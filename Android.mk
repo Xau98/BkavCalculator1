@@ -19,7 +19,7 @@ include $(CLEAR_VARS)
 
 LOCAL_MODULE_TAGS := optional
 
-LOCAL_STATIC_JAVA_LIBRARIES := libarity android-support-v4 guava
+LOCAL_STATIC_JAVA_LIBRARIES := libarity_bkav android-support-v4 guava
 
 LOCAL_SRC_FILES := $(call all-java-files-under, src)
 
@@ -33,7 +33,7 @@ include $(BUILD_PACKAGE)
 ##################################################
 include $(CLEAR_VARS)
 
-LOCAL_PREBUILT_STATIC_JAVA_LIBRARIES := libarity:arity-2.1.2.jar
+LOCAL_PREBUILT_STATIC_JAVA_LIBRARIES := libarity_bkav:arity-2.1.2.jar
 
 include $(BUILD_MULTI_PREBUILT)
 
