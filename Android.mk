@@ -27,7 +27,7 @@ LOCAL_SDK_VERSION := current
 
 # Bkav QuangLH
 LOCAL_PACKAGE_NAME := BkavCalculator
-LOCAL_OVERRIDES_PACKAGES := Calculator
+LOCAL_OVERRIDES_PACKAGES := Calculator ExactCalculator
 
 include $(BUILD_PACKAGE)
 ##################################################
