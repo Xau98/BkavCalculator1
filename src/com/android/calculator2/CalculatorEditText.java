@@ -16,6 +16,8 @@
 
 package com.android.calculator2;
 
+import com.bkav.calculator2.R;
+
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Paint;
@@ -32,7 +34,6 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.widget.EditText;
 import android.widget.TextView;
-import com.bkav.calculator2.R;
 
 public class CalculatorEditText extends EditText {
 
@@ -131,7 +132,7 @@ public class CalculatorEditText extends EditText {
     protected void onTextChanged(CharSequence text, int start, int lengthBefore, int lengthAfter) {
         super.onTextChanged(text, start, lengthBefore, lengthAfter);
 
-         final int textLength = text.length();
+        final int textLength = text.length();
         if (getSelectionStart() != textLength || getSelectionEnd() != textLength) {
             // Pin the selection to the end of the current text.
             setSelection(textLength);

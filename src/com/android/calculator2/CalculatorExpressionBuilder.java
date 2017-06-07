@@ -16,9 +16,6 @@
 
 package com.android.calculator2;
 
-import java.text.NumberFormat;
-import java.util.Locale;
-
 import android.content.Context;
 import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
@@ -91,8 +88,6 @@ public class CalculatorExpressionBuilder extends SpannableStringBuilder {
         }
 
         appendExpr = mTokenizer.getLocalizedExpression(appendExpr);
-
         return super.replace(start, end, appendExpr, 0, appendExpr.length());
     }
-
 }

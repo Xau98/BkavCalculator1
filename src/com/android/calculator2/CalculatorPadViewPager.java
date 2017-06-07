@@ -49,7 +49,7 @@ public class CalculatorPadViewPager extends ViewPager {
 
         @Override
         public float getPageWidth(int position) {
-            return position == 1 ? 7.2f / 9.0f : 1.1f;
+            return position == 1 ? 7.2f / 9.0f : 1.1f; // Bkav TrungNVd
         }
     };
 
@@ -82,7 +82,7 @@ public class CalculatorPadViewPager extends ViewPager {
             if (position < 0.0f) {
                 // Pin the left page to the left side.
                 view.setTranslationX(getWidth() * -position);
-              //  view.setAlpha(Math.max(1.0f + position, 0.0f));trungnvd no set alpha
+                view.setAlpha(Math.max(1.0f + position, 0.0f));
             } else {
                 // Use the default slide transition when moving to the next page.
                 view.setTranslationX(0.0f);

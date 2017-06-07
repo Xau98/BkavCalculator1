@@ -13,7 +13,7 @@
   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
   See the License for the specific language governing permissions and
   limitations under the License.
--->
+  -->
 
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
@@ -45,12 +45,9 @@
         <item name="android:textColor">@color/pad_button_text_color</item>
     </style>
 
-    <style name="PadButtonStyleImageView" parent="@android:style/Widget.Material.Light.Button.Borderless">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:gravity">center</item>
-        <item name="android:minWidth">0dip</item>
-        <item name="android:minHeight">0dip</item>
+    <style name="PadLayoutStyle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
     </style>
 
     <!-- trungnvd style button operator -->
@@ -80,10 +77,4 @@
         <item name="android:textAllCaps">false</item>
         <item name="android:textColor">@color/pad_button_text_operator_color</item>
     </style>
-
-    <style name="PadLayoutStyle">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">match_parent</item>
-    </style>
-
 </resources>
