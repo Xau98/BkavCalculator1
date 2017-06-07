@@ -16,16 +16,14 @@
 
 package com.android.calculator2;
 
-import com.bkav.calculator2.R;
-
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Paint;
 import android.graphics.Paint.FontMetricsInt;
 import android.graphics.Rect;
 import android.os.Parcelable;
-import android.text.method.ScrollingMovementMethod;
 import android.text.TextPaint;
+import android.text.method.ScrollingMovementMethod;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.ActionMode;
@@ -34,6 +32,8 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import com.bkav.calculator2.R;
 
 public class CalculatorEditText extends EditText {
 

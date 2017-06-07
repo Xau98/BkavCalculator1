@@ -16,11 +16,11 @@
 
 package com.android.calculator2;
 
+import com.bkav.calculator2.R;
+
 import org.javia.arity.Symbols;
 import org.javia.arity.SyntaxException;
 import org.javia.arity.Util;
-
-import com.bkav.calculator2.R;
 
 public class CalculatorExpressionEvaluator {
 

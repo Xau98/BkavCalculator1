@@ -18,14 +18,13 @@ package com.android.calculator2;
 
 import android.content.Context;
 import android.util.AttributeSet;
-import android.widget.Button;
 import android.view.View;
-import java.text.DecimalFormat;
-import java.text.DecimalFormatSymbols;
-import java.text.NumberFormat;
-import java.util.Locale;
+import android.widget.Button;
 
 import com.bkav.calculator2.R;
+
+import java.text.DecimalFormatSymbols;
+import java.util.Locale;
 
 public class CalculatorNumericPadLayout extends CalculatorPadLayout {
 

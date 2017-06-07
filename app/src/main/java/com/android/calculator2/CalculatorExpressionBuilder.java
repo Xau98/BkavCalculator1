@@ -16,7 +16,6 @@
 
 package com.android.calculator2;
 
-import android.content.Context;
 import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
 
