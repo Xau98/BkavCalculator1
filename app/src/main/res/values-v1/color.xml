@@ -18,6 +18,44 @@
 <resources>
 
     <!-- Default background color for the status bar. -->
-    <color name="calculator_accent_color">#2195c1</color>
+    <color name="calculator_accent_color">#16617e</color>
 
+    <!-- Color to indicate an error has occured. -->
+    <color name="calculator_error_color">#F40056</color>
+
+    <!-- Background color of the calculator display. TRungnvd-->
+    <color name="display_background_color">#DE2195c1</color>
+
+    <!-- Text color for the formula in the calculator display.trungnvd -->
+    <color name="display_formula_text_color">#fff</color>
+
+    <!-- Text color for the result in the calculator display.trungnvd -->
+    <color name="display_result_text_color">#fff</color>
+
+    <!-- Background color for the numeric pad.trungnvd -->
+    <color name="pad_numeric_background_color">#DEffffff</color>
+
+    <!-- Background color for the operator pad.trungnvd -->
+    <color name="pad_operator_background_color">#DEb1b1b1</color>
+
+    <!-- Background color for the advanced pad.trungnvd -->
+    <color name="pad_advanced_background_color">#573c7d</color>
+
+    <!-- Text color for a button in a pad. trungnvd-->
+    <color name="pad_button_text_color">#2195c1</color>
+
+     <!-- Text color for a button in a pad. trungnvd-->
+    <color name="pad_button_text_operator_color">#FFF</color>
+
+    <!-- Text color for a button in the advanced pad. trungnvd-->
+    <color name="pad_button_advanced_text_color">#FFF</color>
+
+    <!-- Ripple color when a button is pressed in a pad. -->
+    <color name="pad_button_ripple_color">#33FFFFFF</color>
+
+    <!-- Ripple color when a button is pressed in a pad. -->
+    <color name="pad_button_advanced_ripple_color">#1A000000</color>
+
+    <!-- Background color for the icon more pad.anhbm -->
+    <color name="pad_button_icon_more_color">#63458f</color>
 </resources>
