@@ -82,6 +82,8 @@ public class CalculatorPadViewPager extends ViewPager {
             if (position < 0.0f) {
                 // Pin the left page to the left side.
                 view.setTranslationX(getWidth() * -position);
+
+                //AnhBM: Bo do khong can hieu ung alpha khi vuot sang nua
                 //view.setAlpha(Math.max(1.0f + position, 0.0f));
             } else {
                 // Use the default slide transition when moving to the next page.
