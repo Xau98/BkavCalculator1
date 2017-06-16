@@ -17,11 +17,15 @@
 package com.android.calculator2;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
+import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
+
 import com.bkav.calculator2.R;
 
 public class CalculatorPadViewPager extends ViewPager {
@@ -49,7 +53,7 @@ public class CalculatorPadViewPager extends ViewPager {
 
         @Override
         public float getPageWidth(int position) {
-            return position == 1 ? 7.2f / 9.0f : 1.1f; // Bkav TrungNVd
+            return position == 1 ? 0.8f : (float) (mScreenWidth + mWidthDistanceRight) / mScreenWidth; // BKAV AnhBM
         }
     };
 
@@ -105,6 +109,15 @@ public class CalculatorPadViewPager extends ViewPager {
         setOnPageChangeListener(mOnPageChangeListener);
         setPageMargin(getResources().getDimensionPixelSize(R.dimen.pad_page_margin));
         setPageTransformer(false, mPageTransformer);
+
+        // Bkav AnhBM
+        WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+        DisplayMetrics dm = new DisplayMetrics();
+        wm.getDefaultDisplay().getMetrics(dm);
+        mScreenWidth = dm.widthPixels;
+
+        final Resources res = getResources();
+        mWidthDistanceRight = res.getDimensionPixelOffset(R.dimen.width_distance_right);
     }
 
     @Override
@@ -116,4 +129,9 @@ public class CalculatorPadViewPager extends ViewPager {
             mStaticPagerAdapter.notifyDataSetChanged();
         }
     }
+
+    /******************** Bkav **********************/
+    private int mScreenWidth;
+
+    private int mWidthDistanceRight;
 }
