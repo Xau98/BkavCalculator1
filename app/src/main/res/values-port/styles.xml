@@ -50,7 +50,7 @@
         <item name="android:background">@drawable/pad_button_advanced_background</item>
 
         <item name="android:layout_margin">4dip</item>
-        <item name="android:textSize">41sp</item> <!-- trungnvd -->
+        <item name="android:textSize">66.67sp</item> <!-- trungnvd -->
     </style>
 
     <style name="PadButtonStyle.Numeric.Equals">
@@ -92,7 +92,7 @@
     <style name="PadLayoutStyle.Numeric">
         <item name="android:layout_width">0dip</item>
         <item name="android:layout_weight">262</item>
-        <item name="android:paddingTop">20dip</item>
+        <item name="android:paddingTop">0dip</item>
         <item name="android:paddingBottom">20dip</item>
         <item name="android:paddingStart">12dip</item>
         <item name="android:paddingEnd">12dip</item>
@@ -102,7 +102,7 @@
         <item name="android:layout_width">0dip</item>
         <item name="android:layout_weight">98</item>
         <item name="android:paddingTop">0dip</item>
-        <item name="android:paddingBottom">24dip</item>
+        <!--<item name="android:paddingBottom">24dip</item>-->
         <item name="android:paddingStart">0dip</item>
         <item name="android:paddingEnd">35dip</item>
     </style>

@@ -47,7 +47,20 @@
 
             <include layout="@layout/pad_numeric" />
 
-            <include layout="@layout/pad_operator_one_col" />
+            <LinearLayout
+                style="@style/PadLayoutStyle.Operator"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:paddingEnd="0dp">
+
+                <include
+                    layout="@layout/pad_operator_one_col"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1" />
+
+                <include layout="@layout/pad_operator_add_button" />
+            </LinearLayout>
 
         </LinearLayout>
 

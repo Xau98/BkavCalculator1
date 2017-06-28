@@ -21,14 +21,14 @@
     style="@style/PadLayoutStyle.Operator"
     android:background="@color/pad_operator_background_color"
     android:columnCount="1"
-    android:rowCount="6" >
+    android:rowCount="5" >
 
     <ImageView
         android:id="@+id/more"
-        style="@style/PadButtonOperatorImageStyle.Image"
+        style="@style/PadButtonOperatorStyle.Operator.Text"
         android:contentDescription="@string/desc_clr"
+        android:translationY="2dp"
         android:onClick="onButtonClick"
-        android:background="@color/pad_button_icon_more_color"
         android:src="@drawable/icon_more" />
 
     <Button
@@ -54,13 +54,6 @@
         android:text="@string/op_mul" />
 
     <Button
-        android:id="@+id/op_sub"
-        style="@style/PadButtonOperatorStyle.Operator"
-        android:contentDescription="@string/desc_op_sub"
-        android:onClick="onButtonClick"
-        android:text="@string/op_sub" />
-
-    <Button
         android:id="@+id/op_add"
         style="@style/PadButtonOperatorStyle.Operator"
         android:contentDescription="@string/desc_op_add"
@@ -68,10 +61,19 @@
         android:text="@string/op_add" />
 
     <Button
-        android:id="@+id/eq"
+        android:id="@+id/op_sub"
         style="@style/PadButtonOperatorStyle.Operator"
+        android:contentDescription="@string/desc_op_sub"
+        android:onClick="onButtonClick"
+        android:text="@string/op_sub" />
+
+<!--    <Button
+        android:id="@+id/eq"
+        style="@style/PadButtonOperatorImageStyle.Image"
         android:contentDescription="@string/desc_eq"
         android:onClick="onButtonClick"
-        android:text="@string/eq" />
+        android:textSize="27sp"
+        android:background="@color/pad_button_icon_more_color"
+        android:text="@string/eq" />-->
 
 </com.android.calculator2.CalculatorPadLayout>
