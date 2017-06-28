@@ -6,6 +6,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.Display;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -31,9 +32,16 @@ public class BkavCalculator extends Calculator {
         mRootView = (LinearLayout) findViewById(R.id.root_layout);
         mCalculatorPadViewPager = (CalculatorPadViewPager) findViewById(R.id.pad_pager);
 
-        Bitmap backgroundBitmap = getBlurredBackground();
-        mRootView.setBackground(new BitmapDrawable(backgroundBitmap));
-        mCalculatorPadViewPager.setBackgroundColor(getResources().getColor(android.R.color.transparent));
+        //Bitmap backgroundBitmap = getBlurredBackground();
+        Bitmap backgroundBitmapFromRom = getBluredBackgroundFromRom();
+
+        //mRootView.setBackground(new BitmapDrawable(backgroundBitmap));
+        Display getOrient = getWindowManager().getDefaultDisplay();
+        if (getOrient.getWidth() < getOrient.getHeight()) {
+            mCalculatorPadViewPager.setBackgroundColor(getResources().getColor(android.R.color.transparent));
+        }
+
+        mRootView.setBackground(new BitmapDrawable(backgroundBitmapFromRom));
 
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         makeStatusBarTransparent(mToolbar);
@@ -49,11 +57,21 @@ public class BkavCalculator extends Calculator {
         return bitmap;
     }
 
+    private Bitmap getBluredBackgroundFromRom() {
+        WallpaperManager wallpaperManager = WallpaperManager.getInstance(this);
+        Bitmap bitmap = ((BitmapDrawable) wallpaperManager.getDrawable()).getBitmap();
+
+
+        WallpaperBlurCompat wallpaperBlurCompat = new WallpaperBlurCompat(this);
+        return wallpaperBlurCompat.getWallpaperBlur();
+        //return bitmap;
+    }
+
     /**
      * AnhBM: ham thuc hien lam trong suot status bar
      */
     private void makeStatusBarTransparent(Toolbar toolbar) {
-        if ( Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             Window w = getWindow(); // in Activity's onCreate() for instance
             w.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
         }

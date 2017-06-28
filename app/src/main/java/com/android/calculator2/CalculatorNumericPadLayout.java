@@ -17,6 +17,7 @@
 package com.android.calculator2;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.Button;
@@ -57,7 +58,10 @@ public class CalculatorNumericPadLayout extends CalculatorPadLayout {
         for (int childIndex = getChildCount() - 1; childIndex >= 0; --childIndex) {
             final View v = getChildAt(childIndex);
             if (v instanceof Button) {
+                //AnhBM: them font chu cho number
+                Typeface myTypeface = Typeface.createFromAsset(getContext().getAssets(), "fonts/helveticaNeueThin.ttf");
                 final Button b = (Button) v;
+                b.setTypeface(myTypeface);
                 switch (b.getId()) {
                     case R.id.digit_0:
                         b.setText(String.valueOf(zeroDigit));
@@ -90,7 +94,8 @@ public class CalculatorNumericPadLayout extends CalculatorPadLayout {
                         b.setText(String.valueOf((char) (zeroDigit + 9)));
                         break;
                     case R.id.dec_point:
-                        b.setText(String.valueOf(symbols.getDecimalSeparator()));
+                        //AnhBM: sua lai thanh dau "."
+                        b.setText(/*String.valueOf(symbols.getDecimalSeparator())*/String.valueOf("."));
                         break;
                 }
             }
