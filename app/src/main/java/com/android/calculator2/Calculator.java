@@ -133,7 +133,8 @@ public class Calculator extends Activity
 
         mEqualButton = findViewById(R.id.pad_numeric).findViewById(R.id.eq);
         if (mEqualButton == null || mEqualButton.getVisibility() != View.VISIBLE) {
-            mEqualButton = findViewById(R.id.pad_operator).findViewById(R.id.eq);
+            //Bkav AnhBM: Bo di vi do thiet ke lai giao dien moi nen ko can nua
+            mEqualButton = /*findViewById(R.id.pad_operator).*/findViewById(R.id.eq);
         }
 
         mTokenizer = new CalculatorExpressionTokenizer(this);
