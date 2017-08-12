@@ -58,4 +58,6 @@
 
     <!-- Background color for the icon more pad.anhbm -->
     <color name="pad_button_icon_more_color">#DEf15b26</color>
+
+    <color name="default_background">#333333</color>
 </resources>
