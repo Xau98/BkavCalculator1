@@ -38,39 +38,44 @@
         <item name="android:textSize">33sp</item>
     </style>
 
+    <!--Bkav AnhBM: sua lai thanh dp-->
     <style name="PadButtonStyle.Advanced">
         <item name="android:layout_margin">4dip</item>
         <item name="android:background">@drawable/pad_button_advanced_background</item>
         <item name="android:textColor">@color/pad_button_advanced_text_color</item>
-        <item name="android:textSize">17sp</item>
+        <item name="android:textSize">17dp</item>
         <item name="android:textStyle">bold</item>
     </style>
 
+    <!--Bkav AnhBM: sua lai thanh dp-->
     <style name="PadButtonStyle.Numeric">
         <item name="android:background">@drawable/pad_button_advanced_background</item>
 
         <item name="android:layout_margin">4dip</item>
-        <item name="android:textSize">66.67sp</item> <!-- trungnvd -->
+        <item name="android:textSize">66.67dp</item> <!-- trungnvd -->
     </style>
 
     <style name="PadButtonStyle.Numeric.Equals">
         <item name="android:visibility">visible</item>
     </style>
 
+    <!--Bkav AnhBM: sua lai thanh dp-->
     <style name="PadButtonStyle.Numeric.Text"> <!-- trungnvd -->
         <item name="android:visibility">visible</item>
-        <item name="android:textSize">21sp</item>
+        <item name="android:textSize">21dp</item>
         <item name="android:textStyle">normal</item>
     </style>
 
+    <!--Bkav AnhBM: sua lai thanh dp-->
     <style name="PadButtonOperatorStyle.Operator"> <!-- trungnvd -->
         <item name="android:layout_margin">8dip</item>
-        <item name="android:textSize">27sp</item>
+        <item name="android:textSize">27dp</item>
     </style>
 
+    <!--Bkav AnhBM: sua lai thanh dp-->
     <style name="PadButtonOperatorStyle.Operator.Text"> <!-- trungnvd -->
         <item name="android:textAllCaps">true</item>
-        <item name="android:textSize">15sp</item>
+        <item name="android:textSize">15dp</item>
     </style>
 
     <!-- trungnvd -->
