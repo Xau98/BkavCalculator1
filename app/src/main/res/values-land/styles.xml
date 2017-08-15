@@ -34,6 +34,7 @@
         <item name="android:textSize">20sp</item>
     </style>
 
+    <!--Bkav AnhBM: sua lai thanh dp-->
     <style name="PadButtonStyle.Advanced">
         <item name="android:layout_marginTop">4dip</item>
         <item name="android:layout_marginBottom">4dip</item>
@@ -41,37 +42,41 @@
         <item name="android:layout_marginEnd">8dip</item>
         <item name="android:background">@drawable/pad_button_advanced_background</item>
         <item name="android:textColor">@color/pad_button_advanced_text_color</item>
-        <item name="android:textSize">15sp</item>
+        <item name="android:textSize">15dp</item>
         <item name="android:textStyle">bold</item>
     </style>
 
+    <!--Bkav AnhBM: sua lai thanh dp-->
     <style name="PadButtonStyle.Numeric">
         <item name="android:background">@drawable/pad_button_advanced_background</item>
        
         <item name="android:layout_margin">4dip</item>
-        <item name="android:textSize">25sp</item>
+        <item name="android:textSize">25dp</item>
     </style>
     
     <style name="PadButtonStyle.Numeric.Equals">
         <item name="android:visibility">gone</item>
     </style>
-    
+
+    <!--Bkav AnhBM: sua lai thanh dp-->
     <style name="PadButtonStyle.Numeric.Text"><!-- TRUNGNVD -->
         <item name="android:visibility">gone</item>
-        <item name="android:textSize">16sp</item>
+        <item name="android:textSize">16dp</item>
     </style>
 
+    <!--Bkav AnhBM: sua lai thanh dp-->
     <style name="PadButtonOperatorStyle.Operator"><!-- trungnvd -->
         <item name="android:layout_marginTop">4dip</item>
         <item name="android:layout_marginBottom">4dip</item>
         <item name="android:layout_marginStart">8dip</item>
         <item name="android:layout_marginEnd">8dip</item>
-        <item name="android:textSize">21sp</item>
+        <item name="android:textSize">21dp</item>
     </style>
 
+    <!--Bkav AnhBM: sua lai thanh dp-->
     <style name="PadButtonOperatorStyle.Operator.Text"><!-- trungnvd -->
         <item name="android:textAllCaps">true</item>
-        <item name="android:textSize">12sp</item>
+        <item name="android:textSize">12dp</item>
     </style>
 
     <style name="PadLayoutStyle.Advanced">
