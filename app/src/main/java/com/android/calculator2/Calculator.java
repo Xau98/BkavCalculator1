@@ -16,10 +16,6 @@
 
 package com.android.calculator2;
 
-import com.android.calculator2.CalculatorEditText.OnTextSizeChangeListener;
-import com.android.calculator2.CalculatorExpressionEvaluator.EvaluateCallback;
-import com.bkav.calculator2.R;
-
 import android.animation.Animator;
 import android.animation.Animator.AnimatorListener;
 import android.animation.AnimatorListenerAdapter;
@@ -45,6 +41,10 @@ import android.view.ViewGroupOverlay;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.Button;
 import android.widget.TextView;
+
+import com.android.calculator2.CalculatorEditText.OnTextSizeChangeListener;
+import com.android.calculator2.CalculatorExpressionEvaluator.EvaluateCallback;
+import com.bkav.calculator2.R;
 
 public class Calculator extends Activity
         implements OnTextSizeChangeListener, EvaluateCallback, OnLongClickListener {
@@ -260,7 +260,11 @@ public class Calculator extends Activity
     @Override
     public void onEvaluate(String expr, String result, int errorResourceId) {
         if (mCurrentState == CalculatorState.INPUT) {
-            mResultEditText.setText(result);
+            //Bkav AnhBM:
+            if (result != null) {
+                mResultEditText.setText(insertCommas(result));
+            } else
+                mResultEditText.setText((result));
         } else if (errorResourceId != INVALID_RES_ID) {
             onError(errorResourceId);
         } else if (!TextUtils.isEmpty(result)) {
@@ -471,5 +475,39 @@ public class Calculator extends Activity
             // Otherwise, select the previous pad.
             mPadViewPager.setCurrentItem(mPadViewPager.getCurrentItem() - 1);
         }
+    }
+
+    public String insertCommas(String str) {
+
+        String newStr = str;
+        String extend = "";
+        if (mTokenizer.getReplacementMap().get(".").equals(".")) {
+            int pos = str.lastIndexOf(".");
+            if (pos > 0) {
+                newStr = str.substring(0, pos);
+                extend = str.substring(pos);
+            }
+            int firstComma = newStr.indexOf(",");
+            if (firstComma < 0)
+                firstComma = newStr.length();
+            if (newStr.length() > 3 && firstComma > 3) {
+                newStr = insertCommas(new StringBuffer(newStr).insert(
+                        firstComma - 3, ",").toString());
+            }
+        } else {
+            int pos = str.lastIndexOf(",");
+            if (pos > 0) {
+                newStr = str.substring(0, pos);
+                extend = str.substring(pos);
+            }
+            int firstComma = newStr.indexOf(".");
+            if (firstComma < 0)
+                firstComma = newStr.length();
+            if (newStr.length() > 3 && firstComma > 3) {
+                newStr = insertCommas(new StringBuffer(newStr).insert(
+                        firstComma - 3, ".").toString());
+            }
+        }
+        return newStr + extend;
     }
 }

@@ -78,4 +78,8 @@ public class CalculatorExpressionTokenizer {
         }
         return expr;
     }
+
+    public Map<String, String> getReplacementMap() {
+        return mReplacementMap;
+    }
 }
