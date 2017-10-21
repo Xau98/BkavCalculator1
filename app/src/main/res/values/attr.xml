@@ -23,4 +23,9 @@
         <attr name="stepTextSize" format="dimension" />
     </declare-styleable>
 
+    <!--BKAV-->
+    <declare-styleable name="EqualsImageButton">
+        <attr name="state_equals" format="boolean" />
+        <attr name="state_next" format="boolean" />
+    </declare-styleable>
 </resources>

@@ -10,11 +10,13 @@ import android.view.Display;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.LinearLayout;
 
 import com.android.calculator2.Calculator;
 import com.android.calculator2.CalculatorPadViewPager;
 import com.bkav.calculator2.R;
+import com.xlythe.math.Constants;
 
 /**
  * Created by anhbm on 07/06/2017.
@@ -45,6 +47,11 @@ public class BkavCalculator extends Calculator {
 
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         makeStatusBarTransparent(mToolbar);
+        mFormulaEditText.setSolver(mEvaluator.getSolver());
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM, WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
+
+        Button dot = (Button) findViewById(R.id.dec_point);
+        dot.setText(String.valueOf(Constants.DECIMAL_POINT));
     }
 
     private Bitmap getBlurredBackground() {
@@ -94,5 +101,51 @@ public class BkavCalculator extends Calculator {
             result = getResources().getDimensionPixelSize(resourceId);
         }
         return result;
+    }
+
+    @Override
+    protected void onDelete() {
+        mFormulaEditText.backspace();
+    }
+
+    @Override
+    protected void onEquals() {
+        String text = mFormulaEditText.getCleanText();
+        if (mCurrentState == CalculatorState.INPUT) {
+            switch (mEqualButton.getState()) {
+                case EQUALS:
+                    setState(CalculatorState.EVALUATE);
+                    mEvaluator.evaluate(text, this);
+                    break;
+                case NEXT:
+                    mFormulaEditText.next();
+                    break;
+            }
+        }
+    }
+
+    @Override
+    protected void insertMathExpression(View view) {
+        insert(((Button) view).getText().toString());
+    }
+
+    @Override
+    protected void insertAdvancedMathExpression(View view) {
+        insert(((Button) view).getText() + "(");
+    }
+
+    protected void insert(String text) {
+        // Add left parenthesis after functions.
+        if (mCurrentState.equals(CalculatorState.INPUT) ||
+                mFormulaEditText.isCursorModified()) {
+            mFormulaEditText.insert(text);
+        } else {
+            mFormulaEditText.setText(text);
+        }
+    }
+
+    @Override
+    protected void clearResult() {
+        mResultEditText.getEditableText().clear();
     }
 }

@@ -34,6 +34,9 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.bkav.calculator2.R;
+import com.xlythe.math.BaseModule;
+import com.xlythe.math.Constants;
+import com.xlythe.math.Solver;
 
 public class CalculatorEditText extends EditText {
 
@@ -199,5 +202,15 @@ public class CalculatorEditText extends EditText {
 
     public interface OnTextSizeChangeListener {
         void onTextSizeChanged(TextView textView, float oldSize);
+    }
+
+    /*********************** BKAV **************************/
+
+    protected void invalidateTextSize() {
+        float oldTextSize = getTextSize();
+        float newTextSize = getVariableTextSize(getText().toString());
+        if (oldTextSize != newTextSize) {
+            setTextSize(TypedValue.COMPLEX_UNIT_PX, newTextSize);
+        }
     }
 }

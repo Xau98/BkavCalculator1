@@ -44,6 +44,8 @@ import android.widget.TextView;
 
 import com.android.calculator2.CalculatorEditText.OnTextSizeChangeListener;
 import com.android.calculator2.CalculatorExpressionEvaluator.EvaluateCallback;
+import com.android.calculator2.bkav.EqualsImageButton;
+import com.android.calculator2.bkav.FormattedNumberEditText;
 import com.bkav.calculator2.R;
 
 public class Calculator extends Activity
@@ -60,7 +62,7 @@ public class Calculator extends Activity
      */
     public static final int INVALID_RES_ID = -1;
 
-    private enum CalculatorState {
+    protected enum CalculatorState {
         INPUT, EVALUATE, RESULT, ERROR
     }
 
@@ -105,17 +107,19 @@ public class Calculator extends Activity
         }
     };
 
-    private CalculatorState mCurrentState;
+    protected CalculatorState mCurrentState;
     private CalculatorExpressionTokenizer mTokenizer;
-    private CalculatorExpressionEvaluator mEvaluator;
+    protected CalculatorExpressionEvaluator mEvaluator;
 
     private View mDisplayView;
-    private CalculatorEditText mFormulaEditText;
-    private CalculatorEditText mResultEditText;
+    //AnhBM: truoc dung CalculatorEditText doi thanh FormattedNumberEditText
+    protected FormattedNumberEditText mFormulaEditText;
+    protected CalculatorEditText mResultEditText;
     private ViewPager mPadViewPager;
     private View mDeleteButton;
     private View mClearButton;
-    private View mEqualButton;
+    //AnhBM: truoc dung View doi thanh EqualsImageButton
+    protected EqualsImageButton mEqualButton;
 
     private Animator mCurrentAnimator;
 
@@ -125,16 +129,16 @@ public class Calculator extends Activity
         setContentView(R.layout.activity_calculator);
 
         mDisplayView = findViewById(R.id.display);
-        mFormulaEditText = (CalculatorEditText) findViewById(R.id.formula);
+        mFormulaEditText = (FormattedNumberEditText) findViewById(R.id.formula);
         mResultEditText = (CalculatorEditText) findViewById(R.id.result);
         mPadViewPager = (ViewPager) findViewById(R.id.pad_pager);
         mDeleteButton = findViewById(R.id.del);
         mClearButton = findViewById(R.id.clr);
 
-        mEqualButton = findViewById(R.id.pad_numeric).findViewById(R.id.eq);
+        mEqualButton = (EqualsImageButton) findViewById(R.id.pad_numeric).findViewById(R.id.eq);
         if (mEqualButton == null || mEqualButton.getVisibility() != View.VISIBLE) {
             //Bkav AnhBM: Bo di vi do thiet ke lai giao dien moi nen ko can nua
-            mEqualButton = /*findViewById(R.id.pad_operator).*/findViewById(R.id.eq);
+            mEqualButton = (EqualsImageButton)/*findViewById(R.id.pad_operator).*/findViewById(R.id.eq);
         }
 
         mTokenizer = new CalculatorExpressionTokenizer(this);
@@ -169,7 +173,7 @@ public class Calculator extends Activity
                 mTokenizer.getNormalizedExpression(mFormulaEditText.getText().toString()));
     }
 
-    private void setState(CalculatorState state) {
+    protected void setState(CalculatorState state) {
         if (mCurrentState != state) {
             mCurrentState = state;
 
@@ -240,10 +244,25 @@ public class Calculator extends Activity
             case R.id.fun_sin:
             case R.id.fun_tan:
                 // Add left parenthesis after functions.
-                mFormulaEditText.append(((Button) view).getText() + "(");
+                //AnhBM: thay logic nhap
+                insertAdvancedMathExpression(view);
+                // mFormulaEditText.append(((Button) view).getText() + "(");
                 break;
+
+            //AnhBM: them logic 1 so nut
+            case R.id.op_add:
+            case R.id.op_sub:
+            case R.id.op_mul:
+            case R.id.op_div:
+            case R.id.op_fact:
+            case R.id.op_pow:
+                mFormulaEditText.insert(((Button) view).getText().toString());
+                break;
+
             default:
-                mFormulaEditText.append(((Button) view).getText());
+                //AnhBM: thay logic nhap
+                insertMathExpression(view);
+                //mFormulaEditText.append(((Button) view).getText());
                 break;
         }
     }
@@ -273,7 +292,6 @@ public class Calculator extends Activity
             // The current expression cannot be evaluated -> return to the input state.
             setState(CalculatorState.INPUT);
         }
-
         mFormulaEditText.requestFocus();
     }
 
@@ -303,14 +321,14 @@ public class Calculator extends Activity
         animatorSet.start();
     }
 
-    private void onEquals() {
+    protected void onEquals() {
         if (mCurrentState == CalculatorState.INPUT) {
             setState(CalculatorState.EVALUATE);
             mEvaluator.evaluate(mFormulaEditText.getText(), this);
         }
     }
 
-    private void onDelete() {
+    protected void onDelete() {
         // Delete works like backspace; remove the last character from the expression.
         final Editable formulaText = mFormulaEditText.getEditableText();
         final int formulaLength = formulaText.length();
@@ -384,6 +402,8 @@ public class Calculator extends Activity
             @Override
             public void onAnimationStart(Animator animation) {
                 mFormulaEditText.getEditableText().clear();
+                //AnhBM: them logic xoa
+                clearResult();
             }
         });
     }
@@ -478,7 +498,6 @@ public class Calculator extends Activity
     }
 
     public String insertCommas(String str) {
-
         String newStr = str;
         String extend = "";
         if (mTokenizer.getReplacementMap().get(".").equals(".")) {
@@ -509,5 +528,16 @@ public class Calculator extends Activity
             }
         }
         return newStr + extend;
+    }
+
+    protected void insertMathExpression(View view) {
+        mFormulaEditText.append(((Button) view).getText());
+    }
+
+    protected void insertAdvancedMathExpression(View view) {
+        mFormulaEditText.append(((Button) view).getText() + "(");
+    }
+
+    protected void clearResult() {
     }
 }
