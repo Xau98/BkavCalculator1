@@ -106,10 +106,12 @@ public class CalculatorEditText extends EditText {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        if (event.getActionMasked() == MotionEvent.ACTION_UP) {
-            // Hack to prevent keyboard and insertion handle from showing.
-            cancelLongPress();
-        }
+        //Bkav AnhBM: bo logic nay de co the sua duoc Editext\
+
+//        if (event.getActionMasked() == MotionEvent.ACTION_UP) {
+//            // Hack to prevent keyboard and insertion handle from showing.
+//            cancelLongPress();
+//        }
         return super.onTouchEvent(event);
     }
 

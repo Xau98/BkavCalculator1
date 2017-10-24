@@ -228,6 +228,9 @@ public class Calculator extends Activity
         switch (view.getId()) {
             case R.id.eq:
                 onEquals();
+
+                //AnhBM: them logic disableCursorView()
+                disableCursorView();
                 break;
             case R.id.del: // Bkav TrungNVd
                 onDelete();
@@ -406,6 +409,9 @@ public class Calculator extends Activity
                 clearResult();
             }
         });
+
+        //AnhBM: them logic disableCursorView()
+        disableCursorView();
     }
 
     private void onError(final int errorResourceId) {
@@ -539,5 +545,8 @@ public class Calculator extends Activity
     }
 
     protected void clearResult() {
+    }
+
+    protected void disableCursorView() {
     }
 }

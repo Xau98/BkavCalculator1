@@ -6,6 +6,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.text.InputType;
 import android.view.Display;
 import android.view.View;
 import android.view.Window;
@@ -52,6 +53,18 @@ public class BkavCalculator extends Calculator {
 
         Button dot = (Button) findViewById(R.id.dec_point);
         dot.setText(String.valueOf(Constants.DECIMAL_POINT));
+
+        mFormulaEditText.setInputType(InputType.TYPE_CLASS_TEXT);
+        mFormulaEditText.setFocusableInTouchMode(true);
+        mFormulaEditText.setFocusable(true);
+
+        mFormulaEditText.setEnabled(true);
+        mFormulaEditText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mFormulaEditText.setCursorVisible(true);
+            }
+        });
     }
 
     private Bitmap getBlurredBackground() {
@@ -147,5 +160,10 @@ public class BkavCalculator extends Calculator {
     @Override
     protected void clearResult() {
         mResultEditText.getEditableText().clear();
+    }
+
+    @Override
+    protected void disableCursorView() {
+        mFormulaEditText.setCursorVisible(false);
     }
 }
