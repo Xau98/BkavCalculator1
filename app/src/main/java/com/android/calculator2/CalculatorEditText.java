@@ -34,9 +34,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.bkav.calculator2.R;
-import com.xlythe.math.BaseModule;
-import com.xlythe.math.Constants;
-import com.xlythe.math.Solver;
 
 public class CalculatorEditText extends EditText {
 
@@ -106,8 +103,7 @@ public class CalculatorEditText extends EditText {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        //Bkav AnhBM: bo logic nay de co the sua duoc Editext\
-
+        // Bkav AnhBM: bo logic nay de co the sua duoc Editext
 //        if (event.getActionMasked() == MotionEvent.ACTION_UP) {
 //            // Hack to prevent keyboard and insertion handle from showing.
 //            cancelLongPress();

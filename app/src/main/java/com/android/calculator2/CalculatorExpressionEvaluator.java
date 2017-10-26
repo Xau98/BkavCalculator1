@@ -17,8 +17,10 @@
 package com.android.calculator2;
 
 import com.bkav.calculator2.R;
+import com.xlythe.math.NanSyntaxException;
 import com.xlythe.math.Solver;
 
+import org.javia.arity.Symbols;
 import org.javia.arity.SyntaxException;
 
 public class CalculatorExpressionEvaluator {
@@ -34,14 +36,12 @@ public class CalculatorExpressionEvaluator {
      */
     private static final int ROUNDING_DIGITS = Math.max(17 - MAX_DIGITS, 0);
 
-    //AnhBM: dung thu vien tinh toan khac
-    //private final Symbols mSymbols;
-    private final Solver mSolver;
+    private final Symbols mSymbols;
+    
     private final CalculatorExpressionTokenizer mTokenizer;
 
     public CalculatorExpressionEvaluator(CalculatorExpressionTokenizer tokenizer) {
-        //AnhBM: dung thu vien tinh toan khac
-        //mSymbols = new Symbols();
+        mSymbols = new Symbols();
         mSolver = new Solver();
         mTokenizer = tokenizer;
     }
@@ -68,7 +68,7 @@ public class CalculatorExpressionEvaluator {
         }
 
         try {
-            //AnhBM: dung thu vien tinh toan khac
+            // AnhBM: dung thu vien tinh toan khac. Neu NAN thi se throw NanSyntaxException
             String result = mSolver.solve(expr);
             result = mTokenizer.getLocalizedExpression(result);
             callback.onEvaluate(expr, result, Calculator.INVALID_RES_ID);
@@ -85,15 +85,23 @@ public class CalculatorExpressionEvaluator {
 //                callback.onEvaluate(expr, resultString, Calculator.INVALID_RES_ID);
 //            }
         } catch (SyntaxException e) {
-            callback.onEvaluate(expr, null, R.string.error_syntax);
+            // Bkav QuangLH: xu ly NAN
+            if (e instanceof NanSyntaxException) {
+                callback.onEvaluate(expr, null, R.string.error_nan);
+            } else {
+                callback.onEvaluate(expr, null, R.string.error_syntax);
+            }
         }
-    }
-
-    public Solver getSolver() {
-        return mSolver;
     }
 
     public interface EvaluateCallback {
         public void onEvaluate(String expr, String result, int errorResourceId);
+    }
+    
+    /********************* Bkav **********************/
+    private final Solver mSolver;
+    
+    public Solver getSolver() {
+        return mSolver;
     }
 }

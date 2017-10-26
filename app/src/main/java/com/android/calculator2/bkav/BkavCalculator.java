@@ -31,6 +31,10 @@ public class BkavCalculator extends Calculator {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        // Bkav AnhBM: khong cho ban phim hien len.
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM, 
+                WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
+        
         super.onCreate(savedInstanceState);
         mRootView = (LinearLayout) findViewById(R.id.root_layout);
         mCalculatorPadViewPager = (CalculatorPadViewPager) findViewById(R.id.pad_pager);
@@ -48,8 +52,8 @@ public class BkavCalculator extends Calculator {
 
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         makeStatusBarTransparent(mToolbar);
+        
         mFormulaEditText.setSolver(mEvaluator.getSolver());
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM, WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
 
         Button dot = (Button) findViewById(R.id.dec_point);
         dot.setText(String.valueOf(Constants.DECIMAL_POINT));

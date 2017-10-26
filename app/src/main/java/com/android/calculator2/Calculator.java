@@ -504,7 +504,7 @@ public class Calculator extends Activity
         }
     }
 
-    public String insertCommas(String str) {
+    private String insertCommas(String str) {
         String newStr = str;
         String extend = "";
         if (mTokenizer.getReplacementMap().get(".").equals(".")) {
