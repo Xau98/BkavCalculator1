@@ -110,4 +110,7 @@
     <!-- Displayed on buttons on screen for the arccot function. -->
     <string name="fun_arccot">acot</string>
 
+
+    <!-- Abbrev. name of tangent function (e.g. "%". [CHAR_LIMIT=3] -->
+    <string name="fun_percent">%</string>
 </resources>
