@@ -208,6 +208,11 @@ public class FormattedNumberEditText extends NumberEditText {
         mIsInserting = true;
         setText(textBeforeInsertionHandle + delta + BaseModule.SELECTION_HANDLE + textAfterInsertionHandle);
         mIsInserting = false;
+
+        //AnhBM: them logic xu ly control
+        if (getSelectionEnd() == length()) {
+            setCursorVisible(false);
+        }
     }
 
     public void clear() {

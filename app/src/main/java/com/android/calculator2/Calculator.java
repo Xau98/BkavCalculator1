@@ -468,7 +468,8 @@ public class Calculator extends Activity
         animatorSet.addListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationStart(Animator animation) {
-                mResultEditText.setText(result);
+                //AnhBM: chinh hieu ung Animation cho giong
+                mResultEditText.setText(insertCommas(result));
             }
 
             @Override

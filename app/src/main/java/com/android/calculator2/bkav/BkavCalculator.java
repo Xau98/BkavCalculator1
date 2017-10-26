@@ -62,7 +62,9 @@ public class BkavCalculator extends Calculator {
         mFormulaEditText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mFormulaEditText.setCursorVisible(true);
+                if (mFormulaEditText.getSelectionEnd() != mFormulaEditText.getText().length()) {
+                    mFormulaEditText.setCursorVisible(true);
+                }
             }
         });
     }
