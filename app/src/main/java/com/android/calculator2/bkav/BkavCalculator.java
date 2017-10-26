@@ -16,6 +16,7 @@ import android.widget.LinearLayout;
 
 import com.android.calculator2.Calculator;
 import com.android.calculator2.CalculatorPadViewPager;
+import com.android.calculator2.bkav.EqualsImageButton.State;
 import com.bkav.calculator2.R;
 import com.xlythe.math.Constants;
 
@@ -131,7 +132,14 @@ public class BkavCalculator extends Calculator {
     protected void onEquals() {
         String text = mFormulaEditText.getCleanText();
         if (mCurrentState == CalculatorState.INPUT) {
-            switch (mEqualButton.getState()) {
+            
+            // Bkav QuangLH: truong hop dang xoay ngang thi chi la Button thoi.
+            // Xu ly nhu dau bang.
+            State state = State.EQUALS;
+            if (mEqualButton instanceof EqualsImageButton) {
+                state = ((EqualsImageButton) mEqualButton).getState();
+            }
+            switch (state) {
                 case EQUALS:
                     setState(CalculatorState.EVALUATE);
                     mEvaluator.evaluate(text, this);

@@ -119,7 +119,7 @@ public class Calculator extends Activity
     private View mDeleteButton;
     private View mClearButton;
     //AnhBM: truoc dung View doi thanh EqualsImageButton
-    protected EqualsImageButton mEqualButton;
+    protected View mEqualButton;
 
     private Animator mCurrentAnimator;
 
@@ -135,10 +135,10 @@ public class Calculator extends Activity
         mDeleteButton = findViewById(R.id.del);
         mClearButton = findViewById(R.id.clr);
 
-        mEqualButton = (EqualsImageButton) findViewById(R.id.pad_numeric).findViewById(R.id.eq);
+        mEqualButton = findViewById(R.id.pad_numeric).findViewById(R.id.eq);
         if (mEqualButton == null || mEqualButton.getVisibility() != View.VISIBLE) {
             //Bkav AnhBM: Bo di vi do thiet ke lai giao dien moi nen ko can nua
-            mEqualButton = (EqualsImageButton)/*findViewById(R.id.pad_operator).*/findViewById(R.id.eq);
+            mEqualButton = /*findViewById(R.id.pad_operator).*/findViewById(R.id.eq);
         }
 
         mTokenizer = new CalculatorExpressionTokenizer(this);
