@@ -34,6 +34,9 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.bkav.calculator2.R;
+import com.xlythe.math.BaseModule;
+import com.xlythe.math.Constants;
+import com.xlythe.math.Solver;
 
 public class CalculatorEditText extends EditText {
 
@@ -103,10 +106,12 @@ public class CalculatorEditText extends EditText {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        if (event.getActionMasked() == MotionEvent.ACTION_UP) {
-            // Hack to prevent keyboard and insertion handle from showing.
-            cancelLongPress();
-        }
+        //Bkav AnhBM: bo logic nay de co the sua duoc Editext\
+
+//        if (event.getActionMasked() == MotionEvent.ACTION_UP) {
+//            // Hack to prevent keyboard and insertion handle from showing.
+//            cancelLongPress();
+//        }
         return super.onTouchEvent(event);
     }
 
@@ -199,5 +204,15 @@ public class CalculatorEditText extends EditText {
 
     public interface OnTextSizeChangeListener {
         void onTextSizeChanged(TextView textView, float oldSize);
+    }
+
+    /*********************** BKAV **************************/
+
+    protected void invalidateTextSize() {
+        float oldTextSize = getTextSize();
+        float newTextSize = getVariableTextSize(getText().toString());
+        if (oldTextSize != newTextSize) {
+            setTextSize(TypedValue.COMPLEX_UNIT_PX, newTextSize);
+        }
     }
 }

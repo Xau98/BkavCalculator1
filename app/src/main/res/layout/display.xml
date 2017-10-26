@@ -25,12 +25,14 @@
 
     <!-- android:elevation="4dip" : Cai nay de do bong' 4dp -->
 
-    <com.android.calculator2.CalculatorEditText
+    <com.android.calculator2.bkav.BkavCalculatorEditText
         android:id="@+id/formula"
         style="@style/DisplayEditTextStyle.Formula"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="text|textNoSuggestions"
+        android:editable="true"
+        android:enabled="true"
         android:textColor="@color/display_formula_text_color" />
 
     <com.android.calculator2.CalculatorEditText

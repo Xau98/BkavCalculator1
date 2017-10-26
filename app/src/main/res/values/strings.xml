@@ -90,4 +90,24 @@
     <!-- Content description for '=' button. [CHAR_LIMIT=NONE] -->
     <string name="desc_eq">equals</string>
 
+    <!--BKAV-->
+    <!-- Displayed on buttons on screen for the arcsin function. -->
+    <string name="fun_arcsin">asin</string>
+    <!-- Displayed on buttons on screen for the arccos function. -->
+    <string name="fun_arccos">acos</string>
+    <!-- Displayed on buttons on screen for the arctan function. -->
+    <string name="fun_arctan">atan</string>
+    <!-- Displayed on buttons on screen for the csc function. -->
+    <string name="fun_csc">csc</string>
+    <!-- Displayed on buttons on screen for the sec function. -->
+    <string name="fun_sec">sec</string>
+    <!-- Displayed on buttons on screen for the cot function. -->
+    <string name="fun_cot">cot</string>
+    <!-- Displayed on buttons on screen for the arccsc function. -->
+    <string name="fun_arccsc">acsc</string>
+    <!-- Displayed on buttons on screen for the arcsec function. -->
+    <string name="fun_arcsec">asec</string>
+    <!-- Displayed on buttons on screen for the arccot function. -->
+    <string name="fun_arccot">acot</string>
+
 </resources>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<Button xmlns:android="http://schemas.android.com/apk/res/android"
+<com.android.calculator2.bkav.EqualsImageButton xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/eq"
     style="@style/PadButtonOperatorImageStyle.Image"
     android:layout_width="match_parent"
@@ -10,4 +10,5 @@
     android:onClick="onButtonClick"
     android:paddingRight="35dp"
     android:text="@string/eq"
+    android:src="@drawable/equals_btn"
     android:textSize="27sp" />

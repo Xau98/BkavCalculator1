@@ -17,10 +17,9 @@
 package com.android.calculator2;
 
 import com.bkav.calculator2.R;
+import com.xlythe.math.Solver;
 
-import org.javia.arity.Symbols;
 import org.javia.arity.SyntaxException;
-import org.javia.arity.Util;
 
 public class CalculatorExpressionEvaluator {
 
@@ -35,11 +34,15 @@ public class CalculatorExpressionEvaluator {
      */
     private static final int ROUNDING_DIGITS = Math.max(17 - MAX_DIGITS, 0);
 
-    private final Symbols mSymbols;
+    //AnhBM: dung thu vien tinh toan khac
+    //private final Symbols mSymbols;
+    private final Solver mSolver;
     private final CalculatorExpressionTokenizer mTokenizer;
 
     public CalculatorExpressionEvaluator(CalculatorExpressionTokenizer tokenizer) {
-        mSymbols = new Symbols();
+        //AnhBM: dung thu vien tinh toan khac
+        //mSymbols = new Symbols();
+        mSolver = new Solver();
         mTokenizer = tokenizer;
     }
 
@@ -65,20 +68,29 @@ public class CalculatorExpressionEvaluator {
         }
 
         try {
-            double result = mSymbols.eval(expr);
-            if (Double.isNaN(result)) {
-                callback.onEvaluate(expr, null, R.string.error_nan);
-            } else {
-                // The arity library uses floating point arithmetic when evaluating the expression
-                // leading to precision errors in the result. The method doubleToString hides these
-                // errors; rounding the result by dropping N digits of precision.
-                final String resultString = mTokenizer.getLocalizedExpression(
-                        Util.doubleToString(result, MAX_DIGITS, ROUNDING_DIGITS));
-                callback.onEvaluate(expr, resultString, Calculator.INVALID_RES_ID);
-            }
+            //AnhBM: dung thu vien tinh toan khac
+            String result = mSolver.solve(expr);
+            result = mTokenizer.getLocalizedExpression(result);
+            callback.onEvaluate(expr, result, Calculator.INVALID_RES_ID);
+
+//            double result = mSymbols.eval(expr);
+//            if (Double.isNaN(result)) {
+//                callback.onEvaluate(expr, null, R.string.error_nan);
+//            } else {
+//                // The arity library uses floating point arithmetic when evaluating the expression
+//                // leading to precision errors in the result. The method doubleToString hides these
+//                // errors; rounding the result by dropping N digits of precision.
+//                final String resultString = mTokenizer.getLocalizedExpression(
+//                        Util.doubleToString(result, MAX_DIGITS, ROUNDING_DIGITS));
+//                callback.onEvaluate(expr, resultString, Calculator.INVALID_RES_ID);
+//            }
         } catch (SyntaxException e) {
             callback.onEvaluate(expr, null, R.string.error_syntax);
         }
+    }
+
+    public Solver getSolver() {
+        return mSolver;
     }
 
     public interface EvaluateCallback {
