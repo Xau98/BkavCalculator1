@@ -268,6 +268,9 @@ public class Calculator extends Activity
                 //mFormulaEditText.append(((Button) view).getText());
                 break;
         }
+
+        //AnhBM: them logic closePadAdvanced()
+        closePadAdvanced(view);
     }
 
     @Override
@@ -495,7 +498,7 @@ public class Calculator extends Activity
     }
 
     /********** BKAV TRUNGNVD *****************/
-    private void openPage() {
+    protected void openPage() {
         if (mPadViewPager == null || mPadViewPager.getCurrentItem() == 0) {
             mPadViewPager.setCurrentItem(mPadViewPager.getCurrentItem() + 1);
         } else {
@@ -549,5 +552,8 @@ public class Calculator extends Activity
     }
 
     protected void disableCursorView() {
+    }
+
+    protected void closePadAdvanced(View view) {
     }
 }

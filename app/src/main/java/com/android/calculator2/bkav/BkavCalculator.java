@@ -168,4 +168,11 @@ public class BkavCalculator extends Calculator {
     protected void disableCursorView() {
         mFormulaEditText.setCursorVisible(false);
     }
+
+    @Override
+    protected void closePadAdvanced(View view) {
+        if (view.getId() == R.id.fun_percent || view.getId() == R.id.op_fact || view.getId() == R.id.const_pi ) {
+            openPage();
+        }
+    }
 }
