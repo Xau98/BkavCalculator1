@@ -105,12 +105,4 @@
         android:onClick="onButtonClick"
         android:text="@string/op_sqrt" />
 
-    <Button
-        android:id="@+id/fun_percent"
-        style="@style/PadButtonStyle.Advanced"
-        android:contentDescription="@string/desc_fun_tan"
-        android:onClick="onButtonClick"
-        android:text="@string/fun_percent" />
-
-
 </com.android.calculator2.CalculatorPadLayout>

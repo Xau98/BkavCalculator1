@@ -1,6 +1,7 @@
 package com.android.calculator2.bkav;
 
 import android.app.WallpaperManager;
+import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Build;
@@ -183,8 +184,10 @@ public class BkavCalculator extends Calculator {
 
     @Override
     protected void closePadAdvanced(View view) {
-        if (view.getId() == R.id.fun_percent || view.getId() == R.id.op_fact || view.getId() == R.id.const_pi ) {
-            openPage();
+        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+            if (view.getId() == R.id.fun_percent || view.getId() == R.id.op_fact || view.getId() == R.id.const_pi) {
+                openPage();
+            }
         }
     }
 }
