@@ -84,6 +84,8 @@ public class BkavCalculator extends Calculator {
                 if (mFormulaEditText.getSelectionEnd() != mFormulaEditText.getText().length()) {
                     mFormulaEditText.setCursorVisible(true);
                 }
+                mDeleteButton.setVisibility(View.VISIBLE);
+                mClearButton.setVisibility(View.GONE);
             }
         });
 

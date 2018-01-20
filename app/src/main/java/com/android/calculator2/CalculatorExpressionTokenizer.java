@@ -18,15 +18,13 @@ package com.android.calculator2;
 
 import android.content.Context;
 
-import java.text.DecimalFormat;
+import com.bkav.calculator2.R;
+
 import java.text.DecimalFormatSymbols;
-import java.text.NumberFormat;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Map.Entry;
-
-import com.bkav.calculator2.R;
 
 public class CalculatorExpressionTokenizer {
 

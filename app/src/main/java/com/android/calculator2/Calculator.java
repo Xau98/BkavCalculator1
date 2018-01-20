@@ -32,6 +32,7 @@ import android.support.v4.view.ViewPager;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnKeyListener;
@@ -116,8 +117,8 @@ public class Calculator extends Activity
     protected FormattedNumberEditText mFormulaEditText;
     protected CalculatorEditText mResultEditText;
     private ViewPager mPadViewPager;
-    private View mDeleteButton;
-    private View mClearButton;
+    protected View mDeleteButton;
+    protected View mClearButton;
     //AnhBM: truoc dung View doi thanh EqualsImageButton
     protected View mEqualButton;
 
@@ -142,7 +143,8 @@ public class Calculator extends Activity
         }
 
         mTokenizer = new CalculatorExpressionTokenizer(this);
-        mEvaluator = new CalculatorExpressionEvaluator(mTokenizer);
+        mEvaluator = new CalculatorExpressionEvaluator(mTokenizer,this);
+        mFormulaEditText.setSolver(mEvaluator.getSolver());
 
         savedInstanceState = savedInstanceState == null ? Bundle.EMPTY : savedInstanceState;
         setState(CalculatorState.values()[
@@ -170,7 +172,7 @@ public class Calculator extends Activity
 
         outState.putInt(KEY_CURRENT_STATE, mCurrentState.ordinal());
         outState.putString(KEY_CURRENT_EXPRESSION,
-                mTokenizer.getNormalizedExpression(mFormulaEditText.getText().toString()));
+                mTokenizer.getNormalizedExpression(mFormulaEditText.getCleanText()));
     }
 
     protected void setState(CalculatorState state) {

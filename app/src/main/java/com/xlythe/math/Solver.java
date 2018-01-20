@@ -1,10 +1,10 @@
 package com.xlythe.math;
 
-import java.util.Locale;
-
 import org.javia.arity.Complex;
 import org.javia.arity.Symbols;
 import org.javia.arity.SyntaxException;
+
+import java.util.Locale;
 
 /**
  * Solves math problems
