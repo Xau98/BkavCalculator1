@@ -25,6 +25,7 @@ import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.animation.ValueAnimator.AnimatorUpdateListener;
 import android.app.Activity;
+import android.content.res.Configuration;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -143,7 +144,9 @@ public class Calculator extends Activity
         }
 
         mTokenizer = new CalculatorExpressionTokenizer(this);
-        mEvaluator = new CalculatorExpressionEvaluator(mTokenizer,this);
+        mEvaluator = new CalculatorExpressionEvaluator(mTokenizer);
+        
+        // Bkav AnhBM: phai de ben nay. Neu de sagn BkavCalculator thi se bi loi.
         mFormulaEditText.setSolver(mEvaluator.getSolver());
 
         savedInstanceState = savedInstanceState == null ? Bundle.EMPTY : savedInstanceState;
@@ -171,8 +174,12 @@ public class Calculator extends Activity
         super.onSaveInstanceState(outState);
 
         outState.putInt(KEY_CURRENT_STATE, mCurrentState.ordinal());
+        
+        // Bkav AnhBM
         outState.putString(KEY_CURRENT_EXPRESSION,
-                mTokenizer.getNormalizedExpression(mFormulaEditText.getCleanText()));
+                mTokenizer.getNormalizedExpression(getCleanText()));
+//        outState.putString(KEY_CURRENT_EXPRESSION,
+//                mTokenizer.getNormalizedExpression(mFormulaEditText.getText().toString()));
     }
 
     protected void setState(CalculatorState state) {
@@ -557,5 +564,14 @@ public class Calculator extends Activity
     }
 
     protected void closePadAdvanced(View view) {
+    }
+    
+    protected String getCleanText() {
+        return mFormulaEditText.getText().toString();
+    }
+    
+    @Override
+    public boolean isLandscape() {
+        return getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE;
     }
 }

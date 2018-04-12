@@ -213,4 +213,9 @@ public class BkavCalculator extends Calculator {
             }
         }
     }
+    
+    @Override
+    protected String getCleanText() {
+        return mFormulaEditText.getCleanText();
+    }
 }
