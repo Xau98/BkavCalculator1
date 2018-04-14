@@ -31,13 +31,13 @@ public class CalculatorExpressionEvaluator {
     /**
      * The maximum number of significant digits to display.
      */
-    private static final int MAX_DIGITS = 40;
+    private static final int MAX_DIGITS = 17;
 
     /**
      * A {@link Double} has at least 17 significant digits, we show the first {@link #MAX_DIGITS}
      * and use the remaining digits as guard digits to hide floating point precision errors.
      */
-    private static final int ROUNDING_DIGITS = Math.max(17 - MAX_DIGITS, 0);
+    private static final int ROUNDING_DIGITS = Math.max( MAX_DIGITS - 17, 0);
 
     private final Symbols mSymbols;
     
@@ -163,7 +163,7 @@ public class CalculatorExpressionEvaluator {
         }
 
         boolean x = mContext.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE;
-        if(exp >= -5 && x ? exp <= 39 : exp <= 14 ) {
+        if(exp >= -5 && x ? exp <= 17 : exp <= 14 ) {
             for(tail = len; tail < exp; ++tail) {
                 buf.append('0');
             }

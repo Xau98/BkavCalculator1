@@ -151,7 +151,7 @@ public class Calculator extends Activity
                 savedInstanceState.getInt(KEY_CURRENT_STATE, CalculatorState.INPUT.ordinal())]);
         mFormulaEditText.setText(mTokenizer.getLocalizedExpression(
                 savedInstanceState.getString(KEY_CURRENT_EXPRESSION, "")));
-        mEvaluator.evaluate(mFormulaEditText.getText(), this);
+        mEvaluator.evaluate(mFormulaEditText.getCleanText(), this);
 
         mFormulaEditText.setEditableFactory(mFormulaEditableFactory);
         mFormulaEditText.addTextChangedListener(mFormulaTextWatcher);
