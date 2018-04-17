@@ -33,7 +33,7 @@
         <item name="android:paddingTop">9dip</item>
         <item name="android:paddingBottom">48dip</item>
         <item name="android:paddingStart">18dip</item>
-        <item name="android:fontFamily">sans-serif-thin</item>
+        <!--<item name="android:fontFamily">sans-serif-thin</item>-->
         <item name="android:paddingEnd">20dip</item>
         <item name="android:textSize">30sp</item>
     </style>

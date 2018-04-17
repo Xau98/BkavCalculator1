@@ -32,7 +32,6 @@ import android.support.v4.view.ViewPager;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnKeyListener;
@@ -45,7 +44,6 @@ import android.widget.TextView;
 
 import com.android.calculator2.CalculatorEditText.OnTextSizeChangeListener;
 import com.android.calculator2.CalculatorExpressionEvaluator.EvaluateCallback;
-import com.android.calculator2.bkav.EqualsImageButton;
 import com.android.calculator2.bkav.FormattedNumberEditText;
 import com.bkav.calculator2.R;
 
@@ -439,7 +437,8 @@ public class Calculator extends Activity
         // Calculate the values needed to perform the scale and translation animations,
         // accounting for how the scale will affect the final position of the text.
         final float resultScale =
-                mFormulaEditText.getVariableTextSize(result) / mResultEditText.getTextSize();
+                //AnhBM: chinh hieu ung Animation cho giong
+                mFormulaEditText.getVariableTextSize(insertCommas(result)) / mResultEditText.getTextSize();
         final float resultTranslationX = (1.0f - resultScale) *
                 (mResultEditText.getWidth() / 2.0f - mResultEditText.getPaddingEnd());
         final float resultTranslationY = (1.0f - resultScale) *
