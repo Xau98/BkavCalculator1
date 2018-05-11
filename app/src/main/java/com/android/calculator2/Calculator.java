@@ -45,6 +45,7 @@ import android.widget.TextView;
 import com.android.calculator2.CalculatorEditText.OnTextSizeChangeListener;
 import com.android.calculator2.CalculatorExpressionEvaluator.EvaluateCallback;
 import com.android.calculator2.bkav.FormattedNumberEditText;
+import com.android.calculator2.bkav.TextUtil;
 import com.bkav.calculator2.R;
 
 public class Calculator extends Activity
@@ -287,7 +288,7 @@ public class Calculator extends Activity
         if (mCurrentState == CalculatorState.INPUT) {
             //Bkav AnhBM:
             if (result != null) {
-                mResultEditText.setText(insertCommas(result));
+                mResultEditText.setText(TextUtil.formatText(result, mFormulaEditText.getEquationFormatter(), mFormulaEditText.getSolver()));
             } else
                 mResultEditText.setText((result));
         } else if (errorResourceId != INVALID_RES_ID) {
