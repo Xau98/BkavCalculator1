@@ -58,8 +58,6 @@ public class BkavCalculator extends Calculator {
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         makeStatusBarTransparent(mToolbar);
         
-        mFormulaEditText.setSolver(mEvaluator.getSolver());
-
         mFormulaEditText.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -212,5 +210,10 @@ public class BkavCalculator extends Calculator {
                 openPage();
             }
         }
+    }
+    
+    @Override
+    protected String getCleanText() {
+        return mFormulaEditText.getCleanText();
     }
 }

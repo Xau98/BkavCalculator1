@@ -31,7 +31,7 @@ public class CalculatorExpressionEvaluator {
     /**
      * The maximum number of significant digits to display.
      */
-    private static final int MAX_DIGITS = 17;
+    private static final int MAX_DIGITS = 17; // Bkav AnhBM: truoc la 12
 
     /**
      * A {@link Double} has at least 17 significant digits, we show the first {@link #MAX_DIGITS}
@@ -43,12 +43,10 @@ public class CalculatorExpressionEvaluator {
     
     private final CalculatorExpressionTokenizer mTokenizer;
 
-    public CalculatorExpressionEvaluator(CalculatorExpressionTokenizer tokenizer, Activity context) {
+    public CalculatorExpressionEvaluator(CalculatorExpressionTokenizer tokenizer) {
         mSymbols = new Symbols();
         mSolver = new Solver();
         mTokenizer = tokenizer;
-        //Bkav AnhBM: them vao de dung
-        mContext = context;
     }
 
     public void evaluate(CharSequence expr, EvaluateCallback callback) {
@@ -86,7 +84,7 @@ public class CalculatorExpressionEvaluator {
                 // leading to precision errors in the result. The method doubleToString hides these
                 // errors; rounding the result by dropping N digits of precision.
                 final String resultString = mTokenizer.getLocalizedExpression(
-                        doubleToString(result, MAX_DIGITS, ROUNDING_DIGITS));
+                        doubleToString(callback.isLandscape(), result, MAX_DIGITS, ROUNDING_DIGITS));
                 callback.onEvaluate(expr, resultString, Calculator.INVALID_RES_ID);
             }
         } catch (SyntaxException e) {
@@ -101,21 +99,22 @@ public class CalculatorExpressionEvaluator {
 
     public interface EvaluateCallback {
         public void onEvaluate(String expr, String result, int errorResourceId);
+        
+        public boolean isLandscape(); // Bkav QuangLH
     }
     
     /********************* Bkav **********************/
     private final Solver mSolver;
-    private static Activity mContext;
     
     public Solver getSolver() {
         return mSolver;
     }
 
-    public static String doubleToString(double x, int maxLen, int rounding) {
-        return sizeTruncate(doubleToString(x, rounding), maxLen);
+    public static String doubleToString(boolean isLandscape, double x, int maxLenngth, int rounding) {
+        return sizeTruncate(doubleToString(isLandscape, x, rounding), maxLenngth);
     }
 
-    public static String doubleToString(double v, int roundingDigits) {
+    private static String doubleToString(boolean isLandscape, double v, int roundingDigits) {
         double absv = Math.abs(v);
         String str = roundingDigits == -1?Float.toString((float)absv):Double.toString(absv);
         StringBuffer buf = new StringBuffer(str);
@@ -162,8 +161,7 @@ public class CalculatorExpressionEvaluator {
             buf.setLength(roundingStart);
         }
 
-        boolean x = mContext.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE;
-        if(exp >= -5 && x ? exp <= 17 : exp <= 14 ) {
+        if(exp >= -5 && isLandscape ? exp <= 39 : exp <= 14 ) {
             for(tail = len; tail < exp; ++tail) {
                 buf.append('0');
             }
