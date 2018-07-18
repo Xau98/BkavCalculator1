@@ -69,22 +69,23 @@ public class CalculatorExpressionEvaluator {
 
         try {
             // AnhBM: dung thu vien tinh toan khac. Neu NAN thi se throw NanSyntaxException
-            String result = mSolver.solve(expr);
-            result = mTokenizer.getLocalizedExpression(doubleToString(callback.isLandscape(),
-                    Double.parseDouble(result), MAX_DIGITS, ROUNDING_DIGITS));
-            callback.onEvaluate(expr, result, Calculator.INVALID_RES_ID);
+//            String result = mSolver.solve(expr);
+//            result = mTokenizer.getLocalizedExpression(doubleToString(callback.isLandscape(),
+//                    Double.parseDouble(result), MAX_DIGITS, ROUNDING_DIGITS));
+//            callback.onEvaluate(expr, result, Calculator.INVALID_RES_ID);
 
-//            double result = mSymbols.eval(expr);
-//            if (Double.isNaN(result)) {
-//                callback.onEvaluate(expr, null, R.string.error_nan);
-//            } else {
-//                // The arity library uses floating point arithmetic when evaluating the expression
-//                // leading to precision errors in the result. The method doubleToString hides these
-//                // errors; rounding the result by dropping N digits of precision.
-//                final String resultString = mTokenizer.getLocalizedExpression(
-//                        doubleToString(callback.isLandscape(), result, MAX_DIGITS, ROUNDING_DIGITS));
-//                callback.onEvaluate(expr, resultString, Calculator.INVALID_RES_ID);
-//            }
+            String resultPre = mSolver.solve(expr);
+            double result = mSymbols.eval(resultPre);
+            if (Double.isNaN(result)) {
+                callback.onEvaluate(expr, null, R.string.error_nan);
+            } else {
+                // The arity library uses floating point arithmetic when evaluating the expression
+                // leading to precision errors in the result. The method doubleToString hides these
+                // errors; rounding the result by dropping N digits of precision.
+                final String resultString = mTokenizer.getLocalizedExpression(
+                        doubleToString(callback.isLandscape(), result, MAX_DIGITS, ROUNDING_DIGITS));
+                callback.onEvaluate(expr, resultString, Calculator.INVALID_RES_ID);
+            }
         } catch (SyntaxException e) {
             // Bkav QuangLH: xu ly NAN
             if (e instanceof NanSyntaxException) {
