@@ -1,0 +1,114 @@
+package com.android.calculator2.bkav;
+
+import android.content.Context;
+import android.content.res.Resources;
+import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
+import android.util.AttributeSet;
+import android.util.DisplayMetrics;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.WindowManager;
+
+import com.bkav.calculator2.R;
+
+// Phongngb : calculator viewpager khi xoay ngang
+public class BkavCalculatorViewpager extends ViewPager {
+
+    private final PagerAdapter mStaticPagerAdapter = new PagerAdapter() {
+
+        @Override
+        public int getCount() {
+            return getChildCount();
+        }
+
+        @Override
+        public Object instantiateItem(ViewGroup container, int position) {
+            return getChildAt(position);
+        }
+
+        @Override
+        public void destroyItem(ViewGroup container, int position, Object object) {
+            removeViewAt(position);
+        }
+
+        @Override
+        public boolean isViewFromObject(View view, Object object) {
+            return view == object;
+        }
+
+        @Override
+        public float getPageWidth(int position) {
+            if (position == 0) {
+                return (float) ((0.4 * mScreenWidth) / (mScreenWidth + mWidthDistanceRight));
+            } else {
+                return 1f;
+            }
+        }
+    };
+
+    private final OnPageChangeListener mOnPageChangeListener = new SimpleOnPageChangeListener() {
+//        private void recursivelySetEnabled(View view, boolean enabled) {
+//            if (view instanceof ViewGroup) {
+//                final ViewGroup viewGroup = (ViewGroup) view;
+//                for (int childIndex = 0; childIndex < viewGroup.getChildCount(); ++childIndex) {
+//                    recursivelySetEnabled(viewGroup.getChildAt(childIndex), enabled);
+//                }
+//            } else {
+//                view.setEnabled(enabled);
+//            }
+//        }
+
+//        @Override
+//        public void onPageSelected(int position) {
+//            if (getAdapter() == mStaticPagerAdapter) {
+//                for (int childIndex = 0; childIndex < getChildCount(); ++childIndex) {
+//                    recursivelySetEnabled(getChildAt(childIndex), childIndex == position);
+//                }
+//            }
+//        }
+    };
+
+    private final PageTransformer mPageTransformer = new PageTransformer() {
+        @Override
+        public void transformPage(View view, float position) {
+            if (view.equals(getChildAt(1))) {
+                view.setTranslationX(getWidth() * -position);
+            }
+        }
+    };
+
+    public BkavCalculatorViewpager(Context context) {
+        this(context, null);
+    }
+
+    public BkavCalculatorViewpager(Context context, AttributeSet attrs) {
+        super(context, attrs);
+
+        setAdapter(mStaticPagerAdapter);
+        setOnPageChangeListener(mOnPageChangeListener);
+        setPageTransformer(true, mPageTransformer);
+
+        WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+        DisplayMetrics dm = new DisplayMetrics();
+        wm.getDefaultDisplay().getMetrics(dm);
+        mScreenWidth = dm.widthPixels;
+
+        final Resources res = getResources();
+        mWidthDistanceRight = res.getDimensionPixelOffset(R.dimen.width_distance_right);
+    }
+
+    @Override
+    protected void onFinishInflate() {
+        super.onFinishInflate();
+
+        if (getAdapter() == mStaticPagerAdapter) {
+            mStaticPagerAdapter.notifyDataSetChanged();
+        }
+    }
+
+    /******************** Bkav **********************/
+    private int mScreenWidth;
+
+    private int mWidthDistanceRight;
+}

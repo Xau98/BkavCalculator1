@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   Copyright (C) 2014 The Android Open Source Project
 
   Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,21 +14,12 @@
   limitations under the License.
   -->
 
-<com.android.calculator2.CalculatorPadLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<com.android.calculator2.CalculatorPadLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/pad_operator"
     style="@style/PadLayoutStyle.Operator"
-    android:background="@color/pad_operator_background_color"
+    android:background="@color/colorOperator"
     android:columnCount="1"
-    android:rowCount="5" >
-
-    <ImageView
-        android:id="@+id/more"
-        style="@style/PadButtonOperatorStyle.Operator.Text"
-        android:contentDescription="@string/desc_clr"
-        android:translationY="2dp"
-        android:onClick="onButtonClick"
-        android:src="@drawable/icon_more" />
+    android:rowCount="4">
 
     <Button
         android:id="@+id/clr"
@@ -67,13 +57,13 @@
         android:onClick="onButtonClick"
         android:text="@string/op_sub" />
 
-<!--    <Button
-        android:id="@+id/eq"
-        style="@style/PadButtonOperatorImageStyle.Image"
-        android:contentDescription="@string/desc_eq"
-        android:onClick="onButtonClick"
-        android:textSize="27sp"
-        android:background="@color/pad_button_icon_more_color"
-        android:text="@string/eq" />-->
+    <!--    <Button
+            android:id="@+id/eq"
+            style="@style/PadButtonOperatorImageStyle.Image"
+            android:contentDescription="@string/desc_eq"
+            android:onClick="onButtonClick"
+            android:textSize="27sp"
+            android:background="@color/pad_button_icon_more_color"
+            android:text="@string/eq" />-->
 
 </com.android.calculator2.CalculatorPadLayout>

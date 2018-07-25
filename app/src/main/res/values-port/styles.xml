@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   Copyright (C) 2014 The Android Open Source Project
 
   Licensed under the Apache License, Version 2.0 (the "License");
@@ -19,24 +18,30 @@
 <!-- Styles for portrait phone (e.g. Nexus 4/5). -->
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <!--Bkav Phongngb sua Padding top , xoa padding bottom , Them padding right , sua minTextSize , maxTextSize-->
     <style name="DisplayEditTextStyle.Formula">
-        <item name="android:paddingTop">54dip</item>
+        <item name="android:paddingTop">31dip</item>
         <item name="android:paddingBottom">24dip</item>
         <item name="android:paddingStart">18dip</item>
         <item name="android:paddingEnd">20dip</item>
-        <item name="minTextSize">33sp</item>
-        <item name="maxTextSize">60sp</item>
+        <item name="android:paddingRight">23dip</item>
+        <item name="minTextSize">37sp</item>
+        <item name="maxTextSize">67sp</item>
         <item name="stepTextSize">9sp</item>
+
     </style>
 
     <!-- Bkav AnhBM: sua textSize ve 30sp -->
+    <!--Bkav Phongngb Sua PaddingTop , padding bottom , them padding right sua padding end va textSize-->
     <style name="DisplayEditTextStyle.Result">
-        <item name="android:paddingTop">9dip</item>
-        <item name="android:paddingBottom">48dip</item>
+        <item name="android:paddingTop">22dip</item>
+        <item name="android:paddingBottom">50dip</item>
         <item name="android:paddingStart">18dip</item>
+        <!--<item name="android:paddingRight">28dip</item>-->
         <!--<item name="android:fontFamily">sans-serif-thin</item>-->
-        <item name="android:paddingEnd">20dip</item>
-        <item name="android:textSize">30sp</item>
+        <item name="android:paddingEnd">23dip</item>
+        <item name="android:textSize">32sp</item>
+
     </style>
 
     <!--Bkav AnhBM: sua lai thanh dp-->
@@ -51,8 +56,8 @@
     <!--Bkav AnhBM: sua lai thanh dp-->
     <style name="PadButtonStyle.Numeric">
         <item name="android:background">@drawable/pad_button_advanced_background</item>
-
-        <item name="android:layout_margin">4dip</item>
+        <!--<item name="android:paddingTop">7dip</item>-->
+        <!--<item name="android:layout_margin">4dip</item>-->
         <item name="android:textSize">66.67dp</item> <!-- trungnvd -->
     </style>
 
@@ -69,14 +74,16 @@
 
     <!--Bkav AnhBM: sua lai thanh dp-->
     <style name="PadButtonOperatorStyle.Operator"> <!-- trungnvd -->
-        <item name="android:layout_margin">8dip</item>
+        <!-- <item name="android:layout_margin">8dip</item>-->
+        <item name="android:gravity">center</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:layout_centerHorizontal">true</item>
         <item name="android:textSize">27dp</item>
     </style>
 
     <!--Bkav AnhBM: sua lai thanh dp-->
     <style name="PadButtonOperatorStyle.Operator.Text"> <!-- trungnvd -->
-        <item name="android:textAllCaps">true</item>
-        <item name="android:textSize">15dp</item>
+        <item name="android:textSize">0dp</item>
     </style>
 
     <!-- trungnvd -->
@@ -90,36 +97,54 @@
         <item name="android:paddingBottom">20dip</item>
         <item name="android:paddingStart">20dip</item>
         <item name="android:paddingEnd">20dip</item>
-        <item name="android:columnCount">3</item>
+        <item name="android:columnCount">4</item>
         <item name="android:rowCount">4</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="PadLayoutStyle.History">
+        <item name="android:elevation">4dip</item>
+        <item name="android:paddingTop">12dip</item>
+        <item name="android:paddingStart">20dip</item>
+        <item name="android:paddingEnd">20dip</item>
         <item name="android:textStyle">bold</item>
     </style>
 
     <!--Bkav AnhBM: them style-->
     <style name="PadLayoutStyle.BkavAdvanced">
+
         <item name="android:elevation">4dip</item>
-        <item name="android:paddingTop">12dip</item>
+        <item name="android:paddingTop">23dip</item>
         <item name="android:paddingBottom">20dip</item>
         <item name="android:paddingStart">20dip</item>
         <item name="android:paddingEnd">20dip</item>
         <item name="android:columnCount">3</item>
-        <item name="android:rowCount">5</item>
+        <item name="android:rowCount">6</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <!--Bkav Phongngb-->
+    <style name="PadLayoutStyle.BkavHistory">
+        <item name="android:elevation">4dip</item>
+        <item name="android:paddingTop">10dip</item>
+        <item name="android:paddingStart">20dip</item>
+        <item name="android:paddingEnd">20dip</item>
         <item name="android:textStyle">bold</item>
     </style>
 
     <style name="PadLayoutStyle.Numeric">
         <item name="android:layout_width">0dip</item>
         <item name="android:layout_weight">262</item>
-        <item name="android:paddingTop">0dip</item>
-        <item name="android:paddingBottom">20dip</item>
-        <item name="android:paddingStart">12dip</item>
-        <item name="android:paddingEnd">12dip</item>
+        <!--Bkav Phonggnb Thay doi kich co cho no phu hop voi thiet ke -->
+        <!--<item name="android:paddingTop">0dip</item>-->
+        <!--<item name="android:paddingBottom">20dip</item>-->
+        <!--<item name="android:paddingStart">12dip</item>-->
+        <!--<item name="android:paddingEnd">12dip</item>-->
     </style>
 
     <style name="PadLayoutStyle.Operator">
         <item name="android:layout_width">0dip</item>
         <item name="android:layout_weight">98</item>
-        <item name="android:paddingTop">0dip</item>
         <!--<item name="android:paddingBottom">24dip</item>-->
         <item name="android:paddingStart">0dip</item>
         <item name="android:paddingEnd">35dip</item>

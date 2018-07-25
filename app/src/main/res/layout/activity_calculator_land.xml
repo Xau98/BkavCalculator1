@@ -15,26 +15,45 @@
   limitations under the License.
   -->
 
-<LinearLayout
+<!--Bkav phongngb -->
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
+
+    <!--Bkav Phongngb -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/display_background_color" />
 
     <include
-        layout="@layout/display"
+        layout="@layout/bkav_display"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-    <LinearLayout
+    <!--Bkav Phongngb-->
+
+    <com.android.calculator2.bkav.BkavCalculatorViewpager
+        android:id="@+id/pager"
         android:layout_width="match_parent"
-        android:layout_height="0dip"
-        android:layout_weight="1">
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:overScrollMode="never">
 
-        <include layout="@layout/pad_numeric" />
-        <include layout="@layout/pad_operator_two_col" />
-        <include layout="@layout/pad_advanced" />
+        <include layout="@layout/bkav_pad_history" ></include>
 
-    </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
 
-</LinearLayout>
+            <include layout="@layout/pad_numeric" />
+            <include layout="@layout/pad_operator_two_col" />
+            <include layout="@layout/bkav_pad_advanced_land" />
+
+        </LinearLayout>
+
+    </com.android.calculator2.bkav.BkavCalculatorViewpager>
+
+</RelativeLayout>

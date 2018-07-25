@@ -21,6 +21,7 @@ import android.text.Editable;
 import android.text.Html;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
+import android.util.Log;
 
 import com.bkav.calculator2.R;
 import com.xlythe.math.BaseModule;
@@ -153,6 +154,7 @@ public class FormattedNumberEditText extends NumberEditText {
 
     public void insert(String delta) {
         String currentText = getText().toString();
+
         int selectionHandle = getSelectionStart();
         String textBeforeInsertionHandle = currentText.substring(0, selectionHandle);
         String textAfterInsertionHandle = currentText.substring(selectionHandle, currentText.length());

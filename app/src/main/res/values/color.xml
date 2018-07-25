@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   Copyright (C) 2014 The Android Open Source Project
 
   Licensed under the Apache License, Version 2.0 (the "License");
@@ -24,7 +23,7 @@
     <color name="calculator_error_color">#F40056</color>
 
     <!-- Background color of the calculator display. TRungnvd-->
-    <color name="display_background_color">#2195c1</color>
+    <color name="display_background_color">#76000000</color>
 
     <!-- Text color for the formula in the calculator display.trungnvd -->
     <color name="display_formula_text_color">#fff</color>
@@ -43,8 +42,8 @@
 
     <!-- Text color for a button in a pad. trungnvd-->
     <color name="pad_button_text_color">#2195c1</color>
-    
-     <!-- Text color for a button in a pad. trungnvd-->
+
+    <!-- Text color for a button in a pad. trungnvd-->
     <color name="pad_button_text_operator_color">#FFF</color>
 
     <!-- Text color for a button in the advanced pad. trungnvd-->

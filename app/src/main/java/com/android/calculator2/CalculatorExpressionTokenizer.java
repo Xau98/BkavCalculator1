@@ -36,9 +36,9 @@ public class CalculatorExpressionTokenizer {
         Locale locale = context.getResources().getConfiguration().locale;
         if (!context.getResources().getBoolean(R.bool.use_localized_digits)) {
             locale = new Locale.Builder()
-                .setLocale(locale)
-                .setUnicodeLocaleKeyword("nu", "latn")
-                .build();
+                    .setLocale(locale)
+                    .setUnicodeLocaleKeyword("nu", "latn")
+                    .build();
         }
 
         final DecimalFormatSymbols symbols = new DecimalFormatSymbols(locale);

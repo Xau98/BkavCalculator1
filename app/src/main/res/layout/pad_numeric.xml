@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   Copyright (C) 2014 The Android Open Source Project
 
   Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,13 +14,13 @@
   limitations under the License.
   -->
 
-<com.android.calculator2.CalculatorNumericPadLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<com.android.calculator2.CalculatorNumericPadLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/pad_numeric"
     style="@style/PadLayoutStyle.Numeric"
-    android:background="@color/pad_numeric_background_color"
+    android:background="@color/colorNumberic"
     android:columnCount="3"
     android:rowCount="4">
+
 
     <Button
         android:id="@+id/digit_7"

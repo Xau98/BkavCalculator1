@@ -48,9 +48,9 @@ public class CalculatorNumericPadLayout extends CalculatorPadLayout {
         Locale locale = getResources().getConfiguration().locale;
         if (!getResources().getBoolean(R.bool.use_localized_digits)) {
             locale = new Locale.Builder()
-                .setLocale(locale)
-                .setUnicodeLocaleKeyword("nu", "latn")
-                .build();
+                    .setLocale(locale)
+                    .setUnicodeLocaleKeyword("nu", "latn")
+                    .build();
         }
 
         final DecimalFormatSymbols symbols = DecimalFormatSymbols.getInstance(locale);
@@ -93,10 +93,13 @@ public class CalculatorNumericPadLayout extends CalculatorPadLayout {
                     case R.id.digit_9:
                         b.setText(String.valueOf((char) (zeroDigit + 9)));
                         break;
+
                     case R.id.dec_point:
                         //AnhBM: sua lai thanh dau "."
                         b.setText(/*String.valueOf(symbols.getDecimalSeparator())*/String.valueOf("."));
                         break;
+
+//
                 }
             }
         }

@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   Copyright (C) 2014 The Android Open Source Project
 
   Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,13 +14,11 @@
   limitations under the License.
   -->
 
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/display"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@color/display_background_color"
-    android:paddingBottom="20dp" >
+    android:layout_height="wrap_content">
 
     <!-- android:elevation="4dip" : Cai nay de do bong' 4dp -->
 
@@ -30,10 +27,11 @@
         style="@style/DisplayEditTextStyle.Formula"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="text|textNoSuggestions"
         android:editable="true"
         android:enabled="true"
-        android:textColor="@color/display_formula_text_color" />
+        android:inputType="text|textNoSuggestions"
+        android:textColor="@color/display_formula_text_color"
+        android:typeface="monospace" />
 
     <com.android.calculator2.CalculatorEditText
         android:id="@+id/result"
@@ -41,8 +39,46 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/formula"
-        android:inputType="none"
         android:focusable="false"
+        android:inputType="none"
         android:textColor="@color/display_result_text_color" />
+
+    <!--Bkav Phongngb them hai nut hsitory and more vao display -->
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/result">
+
+        <Button
+            android:id="@+id/digit_history"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:background="@null"
+            android:onClick="onButtonClick"
+            android:paddingLeft="24dp"
+            android:paddingRight="3dp"
+            android:paddingTop="24dp"
+            android:text="@string/button_history"
+            android:textAllCaps="false"
+            android:textColor="@color/colorFontHistory"
+            android:textSize="17sp"
+            android:textStyle="normal" />
+
+        <ImageView
+            android:id="@+id/more"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:contentDescription="@string/desc_clr"
+            android:onClick="onButtonClick"
+            android:paddingRight="33dp"
+            android:paddingTop="30dp"
+            android:src="@drawable/icon_more"
+            android:textColor="@color/colorFontPoint" />
+
+    </RelativeLayout>
 
 </RelativeLayout>

@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   Copyright (C) 2014 The Android Open Source Project
 
   Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,13 +14,12 @@
   limitations under the License.
   -->
 
-<com.android.calculator2.CalculatorPadLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<com.android.calculator2.CalculatorPadLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/pad_operator"
     style="@style/PadLayoutStyle.Operator"
-    android:background="@color/pad_operator_background_color"
+    android:background="@color/colorOperator"
     android:columnCount="2"
-    android:rowCount="3" >
+    android:rowCount="3">
 
     <Button
         android:id="@+id/op_mul"
@@ -50,7 +48,7 @@
         android:contentDescription="@string/desc_fun_tan"
         android:onClick="onButtonClick"
         android:text="@string/fun_percent"
-        android:textSize="17dp"/>
+        android:textSize="17dp" />
 
     <!--<Space style="@style/PadButtonOperatorStyle.Operator" />-->
 

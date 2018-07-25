@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+    <!--Bkav Phongngb -->
+    <string name="clear_history">Clear</string>
+    <string name="button_history">History</string>
+    <string name="textview_no_history">No history</string>
+</resources>

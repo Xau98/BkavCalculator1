@@ -27,12 +27,17 @@ import android.animation.ValueAnimator.AnimatorUpdateListener;
 import android.app.Activity;
 import android.content.res.Configuration;
 import android.graphics.Rect;
+import android.graphics.Typeface;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
+import android.view.Display;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnKeyListener;
@@ -48,6 +53,9 @@ import com.android.calculator2.CalculatorExpressionEvaluator.EvaluateCallback;
 import com.android.calculator2.bkav.FormattedNumberEditText;
 import com.android.calculator2.bkav.TextUtil;
 import com.bkav.calculator2.R;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Calculator extends Activity
         implements OnTextSizeChangeListener, EvaluateCallback, OnLongClickListener {
@@ -116,7 +124,7 @@ public class Calculator extends Activity
     //AnhBM: truoc dung CalculatorEditText doi thanh FormattedNumberEditText
     protected FormattedNumberEditText mFormulaEditText;
     protected CalculatorEditText mResultEditText;
-    private ViewPager mPadViewPager;
+    protected ViewPager mPadViewPager;
     protected View mDeleteButton;
     protected View mClearButton;
     //AnhBM: truoc dung View doi thanh EqualsImageButton
@@ -129,10 +137,22 @@ public class Calculator extends Activity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_calculator);
 
+
         mDisplayView = findViewById(R.id.display);
+
+//        Bkav phonggnb set font chu cho edittext
+        Typeface typeface = Typeface.createFromAsset(getAssets(), "fonts/helveticaNeueThin.ttf");
         mFormulaEditText = (FormattedNumberEditText) findViewById(R.id.formula);
+        mFormulaEditText.setTypeface(typeface);
+        mFormulaEditText.setTextColor(getResources().getColor(R.color.colorEdittext));
+
         mResultEditText = (CalculatorEditText) findViewById(R.id.result);
+        mResultEditText.setTypeface(typeface);
+        mResultEditText.setTextColor(getResources().getColor(R.color.colorEdittext));
+
         mPadViewPager = (ViewPager) findViewById(R.id.pad_pager);
+        // Bkav Phongngb :
+        mViewPager = (ViewPager) findViewById(R.id.pager);
         mDeleteButton = findViewById(R.id.del);
         mClearButton = findViewById(R.id.clr);
 
@@ -160,6 +180,7 @@ public class Calculator extends Activity
         mFormulaEditText.setOnKeyListener(mFormulaOnKeyListener);
         mFormulaEditText.setOnTextSizeChangeListener(this);
         mDeleteButton.setOnLongClickListener(this);
+
     }
 
     @Override
@@ -173,7 +194,7 @@ public class Calculator extends Activity
         super.onSaveInstanceState(outState);
 
         outState.putInt(KEY_CURRENT_STATE, mCurrentState.ordinal());
-        
+
         // Bkav AnhBM
         outState.putString(KEY_CURRENT_EXPRESSION,
                 mTokenizer.getNormalizedExpression(getCleanText()));
@@ -209,15 +230,30 @@ public class Calculator extends Activity
         }
     }
 
+
     @Override
     public void onBackPressed() {
-        if (mPadViewPager == null || mPadViewPager.getCurrentItem() == 0) {
-            // If the user is currently looking at the first pad (or the pad is not paged),
-            // allow the system to handle the Back button.
-            super.onBackPressed();
-        } else {
-            // Otherwise, select the previous pad.
-            mPadViewPager.setCurrentItem(mPadViewPager.getCurrentItem() - 1);
+        Display getOrient = getWindowManager().getDefaultDisplay();
+        if (getOrient.getWidth() < getOrient.getHeight()) {  // Bkav Phongngb Xac dinh man hinh xoay  doc
+            if (mPadViewPager == null || mPadViewPager.getCurrentItem() == 0) {
+                // If the user is currently looking at the first pad (or the pad is not paged),
+                // allow the system to handle the Back button.
+                mPadViewPager.setCurrentItem(mPadViewPager.getCurrentItem() + 1);
+            } else if (mPadViewPager == null || mPadViewPager.getCurrentItem() == 1) {
+                super.onBackPressed();
+
+            } else {
+                // Otherwise, select the previous pad.
+                mPadViewPager.setCurrentItem(mPadViewPager.getCurrentItem() - 1);
+            }
+        } else { //Bkav Phongngb Man hinh xoay ngang
+            if (mViewPager == null || mViewPager.getCurrentItem() == 0) {
+                // If the user is currently looking at the first pad (or the pad is not paged),
+                // allow the system to handle the Back button.
+                mViewPager.setCurrentItem(mViewPager.getCurrentItem() + 1);
+            } else {
+                super.onBackPressed();
+            }
         }
     }
 
@@ -269,7 +305,54 @@ public class Calculator extends Activity
             case R.id.op_pow:
                 mFormulaEditText.insert(((Button) view).getText().toString());
                 break;
+            //Bkav  Phongngb : Thuc hien cac tinh nag mr
+            case R.id.op_m_r: {
+                setState(CalculatorState.EVALUATE);
+                mEvaluator.evaluate(mInput, this);
+                break;
+            }
 
+            //Bkav  Phongngb : Thuc hien cac tinh nag m+
+            case R.id.op_m_plus: {
+
+                if (mFormulaEditText.getText().toString().trim().length() != 0 && !mPattern.matcher(mFormulaEditText.getText().toString().trim()).matches()) {
+                    mInput += (mInput.equals("")) ? mFormulaEditText.getText().toString() : "+" + mFormulaEditText.getText().toString();
+                    setState(CalculatorState.EVALUATE);
+                    mEvaluator.evaluate(mFormulaEditText.getText().toString(), this);
+
+                } else {
+                    mInput += (mInput.equals("")) ? mFormulaEditText.getText().toString() : "+" + mFormulaEditText.getText().toString();
+                }
+                break;
+            }
+
+            //Bkav  Phongngb : Thuc hien cac tinh nag m-
+            case R.id.op_m_minus: {
+                if (mFormulaEditText.getText().toString().trim().length() != 0 && !mPattern.matcher(mFormulaEditText.getText().toString().trim()).matches()) {
+
+                    mInput += (mInput.equals("")) ? ("(-1*" + "(" + mFormulaEditText.getText().toString() + "))") : "-" + mFormulaEditText.getText().toString();
+                    setState(CalculatorState.EVALUATE);
+                    mEvaluator.evaluate(("-1*" + "(" + mFormulaEditText.getText().toString() + ")"), this);
+
+                } else {
+                    mInput += (mInput.equals("")) ? ("(-1*" + "(" + mFormulaEditText.getText().toString() + "))") : "-" + mFormulaEditText.getText().toString();
+                }
+
+                break;
+            }
+
+            //Bkav  Phongngb : Thuc hien cac tinh nag mc
+            case R.id.op_m_c: {
+                mInput = "";
+                break;
+            }
+
+            //Bkav  Phongngb : Thuc hien cac tinh nag open history
+
+            case R.id.digit_history: {
+                openHistory();
+                break;
+            }
             default:
                 //AnhBM: thay logic nhap
                 insertMathExpression(view);
@@ -280,6 +363,26 @@ public class Calculator extends Activity
         //AnhBM: them logic closePadAdvanced()
         closePadAdvanced(view);
     }
+
+    //Bkav  Phongngb : open tab history
+    protected void openHistory() {
+        Display getOrient = getWindowManager().getDefaultDisplay();
+        if (getOrient.getWidth() < getOrient.getHeight()) {
+            if (mPadViewPager == null || mPadViewPager.getCurrentItem() == 1) {
+                mPadViewPager.setCurrentItem(mPadViewPager.getCurrentItem() - 1);
+            } else if (mPadViewPager == null || mPadViewPager.getCurrentItem() == 0) {
+                mPadViewPager.setCurrentItem(mPadViewPager.getCurrentItem() + 1);
+            }
+        } else {
+            if (mViewPager == null || mViewPager.getCurrentItem() == 1) {
+                mViewPager.setCurrentItem(mViewPager.getCurrentItem() - 1);
+            } else if (mViewPager == null || mViewPager.getCurrentItem() == 0) {
+                mViewPager.setCurrentItem(mViewPager.getCurrentItem() + 1);
+            }
+        }
+
+    }
+
 
     @Override
     public boolean onLongClick(View view) {
@@ -324,6 +427,7 @@ public class Calculator extends Activity
         final float translationY = (1.0f - textScale) *
                 (textView.getHeight() / 2.0f - textView.getPaddingBottom());
 
+
         final AnimatorSet animatorSet = new AnimatorSet();
         animatorSet.playTogether(
                 ObjectAnimator.ofFloat(textView, View.SCALE_X, textScale, 1.0f),
@@ -339,6 +443,7 @@ public class Calculator extends Activity
         if (mCurrentState == CalculatorState.INPUT) {
             setState(CalculatorState.EVALUATE);
             mEvaluator.evaluate(mFormulaEditText.getText(), this);
+
         }
     }
 
@@ -360,7 +465,14 @@ public class Calculator extends Activity
 
         // Make reveal cover the display and status bar.
         final View revealView = new View(this);
-        revealView.setBottom(displayRect.bottom);
+
+//        Bkav Phongngb .
+        Display getOrient = getWindowManager().getDefaultDisplay();
+        if (getOrient.getWidth() < getOrient.getHeight())
+            revealView.setBottom(displayRect.bottom + mPadViewPager.getPaddingTop());
+        else
+            revealView.setBottom(displayRect.bottom);
+
         revealView.setLeft(displayRect.left);
         revealView.setRight(displayRect.right);
         revealView.setBackgroundColor(getResources().getColor(colorRes));
@@ -447,12 +559,21 @@ public class Calculator extends Activity
         final float resultScale =
                 //AnhBM: chinh hieu ung Animation cho giong
                 mFormulaEditText.getVariableTextSize(insertCommas(result)) / mResultEditText.getTextSize();
+
         final float resultTranslationX = (1.0f - resultScale) *
                 (mResultEditText.getWidth() / 2.0f - mResultEditText.getPaddingEnd());
+//        Log.d("Phongngb Debug :" , resultScale + ":" + mFormulaEditText.getVariableTextSize(result) + ":" + mResultEditText.getPaddingEnd());
+
+
         final float resultTranslationY = (1.0f - resultScale) *
                 (mResultEditText.getHeight() / 2.0f - mResultEditText.getPaddingBottom()) +
                 (mFormulaEditText.getBottom() - mResultEditText.getBottom()) +
-                (mResultEditText.getPaddingBottom() - mFormulaEditText.getPaddingBottom());
+                (mResultEditText.getPaddingBottom() - mFormulaEditText.getPaddingBottom()) ;
+
+
+
+        Log.d("Phong Debug :", mResultEditText.getHeight() + ":" + mResultEditText.getPaddingBottom()
+                + ":" + mFormulaEditText.getBottom() + ":" + mResultEditText.getBottom() + ":" + mFormulaEditText.getPaddingBottom() + ":" + resultTranslationX + ":" + resultTranslationY);
         final float formulaTranslationY = -mFormulaEditText.getBottom();
 
         // Use a value animator to fade to the final text color over the course of the animation.
@@ -466,6 +587,7 @@ public class Calculator extends Activity
                 mResultEditText.setTextColor((int) valueAnimator.getAnimatedValue());
             }
         });
+
 
         final AnimatorSet animatorSet = new AnimatorSet();
         animatorSet.playTogether(
@@ -493,6 +615,7 @@ public class Calculator extends Activity
                 mResultEditText.setTranslationX(0.0f);
                 mResultEditText.setTranslationY(0.0f);
                 mFormulaEditText.setTranslationY(0.0f);
+               Log.d("AnhBM debug" , "xxx " + resultScale + "; " + formulaTranslationY + "; " + mFormulaEditText.getTextSize());
 
                 // Finally update the formula to use the current result.
                 mFormulaEditText.setText(result);
@@ -508,9 +631,9 @@ public class Calculator extends Activity
 
     /********** BKAV TRUNGNVD *****************/
     protected void openPage() {
-        if (mPadViewPager == null || mPadViewPager.getCurrentItem() == 0) {
+        if (mPadViewPager == null || mPadViewPager.getCurrentItem() == 1) {
             mPadViewPager.setCurrentItem(mPadViewPager.getCurrentItem() + 1);
-        } else {
+        } else if (mPadViewPager == null || mPadViewPager.getCurrentItem() == 2) { // Bkav Phongngb . Khi ta them man hinh history vao Viewpager thi set lai
             // Otherwise, select the previous pad.
             mPadViewPager.setCurrentItem(mPadViewPager.getCurrentItem() - 1);
         }
@@ -565,13 +688,20 @@ public class Calculator extends Activity
 
     protected void closePadAdvanced(View view) {
     }
-    
+
     protected String getCleanText() {
         return mFormulaEditText.getText().toString();
     }
-    
+
     @Override
     public boolean isLandscape() {
         return getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE;
     }
+
+
+    /***************** Bkav *****************/
+
+    protected ViewPager mViewPager;
+    private String mInput = "";
+    private Pattern mPattern = Pattern.compile("\\d*");
 }
