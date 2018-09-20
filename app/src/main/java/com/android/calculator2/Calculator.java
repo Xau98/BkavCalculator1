@@ -116,7 +116,7 @@ public class Calculator extends Activity
     //AnhBM: truoc dung CalculatorEditText doi thanh FormattedNumberEditText
     protected FormattedNumberEditText mFormulaEditText;
     protected CalculatorEditText mResultEditText;
-    private ViewPager mPadViewPager;
+    protected ViewPager mPadViewPager;
     protected View mDeleteButton;
     protected View mClearButton;
     //AnhBM: truoc dung View doi thanh EqualsImageButton
@@ -160,6 +160,7 @@ public class Calculator extends Activity
         mFormulaEditText.setOnKeyListener(mFormulaOnKeyListener);
         mFormulaEditText.setOnTextSizeChangeListener(this);
         mDeleteButton.setOnLongClickListener(this);
+
     }
 
     @Override
@@ -173,7 +174,7 @@ public class Calculator extends Activity
         super.onSaveInstanceState(outState);
 
         outState.putInt(KEY_CURRENT_STATE, mCurrentState.ordinal());
-        
+
         // Bkav AnhBM
         outState.putString(KEY_CURRENT_EXPRESSION,
                 mTokenizer.getNormalizedExpression(getCleanText()));
@@ -209,15 +210,29 @@ public class Calculator extends Activity
         }
     }
 
+
     @Override
     public void onBackPressed() {
-        if (mPadViewPager == null || mPadViewPager.getCurrentItem() == 0) {
-            // If the user is currently looking at the first pad (or the pad is not paged),
-            // allow the system to handle the Back button.
-            super.onBackPressed();
+        int orientation = getResources().getConfiguration().orientation;
+        if (orientation == Configuration.ORIENTATION_PORTRAIT) {
+            // Bkav Phongngb Xac dinh man hinh xoay  doc
+            if (mPadViewPager == null || mPadViewPager.getCurrentItem() == 0) {
+                // If the user is currently looking at the first pad (or the pad is not paged),
+                // allow the system to handle the Back button.
+                mPadViewPager.setCurrentItem(mPadViewPager.getCurrentItem() + 1);
+            } else if (mPadViewPager == null || mPadViewPager.getCurrentItem() == 1) {
+                super.onBackPressed();
+            } else {
+                // Otherwise, select the previous pad.
+                mPadViewPager.setCurrentItem(mPadViewPager.getCurrentItem() - 1);
+            }
         } else {
-            // Otherwise, select the previous pad.
-            mPadViewPager.setCurrentItem(mPadViewPager.getCurrentItem() - 1);
+            //Bkav Phongngb Man hinh xoay ngang
+            if (mViewPager == null || mViewPager.getCurrentItem() == 0) {
+                mViewPager.setCurrentItem(mViewPager.getCurrentItem() + 1);
+            } else {
+                super.onBackPressed();
+            }
         }
     }
 
@@ -269,6 +284,32 @@ public class Calculator extends Activity
             case R.id.op_pow:
                 mFormulaEditText.insert(((Button) view).getText().toString());
                 break;
+
+            //Bkav  Phongngb : Thuc hien cac tinh nag mr
+            case R.id.op_m_r: {
+                performMR();
+                break;
+            }
+            //Bkav  Phongngb : Thuc hien cac tinh nag m+
+            case R.id.op_m_plus: {
+                performMPlus();
+                break;
+            }
+            //Bkav  Phongngb : Thuc hien cac tinh nag m-
+            case R.id.op_m_minus: {
+                performMMinus();
+                break;
+            }
+            //Bkav  Phongngb : Thuc hien cac tinh nag mc
+            case R.id.op_m_c: {
+                performMC();
+                break;
+            }
+            //Bkav  Phongngb : Thuc hien cac tinh nag open history
+            case R.id.digit_history: {
+                openHistory();
+                break;
+            }
 
             default:
                 //AnhBM: thay logic nhap
@@ -324,6 +365,7 @@ public class Calculator extends Activity
         final float translationY = (1.0f - textScale) *
                 (textView.getHeight() / 2.0f - textView.getPaddingBottom());
 
+
         final AnimatorSet animatorSet = new AnimatorSet();
         animatorSet.playTogether(
                 ObjectAnimator.ofFloat(textView, View.SCALE_X, textScale, 1.0f),
@@ -339,6 +381,7 @@ public class Calculator extends Activity
         if (mCurrentState == CalculatorState.INPUT) {
             setState(CalculatorState.EVALUATE);
             mEvaluator.evaluate(mFormulaEditText.getText(), this);
+
         }
     }
 
@@ -360,7 +403,10 @@ public class Calculator extends Activity
 
         // Make reveal cover the display and status bar.
         final View revealView = new View(this);
-        revealView.setBottom(displayRect.bottom);
+
+        //Bkav Phongngb:
+        revealViewSetBottom(revealView, displayRect);
+
         revealView.setLeft(displayRect.left);
         revealView.setRight(displayRect.right);
         revealView.setBackgroundColor(getResources().getColor(colorRes));
@@ -452,7 +498,7 @@ public class Calculator extends Activity
         final float resultTranslationY = (1.0f - resultScale) *
                 (mResultEditText.getHeight() / 2.0f - mResultEditText.getPaddingBottom()) +
                 (mFormulaEditText.getBottom() - mResultEditText.getBottom()) +
-                (mResultEditText.getPaddingBottom() - mFormulaEditText.getPaddingBottom());
+                (mResultEditText.getPaddingBottom() - mFormulaEditText.getPaddingBottom()) ;
         final float formulaTranslationY = -mFormulaEditText.getBottom();
 
         // Use a value animator to fade to the final text color over the course of the animation.
@@ -507,10 +553,14 @@ public class Calculator extends Activity
     }
 
     /********** BKAV TRUNGNVD *****************/
+
+    protected ViewPager mViewPager;
+
     protected void openPage() {
-        if (mPadViewPager == null || mPadViewPager.getCurrentItem() == 0) {
+        if (mPadViewPager == null || mPadViewPager.getCurrentItem() == 1) {
             mPadViewPager.setCurrentItem(mPadViewPager.getCurrentItem() + 1);
-        } else {
+        } else if (mPadViewPager == null || mPadViewPager.getCurrentItem() == 2) {
+            // Bkav Phongngb . Khi ta them man hinh history vao Viewpager thi set lai
             // Otherwise, select the previous pad.
             mPadViewPager.setCurrentItem(mPadViewPager.getCurrentItem() - 1);
         }
@@ -565,13 +615,32 @@ public class Calculator extends Activity
 
     protected void closePadAdvanced(View view) {
     }
-    
+
     protected String getCleanText() {
         return mFormulaEditText.getText().toString();
     }
-    
+
     @Override
     public boolean isLandscape() {
         return getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE;
+    }
+
+    protected void openHistory() {
+    }
+
+    protected void performMMinus() {
+    }
+
+    protected void performMPlus() {
+    }
+
+    protected void performMR() {
+    }
+
+    protected void performMC() {
+    }
+
+    protected void revealViewSetBottom(View revealView, Rect displayRect) {
+        revealView.setBottom(displayRect.bottom);
     }
 }

@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   Copyright (C) 2014 The Android Open Source Project
 
   Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,6 +17,21 @@
 <!-- Styles for landscape 800dip-wide tablet (e.g. Nexus 10). -->
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
+
+    <!--Bkav AnhBM: sua lai thanh dp-->
+    <style name="PadButtonStyle.Advanced">
+        <item name="android:layout_margin">6dip</item>
+        <item name="android:background">@drawable/pad_button_advanced_background</item>
+        <item name="android:textColor">@color/pad_button_advanced_text_color</item>
+        <item name="android:textSize">36dp</item>
+    </style>
+
+    <!--Bkav AnhBM: sua lai thanh dp-->
+    <style name="PadButtonStyle.Numeric">
+        <item name="android:layout_margin">6dip</item>
+        <item name="android:textSize">48dp</item>
+    </style>
+
     <style name="DisplayEditTextStyle.Formula">
         <item name="android:paddingTop">72dip</item>
         <item name="android:paddingBottom">26dip</item>
@@ -34,20 +48,6 @@
         <item name="android:paddingStart">44dip</item>
         <item name="android:paddingEnd">44dip</item>
         <item name="android:textSize">56sp</item>
-    </style>
-
-    <!--Bkav AnhBM: sua lai thanh dp-->
-    <style name="PadButtonStyle.Advanced">
-        <item name="android:layout_margin">6dip</item>
-        <item name="android:background">@drawable/pad_button_advanced_background</item>
-        <item name="android:textColor">@color/pad_button_advanced_text_color</item>
-        <item name="android:textSize">36dp</item>
-    </style>
-
-    <!--Bkav AnhBM: sua lai thanh dp-->
-    <style name="PadButtonStyle.Numeric">
-        <item name="android:layout_margin">6dip</item>
-        <item name="android:textSize">48dp</item>
     </style>
 
     <style name="PadButtonStyle.Numeric.Equals">
@@ -71,8 +71,17 @@
         <item name="android:paddingBottom">10dip</item>
         <item name="android:paddingStart">18dip</item>
         <item name="android:paddingEnd">22dip</item>
-        <item name="android:columnCount">3</item>
+        <item name="android:columnCount">4</item>
         <item name="android:rowCount">4</item>
+        <item name="android:paddingRight">40dip</item>
+    </style>
+
+    <style name="PadLayoutStyle.History">
+        <item name="android:layout_width">0dip</item>
+        <item name="android:layout_weight">508</item>
+        <item name="android:paddingTop">10dip</item>
+        <item name="android:paddingStart">18dip</item>
+        <item name="android:paddingEnd">22dip</item>
     </style>
 
     <style name="PadLayoutStyle.Numeric">

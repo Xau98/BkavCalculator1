@@ -48,9 +48,9 @@ public class CalculatorNumericPadLayout extends CalculatorPadLayout {
         Locale locale = getResources().getConfiguration().locale;
         if (!getResources().getBoolean(R.bool.use_localized_digits)) {
             locale = new Locale.Builder()
-                .setLocale(locale)
-                .setUnicodeLocaleKeyword("nu", "latn")
-                .build();
+                    .setLocale(locale)
+                    .setUnicodeLocaleKeyword("nu", "latn")
+                    .build();
         }
 
         final DecimalFormatSymbols symbols = DecimalFormatSymbols.getInstance(locale);

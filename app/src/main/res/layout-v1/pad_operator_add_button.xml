@@ -9,6 +9,6 @@
     android:contentDescription="@string/desc_eq"
     android:onClick="onButtonClick"
     android:paddingRight="35dp"
-    android:text="@string/eq"
     android:src="@drawable/equals_btn"
+    android:text="@string/eq"
     android:textSize="27sp" />

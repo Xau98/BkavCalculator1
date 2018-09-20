@@ -53,6 +53,15 @@ public class BlurManager {
         mIsBuilt = false;
     }
 
+//    Bkav Phongngb them ham tao khong doi so de blur
+    public BlurManager() {
+        mUseSetImageBitmap = false;
+        mMinRadius = DEFAULT_MIN_RADIUS;
+        mMaxRadius = DEFAULT_MAX_RADIUS;
+        mBitmapScale = DEFAULT_BITMAP_SCALE;
+        mIsBuilt = false;
+    }
+
     public BlurManager build(Context context, Bitmap imageBitmap) {
         if (mBitmapScale == 1f) {
             mInputBitmap = imageBitmap.copy(Bitmap.Config.ARGB_8888, true);

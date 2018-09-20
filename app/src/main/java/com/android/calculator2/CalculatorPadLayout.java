@@ -17,14 +17,23 @@
 package com.android.calculator2;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.content.res.TypedArray;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.graphics.Rect;
 import android.util.AttributeSet;
+import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
+
+import com.bkav.calculator2.R;
 
 /**
  * A layout that places children in an evenly distributed grid based on the specified
- *  {@link android.R.attr#columnCount} and {@link android.R.attr#rowCount} attributes.
+ * {@link android.R.attr#columnCount} and {@link android.R.attr#rowCount} attributes.
  */
 public class CalculatorPadLayout extends ViewGroup {
 
@@ -43,7 +52,7 @@ public class CalculatorPadLayout extends ViewGroup {
         super(context, attrs, defStyle);
 
         final TypedArray a = context.obtainStyledAttributes(attrs,
-                new int[] { android.R.attr.rowCount, android.R.attr.columnCount }, defStyle, 0);
+                new int[]{android.R.attr.rowCount, android.R.attr.columnCount}, defStyle, 0);
         mRowCount = a.getInt(0, 1);
         mColumnCount = a.getInt(1, 1);
 
@@ -95,6 +104,7 @@ public class CalculatorPadLayout extends ViewGroup {
 
             rowIndex = (rowIndex + (columnIndex + 1) / mColumnCount) % mRowCount;
             columnIndex = (columnIndex + 1) % mColumnCount;
+
         }
     }
 
@@ -116,5 +126,51 @@ public class CalculatorPadLayout extends ViewGroup {
     @Override
     protected boolean checkLayoutParams(LayoutParams p) {
         return p instanceof MarginLayoutParams;
+    }
+
+
+    /****************************** Bkav **************************/
+
+    private Bitmap mBitmap;
+    private int mPostion;
+    private float mOffset;
+    private int mOffsetPixel;
+    private int mWidthDistanceRight;
+    private int mScreenWidth;
+
+    public void setInforScrollViewpager(Bitmap bitmap, int i, float v, int i1) {
+        this.mBitmap = bitmap;
+        this.mPostion = i;
+        this.mOffset = v;
+        this.mOffsetPixel = i1;
+
+        final Resources res = getResources();
+        mWidthDistanceRight = res.getDimensionPixelOffset(R.dimen.width_distance_right);
+        WindowManager wm = (WindowManager) getContext().getSystemService(Context.WINDOW_SERVICE);
+        DisplayMetrics dm = new DisplayMetrics();
+        wm.getDefaultDisplay().getMetrics(dm);
+        mScreenWidth = dm.widthPixels;
+
+        invalidate();
+        requestLayout();
+    }
+
+    /**
+     * Bkav Phongngb
+     * Day la ham set background advenced khi keo den dau setBackground tuong ung den do
+     * @param canvas
+     */
+    @Override
+    protected void onDraw(Canvas canvas) {
+        super.onDraw(canvas);
+        Paint mPaint = new Paint();
+        if (mBitmap != null) {
+            Rect dest = new Rect(0, 0, getWidth(), getHeight());
+            mPaint.setFilterBitmap(true);
+
+            int delta = getWidth() - (int) (mOffsetPixel - mWidthDistanceRight);
+            canvas.translate(-delta + mOffset * mWidthDistanceRight, 0);
+            canvas.drawBitmap(mBitmap, null, dest, mPaint);
+        }
     }
 }

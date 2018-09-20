@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   Copyright (C) 2014 The Android Open Source Project
 
   Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,12 +13,10 @@
   See the License for the specific language governing permissions and
   limitations under the License.
   -->
-
-<com.android.calculator2.CalculatorPadLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<com.android.calculator2.CalculatorPadLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/pad_advanced"
     style="@style/PadLayoutStyle.Advanced"
-    android:background="@color/pad_advanced_background_color">
+    android:background="@color/colorAdvenced">
 
     <Button
         android:id="@+id/fun_sin"
@@ -91,18 +88,48 @@
         android:onClick="onButtonClick"
         android:text="@string/lparen" />
 
-    <Button
-        android:id="@+id/rparen"
-        style="@style/PadButtonStyle.Advanced"
-        android:contentDescription="@string/desc_rparen"
-        android:onClick="onButtonClick"
-        android:text="@string/rparen" />
+    <!--Bkav Phongngb-->
+
+    <!--<Button-->
+    <!--android:id="@+id/rparen"-->
+    <!--style="@style/PadButtonStyle.Advanced"-->
+    <!--android:contentDescription="@string/desc_rparen"-->
+    <!--android:onClick="onButtonClick"-->
+    <!--android:text="@string/rparen" />-->
+
+    <!--<Button-->
+    <!--android:id="@+id/op_sqrt"-->
+    <!--style="@style/PadButtonStyle.Advanced"-->
+    <!--android:contentDescription="@string/desc_op_sqrt"-->
+    <!--android:onClick="onButtonClick"-->
+    <!--android:text="@string/op_sqrt" />-->
+
 
     <Button
-        android:id="@+id/op_sqrt"
+        android:id="@+id/op_m_plus"
         style="@style/PadButtonStyle.Advanced"
-        android:contentDescription="@string/desc_op_sqrt"
         android:onClick="onButtonClick"
-        android:text="@string/op_sqrt" />
+        android:text="@string/op_mplus" />
+
+
+    <Button
+        android:id="@+id/op_m_minus"
+        style="@style/PadButtonStyle.Advanced"
+        android:onClick="onButtonClick"
+        android:text="@string/op_mmius" />
+
+    <Button
+        android:id="@+id/op_m_r"
+        style="@style/PadButtonStyle.Advanced"
+        android:onClick="onButtonClick"
+        android:text="@string/op_mr" />
+
+
+    <Button
+        android:id="@+id/op_m_c"
+        style="@style/PadButtonStyle.Advanced"
+        android:onClick="onButtonClick"
+        android:text="@string/op_mc" />
+
 
 </com.android.calculator2.CalculatorPadLayout>

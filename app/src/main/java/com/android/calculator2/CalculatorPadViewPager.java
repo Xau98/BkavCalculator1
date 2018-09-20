@@ -30,7 +30,9 @@ import com.bkav.calculator2.R;
 
 public class CalculatorPadViewPager extends ViewPager {
 
+
     private final PagerAdapter mStaticPagerAdapter = new PagerAdapter() {
+
         @Override
         public int getCount() {
             return getChildCount();
@@ -46,14 +48,24 @@ public class CalculatorPadViewPager extends ViewPager {
             removeViewAt(position);
         }
 
+        //Bkav Phongngb: method kiem tra xem cac doi tuong duoc tra ve boi insatantiateItem duoc ket noi voi cac view duoc cung cap
         @Override
         public boolean isViewFromObject(View view, Object object) {
             return view == object;
         }
 
         @Override
-        public float getPageWidth(int position) {
-            return position == 1 ? 0.8f : (float) (mScreenWidth + mWidthDistanceRight) / mScreenWidth; // BKAV AnhBM
+        public float getPageWidth(int position) { // Bkav phongngb set lai hien thi cua ba man hinh tren viewpager
+            if (position == 0) {
+                return 0.84f;
+            } else if (position == 2) {
+                return (0.84f);
+            } else {
+                return (float) (mScreenWidth + mWidthDistanceRight) / mScreenWidth;
+
+            }
+            //BKAV AnhBM
+            //return  position == 1 ? 0.8f :(float) (mScreenWidth + mWidthDistanceRight) / mScreenWidth;
         }
     };
 
@@ -78,24 +90,42 @@ public class CalculatorPadViewPager extends ViewPager {
                 }
             }
         }
+
+        //Bkav phongngb khi scroll se draw background advenced
+        @Override
+        public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+            super.onPageScrolled(position, positionOffset, positionOffsetPixels);
+            if (mIScrollViewPager != null)
+                mIScrollViewPager.onScroll(position, positionOffset, positionOffsetPixels);
+        }
     };
 
     private final PageTransformer mPageTransformer = new PageTransformer() {
         @Override
         public void transformPage(View view, float position) {
-            if (position < 0.0f) {
-                // Pin the left page to the left side.
-                view.setTranslationX(getWidth() * -position);
-
-                //AnhBM: Bo do khong can hieu ung alpha khi vuot sang nua
-                //view.setAlpha(Math.max(1.0f + position, 0.0f));
-            } else {
-                // Use the default slide transition when moving to the next page.
-                view.setTranslationX(0.0f);
-                view.setAlpha(1.0f);
+            // Phongngb : Check neu lon hon 3 view . neu view hien thi len man hinh la view 1
+            // thi di chuyen cac view kia
+            if (getChildCount() > 2) {
+                if (view.equals(getChildAt(1))) {
+                    view.setTranslationX(getWidth() * -position);
+                }
             }
+
+//            Bkav AnhBM: Bo logic goc
+//            if (position < 0.0f) {
+//                // Pin the left page to the left side.
+//                view.setTranslationX(getWidth() * -position);
+//
+//                //AnhBM: Bo do khong can hieu ung alpha khi vuot sang nua
+//                //view.setAlpha(Math.max(1.0f + position, 0.0f));
+//            } else {
+//                // Use the default slide transition when moving to the next page.
+//                view.setTranslationX(0.0f);
+//                view.setAlpha(1.0f);
+//            }
         }
     };
+
 
     public CalculatorPadViewPager(Context context) {
         this(context, null);
@@ -105,10 +135,12 @@ public class CalculatorPadViewPager extends ViewPager {
         super(context, attrs);
 
         setAdapter(mStaticPagerAdapter);
-        setBackgroundColor(getResources().getColor(android.R.color.black));
+        //Bkav AnhBM: bo de dung cho cau truc pageview moi
+//        setBackgroundColor(getResources().getColor(android.R.color.black));
+//        setPageMargin(getResources().getDimensionPixelSize(R.dimen.pad_page_margin));
         setOnPageChangeListener(mOnPageChangeListener);
-        setPageMargin(getResources().getDimensionPixelSize(R.dimen.pad_page_margin));
-        setPageTransformer(false, mPageTransformer);
+        // Bkav Phongngb : de cho viewPager co the reverse drawing
+        setPageTransformer(true, mPageTransformer);
 
         // Bkav AnhBM
         WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
@@ -130,8 +162,20 @@ public class CalculatorPadViewPager extends ViewPager {
         }
     }
 
+
     /******************** Bkav **********************/
     private int mScreenWidth;
 
     private int mWidthDistanceRight;
+    private IScrollViewPager mIScrollViewPager;
+
+    public interface IScrollViewPager {
+        void onScroll(int i, float v, int i1);
+    }
+
+    public void setOnScrollViewPager(IScrollViewPager mIScrollViewPager) {
+        this.mIScrollViewPager = mIScrollViewPager;
+    }
+
+
 }

@@ -37,7 +37,7 @@ public class CalculatorExpressionEvaluator {
     private static final int ROUNDING_DIGITS = Math.max( MAX_DIGITS - 17, 0);
 
     private final Symbols mSymbols;
-    
+
     private final CalculatorExpressionTokenizer mTokenizer;
 
     public CalculatorExpressionEvaluator(CalculatorExpressionTokenizer tokenizer) {
@@ -70,8 +70,7 @@ public class CalculatorExpressionEvaluator {
         try {
             // AnhBM: dung thu vien tinh toan khac. Neu NAN thi se throw NanSyntaxException
 //            String result = mSolver.solve(expr);
-//            result = mTokenizer.getLocalizedExpression(doubleToString(callback.isLandscape(),
-//                    Double.parseDouble(result), MAX_DIGITS, ROUNDING_DIGITS));
+//            result = mTokenizer.getLocalizedExpression(doubleToString(Double.parseDouble(result), MAX_DIGITS, ROUNDING_DIGITS));
 //            callback.onEvaluate(expr, result, Calculator.INVALID_RES_ID);
 
             String resultPre = mSolver.solve(expr);
@@ -98,13 +97,13 @@ public class CalculatorExpressionEvaluator {
 
     public interface EvaluateCallback {
         public void onEvaluate(String expr, String result, int errorResourceId);
-        
+
         public boolean isLandscape(); // Bkav QuangLH
     }
-    
+
     /********************* Bkav **********************/
     private final Solver mSolver;
-    
+
     public Solver getSolver() {
         return mSolver;
     }
@@ -112,6 +111,7 @@ public class CalculatorExpressionEvaluator {
     public static String doubleToString(boolean isLandscape, double x, int maxLenngth, int rounding) {
         return sizeTruncate(doubleToString(isLandscape, x, rounding), maxLenngth);
     }
+
 
     private static String doubleToString(boolean isLandscape, double v, int roundingDigits) {
         double absv = Math.abs(v);

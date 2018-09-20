@@ -16,7 +16,6 @@
   -->
 
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
-
     <declare-styleable name="CalculatorEditText">
         <attr name="minTextSize" format="dimension" />
         <attr name="maxTextSize" format="dimension" />

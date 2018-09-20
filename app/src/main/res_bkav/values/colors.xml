@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--Bkav Phongngb-->
+    <color name="colorText">#696868</color>
+    <color name="colorWhite">#FFFFFF</color>
+    <color name="colorDisplay">#76000000</color>
+    <color name="colorNumberic">#0DFFFFFF</color>
+    <color name="colorOperator">#663a4852</color>
+    <color name="colorAdvenced">#A6464646</color>
+    <color name="colorHistory">#A6464646</color>
+    <color name="colorFontHistory">#66FFFFFF</color>
+    <color name="colorFontPoint">#59FFFFFF</color>
+    <color name="colorEdittext">#59FFFFFF</color>
+    <color name="colorLineHistory">#cac7c7</color>
+</resources>

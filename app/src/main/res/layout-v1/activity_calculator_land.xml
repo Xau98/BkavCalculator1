@@ -13,38 +13,66 @@
   See the License for the specific language governing permissions and
   limitations under the License.
   -->
-
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<!-- Bkav Phongngb-->
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/root_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
     android:orientation="vertical">
 
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar"
+    <!-- Bkav Phongngb-->
+    <View
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        app:contentInsetLeft="0dp"
-        app:contentInsetStart="0dp"></android.support.v7.widget.Toolbar>
-
-    <include
-        layout="@layout/display"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="match_parent"
+        android:background="@color/display_background_color" />
 
     <LinearLayout
+        android:id="@+id/view"
         android:layout_width="match_parent"
-        android:layout_height="0dip"
-        android:layout_weight="1">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <include layout="@layout/pad_numeric" />
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:contentInsetLeft="0dp"
+            app:contentInsetStart="0dp">
 
-        <include layout="@layout/pad_operator_two_col" />
+        </android.support.v7.widget.Toolbar>
 
-        <include layout="@layout/bkav_pad_advanced_land" />
+        <include
+            layout="@layout/bkav_display"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
+
+        <!-- Bkav Phongngb-->
+        <com.android.calculator2.bkav.BkavCalculatorViewpager
+            android:id="@+id/pager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:overScrollMode="never">
+
+            <include layout="@layout/bkav_pad_history_land"></include>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+                <include layout="@layout/pad_numeric"  />
+
+                <include layout="@layout/pad_operator_two_col" />
+
+                <include layout="@layout/bkav_pad_advanced_land" />
+
+            </LinearLayout>
+
+        </com.android.calculator2.bkav.BkavCalculatorViewpager>
     </LinearLayout>
 
-</LinearLayout>
+
+</RelativeLayout>
