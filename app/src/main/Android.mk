@@ -26,7 +26,8 @@ LOCAL_STATIC_JAVA_LIBRARIES := libarity_bkav \
 
 LOCAL_SRC_FILES := $(call all-java-files-under, java)
 
-LOCAL_RESOURCE_DIR := $(LOCAL_PATH)/res \
+LOCAL_RESOURCE_DIR := $(LOCAL_PATH)/res_bkav \
+    $(LOCAL_PATH)/res \
     frameworks/support/v7/appcompat/res
 
 LOCAL_SDK_VERSION := current
