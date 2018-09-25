@@ -21,6 +21,8 @@ import android.text.format.DateUtils;
 import android.util.DisplayMetrics;
 import android.view.Display;
 import android.view.MotionEvent;
+import android.view.OrientationEventListener;
+import android.view.Surface;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -80,7 +82,6 @@ public class BkavCalculator extends Calculator {
     private String mInput = "";
 
 
-
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -124,6 +125,30 @@ public class BkavCalculator extends Calculator {
             // Bkav phongngb : Hien thi man hinh khi mann hinh xoay ngang
             mCalculatorViewpager = (BkavCalculatorViewpager) findViewById(R.id.pager);
             mCalculatorViewpager.setCurrentItem(1);
+            //Bkav AnhBM: chinh sua giao dien xoay ngang khi co phim dieu huong
+            if (hasImmersive(getApplicationContext())) {
+                mView = (LinearLayout) findViewById(R.id.view);
+                OrientationEventListener mOrientationEventListener = new OrientationEventListener(this) {
+                    @Override
+                    public void onOrientationChanged(int orientation) {
+                        if (orientation == ORIENTATION_UNKNOWN) return;
+
+                        int rotation = getWindowManager().getDefaultDisplay().getRotation();
+                        switch (rotation) {
+                            case Surface.ROTATION_90:
+                                mView.setPadding(0, 0, getNavigationBarHeight(), 0);
+                                break;
+                            case Surface.ROTATION_270:
+                                mView.setPadding(getNavigationBarHeight(), 0, 0, 0);
+                                break;
+                        }
+                    }
+                };
+
+                if (mOrientationEventListener.canDetectOrientation()) {
+                    mOrientationEventListener.enable();
+                }
+            }
         }
 
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -230,8 +255,8 @@ public class BkavCalculator extends Calculator {
                             } else if (position == 1) {
                                 if (orientation == Configuration.ORIENTATION_PORTRAIT) {
                                     if (cutBitmapAd != null) {
-                                        mCalculatorPadLayout.setInforScrollViewpager(bitmapBlurAd,
-                                                position, positionOffset, positionOffsetPixels);
+                                        mCalculatorPadLayout.setInforScrollViewpager(bitmapBlurAd
+                                                , positionOffset, positionOffsetPixels);
                                     }
                                 }
                             }

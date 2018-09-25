@@ -60,7 +60,4 @@
         </LinearLayout>
 
     </LinearLayout>
-
-    <!--<include layout="@layout/bkav_pad_history" ></include>-->
-
 </RelativeLayout>

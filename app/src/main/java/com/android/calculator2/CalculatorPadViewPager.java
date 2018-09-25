@@ -140,7 +140,7 @@ public class CalculatorPadViewPager extends ViewPager {
 //        setPageMargin(getResources().getDimensionPixelSize(R.dimen.pad_page_margin));
         setOnPageChangeListener(mOnPageChangeListener);
         // Bkav Phongngb : de cho viewPager co the reverse drawing
-        setPageTransformer(true, mPageTransformer);
+        setPageTransformer(/*false*/true, mPageTransformer);
 
         // Bkav AnhBM
         WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);

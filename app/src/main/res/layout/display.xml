@@ -64,7 +64,7 @@
             android:text="@string/button_history"
             android:textAllCaps="false"
             android:textColor="@color/colorFontHistory"
-            android:textSize="17sp"
+            android:textSize="17dp"
             android:textStyle="normal" />
 
         <ImageView

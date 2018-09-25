@@ -132,15 +132,12 @@ public class CalculatorPadLayout extends ViewGroup {
     /****************************** Bkav **************************/
 
     private Bitmap mBitmap;
-    private int mPostion;
     private float mOffset;
     private int mOffsetPixel;
     private int mWidthDistanceRight;
-    private int mScreenWidth;
 
-    public void setInforScrollViewpager(Bitmap bitmap, int i, float v, int i1) {
+    public void setInforScrollViewpager(Bitmap bitmap, float v, int i1) {
         this.mBitmap = bitmap;
-        this.mPostion = i;
         this.mOffset = v;
         this.mOffsetPixel = i1;
 
@@ -149,7 +146,6 @@ public class CalculatorPadLayout extends ViewGroup {
         WindowManager wm = (WindowManager) getContext().getSystemService(Context.WINDOW_SERVICE);
         DisplayMetrics dm = new DisplayMetrics();
         wm.getDefaultDisplay().getMetrics(dm);
-        mScreenWidth = dm.widthPixels;
 
         invalidate();
         requestLayout();
