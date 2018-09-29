@@ -1,7 +1,6 @@
 package com.android.calculator2.bkav;
 
 import android.content.Context;
-import android.content.res.Configuration;
 import android.graphics.Typeface;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -45,13 +44,7 @@ public class BkavHistoryAdapter extends ArrayAdapter<String> {
             TextView txtHistory = (TextView) view.findViewById(R.id.textview_history);
             TextView txtResult = (TextView) view.findViewById(R.id.textview_result);
             if (array.length >= 2) {
-                Typeface typeface = Typeface.createFromAsset(mContext.getAssets(), "fonts/helveticaneue-light.ttf");
-                int orientation = getContext().getResources().getConfiguration().orientation;
-                if (orientation == Configuration.ORIENTATION_PORTRAIT) {
-                    txtResult.setTextSize(30);
-                    txtHistory.setTextSize(16);
-                    txtHistory.setPadding(0, 0, 30, 0);
-                }
+                Typeface typeface = Typeface.createFromAsset(mContext.getAssets(), "fonts/helveticaNeueThin.ttf");
                 txtHistory.setTypeface(typeface);
                 txtResult.setTypeface(typeface);
 

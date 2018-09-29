@@ -9,6 +9,7 @@ import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.graphics.Typeface;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Build;
 import android.os.Bundle;
@@ -101,6 +102,8 @@ public class BkavCalculator extends Calculator {
         mClearHistory = (Button) findViewById(R.id.clear_history);
         mButtonHistory = (Button) findViewById(R.id.digit_history);
         mRelativeLayoutHistory = (BkavHistoryLayout) findViewById(R.id.relative_layout_history);
+        Typeface typeface = Typeface.createFromAsset(getAssets(), "fonts/helveticaNeueThin.ttf");
+        mClearHistory.setTypeface(typeface);
 
         Bitmap backgroundBitmapFromRom = getBluredBackgroundFromRom();
         mRootView.setBackground(new BitmapDrawable(backgroundBitmapFromRom));
