@@ -6,31 +6,32 @@
     android:layout_height="wrap_content"
     android:layout_gravity="center"
     android:orientation="vertical"
-    android:paddingTop="17dp">
+    android:paddingTop="14.67dp"
+    android:paddingBottom="7.67dp">
 
     <TextView
         android:id="@+id/textview_result"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="right"
+        android:layout_gravity="center_vertical|right"
         android:paddingBottom="5dp"
+        android:gravity="center"
         android:paddingRight="10dp"
         android:maxLines="1"
         android:textAlignment="center"
         android:textColor="@color/colorWhite"
-        android:textSize="20sp" />
+        android:textSize="30sp" />
 
     <TextView
         android:id="@+id/textview_history"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="right"
+        android:layout_gravity="center_vertical|right"
         android:paddingBottom="5dp"
-        android:paddingRight="20dp"
+        android:gravity="center"
+        android:paddingRight="10dp"
         android:maxLines="1"
         android:textAlignment="center"
         android:textColor="@color/colorWhite"
-        android:textSize="13sp" />
-
-
+        android:textSize="16sp" />
 </LinearLayout>
