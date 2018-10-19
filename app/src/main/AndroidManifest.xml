@@ -38,7 +38,7 @@
             </intent-filter>
 
             <intent-filter>
-                <action android:name="android.intent.action.APP_CALCULATOR" />
+                <action android:name="bkav.intent.action.APP_CALCULATOR" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
