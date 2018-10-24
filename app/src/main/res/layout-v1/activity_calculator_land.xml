@@ -55,7 +55,7 @@
             android:layout_weight="1"
             android:overScrollMode="never">
 
-            <include layout="@layout/bkav_pad_history_land"></include>
+            <include layout="@layout/bkav_pad_history_land"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
