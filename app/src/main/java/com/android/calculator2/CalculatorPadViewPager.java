@@ -57,9 +57,9 @@ public class CalculatorPadViewPager extends ViewPager {
         @Override
         public float getPageWidth(int position) { // Bkav phongngb set lai hien thi cua ba man hinh tren viewpager
             if (position == 0) {
-                return 0.84f;
+                return 0.80f;// Bkav ThanhNgD: 0.84 -> 0.80
             } else if (position == 2) {
-                return (0.84f);
+                return (0.75f);//Bkav ThanhNgD: 0.84 -> 0.75
             } else {
                 return (float) (mScreenWidth + mWidthDistanceRight) / mScreenWidth;
 
@@ -77,6 +77,8 @@ public class CalculatorPadViewPager extends ViewPager {
                     recursivelySetEnabled(viewGroup.getChildAt(childIndex), enabled);
                 }
             } else {
+                // Bkav ThanhNgD: setEnabled(...) xu li kha nang Touchables( co' the cham.) cua view
+                // false -> vo hieu hoa' Touchables, true -> bat Touchables
                 view.setEnabled(enabled);
             }
         }
@@ -86,7 +88,12 @@ public class CalculatorPadViewPager extends ViewPager {
             if (getAdapter() == mStaticPagerAdapter) {
                 for (int childIndex = 0; childIndex < getChildCount(); ++childIndex) {
                     // Only enable subviews of the current page.
-                    recursivelySetEnabled(getChildAt(childIndex), childIndex == position);
+
+                    //Bkav ThanhNgD: childIndex == position -> true
+                    // Neu' la` childIndex == position thi` page dang chon moi' click dc, page khac'
+                    // du` co' hien cung k the click vi`  setEnabled() = false
+                    // Con` la` true thi` neu' view dc hien tren windown thi` co the click
+                    recursivelySetEnabled(getChildAt(childIndex), true);
                 }
             }
         }

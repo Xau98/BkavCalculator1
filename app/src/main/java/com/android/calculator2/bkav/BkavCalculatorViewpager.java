@@ -39,8 +39,8 @@ public class BkavCalculatorViewpager extends ViewPager {
 
         @Override
         public float getPageWidth(int position) {
-            if (position == 0) {
-                return (float) ((0.4 * mScreenWidth) / (mScreenWidth + mWidthDistanceRight));
+            if (position == 0) {//Bkav ThanhNgD: 0.4 -> 0.405
+                return (float) ((0.405 * mScreenWidth) / (mScreenWidth + mWidthDistanceRight));
             } else {
                 return 1f;
             }
@@ -48,25 +48,31 @@ public class BkavCalculatorViewpager extends ViewPager {
     };
 
     private final OnPageChangeListener mOnPageChangeListener = new SimpleOnPageChangeListener() {
-//        private void recursivelySetEnabled(View view, boolean enabled) {
-//            if (view instanceof ViewGroup) {
-//                final ViewGroup viewGroup = (ViewGroup) view;
-//                for (int childIndex = 0; childIndex < viewGroup.getChildCount(); ++childIndex) {
-//                    recursivelySetEnabled(viewGroup.getChildAt(childIndex), enabled);
-//                }
-//            } else {
-//                view.setEnabled(enabled);
-//            }
-//        }
+        //Bkav ThanhNgD:  Trong nay` bi cmt -> Bo cmt
+        private void recursivelySetEnabled(View view, boolean enabled) {
+            if (view instanceof ViewGroup) {
+                final ViewGroup viewGroup = (ViewGroup) view;
+                for (int childIndex = 0; childIndex < viewGroup.getChildCount(); ++childIndex) {
+                    recursivelySetEnabled(viewGroup.getChildAt(childIndex), enabled);
+                }
+            } else {
+                // Bkav ThanhNgD: setEnabled(...) xu li kha nang Touchables( co' the cham.) cua view.
+                // false -> vo hieu hoa' Touchables, true -> bat Touchables
+                view.setEnabled(enabled);
+            }
+        }
 
-//        @Override
-//        public void onPageSelected(int position) {
-//            if (getAdapter() == mStaticPagerAdapter) {
-//                for (int childIndex = 0; childIndex < getChildCount(); ++childIndex) {
-//                    recursivelySetEnabled(getChildAt(childIndex), childIndex == position);
-//                }
-//            }
-//        }
+        @Override
+        public void onPageSelected(int position) {
+            if (getAdapter() == mStaticPagerAdapter) {
+                for (int childIndex = 0; childIndex < getChildCount(); ++childIndex) {
+                    //Bkav ThanhNgD: childIndex == position -> true
+                    // Neu' la` childIndex == position thi` page dang chon moi' click dc
+                    // Con` la` true thi` tat ca nhung gi` hien tren windown deu` co the click dc
+                    recursivelySetEnabled(getChildAt(childIndex), true);
+                }
+            }
+        }
     };
 
     private final PageTransformer mPageTransformer = new PageTransformer() {
