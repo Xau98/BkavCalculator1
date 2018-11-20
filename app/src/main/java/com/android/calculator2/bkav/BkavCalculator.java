@@ -20,6 +20,7 @@ import android.support.v7.widget.Toolbar;
 import android.text.InputType;
 import android.text.format.DateUtils;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.Display;
 import android.view.MotionEvent;
 import android.view.OrientationEventListener;
@@ -33,8 +34,10 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.android.calculator2.Calculator;
+import com.android.calculator2.CalculatorNumericPadLayout;
 import com.android.calculator2.CalculatorPadLayout;
 import com.android.calculator2.CalculatorPadViewPager;
 import com.android.calculator2.bkav.EqualsImageButton.State;
@@ -46,6 +49,8 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.regex.Pattern;
+
+import static android.view.View.VISIBLE;
 
 /**
  * Created by anhbm on 07/06/2017.
@@ -122,7 +127,6 @@ public class BkavCalculator extends Calculator {
 
                 myButton.setBackgroundColor(getResources().getColor(R.color.colorNumberic));
                 mView.addView(myButton);
-
             }
         } else {
             // Bkav phongngb : Hien thi man hinh khi mann hinh xoay ngang
@@ -180,7 +184,7 @@ public class BkavCalculator extends Calculator {
                 if (mFormulaEditText.getSelectionEnd() != mFormulaEditText.getText().length()) {
                     mFormulaEditText.setCursorVisible(true);
                 }
-                mDeleteButton.setVisibility(View.VISIBLE);
+                mDeleteButton.setVisibility(VISIBLE);
                 mClearButton.setVisibility(View.GONE);
             }
         });
@@ -219,9 +223,26 @@ public class BkavCalculator extends Calculator {
                 mListView.setAdapter(mAdapter);
                 mAdapter.notifyDataSetChanged();
                 mClearHistory.setVisibility(View.INVISIBLE);
+                //Bkav ThanhNgD: Xu li bug khi dang o page lich su( dang co du lieu) ma` xoa' lich xu
+                // thi` click se bi click button 123... cua page 1
+                if(mCalculatorPadViewPager != null){
+                    TextView emptyElement = (TextView) findViewById(R.id.emptyElement);
+                    if(emptyElement != null && emptyElement.getVisibility() == VISIBLE){
+                        CalculatorNumericPadLayout calculatorNumericPadLayout
+                                = (CalculatorNumericPadLayout) findViewById(R.id.pad_numeric);
+                        mCalculatorPadViewPager.recursivelySetEnabled( calculatorNumericPadLayout, false);
+                    }
+                }
+                if(mCalculatorViewpager != null){
+                    TextView emptyElement = (TextView) findViewById(R.id.emptyElement);
+                    if(emptyElement != null && emptyElement.getVisibility() == VISIBLE){
+                        CalculatorNumericPadLayout calculatorNumericPadLayout
+                                = (CalculatorNumericPadLayout) findViewById(R.id.pad_numeric);
+                        mCalculatorViewpager.recursivelySetEnabled( calculatorNumericPadLayout, false);
+                    }
+                }
             }
         });
-
 
 //        Bkav phongngb xu li sau 0.1 s thi moi load giao dien xu ly
         Handler handler = new Handler();
@@ -248,7 +269,7 @@ public class BkavCalculator extends Calculator {
                 blurAd.bitmapScale(0.05f).build(getApplicationContext(), bmAd);
                 final Bitmap bitmapBlurAd = blurAd.blur(20f);
 
-                if (mCalculatorPadViewPager != null)
+                if (mCalculatorPadViewPager != null){
                     mCalculatorPadViewPager.setOnScrollViewPager(new CalculatorPadViewPager.IScrollViewPager() {
                         @Override
                         public void onScroll(int position, float positionOffset, int positionOffsetPixels) {
@@ -265,6 +286,7 @@ public class BkavCalculator extends Calculator {
                             }
                         }
                     });
+                }
 
                 if (mCalculatorViewpager != null) {
                     mCalculatorViewpager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -275,6 +297,9 @@ public class BkavCalculator extends Calculator {
 
                         @Override
                         public void onPageSelected(int i) {
+                            //Bkav ThanhNgD: Goi lai onPageSelected() de nhan su kien khi changed page
+                            // de xu li bug lich su trong' khi o page 0 van~ click dc button 123... cua page 1
+                            mCalculatorViewpager.getmOnPageChangeListener().onPageSelected(i);
                         }
 
                         @Override
@@ -345,7 +370,7 @@ public class BkavCalculator extends Calculator {
         mHistoryCaculator = mSharedPreferences.getString(HISTORY_CACULATOR, "");
         this.mListHistory.clear();
         if (mHistoryCaculator.trim().length() > 0) {
-            mClearHistory.setVisibility(View.VISIBLE);
+            mClearHistory.setVisibility(VISIBLE);
             mListHistory.addAll(Arrays.asList(mHistoryCaculator.split(";")));
             if (mListHistory.size() > SIZE_HISTORY) {
                 mListHistory = mListHistory.subList(0, SIZE_HISTORY);
