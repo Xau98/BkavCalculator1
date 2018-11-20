@@ -122,10 +122,6 @@ public class CalculatorPadViewPager extends ViewPager {
         }
     };
 
-    public OnPageChangeListener getmOnPageChangeListener(){
-        return mOnPageChangeListener;
-    }
-
     private final PageTransformer mPageTransformer = new PageTransformer() {
         @Override
         public void transformPage(View view, float position) {
@@ -187,7 +183,6 @@ public class CalculatorPadViewPager extends ViewPager {
             mStaticPagerAdapter.notifyDataSetChanged();
         }
     }
-
 
     /******************** Bkav **********************/
     private int mScreenWidth;

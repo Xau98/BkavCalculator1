@@ -74,7 +74,6 @@ public class BkavCalculatorViewpager extends ViewPager {
         //Bkav ThanhNgD:  Trong nay` bi cmt -> Bo cmt
         @Override
         public void onPageSelected(int position) {
-            Log.i("XXX","XXX");
             if (getAdapter() == mStaticPagerAdapter) {
                 TextView emptyElement = (TextView) getChildAt(0).findViewById(R.id.emptyElement);
                 for (int childIndex = 0; childIndex < getChildCount(); ++childIndex) {
