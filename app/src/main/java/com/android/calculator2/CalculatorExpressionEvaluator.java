@@ -73,8 +73,7 @@ public class CalculatorExpressionEvaluator {
 //            result = mTokenizer.getLocalizedExpression(doubleToString(Double.parseDouble(result), MAX_DIGITS, ROUNDING_DIGITS));
 //            callback.onEvaluate(expr, result, Calculator.INVALID_RES_ID);
 
-            String resultPre = mSolver.solve(expr);
-            double result = mSymbols.eval(resultPre);
+            double result = mSymbols.eval(expr);
             if (Double.isNaN(result)) {
                 callback.onEvaluate(expr, null, R.string.error_nan);
             } else {

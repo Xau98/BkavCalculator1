@@ -27,7 +27,6 @@ import android.animation.ValueAnimator.AnimatorUpdateListener;
 import android.app.Activity;
 import android.content.res.Configuration;
 import android.graphics.Rect;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.view.ViewPager;
@@ -40,7 +39,6 @@ import android.view.View.OnKeyListener;
 import android.view.View.OnLongClickListener;
 import android.view.ViewAnimationUtils;
 import android.view.ViewGroupOverlay;
-import android.view.WindowManager;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.Button;
 import android.widget.TextView;
@@ -529,7 +527,8 @@ public class Calculator extends Activity
             @Override
             public void onAnimationStart(Animator animation) {
                 //AnhBM: chinh hieu ung Animation cho giong
-                mResultEditText.setText(insertCommas(result));
+                // mResultEditText.setText(result);
+                mResultEditText.setText(TextUtil.formatText(result, mFormulaEditText.getEquationFormatter(), mFormulaEditText.getSolver()));
             }
 
             @Override
