@@ -33,6 +33,7 @@ import android.support.v4.view.ViewPager;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnKeyListener;
@@ -490,9 +491,10 @@ public class Calculator extends Activity
     private void onResult(final String result) {
         // Calculate the values needed to perform the scale and translation animations,
         // accounting for how the scale will affect the final position of the text.
+        final String normalizeResult = insertCommas(result);
         final float resultScale =
                 //AnhBM: chinh hieu ung Animation cho giong
-                mFormulaEditText.getVariableTextSize(insertCommas(result)) / mResultEditText.getTextSize();
+                mFormulaEditText.getVariableTextSize(normalizeResult) / mResultEditText.getTextSize();
         final float resultTranslationX = (1.0f - resultScale) *
                 (mResultEditText.getWidth() / 2.0f - mResultEditText.getPaddingEnd());
         final float resultTranslationY = (1.0f - resultScale) *
@@ -527,8 +529,8 @@ public class Calculator extends Activity
             @Override
             public void onAnimationStart(Animator animation) {
                 //AnhBM: chinh hieu ung Animation cho giong
-                // mResultEditText.setText(result);
-                mResultEditText.setText(TextUtil.formatText(result, mFormulaEditText.getEquationFormatter(), mFormulaEditText.getSolver()));
+                //mResultEditText.setText(result);
+                mResultEditText.setText(normalizeResult);
             }
 
             @Override
@@ -567,6 +569,36 @@ public class Calculator extends Activity
         }
     }
 
+    private boolean canAddMoreComma(String str, int firstCommaPosition) {
+        if (TextUtils.isEmpty(str)) {
+            return false;
+        }
+
+        return firstCommaPosition - 3 > ((str.startsWith("-") || str.startsWith("−")) ? 1 : 0);
+    }
+    private int getLastCommasPos(String str) {
+        if (TextUtils.isEmpty(str)) {
+            return -1;
+        }
+
+        // Bkav QuangLH: bo dau - di khi tinh toan vi tri dau thap phan.
+        // Khong hieu sao dau am lai de la dau "−" thay vi "-". TODO: xem
+        // lai xem co phai Android goc lam vay khong.
+        return (str.startsWith("-") || str.startsWith("−")) ? 1 : 0;
+    }
+
+    /**
+     * Bkav QuangLH them dau thap phan vao xau ket qua
+     *
+     * Can test:
+     * + Ca Tieng Anh, Tieng Viet.
+     * + 3 - 300
+     * + 3 - 300000
+     * + 3 - 300,5
+     * + 3 - 300000,5
+     * + 99999999999 - 3 (test lam tron)
+     *
+     * */
     private String insertCommas(String str) {
         String newStr = str;
         String extend = "";
@@ -579,7 +611,7 @@ public class Calculator extends Activity
             int firstComma = newStr.indexOf(",");
             if (firstComma < 0)
                 firstComma = newStr.length();
-            if (newStr.length() > 3 && firstComma > 3) {
+            if (canAddMoreComma(newStr, firstComma)) {
                 newStr = insertCommas(new StringBuffer(newStr).insert(
                         firstComma - 3, ",").toString());
             }
@@ -592,7 +624,7 @@ public class Calculator extends Activity
             int firstComma = newStr.indexOf(".");
             if (firstComma < 0)
                 firstComma = newStr.length();
-            if (newStr.length() > 3 && firstComma > 3) {
+            if (canAddMoreComma(newStr, firstComma)) {
                 newStr = insertCommas(new StringBuffer(newStr).insert(
                         firstComma - 3, ".").toString());
             }
