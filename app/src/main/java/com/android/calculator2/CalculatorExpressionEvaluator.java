@@ -72,7 +72,6 @@ public class CalculatorExpressionEvaluator {
 //            String result = mSolver.solve(expr);
 //            result = mTokenizer.getLocalizedExpression(doubleToString(Double.parseDouble(result), MAX_DIGITS, ROUNDING_DIGITS));
 //            callback.onEvaluate(expr, result, Calculator.INVALID_RES_ID);
-
             double result = mSymbols.eval(expr);
             if (Double.isNaN(result)) {
                 callback.onEvaluate(expr, null, R.string.error_nan);
@@ -116,7 +115,7 @@ public class CalculatorExpressionEvaluator {
         double absv = Math.abs(v);
         String str = roundingDigits == -1?Float.toString((float)absv):Double.toString(absv);
         StringBuffer buf = new StringBuffer(str);
-        int roundingStart = roundingDigits > 0 && roundingDigits <= 13?16 - roundingDigits:17;
+        int roundingStart = /*roundingDigits > 0 && roundingDigits <= 13?16 - roundingDigits:17*/15;
         int ePos = str.lastIndexOf(69);
         int exp = ePos != -1?Integer.parseInt(str.substring(ePos + 1)):0;
         if(ePos != -1) {

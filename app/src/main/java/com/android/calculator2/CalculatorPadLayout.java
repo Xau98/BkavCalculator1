@@ -153,7 +153,7 @@ public class CalculatorPadLayout extends ViewGroup {
 
     /**
      * Bkav Phongngb
-     * Day la ham set background advenced khi keo den dau setBackground tuong ung den do
+     * Day la ham set background advanced khi keo den dau setBackground tuong ung den do
      * @param canvas
      */
     @Override
