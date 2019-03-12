@@ -54,6 +54,10 @@ public class CalculatorNumericPadLayout extends CalculatorPadLayout {
         }
 
         final DecimalFormatSymbols symbols = DecimalFormatSymbols.getInstance(locale);
+
+        // Bkav QuangLH
+        mDecimalSeparator = String.valueOf(symbols.getDecimalSeparator());
+
         final char zeroDigit = symbols.getZeroDigit();
         for (int childIndex = getChildCount() - 1; childIndex >= 0; --childIndex) {
             final View v = getChildAt(childIndex);
@@ -100,6 +104,13 @@ public class CalculatorNumericPadLayout extends CalculatorPadLayout {
                 }
             }
         }
+    }
+
+    /************************ Bkav ************************/
+    private String mDecimalSeparator;
+
+    public String getDecimalSeparator() {
+        return mDecimalSeparator;
     }
 }
 

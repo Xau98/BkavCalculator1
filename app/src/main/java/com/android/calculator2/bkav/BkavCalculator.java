@@ -1,7 +1,10 @@
 package com.android.calculator2.bkav;
 
 import android.app.WallpaperManager;
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
@@ -44,10 +47,12 @@ import com.android.calculator2.bkav.EqualsImageButton.State;
 import com.bkav.calculator2.R;
 import com.xlythe.math.Constants;
 
+import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 import java.util.regex.Pattern;
 
 import static android.view.View.VISIBLE;
@@ -68,8 +73,8 @@ public class BkavCalculator extends Calculator {
     private boolean mHasImmersive;
     private boolean mCached = false;
     private Button mButtonHistory;
-    Bitmap bitmapBlurHis = null;
-
+    private Bitmap bitmapBlurHis = null;
+    private CalculatorNumericPadLayout mCalculatorNumericPadLayoutl;
 
     private ListView mListView;
     protected Button mClearHistory;
@@ -87,10 +92,21 @@ public class BkavCalculator extends Calculator {
     private Pattern mPattern = Pattern.compile("\\d*");
     private String mInput = "";
 
+    private BroadcastReceiver mLangReceiver = null;
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        mLangReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                // Bkav QuanTHb: kill de load lai resource lien quan toi dau thap phan
+                android.os.Process.killProcess(android.os.Process.myPid());
+            }
+        };
+        IntentFilter filter = new IntentFilter(Intent.ACTION_LOCALE_CHANGED);
+        registerReceiver(mLangReceiver, filter);
+
         // Bkav AnhBM: khong cho ban phim hien len.
         hideSoftKeyboard();
 
@@ -101,6 +117,8 @@ public class BkavCalculator extends Calculator {
         mViewPager = (ViewPager) findViewById(R.id.pager);
 
         mCalculatorPadLayout = (CalculatorPadLayout) findViewById(R.id.pad_advanced);
+
+        mCalculatorNumericPadLayoutl = (CalculatorNumericPadLayout) findViewById(R.id.pad_numeric);
 //        Bkav Phongngb
         mListView = (ListView) findViewById(R.id.listview_history);
         mListView.setEmptyView(findViewById(R.id.emptyElement));
@@ -194,9 +212,8 @@ public class BkavCalculator extends Calculator {
         // Bkav PhongNGb : tu dong luu trong vong 15 phut khi thoat ra
         long timeExit = mSharedPreferences.getLong(TIME_EXIT_SYSTEM, 0);
 
-        if (System.currentTimeMillis() - timeExit < DateUtils.MINUTE_IN_MILLIS * 15) {
-            String valueCaculator = mSharedPreferences.getString(VALUE_CACULTOR, "");
-            mFormulaEditText.setText(valueCaculator);
+        if (System.currentTimeMillis() - timeExit < DateUtils.MINUTE_IN_MILLIS * 15 /*&& getPreferences()*/) {
+            mFormulaEditText.setText(getSavedExpression());
         }
 
         //Bkav  Phongngb bat su kien khi nhan vao item cua listview
@@ -223,22 +240,19 @@ public class BkavCalculator extends Calculator {
                 mListView.setAdapter(mAdapter);
                 mAdapter.notifyDataSetChanged();
                 mClearHistory.setVisibility(View.INVISIBLE);
+
                 //Bkav ThanhNgD: Xu li bug khi dang o page lich su( dang co du lieu) ma` xoa' lich xu
                 // thi` click se bi click button 123... cua page 1
                 if(mCalculatorPadViewPager != null){
                     TextView emptyElement = (TextView) findViewById(R.id.emptyElement);
                     if(emptyElement != null && emptyElement.getVisibility() == VISIBLE){
-                        CalculatorNumericPadLayout calculatorNumericPadLayout
-                                = (CalculatorNumericPadLayout) findViewById(R.id.pad_numeric);
-                        mCalculatorPadViewPager.recursivelySetEnabled( calculatorNumericPadLayout, false);
+                        mCalculatorPadViewPager.recursivelySetEnabled(mCalculatorNumericPadLayoutl, false);
                     }
                 }
                 if(mCalculatorViewpager != null){
                     TextView emptyElement = (TextView) findViewById(R.id.emptyElement);
                     if(emptyElement != null && emptyElement.getVisibility() == VISIBLE){
-                        CalculatorNumericPadLayout calculatorNumericPadLayout
-                                = (CalculatorNumericPadLayout) findViewById(R.id.pad_numeric);
-                        mCalculatorViewpager.recursivelySetEnabled( calculatorNumericPadLayout, false);
+                        mCalculatorViewpager.recursivelySetEnabled(mCalculatorNumericPadLayoutl, false);
                     }
                 }
             }
@@ -309,6 +323,26 @@ public class BkavCalculator extends Calculator {
                 }
             }
         }, 100);
+    }
+
+    private String getSavedExpression() {
+        String valueCaculator = mSharedPreferences.getString(VALUE_CACULTOR, "");
+
+        String separator = mCalculatorNumericPadLayoutl.getDecimalSeparator();
+        String otherSeparator = ".".equals(separator) ? "," : ".";
+
+        // Bkav QuangLH: chuan hoa lai xau da luu trong truong hop vua doi ngon ngu,
+        // dau thap phan cu da luu khong con dung nua
+        int index = valueCaculator.indexOf(otherSeparator);
+        if (index != -1) {
+            // Bkav QuangLH: co su thay doi ngon ngu, can yeu cau thu vien tinh toan
+            // load lai cac gia tri static lien quan toi dau phan cach.
+            Constants.rebuildConstants();
+
+            valueCaculator = valueCaculator.replace(otherSeparator, separator);
+        }
+
+        return valueCaculator;
     }
 
     //    Bkav Phongngb tao ra 1 bitmap b1 tuong tu nhu mot bitmap thu 2
@@ -476,7 +510,6 @@ public class BkavCalculator extends Calculator {
     protected void onEquals() {
         // Bkav Phongngb : save phep toan va set lai adpter cho listview
         saveHistory();
-
         if (mCurrentState == CalculatorState.INPUT) {
             // Bkav QuangLH: truong hop dang xoay ngang thi chi la Button thoi.
             // Xu ly nhu dau bang.
@@ -498,6 +531,13 @@ public class BkavCalculator extends Calculator {
     }
 
     @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        unregisterReceiver(mLangReceiver); // QuanTHb: huy broadcast
+    }
+
+    @Override
     protected void onPause() {
         super.onPause();
         // Bkav PhongNGb: luu de khoi phuc lai luc vao lai neu trong vong 15p.
@@ -506,7 +546,6 @@ public class BkavCalculator extends Calculator {
         editor.putLong(TIME_EXIT_SYSTEM, System.currentTimeMillis());
         editor.commit();
     }
-
 
     @Override
     protected void insertMathExpression(View view) {
