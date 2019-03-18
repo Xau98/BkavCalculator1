@@ -307,7 +307,7 @@ public class FormattedNumberEditText extends NumberEditText {
                 input = grouped;
             }
         }
-        
+
         return mEquationFormatter.insertSupScripts(input);
     }
 
