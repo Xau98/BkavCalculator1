@@ -491,12 +491,12 @@ public class BkavCalculator extends Calculator {
 
     //    Bkav Phonggnb luu lich su tinh toan
     private void saveHistory() {
-        String text = mFormulaEditText.getCleanText();
+        String expression = mFormulaEditText.getCleanText();
         String result = mResultEditText.getText().toString();
-        if (text.trim().length() > 0 && !result.trim().equals("")) {
+        if (shouldBeSavedInHistory(expression, result)) {
             mHistoryCaculator = (mHistoryCaculator.trim().length() > 0)
-                    ? (mHistoryCaculator = text + "=" + result + ";" + mHistoryCaculator)
-                    : (text + "=" + result);
+                    ? (mHistoryCaculator = expression + "=" + result + ";" + mHistoryCaculator)
+                    : (expression + "=" + result);
             SharedPreferences.Editor editor = mSharedPreferences.edit();
             editor.putString(HISTORY_CACULATOR, mHistoryCaculator);
 
@@ -698,5 +698,20 @@ public class BkavCalculator extends Calculator {
         } else {
             super.revealViewSetBottom(revealView, displayRect);
         }
+    }
+
+    /**
+     * QuanTHb: các phép tính có biểu thức khác null, đồng thời
+     * kết quả của nó cũng khác null và không phải lỗi thì mới lưu vào lịch sử
+     */
+    private boolean shouldBeSavedInHistory(String expression, String result){
+        // QuanTHb: các phép tính có biểu thức khác null.
+        boolean expressionNotNull = !expression.trim().equals("");
+        // QuanTHb: nếu kết quả lỗi thì kêt quả là 1 xâu có id là error_syntax.
+        // so sánh kêt với xâu đó sẽ biết là phép tính có lỗi hay không?
+        String error_syntax = getResources().getString(R.string.error_syntax);
+        boolean notNull = !result.trim().equals("");
+        boolean notAnError = !result.trim().equals(error_syntax);
+        return expressionNotNull && notNull && notAnError;
     }
 }
