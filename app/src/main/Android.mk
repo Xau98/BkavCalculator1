@@ -19,8 +19,7 @@ include $(CLEAR_VARS)
 
 LOCAL_MODULE_TAGS := optional
 
-LOCAL_STATIC_JAVA_LIBRARIES := libarity_bkav \
-    guava
+LOCAL_STATIC_JAVA_LIBRARIES := guava libarity_bkav
 
 LOCAL_STATIC_ANDROID_LIBRARIES:= \
         android-support-compat \
@@ -32,7 +31,7 @@ LOCAL_SRC_FILES := $(call all-java-files-under, java)
 LOCAL_RESOURCE_DIR := $(LOCAL_PATH)/res_bkav \
     $(LOCAL_PATH)/res
 
-LOCAL_SDK_VERSION := current
+LOCAL_PRIVATE_PLATFORM_APIS := true
 
 LOCAL_AAPT_FLAGS := --auto-add-overlay
 
@@ -41,15 +40,13 @@ LOCAL_PACKAGE_NAME := BkavCalculator
 LOCAL_OVERRIDES_PACKAGES := Calculator ExactCalculator
 
 include $(BUILD_PACKAGE)
+
 ##################################################
 include $(CLEAR_VARS)
 
-LOCAL_MODULE_CLASS := JAVA_LIBRARIES
-LOCAL_MODULE := libarity_bkav
-LOCAL_SRC_FILES := ../../libs/arity-2.1.7.jar
-LOCAL_SDK_VERSION := current
+LOCAL_PREBUILT_STATIC_JAVA_LIBRARIES := libarity_bkav:../../libs/arity-2.1.7.jar
 
-include $(BUILD_PREBUILT)
+include $(BUILD_MULTI_PREBUILT)
 
 # Use the following include to make our test apk.
 include $(call all-makefiles-under,$(LOCAL_PATH))
