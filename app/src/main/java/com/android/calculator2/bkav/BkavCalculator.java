@@ -17,6 +17,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
@@ -44,6 +45,8 @@ import com.android.calculator2.CalculatorNumericPadLayout;
 import com.android.calculator2.CalculatorPadLayout;
 import com.android.calculator2.CalculatorPadViewPager;
 import com.android.calculator2.bkav.EqualsImageButton.State;
+import com.android.calculator2.utils.CheckPermission;
+import com.android.calculator2.utils.PermissionUtil;
 import com.bkav.calculator2.R;
 import com.xlythe.math.Constants;
 
@@ -61,7 +64,7 @@ import static android.view.View.VISIBLE;
  * Created by anhbm on 07/06/2017.
  */
 
-public class BkavCalculator extends Calculator {
+public class BkavCalculator extends Calculator implements PermissionUtil.CallbackCheckPermission{
 
     private RelativeLayout mRootView;
     private CalculatorPadViewPager mCalculatorPadViewPager;
@@ -93,10 +96,12 @@ public class BkavCalculator extends Calculator {
     private String mInput = "";
 
     private BroadcastReceiver mLangReceiver = null;
+    private CheckPermission mCheckPermission; // Bien check P
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        mCheckPermission = new CheckPermission(this);
         mLangReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
@@ -125,11 +130,14 @@ public class BkavCalculator extends Calculator {
         mClearHistory = (Button) findViewById(R.id.clear_history);
         mButtonHistory = (Button) findViewById(R.id.digit_history);
         mRelativeLayoutHistory = (BkavHistoryLayout) findViewById(R.id.relative_layout_history);
-        Typeface typeface = Typeface.createFromAsset(getAssets(), "fonts/helveticaNeueThin.ttf");
-        mClearHistory.setTypeface(typeface);
-
-        Bitmap backgroundBitmapFromRom = getBluredBackgroundFromRom();
-        mRootView.setBackground(new BitmapDrawable(backgroundBitmapFromRom));
+        // TrungTH không cần ?
+//        Typeface typeface = Typeface.createFromAsset(getAssets(), "fonts/helveticaNeueThin.ttf");
+//        mClearHistory.setTypeface(typeface);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            mCheckPermission.checkPremission(CheckPermission.LIST_PERMS);
+        }else {
+            setBlurBackground();
+        }
 
         final int orientation = getResources().getConfiguration().orientation;
         if (orientation == Configuration.ORIENTATION_PORTRAIT) {
@@ -434,7 +442,6 @@ public class BkavCalculator extends Calculator {
 
     //    Blur from view
     private Bitmap getBlurredBackground(View view) {
-
         WallpaperManager wallpaperManager = WallpaperManager.getInstance(this);
         Bitmap bitmap = ((BitmapDrawable) wallpaperManager.getDrawable()).getBitmap();
         BlurManager blurManager = new BlurManager(view, null);
@@ -713,5 +720,34 @@ public class BkavCalculator extends Calculator {
         boolean notNull = !result.trim().equals("");
         boolean notAnError = !result.trim().equals(error_syntax);
         return expressionNotNull && notNull && notAnError;
+    }
+
+    @Override
+    public void denyPermission(String[] pers) {
+
+    }
+
+    @Override
+    public void acceptPermission(String[] pers) {
+        if (mCheckPermission.canAccessWriteStorage()) {
+            setBlurBackground();
+        }
+    }
+
+    @Override
+    public void alwaysDeny(String[] pers) {
+        PermissionUtil.showDialogOpenSetting(this, this, pers, CheckPermission.PERMISSION_REQUEST_CODE, R.string.title_request_permission, R.string.message_request_permission);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if (requestCode == CheckPermission.PERMISSION_REQUEST_CODE) {
+            PermissionUtil.onActivityPermissionResult(permissions, grantResults, this, this);
+        }
+    }
+
+    private void setBlurBackground() {
+        Bitmap backgroundBitmapFromRom = getBluredBackgroundFromRom();
+        mRootView.setBackground(new BitmapDrawable(backgroundBitmapFromRom));
     }
 }

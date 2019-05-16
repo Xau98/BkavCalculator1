@@ -25,6 +25,7 @@
         android:layout_centerHorizontal="true"
         android:background="@null"
         android:text="@string/clear_history"
+        android:fontFamily="sans-serif-thin"
         android:textAllCaps="false"
         android:textColor="@color/colorWhite"
         android:textSize="20sp"

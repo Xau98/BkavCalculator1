@@ -113,6 +113,9 @@
 
     <!-- Abbrev. name of tangent function (e.g. "%". [CHAR_LIMIT=3] -->
     <string name="fun_percent">%</string>
-
+    <string name="message_request_permission">To enable this feature, press on APP SETTINGS below, activate Storage and Phone in Permissions.</string>
+    <string name="title_request_permission">Allow RadioOnline access phone storage </string>
+    <string name="positive_title_request_permission">APP SETTINGS</string>
+    <string name="negative_title_request_permission">NOT NOW</string>
 
 </resources>
