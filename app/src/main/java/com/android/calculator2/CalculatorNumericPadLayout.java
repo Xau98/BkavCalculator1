@@ -52,7 +52,6 @@ public class CalculatorNumericPadLayout extends CalculatorPadLayout {
                     .setUnicodeLocaleKeyword("nu", "latn")
                     .build();
         }
-
         final DecimalFormatSymbols symbols = DecimalFormatSymbols.getInstance(locale);
 
         // Bkav QuangLH

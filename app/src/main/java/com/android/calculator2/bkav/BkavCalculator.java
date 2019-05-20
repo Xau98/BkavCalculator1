@@ -22,6 +22,7 @@ import android.support.annotation.RequiresApi;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.text.InputType;
+import android.text.TextUtils;
 import android.text.format.DateUtils;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -51,6 +52,8 @@ import com.bkav.calculator2.R;
 import com.xlythe.math.Constants;
 
 import java.text.DecimalFormatSymbols;
+import java.text.NumberFormat;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -64,7 +67,7 @@ import static android.view.View.VISIBLE;
  * Created by anhbm on 07/06/2017.
  */
 
-public class BkavCalculator extends Calculator implements PermissionUtil.CallbackCheckPermission{
+public class BkavCalculator extends Calculator implements PermissionUtil.CallbackCheckPermission {
 
     private RelativeLayout mRootView;
     private CalculatorPadViewPager mCalculatorPadViewPager;
@@ -86,6 +89,7 @@ public class BkavCalculator extends Calculator implements PermissionUtil.Callbac
     private static final String PREFS_NAME_CACULATOR = "caculator_value";
     private static final String TIME_EXIT_SYSTEM = "timeSystem";
     private static final String VALUE_CACULTOR = "valueCaculator";
+    private static final String DECIMAL_SEPARATOR_OLD_SAVE = "DECIMAL_SEPARATOR_OLD_SAVE"; // TrungTH them vao
     private static final String HISTORY_CACULATOR = "historyCaculator";
     private String mHistoryCaculator = "";
     private SharedPreferences mSharedPreferences;
@@ -135,7 +139,7 @@ public class BkavCalculator extends Calculator implements PermissionUtil.Callbac
 //        mClearHistory.setTypeface(typeface);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             mCheckPermission.checkPremission(CheckPermission.LIST_PERMS);
-        }else {
+        } else {
             setBlurBackground();
         }
 
@@ -217,12 +221,6 @@ public class BkavCalculator extends Calculator implements PermissionUtil.Callbac
 
         // Bkav Phongngb Set lai adapter cho listview history
         refreshEvents();
-        // Bkav PhongNGb : tu dong luu trong vong 15 phut khi thoat ra
-        long timeExit = mSharedPreferences.getLong(TIME_EXIT_SYSTEM, 0);
-
-        if (System.currentTimeMillis() - timeExit < DateUtils.MINUTE_IN_MILLIS * 15 /*&& getPreferences()*/) {
-            mFormulaEditText.setText(getSavedExpression());
-        }
 
         //Bkav  Phongngb bat su kien khi nhan vao item cua listview
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -251,15 +249,15 @@ public class BkavCalculator extends Calculator implements PermissionUtil.Callbac
 
                 //Bkav ThanhNgD: Xu li bug khi dang o page lich su( dang co du lieu) ma` xoa' lich xu
                 // thi` click se bi click button 123... cua page 1
-                if(mCalculatorPadViewPager != null){
+                if (mCalculatorPadViewPager != null) {
                     TextView emptyElement = (TextView) findViewById(R.id.emptyElement);
-                    if(emptyElement != null && emptyElement.getVisibility() == VISIBLE){
+                    if (emptyElement != null && emptyElement.getVisibility() == VISIBLE) {
                         mCalculatorPadViewPager.recursivelySetEnabled(mCalculatorNumericPadLayoutl, false);
                     }
                 }
-                if(mCalculatorViewpager != null){
+                if (mCalculatorViewpager != null) {
                     TextView emptyElement = (TextView) findViewById(R.id.emptyElement);
-                    if(emptyElement != null && emptyElement.getVisibility() == VISIBLE){
+                    if (emptyElement != null && emptyElement.getVisibility() == VISIBLE) {
                         mCalculatorViewpager.recursivelySetEnabled(mCalculatorNumericPadLayoutl, false);
                     }
                 }
@@ -291,7 +289,7 @@ public class BkavCalculator extends Calculator implements PermissionUtil.Callbac
                 blurAd.bitmapScale(0.05f).build(getApplicationContext(), bmAd);
                 final Bitmap bitmapBlurAd = blurAd.blur(20f);
 
-                if (mCalculatorPadViewPager != null){
+                if (mCalculatorPadViewPager != null) {
                     mCalculatorPadViewPager.setOnScrollViewPager(new CalculatorPadViewPager.IScrollViewPager() {
                         @Override
                         public void onScroll(int position, float positionOffset, int positionOffsetPixels) {
@@ -333,21 +331,33 @@ public class BkavCalculator extends Calculator implements PermissionUtil.Callbac
         }, 100);
     }
 
+    /**
+     * TrungTH muc dich la se check lai khi ngon ngu co su thay doi va doi lai gia tri cho chuan
+     *
+     * @return
+     */
     private String getSavedExpression() {
         String valueCaculator = mSharedPreferences.getString(VALUE_CACULTOR, "");
-
-        String separator = mCalculatorNumericPadLayoutl.getDecimalSeparator();
-        String otherSeparator = ".".equals(separator) ? "," : ".";
-
-        // Bkav QuangLH: chuan hoa lai xau da luu trong truong hop vua doi ngon ngu,
-        // dau thap phan cu da luu khong con dung nua
-        int index = valueCaculator.indexOf(otherSeparator);
-        if (index != -1) {
-            // Bkav QuangLH: co su thay doi ngon ngu, can yeu cau thu vien tinh toan
-            // load lai cac gia tri static lien quan toi dau phan cach.
-            Constants.rebuildConstants();
-
-            valueCaculator = valueCaculator.replace(otherSeparator, separator);
+        if (TextUtils.isEmpty(valueCaculator)) {
+            return valueCaculator; // ko phai lam gi
+        }
+        Constants.rebuildConstants();
+        String oldLocale = mSharedPreferences.getString(DECIMAL_SEPARATOR_OLD_SAVE, "");
+        String newlocale = getResources().getConfiguration().locale.getLanguage();;
+        if (TextUtils.isEmpty(oldLocale) || TextUtils.isEmpty(newlocale) || oldLocale.equals(newlocale)) {
+            return valueCaculator; // Ko phai lam gi
+        } else {
+            // Phai doi lai
+            // vi du 1.000,01 => 1,000.01
+            NumberFormat parser = NumberFormat.getNumberInstance(new Locale(oldLocale));
+            NumberFormat formatter = NumberFormat.getNumberInstance(new Locale(newlocale));
+            Number rawNumber = null;
+            try {
+                rawNumber = parser.parse(valueCaculator);
+                valueCaculator = formatter.format(rawNumber);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
         }
 
         return valueCaculator;
@@ -540,16 +550,33 @@ public class BkavCalculator extends Calculator implements PermissionUtil.Callbac
     @Override
     protected void onDestroy() {
         super.onDestroy();
-
         unregisterReceiver(mLangReceiver); // QuanTHb: huy broadcast
     }
 
     @Override
     protected void onPause() {
         super.onPause();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // Bkav PhongNGb : tu dong luu trong vong 15 phut khi thoat ra
+        long timeExit = mSharedPreferences.getLong(TIME_EXIT_SYSTEM, 0);
+
+        if (System.currentTimeMillis() - timeExit < DateUtils.MINUTE_IN_MILLIS * 15 /*&& getPreferences()*/) {
+            mFormulaEditText.setText(getSavedExpression());
+        }
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
         // Bkav PhongNGb: luu de khoi phuc lai luc vao lai neu trong vong 15p.
         SharedPreferences.Editor editor = mSharedPreferences.edit();
         editor.putString(VALUE_CACULTOR, mFormulaEditText.getText().toString());
+        // Luu them gia tri nay de check khi thay doi ngon ngu
+        editor.putString(DECIMAL_SEPARATOR_OLD_SAVE, getResources().getConfiguration().locale.getLanguage());
         editor.putLong(TIME_EXIT_SYSTEM, System.currentTimeMillis());
         editor.commit();
     }
@@ -711,7 +738,7 @@ public class BkavCalculator extends Calculator implements PermissionUtil.Callbac
      * QuanTHb: các phép tính có biểu thức khác null, đồng thời
      * kết quả của nó cũng khác null và không phải lỗi thì mới lưu vào lịch sử
      */
-    private boolean shouldBeSavedInHistory(String expression, String result){
+    private boolean shouldBeSavedInHistory(String expression, String result) {
         // QuanTHb: các phép tính có biểu thức khác null.
         boolean expressionNotNull = !expression.trim().equals("");
         // QuanTHb: nếu kết quả lỗi thì kêt quả là 1 xâu có id là error_syntax.
