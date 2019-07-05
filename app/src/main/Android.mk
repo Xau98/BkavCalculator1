@@ -22,9 +22,12 @@ LOCAL_MODULE_TAGS := optional
 LOCAL_STATIC_JAVA_LIBRARIES := guava libarity_bkav
 
 LOCAL_STATIC_ANDROID_LIBRARIES:= \
+        android-support-v4 \
         android-support-compat \
         android-support-core-ui \
         android-support-v7-appcompat
+
+LOCAL_USE_AAPT2 := true
 
 LOCAL_SRC_FILES := $(call all-java-files-under, java)
 
