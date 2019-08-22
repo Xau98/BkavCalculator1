@@ -2,10 +2,9 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 28
-    buildToolsVersion "28.0.0"
     defaultConfig {
         multiDexEnabled true
-        applicationId "com.google.android.apps.calculator"
+        applicationId "com.bkav.calculator"
         minSdkVersion 21
         targetSdkVersion 28
         versionCode 1
@@ -32,10 +31,9 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    compile 'com.android.support:appcompat-v7:28.0.0'
-    compile 'com.android.support:support-v4:28.0.0'
-    testCompile 'junit:junit:4.12'
-    compile 'com.xlythe:math-library:1.0.0'
-    compile 'com.xlythe:floating-view:1.1.1'
-    compile files('libs/arity-2.1.7.jar')
+    implementation 'com.android.support:appcompat-v7:28.0.0'
+    implementation 'com.android.support:support-v4:28.0.0'
+    implementation 'com.xlythe:math-library:1.0.0'
+    implementation 'com.xlythe:floating-view:1.1.1'
+    implementation files('libs/arity-2.1.7.jar')
 }

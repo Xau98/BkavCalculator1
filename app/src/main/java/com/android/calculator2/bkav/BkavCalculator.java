@@ -105,7 +105,6 @@ public class BkavCalculator extends Calculator implements PermissionUtil.Callbac
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        mCheckPermission = new CheckPermission(this);
         mLangReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
@@ -137,11 +136,8 @@ public class BkavCalculator extends Calculator implements PermissionUtil.Callbac
         // TrungTH không cần ?
 //        Typeface typeface = Typeface.createFromAsset(getAssets(), "fonts/helveticaNeueThin.ttf");
 //        mClearHistory.setTypeface(typeface);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            mCheckPermission.checkPremission(CheckPermission.LIST_PERMS);
-        } else {
-            setBlurBackground();
-        }
+         mCheckPermission = new CheckPermission(this);
+         setBlurBackground();
 
         final int orientation = getResources().getConfiguration().orientation;
         if (orientation == Configuration.ORIENTATION_PORTRAIT) {
@@ -461,13 +457,12 @@ public class BkavCalculator extends Calculator implements PermissionUtil.Callbac
 
     }
 
+    private WallpaperBlurCompat mWallpaperBlurCompat;
     private Bitmap getBluredBackgroundFromRom() {
-        WallpaperManager wallpaperManager = WallpaperManager.getInstance(this);
-        Bitmap bitmap = ((BitmapDrawable) wallpaperManager.getDrawable()).getBitmap();
-
-        WallpaperBlurCompat wallpaperBlurCompat = new WallpaperBlurCompat(this);
-        return wallpaperBlurCompat.getWallpaperBlur();
-        //return bitmap;
+        if(mWallpaperBlurCompat == null) {
+            mWallpaperBlurCompat = new WallpaperBlurCompat(this, mCheckPermission);
+        }
+        return mWallpaperBlurCompat.getWallpaperBlur();
     }
 
     /**
@@ -756,7 +751,7 @@ public class BkavCalculator extends Calculator implements PermissionUtil.Callbac
 
     @Override
     public void acceptPermission(String[] pers) {
-        if (mCheckPermission.canAccessWriteStorage()) {
+        if (mCheckPermission !=null && mCheckPermission.canAccessWriteStorage()) {
             setBlurBackground();
         }
     }

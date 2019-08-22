@@ -1,5 +1,7 @@
 package com.android.calculator2.bkav;
 
+import android.Manifest;
+import android.app.Activity;
 import android.app.WallpaperManager;
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -10,6 +12,9 @@ import android.renderscript.Allocation;
 import android.renderscript.Element;
 import android.renderscript.RenderScript;
 import android.renderscript.ScriptIntrinsicBlur;
+import android.util.Log;
+
+import com.android.calculator2.utils.CheckPermission;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -27,9 +32,12 @@ public class WallpaperBlurCompat {
     private RenderScript mRenderScript;
     private WallpaperManager mWallpaperManager;
     private  Context mContext;
+    private CheckPermission mCheckPermission; // Bien check P
 
-    public WallpaperBlurCompat(Context context){
+
+    public WallpaperBlurCompat(Activity context, CheckPermission checkPermission){
         mWallpaperManager = WallpaperManager.getInstance(context);
+        mCheckPermission = checkPermission;
         initBlur(context);
         mContext = context;
     }
@@ -53,7 +61,11 @@ public class WallpaperBlurCompat {
             return blurWallpaper();
         }
         if (wallpaperBlur == null){
-            wallpaperBlur = blurWallpaper();
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && !mCheckPermission.hasPermission((Activity) mContext, Manifest.permission.READ_EXTERNAL_STORAGE) ) {
+                mCheckPermission.checkPremission(CheckPermission.LIST_PERMS);
+            } else {
+                wallpaperBlur = blurWallpaper();
+            }
         }
         return wallpaperBlur;
     }

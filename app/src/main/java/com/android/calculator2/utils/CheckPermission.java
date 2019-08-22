@@ -17,8 +17,6 @@ public class CheckPermission {
             Manifest.permission.READ_EXTERNAL_STORAGE
     };
 
-    public static final String[] LIST_LOCATIONS_PERMS = new String[]{Manifest.permission.READ_EXTERNAL_STORAGE};
-
     private Activity mActivity;
 
     public CheckPermission(Activity activity) {
@@ -30,21 +28,11 @@ public class CheckPermission {
         return (hasPermission(mActivity, Manifest.permission.READ_EXTERNAL_STORAGE));
     }
 
-    private boolean canAccessPhoneState() {
-        return (hasPermission(mActivity, Manifest.permission.READ_PHONE_STATE));
-    }
-
     @RequiresApi(api = Build.VERSION_CODES.M)
     public static boolean hasPermission(Activity activity, String perm) {
         return (PackageManager.PERMISSION_GRANTED == activity.checkSelfPermission(perm));
     }
 
-
-    @RequiresApi(api = Build.VERSION_CODES.M)
-    public boolean canAccessFineLocation() {
-        return (CheckPermission.hasPermission(mActivity, Manifest.permission.ACCESS_FINE_LOCATION) &&
-                CheckPermission.hasPermission(mActivity, Manifest.permission.ACCESS_COARSE_LOCATION));
-    }
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     public void checkPremission(String[] listsPermission) {
