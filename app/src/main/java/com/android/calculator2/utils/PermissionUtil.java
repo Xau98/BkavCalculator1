@@ -24,7 +24,7 @@ public class PermissionUtil {
 
     private static final String PREF_FIRST_RUN_CHECK_PRE = "PREF_FIRST_RUN_CHECK_PRE";
 
-    public static final String APPLICATION_ID = "bkav.android.radioonline";
+    public static final String APPLICATION_ID = "com.bkav.calculator2";
 
     private static final int DELTA_REQUEST_OPEN_SETTINGS = 101;
 

@@ -49,7 +49,7 @@
     <string name="desc_eq" msgid="8068773095462472408">"bằng"</string>
 
     <string name="message_request_permission">Để bật tính năng này, bấm vào CÀI ĐẶT bên dưới, kích hoạt Lưu Trữ trong menu quyền</string>
-    <string name="title_request_permission">Cho phép RadioOnline truy cập bộ nhớ điện thoại</string>
+    <string name="title_request_permission">Cho phép Máy tính truy cập bộ nhớ điện thoại</string>
     <string name="positive_title_request_permission">CÀI ĐẶT</string>
     <string name="negative_title_request_permission">KHÔNG PHẢI LÚC NÀY</string>
 
