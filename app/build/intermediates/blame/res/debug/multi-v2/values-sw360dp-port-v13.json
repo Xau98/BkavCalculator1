@@ -1,17 +1,17 @@
 {
     "logs": [
         {
-            "outputFile": "/home/tiennvh/Desktop/ExactCalculator/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-sw360dp-port-v13/values-sw360dp-port-v13.xml",
+            "outputFile": "/home/tiennvh/Desktop/BkavCalculator/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-sw360dp-port-v13/values-sw360dp-port-v13.xml",
             "map": [
                 {
-                    "source": "/home/tiennvh/Desktop/ExactCalculator/app/src/main/res/values-sw360dp-port/styles.xml",
+                    "source": "/home/tiennvh/Desktop/BkavCalculator/app/src/main/res/values-sw360dp-port/styles.xml",
                     "from": {
-                        "startLines": "-1,-1,30,-1,-1,-1,-1,-1,-1",
-                        "startColumns": "-1,-1,4,-1,-1,-1,-1,-1,-1",
-                        "startOffsets": "-1,-1,1167,-1,-1,-1,-1,-1,-1",
-                        "endLines": "-1,-1,34,-1,-1,-1,-1,-1,-1",
-                        "endColumns": "-1,-1,12,-1,-1,-1,-1,-1,-1",
-                        "endOffsets": "-1,-1,1409,-1,-1,-1,-1,-1,-1"
+                        "startLines": "19,25,30,36,41,45,50,58,67",
+                        "startColumns": "4,4,4,4,4,4,4,4,4",
+                        "startOffsets": "721,1001,1167,1415,1584,1692,1858,2183,2563",
+                        "endLines": "23,28,34,39,43,48,56,65,74",
+                        "endColumns": "12,12,12,12,12,12,12,12,12",
+                        "endOffsets": "995,1161,1409,1578,1686,1852,2177,2557,2935"
                     },
                     "to": {
                         "startLines": "2,7,11,16,20,23,27,34,42",

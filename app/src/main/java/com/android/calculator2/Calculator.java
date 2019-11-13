@@ -40,6 +40,7 @@ import android.content.ClipData;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -279,13 +280,12 @@ public class Calculator extends Activity
 
     private View mCurrentButton;
     private Animator mCurrentAnimator;
-
+    // Bkav TienNvh:
     private SharedPreferences mSharedPreferences;
-    private String mSharePreFile="SaveCalCulator";
+    private String mSharePreFile = "SaveCalCulator";
 
-    private View mPercentButton;
-    private View mPIButton ;
-    private View mFactButton ;
+    private String mINPUT = ""; 
+    
     // Characters that were recently entered at the end of the display that have not yet
     // been added to the underlying expression.
     private String mUnprocessedChars = null;
@@ -424,6 +424,7 @@ public class Calculator extends Activity
                 findViewById(R.id.fun_ln),
                 findViewById(R.id.fun_log),
                 findViewById(R.id.op_sqrt)
+
         };
         mInverseButtons = new View[]{
                 findViewById(R.id.fun_arcsin),
@@ -457,34 +458,23 @@ public class Calculator extends Activity
         restoreDisplay();
         setBlurBackground();
         // Bkav TienNVh :
-        mSharedPreferences= getSharedPreferences(mSharePreFile, MODE_PRIVATE);
-        String formulatext= mSharedPreferences.getString("FormulaText", "");
+        mSharedPreferences = getSharedPreferences(mSharePreFile, MODE_PRIVATE);
+        final String formulatext = mSharedPreferences.getString("FormulaText", "");
+        int orientation = getResources().getConfiguration().orientation;
 
         mFormulaText.setText(formulatext);
-
-        mPercentButton = findViewById(R.id.op_pct);
-        mPercentButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mPadViewPager.setCurrentItem(mPadViewPager.getCurrentItem()-1);
+        if (!formulatext.equals("")) {
+            for (int i = 0; i < formulatext.length(); i++) {
+                char splitFormulatext = formulatext.charAt(i);
+                if (KeyMaps.keyForDigVal((int) splitFormulatext) == View.NO_ID) {
+                    if (KeyMaps.keyForChar(splitFormulatext) != View.NO_ID) {
+                        addExplicitKeyToExpr(KeyMaps.keyForChar(splitFormulatext));
+                    }
+                } else {
+                    addExplicitKeyToExpr(KeyMaps.keyForDigVal((int) splitFormulatext));
+                }
             }
-        });
-
-        mPIButton =findViewById(R.id.const_pi);
-        mPIButton .setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mPadViewPager.setCurrentItem(mPadViewPager.getCurrentItem()-1);
-            }
-        });
-
-        mFactButton =findViewById(R.id.op_fact);
-        mFactButton .setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mPadViewPager.setCurrentItem(mPadViewPager.getCurrentItem()-1);
-            }
-        });
+        }
     }
 
     @Override
@@ -504,9 +494,9 @@ public class Calculator extends Activity
 
     private void setBlurBackground() {
         Bitmap backgroundBitmapFromRom = getBluredBackgroundFromRom();
-       mDragLayout.setBackground(new BitmapDrawable(backgroundBitmapFromRom));
-       if(mPadViewPager!=null)
-         mPadViewPager.setBackgroundColor(Color.TRANSPARENT);
+        mDragLayout.setBackground(new BitmapDrawable(backgroundBitmapFromRom));
+        if (mPadViewPager != null)
+            mPadViewPager.setBackgroundColor(Color.TRANSPARENT);
     }
 
     @Override
@@ -518,7 +508,7 @@ public class Calculator extends Activity
     @Override
     public void acceptPermission(String[] pers) {
         if (mCheckPermission != null && mCheckPermission.canAccessWriteStorage()) {
-             setBlurBackground();
+            setBlurBackground();
         }
     }
 
@@ -668,10 +658,7 @@ public class Calculator extends Activity
     @Override
     protected void onDestroy() {
         mDragLayout.removeDragCallback(this);
-        //TienNVh : Luu trang thai cuoi cung
-        SharedPreferences.Editor editor= mSharedPreferences.edit();
-        editor.putString("FormulaText", mFormulaText.getText()+"");
-        editor.apply();
+
         super.onDestroy();
 
     }
@@ -715,7 +702,6 @@ public class Calculator extends Activity
     public boolean dispatchTouchEvent(MotionEvent e) {
         if (e.getActionMasked() == MotionEvent.ACTION_DOWN) {
             stopActionModeOrContextMenu();
-            Log.d(TAG, "dispatchTouchEvent: ");
             final HistoryFragment historyFragment = getHistoryFragment();
             if (mDragLayout.isOpen() && historyFragment != null) {
                 historyFragment.stopActionModeOrContextMenu();
@@ -809,6 +795,7 @@ public class Calculator extends Activity
      *
      * @param showInverse {@code true} if inverse functions should be shown
      */
+    //Bkav TienNVh:
     private void onInverseToggled(boolean showInverse) {
         mInverseToggle.setSelected(showInverse);
         if (showInverse) {
@@ -816,17 +803,34 @@ public class Calculator extends Activity
             mInverseToggle.setContentDescription(getString(R.string.desc_inv_on));
             for (View invertibleButton : mInvertibleButtons) {
                 invertibleButton.setVisibility(View.GONE);
+
+                if (mPadViewPager == null) {
+                    findViewById(R.id.op_m_plus).setVisibility(View.GONE);
+                    findViewById(R.id.op_m_sub).setVisibility(View.GONE);
+                }
             }
             for (View inverseButton : mInverseButtons) {
                 inverseButton.setVisibility(View.VISIBLE);
+                if (mPadViewPager == null) {
+                    findViewById(R.id.op_m_r).setVisibility(View.VISIBLE);
+                    findViewById(R.id.op_m_c).setVisibility(View.VISIBLE);
+                }
             }
         } else {
             mInverseToggle.setContentDescription(getString(R.string.desc_inv_off));
             for (View invertibleButton : mInvertibleButtons) {
                 invertibleButton.setVisibility(View.VISIBLE);
+                if (mPadViewPager == null) {
+                    findViewById(R.id.op_m_plus).setVisibility(View.VISIBLE);
+                    findViewById(R.id.op_m_sub).setVisibility(View.VISIBLE);
+                }
             }
             for (View inverseButton : mInverseButtons) {
                 inverseButton.setVisibility(View.GONE);
+                if (mPadViewPager == null) {
+                    findViewById(R.id.op_m_r).setVisibility(View.GONE);
+                    findViewById(R.id.op_m_c).setVisibility(View.GONE);
+                }
             }
         }
     }
@@ -966,6 +970,7 @@ public class Calculator extends Activity
             case R.id.toggle_inv:
                 final boolean selected = !mInverseToggle.isSelected();
                 mInverseToggle.setSelected(selected);
+                Log.d(TAG, "onButtonClick: " + selected);
                 onInverseToggled(selected);
                 if (mCurrentState == CalculatorState.RESULT) {
                     mResultText.redisplay();   // In case we cancelled reevaluation.
@@ -991,15 +996,67 @@ public class Calculator extends Activity
                     evaluateInstantIfNecessary();
                 }
                 return;
+            //Bkav  TienNVh: Click cac nut % , ! , pi , dong item mo rong
+            case R.id.const_pi:
+            case R.id.op_fact:
+            case R.id.op_pct:
+                addExplicitKeyToExpr(id);
+                redisplayAfterFormulaChange();
+                if (mPadViewPager != null) {
+                    mPadViewPager.setCurrentItem(mPadViewPager.getCurrentItem() - 1);
+                }
+                return;
+
+            case R.id.op_m_c:
+                mINPUT="";
+                return;
+            case R.id.op_m_r:
+                 mFormulaText.setText(mINPUT);
+                if (!mINPUT.equals("")) {
+                    for (int i = 0; i < mINPUT.length(); i++) {
+                        char splitFormulatext = mINPUT.charAt(i);
+                        if (KeyMaps.keyForDigVal((int) splitFormulatext) == View.NO_ID) {
+                            if (KeyMaps.keyForChar(splitFormulatext) != View.NO_ID) {
+                                addExplicitKeyToExpr(KeyMaps.keyForChar(splitFormulatext));
+                            }
+                        } else {
+                            addExplicitKeyToExpr(KeyMaps.keyForDigVal((int) splitFormulatext));
+                        }
+                    }
+                }
+                return;
+            case R.id.op_m_plus:
+                mINPUT=mResultText.getText()+"";
+                onEquals();
+                return;
+            case R.id.op_m_sub:
+                mINPUT= mResultText.getText()+"*-1";
+                if (!mINPUT.equals("")) {
+                    for (int i = 0; i < mINPUT.length(); i++) {
+                        char splitFormulatext = mINPUT.charAt(i);
+                        if (KeyMaps.keyForDigVal((int) splitFormulatext) == View.NO_ID) {
+                            if (KeyMaps.keyForChar(splitFormulatext) != View.NO_ID) {
+                                addExplicitKeyToExpr(KeyMaps.keyForChar(splitFormulatext));
+                            }
+                        } else {
+                            addExplicitKeyToExpr(KeyMaps.keyForDigVal((int) splitFormulatext));
+                        }
+                    }
+                }
+                onEquals();
+
+                return;
             default:
                 cancelIfEvaluating(false);
                 if (haveUnprocessed()) {
                     // For consistency, append as uninterpreted characters.
                     // This may actually be useful for a left parenthesis.
                     addChars(KeyMaps.toString(this, id), true);
+
                 } else {
                     addExplicitKeyToExpr(id);
                     redisplayAfterFormulaChange();
+
                 }
                 break;
         }
@@ -1127,6 +1184,10 @@ public class Calculator extends Activity
                 setState(CalculatorState.EVALUATE);
                 mEvaluator.requireResult(Evaluator.MAIN_INDEX, this, mResultText);
             }
+            //TienNvh : Luu trang thais
+            SharedPreferences.Editor editor = mSharedPreferences.edit();
+            editor.putString("FormulaText", mFormulaText.getText() + "");
+            editor.apply();
         }
     }
 

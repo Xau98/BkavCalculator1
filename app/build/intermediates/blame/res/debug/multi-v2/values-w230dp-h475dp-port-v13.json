@@ -1,27 +1,27 @@
 {
     "logs": [
         {
-            "outputFile": "/home/tiennvh/Desktop/ExactCalculator/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-w230dp-h475dp-port-v13/values-w230dp-h475dp-port-v13.xml",
+            "outputFile": "/home/tiennvh/Desktop/BkavCalculator/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-w230dp-h475dp-port-v13/values-w230dp-h475dp-port-v13.xml",
             "map": [
                 {
-                    "source": "/home/tiennvh/Desktop/ExactCalculator/app/src/main/res/values-w230dp-h475dp-port/layout.xml",
+                    "source": "/home/tiennvh/Desktop/BkavCalculator/app/src/main/res/values-w230dp-h475dp-port/dimens.xml",
                     "from": {
-                        "startLines": "18,19,21,20",
-                        "startColumns": "4,4,4,4",
-                        "startOffsets": "661,752,903,823",
-                        "endColumns": "90,70,75,79",
-                        "endOffsets": "747,818,974,898"
+                        "startLines": "24,23,20,22,21,19,25,29,31,30,28,32",
+                        "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4",
+                        "startOffsets": "967,914,753,862,808,702,1020,1165,1272,1219,1114,1323",
+                        "endColumns": "52,52,54,51,53,50,52,53,50,52,50,47",
+                        "endOffsets": "1015,962,803,909,857,748,1068,1214,1318,1267,1160,1366"
                     },
                     "to": {
-                        "startLines": "14,15,16,17",
-                        "startColumns": "4,4,4,4",
-                        "startOffsets": "683,774,845,921",
-                        "endColumns": "90,70,75,79",
-                        "endOffsets": "769,840,916,996"
+                        "startLines": "2,3,4,5,6,7,8,9,10,11,12,13",
+                        "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4",
+                        "startOffsets": "55,108,161,216,268,322,373,426,480,531,584,635",
+                        "endColumns": "52,52,54,51,53,50,52,53,50,52,50,47",
+                        "endOffsets": "103,156,211,263,317,368,421,475,526,579,630,678"
                     }
                 },
                 {
-                    "source": "/home/tiennvh/Desktop/ExactCalculator/app/src/main/res/values-w230dp-h475dp-port/styles.xml",
+                    "source": "/home/tiennvh/Desktop/BkavCalculator/app/src/main/res/values-w230dp-h475dp-port/styles.xml",
                     "from": {
                         "startLines": "19,25,30,34,38,42,47,55,64",
                         "startColumns": "4,4,4,4,4,4,4,4,4",
@@ -40,20 +40,20 @@
                     }
                 },
                 {
-                    "source": "/home/tiennvh/Desktop/ExactCalculator/app/src/main/res/values-w230dp-h475dp-port/dimens.xml",
+                    "source": "/home/tiennvh/Desktop/BkavCalculator/app/src/main/res/values-w230dp-h475dp-port/layout.xml",
                     "from": {
-                        "startLines": "24,23,20,22,21,19,25,29,31,30,28,32",
-                        "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4",
-                        "startOffsets": "967,914,753,862,808,702,1020,1165,1272,1219,1114,1323",
-                        "endColumns": "52,52,54,51,53,50,52,53,50,52,50,47",
-                        "endOffsets": "1015,962,803,909,857,748,1068,1214,1318,1267,1160,1366"
+                        "startLines": "18,19,21,20",
+                        "startColumns": "4,4,4,4",
+                        "startOffsets": "661,752,903,823",
+                        "endColumns": "90,70,75,79",
+                        "endOffsets": "747,818,974,898"
                     },
                     "to": {
-                        "startLines": "2,3,4,5,6,7,8,9,10,11,12,13",
-                        "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4",
-                        "startOffsets": "55,108,161,216,268,322,373,426,480,531,584,635",
-                        "endColumns": "52,52,54,51,53,50,52,53,50,52,50,47",
-                        "endOffsets": "103,156,211,263,317,368,421,475,526,579,630,678"
+                        "startLines": "14,15,16,17",
+                        "startColumns": "4,4,4,4",
+                        "startOffsets": "683,774,845,921",
+                        "endColumns": "90,70,75,79",
+                        "endOffsets": "769,840,916,996"
                     }
                 }
             ]

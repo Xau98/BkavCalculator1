@@ -1,27 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "/home/tiennvh/Desktop/ExactCalculator/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-w230dp-h275dp-v13/values-w230dp-h275dp-v13.xml",
+            "outputFile": "/home/tiennvh/Desktop/BkavCalculator/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-w230dp-h275dp-v13/values-w230dp-h275dp-v13.xml",
             "map": [
                 {
-                    "source": "/home/tiennvh/Desktop/ExactCalculator/app/src/main/res/values-w230dp-h275dp/layout.xml",
-                    "from": {
-                        "startLines": "18,19,21,20",
-                        "startColumns": "4,4,4,4",
-                        "startOffsets": "661,752,903,823",
-                        "endColumns": "90,70,75,79",
-                        "endOffsets": "747,818,974,898"
-                    },
-                    "to": {
-                        "startLines": "14,15,16,17",
-                        "startColumns": "4,4,4,4",
-                        "startOffsets": "680,771,842,918",
-                        "endColumns": "90,70,75,79",
-                        "endOffsets": "766,837,913,993"
-                    }
-                },
-                {
-                    "source": "/home/tiennvh/Desktop/ExactCalculator/app/src/main/res/values-w230dp-h275dp/styles.xml",
+                    "source": "/home/tiennvh/Desktop/BkavCalculator/app/src/main/res/values-w230dp-h275dp/styles.xml",
                     "from": {
                         "startLines": "19,25,30,34,38,42,47,55,64",
                         "startColumns": "4,4,4,4,4,4,4,4,4",
@@ -40,7 +23,24 @@
                     }
                 },
                 {
-                    "source": "/home/tiennvh/Desktop/ExactCalculator/app/src/main/res/values-w230dp-h275dp/dimens.xml",
+                    "source": "/home/tiennvh/Desktop/BkavCalculator/app/src/main/res/values-w230dp-h275dp/layout.xml",
+                    "from": {
+                        "startLines": "18,19,21,20",
+                        "startColumns": "4,4,4,4",
+                        "startOffsets": "661,752,903,823",
+                        "endColumns": "90,70,75,79",
+                        "endOffsets": "747,818,974,898"
+                    },
+                    "to": {
+                        "startLines": "14,15,16,17",
+                        "startColumns": "4,4,4,4",
+                        "startOffsets": "680,771,842,918",
+                        "endColumns": "90,70,75,79",
+                        "endOffsets": "766,837,913,993"
+                    }
+                },
+                {
+                    "source": "/home/tiennvh/Desktop/BkavCalculator/app/src/main/res/values-w230dp-h275dp/dimens.xml",
                     "from": {
                         "startLines": "24,23,20,22,21,19,25,29,31,30,28,32",
                         "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4",

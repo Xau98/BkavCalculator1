@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "/home/tiennvh/Desktop/ExactCalculator/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-small-v4/values-small-v4.xml",
+            "outputFile": "/home/tiennvh/Desktop/BkavCalculator/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-small-v4/values-small-v4.xml",
             "map": [
                 {
                     "source": "/home/tiennvh/.gradle/caches/transforms-2/files-2.1/a10c515599ba72b77fad2d423a5fcbf5/material-1.2.0-alpha01/res/values-small-v4/values-small-v4.xml",

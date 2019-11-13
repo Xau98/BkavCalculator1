@@ -314,5 +314,13 @@
     <string name="title_current_expression">Current Expression</string>
     <!-- Placeholder string when there is no history to be shown. [CHAR_LIMIT=40] -->
     <string name="no_history">No History</string>
+    <string name="mr">mr</string>
+    <string name="button_mr">mr</string>
+    <string name="m_plus">m+</string>
+    <string name="button_m_plus">button m+</string>
+    <string name="mc">mc</string>
+    <string name="button_mc">Button mc</string>
+    <string name="m_sub">m-</string>
+    <string name="button_m_sub">Button m-</string>
 
 </resources>

@@ -189,6 +189,7 @@ public class KeyMaps {
             case R.id.op_sqr:
                 result = '2';
                 break;
+
             default:
                 throw new AssertionError("Unexpected key id");
         }

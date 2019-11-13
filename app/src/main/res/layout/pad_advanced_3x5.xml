@@ -23,14 +23,7 @@
     android:background="#3b3c3f"
     app:rowCount="5"
     app:columnCount="4">
-    <Button
-        android:id="@+id/op_m_r"
-        style="@style/PadButtonStyle.Advanced.Text"
-        android:background="@drawable/pad_button_inverse_background"
-        android:contentDescription="mr"
-        android:text="mr"
-        app:layout_row="0"
-        app:layout_column="0" />
+
     <Button
         android:id="@+id/toggle_inv"
         style="@style/PadButtonStyle.Advanced.Text"
@@ -57,10 +50,10 @@
         app:layout_column="3" />
 
     <Button
-        android:id="@+id/opp_mc"
+        android:id="@+id/op_m_c"
         style="@style/PadButtonStyle.Advanced"
-        android:contentDescription="mc"
-        android:text="mc"
+        android:contentDescription="@string/button_mc"
+        android:text="@string/mc"
         app:layout_row="1"
         app:layout_column="0" />
     <Button
@@ -117,10 +110,10 @@
         app:layout_row="1"
         app:layout_column="3" />
     <Button
-        android:id="@+id/opp_m_plus"
+        android:id="@+id/op_m_plus"
         style="@style/PadButtonStyle.Advanced"
-        android:contentDescription="@string/desc_fun_ln"
-        android:text="m+"
+        android:contentDescription="@string/button_m_plus"
+        android:text="@string/m_plus"
         app:layout_row="2"
         app:layout_column="0" />
 
@@ -169,10 +162,10 @@
         app:layout_column="3" />
 
     <Button
-        android:id="@+id/opp_m_sub"
+        android:id="@+id/op_m_sub"
         style="@style/PadButtonStyle.Advanced"
-        android:contentDescription="m-"
-        android:text="m-"
+        android:contentDescription="@string/button_m_sub"
+        android:text="@string/m_sub"
         app:layout_row="3"
         app:layout_column="0" />
     <Button
@@ -198,14 +191,20 @@
         android:text="@string/op_pow"
         app:layout_row="3"
         app:layout_column="3" />
-
+    <Button
+        android:id="@+id/op_m_r"
+        style="@style/PadButtonStyle.Advanced"
+        android:contentDescription="@string/button_mr"
+        android:text="@string/mr"
+        app:layout_row="4"
+        app:layout_column="0" />
     <Button
         android:id="@+id/lparen"
         style="@style/PadButtonStyle.Advanced"
         android:contentDescription="@string/desc_lparen"
         android:text="@string/lparen"
         app:layout_row="4"
-        app:layout_column="0" />
+        app:layout_column="1" />
 
     <Button
         android:id="@+id/rparen"
@@ -213,7 +212,7 @@
         android:contentDescription="@string/desc_rparen"
         android:text="@string/rparen"
         app:layout_row="4"
-        app:layout_column="1" />
+        app:layout_column="2" />
 
     <Button
         android:id="@+id/op_sqrt"
@@ -221,7 +220,7 @@
         android:contentDescription="@string/desc_op_sqrt"
         android:text="@string/op_sqrt"
         app:layout_row="4"
-        app:layout_column="2" />
+        app:layout_column="3" />
 
     <Button
         android:id="@+id/op_sqr"
@@ -231,6 +230,6 @@
         android:text="@string/op_sqr"
         android:visibility="gone"
         app:layout_row="4"
-        app:layout_column="2" />
+        app:layout_column="3" />
 
 </androidx.gridlayout.widget.GridLayout>

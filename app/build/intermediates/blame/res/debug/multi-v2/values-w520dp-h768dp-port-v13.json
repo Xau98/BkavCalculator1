@@ -1,27 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "/home/tiennvh/Desktop/ExactCalculator/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-w520dp-h768dp-port-v13/values-w520dp-h768dp-port-v13.xml",
+            "outputFile": "/home/tiennvh/Desktop/BkavCalculator/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-w520dp-h768dp-port-v13/values-w520dp-h768dp-port-v13.xml",
             "map": [
                 {
-                    "source": "/home/tiennvh/Desktop/ExactCalculator/app/src/main/res/values-w520dp-h768dp-port/dimens.xml",
-                    "from": {
-                        "startLines": "24,23,20,22,21,19,25,29,31,30,28,32",
-                        "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4",
-                        "startOffsets": "968,915,754,863,809,702,1021,1166,1273,1220,1115,1324",
-                        "endColumns": "52,52,54,51,53,51,52,53,50,52,50,47",
-                        "endOffsets": "1016,963,804,910,858,749,1069,1215,1319,1268,1161,1367"
-                    },
-                    "to": {
-                        "startLines": "2,3,4,5,6,7,8,9,10,11,12,13",
-                        "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4",
-                        "startOffsets": "55,108,161,216,268,322,374,427,481,532,585,636",
-                        "endColumns": "52,52,54,51,53,51,52,53,50,52,50,47",
-                        "endOffsets": "103,156,211,263,317,369,422,476,527,580,631,679"
-                    }
-                },
-                {
-                    "source": "/home/tiennvh/Desktop/ExactCalculator/app/src/main/res/values-w520dp-h768dp-port/layout.xml",
+                    "source": "/home/tiennvh/Desktop/BkavCalculator/app/src/main/res/values-w520dp-h768dp-port/layout.xml",
                     "from": {
                         "startLines": "18,19,20,21",
                         "startColumns": "4,4,4,4",
@@ -38,7 +21,7 @@
                     }
                 },
                 {
-                    "source": "/home/tiennvh/Desktop/ExactCalculator/app/src/main/res/values-w520dp-h768dp-port/styles.xml",
+                    "source": "/home/tiennvh/Desktop/BkavCalculator/app/src/main/res/values-w520dp-h768dp-port/styles.xml",
                     "from": {
                         "startLines": "19,25,30,34,38,42,47,56,65",
                         "startColumns": "4,4,4,4,4,4,4,4,4",
@@ -54,6 +37,23 @@
                         "endLines": "22,26,29,32,35,39,47,55,63",
                         "endColumns": "12,12,12,12,12,12,12,12,12",
                         "endOffsets": "1283,1448,1554,1668,1775,1940,2320,2698,3075"
+                    }
+                },
+                {
+                    "source": "/home/tiennvh/Desktop/BkavCalculator/app/src/main/res/values-w520dp-h768dp-port/dimens.xml",
+                    "from": {
+                        "startLines": "24,23,20,22,21,19,25,29,31,30,28,32",
+                        "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4",
+                        "startOffsets": "968,915,754,863,809,702,1021,1166,1273,1220,1115,1324",
+                        "endColumns": "52,52,54,51,53,51,52,53,50,52,50,47",
+                        "endOffsets": "1016,963,804,910,858,749,1069,1215,1319,1268,1161,1367"
+                    },
+                    "to": {
+                        "startLines": "2,3,4,5,6,7,8,9,10,11,12,13",
+                        "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4",
+                        "startOffsets": "55,108,161,216,268,322,374,427,481,532,585,636",
+                        "endColumns": "52,52,54,51,53,51,52,53,50,52,50,47",
+                        "endOffsets": "103,156,211,263,317,369,422,476,527,580,631,679"
                     }
                 }
             ]

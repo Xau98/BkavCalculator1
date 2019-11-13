@@ -1,10 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "/home/tiennvh/Desktop/ExactCalculator/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-w520dp-h220dp-land-v13/values-w520dp-h220dp-land-v13.xml",
+            "outputFile": "/home/tiennvh/Desktop/BkavCalculator/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-w520dp-h220dp-land-v13/values-w520dp-h220dp-land-v13.xml",
             "map": [
                 {
-                    "source": "/home/tiennvh/Desktop/ExactCalculator/app/src/main/res/values-w520dp-h220dp-land/dimens.xml",
+                    "source": "/home/tiennvh/Desktop/BkavCalculator/app/src/main/res/values-w520dp-h220dp-land/dimens.xml",
                     "from": {
                         "startLines": "24,23,20,22,21,19,25,29,31,30,28,32",
                         "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4",
@@ -21,7 +21,7 @@
                     }
                 },
                 {
-                    "source": "/home/tiennvh/Desktop/ExactCalculator/app/src/main/res/values-w520dp-h220dp-land/layout.xml",
+                    "source": "/home/tiennvh/Desktop/BkavCalculator/app/src/main/res/values-w520dp-h220dp-land/layout.xml",
                     "from": {
                         "startLines": "18,19,21,20",
                         "startColumns": "4,4,4,4",
@@ -38,7 +38,7 @@
                     }
                 },
                 {
-                    "source": "/home/tiennvh/Desktop/ExactCalculator/app/src/main/res/values-w520dp-h220dp-land/styles.xml",
+                    "source": "/home/tiennvh/Desktop/BkavCalculator/app/src/main/res/values-w520dp-h220dp-land/styles.xml",
                     "from": {
                         "startLines": "19,25,30,34,38,42,47,56,65",
                         "startColumns": "4,4,4,4,4,4,4,4,4",
