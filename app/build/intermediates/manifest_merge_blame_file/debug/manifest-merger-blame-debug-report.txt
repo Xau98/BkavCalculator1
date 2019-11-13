@@ -1,0 +1,87 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<!--
+3  Copyright (C) 2014 The Android Open Source Project
+4
+5  Licensed under the Apache License, Version 2.0 (the "License");
+6  you may not use this file except in compliance with the License.
+7  You may obtain a copy of the License at
+8
+9    http://www.apache.org/licenses/LICENSE-2.0
+10
+11  Unless required by applicable law or agreed to in writing, software
+12  distributed under the License is distributed on an "AS IS" BASIS,
+13  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+14  See the License for the specific language governing permissions and
+15  limitations under the License.
+16-->
+17<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+18    package="com.android.calculator2" >
+19
+20    <uses-sdk
+21        android:minSdkVersion="21"
+21-->/home/tiennvh/Desktop/ExactCalculator/app/src/main/AndroidManifest.xml
+22        android:targetSdkVersion="29" />
+22-->/home/tiennvh/Desktop/ExactCalculator/app/src/main/AndroidManifest.xml
+23
+24    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+24-->/home/tiennvh/Desktop/ExactCalculator/app/src/main/AndroidManifest.xml:21:5-79
+24-->/home/tiennvh/Desktop/ExactCalculator/app/src/main/AndroidManifest.xml:21:22-77
+25
+26    <application
+26-->/home/tiennvh/Desktop/ExactCalculator/app/src/main/AndroidManifest.xml:22:5-50:19
+27        android:allowBackup="false"
+27-->/home/tiennvh/Desktop/ExactCalculator/app/src/main/AndroidManifest.xml:23:9-36
+28        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+28-->[androidx.core:core:1.1.0] /home/tiennvh/.gradle/caches/transforms-2/files-2.1/7f6c41cc2a14c0fbaa8d0166c17dc544/core-1.1.0/AndroidManifest.xml:24:18-86
+29        android:debuggable="true"
+30        android:icon="@mipmap/bkav_calculator_foreground"
+30-->/home/tiennvh/Desktop/ExactCalculator/app/src/main/AndroidManifest.xml:24:9-58
+31        android:label="@string/app_name"
+31-->/home/tiennvh/Desktop/ExactCalculator/app/src/main/AndroidManifest.xml:25:9-41
+32        android:supportsRtl="true"
+32-->/home/tiennvh/Desktop/ExactCalculator/app/src/main/AndroidManifest.xml:27:9-35
+33        android:testOnly="true"
+34        android:theme="@style/CalculatorTheme" >
+34-->/home/tiennvh/Desktop/ExactCalculator/app/src/main/AndroidManifest.xml:26:9-47
+35        <activity
+35-->/home/tiennvh/Desktop/ExactCalculator/app/src/main/AndroidManifest.xml:29:9-42:20
+36            android:name="com.android.calculator2.Calculator"
+36-->/home/tiennvh/Desktop/ExactCalculator/app/src/main/AndroidManifest.xml:30:13-39
+37            android:label="@string/app_name"
+37-->/home/tiennvh/Desktop/ExactCalculator/app/src/main/AndroidManifest.xml:31:13-45
+38            android:launchMode="singleTask" >
+38-->/home/tiennvh/Desktop/ExactCalculator/app/src/main/AndroidManifest.xml:32:13-44
+39            <layout
+39-->/home/tiennvh/Desktop/ExactCalculator/app/src/main/AndroidManifest.xml:34:13-36:44
+40                android:minHeight="220dp"
+40-->/home/tiennvh/Desktop/ExactCalculator/app/src/main/AndroidManifest.xml:35:17-42
+41                android:minWidth="230dp" />
+41-->/home/tiennvh/Desktop/ExactCalculator/app/src/main/AndroidManifest.xml:36:17-41
+42
+43            <intent-filter>
+43-->/home/tiennvh/Desktop/ExactCalculator/app/src/main/AndroidManifest.xml:37:13-41:29
+44                <action android:name="android.intent.action.MAIN" />
+44-->/home/tiennvh/Desktop/ExactCalculator/app/src/main/AndroidManifest.xml:38:17-69
+44-->/home/tiennvh/Desktop/ExactCalculator/app/src/main/AndroidManifest.xml:38:25-66
+45
+46                <category android:name="android.intent.category.LAUNCHER" />
+46-->/home/tiennvh/Desktop/ExactCalculator/app/src/main/AndroidManifest.xml:39:17-77
+46-->/home/tiennvh/Desktop/ExactCalculator/app/src/main/AndroidManifest.xml:39:27-74
+47                <category android:name="android.intent.category.APP_CALCULATOR" />
+47-->/home/tiennvh/Desktop/ExactCalculator/app/src/main/AndroidManifest.xml:40:17-83
+47-->/home/tiennvh/Desktop/ExactCalculator/app/src/main/AndroidManifest.xml:40:27-80
+48            </intent-filter>
+49        </activity>
+50        <activity
+50-->/home/tiennvh/Desktop/ExactCalculator/app/src/main/AndroidManifest.xml:44:9-48:53
+51            android:name="com.android.calculator2.Licenses"
+51-->/home/tiennvh/Desktop/ExactCalculator/app/src/main/AndroidManifest.xml:45:13-37
+52            android:launchMode="singleTop"
+52-->/home/tiennvh/Desktop/ExactCalculator/app/src/main/AndroidManifest.xml:46:13-43
+53            android:parentActivityName="com.android.calculator2.Calculator"
+53-->/home/tiennvh/Desktop/ExactCalculator/app/src/main/AndroidManifest.xml:47:13-53
+54            android:theme="@style/Theme.Licenses" />
+54-->/home/tiennvh/Desktop/ExactCalculator/app/src/main/AndroidManifest.xml:48:13-50
+55    </application>
+56
+57</manifest>

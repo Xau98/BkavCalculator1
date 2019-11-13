@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?><!--
+<?xml version="1.0" encoding="utf-8"?>
+<!--
   Copyright (C) 2014 The Android Open Source Project
 
   Licensed under the Apache License, Version 2.0 (the "License");
@@ -16,13 +17,53 @@
 
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
-
-    <style name="DisplayEditTextStyle" parent="@android:style/Widget.Material.Light.EditText">
-        <item name="android:background">@android:color/transparent</item>
+    <style name="DisplayTextStyle" parent="@android:style/Widget.Material.Light.TextView">
         <item name="android:cursorVisible">false</item>
         <item name="android:fontFamily">sans-serif-light</item>
         <item name="android:includeFontPadding">false</item>
         <item name="android:gravity">bottom|end</item>
+        <item name="android:textAlignment">viewEnd</item>
+    </style>
+
+    <style name="DisplayTextStyle.Formula">
+        <item name="android:paddingTop">@dimen/formula_padding_top</item>
+        <item name="android:paddingBottom">@dimen/formula_padding_bottom</item>
+        <item name="android:paddingStart">@dimen/formula_padding_start</item>
+        <item name="android:paddingEnd">@dimen/formula_padding_end</item>
+        <item name="android:gravity">bottom</item>
+        <item name="minTextSize">@dimen/formula_min_textsize</item>
+        <item name="maxTextSize">@dimen/formula_max_textsize</item>
+        <item name="stepTextSize">@dimen/formula_step_textsize</item>
+    </style>
+    <!--Bkav AnhBM: them style-->
+    <style name="PadLayoutStyle.BkavAdvanced">
+
+        <item name="android:elevation">4dip</item>
+        <item name="android:paddingTop">23dip</item>
+        <item name="android:paddingBottom">20dip</item>
+        <item name="android:paddingStart">20dip</item>
+        <item name="android:paddingEnd">20dip</item>
+        <item name="android:columnCount">3</item>
+        <item name="android:rowCount">6</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+    <style name="DisplayTextStyle.Result">
+        <item name="android:paddingTop">@dimen/result_padding_top</item>
+        <item name="android:paddingBottom">@dimen/result_padding_bottom</item>
+        <item name="android:paddingStart">@dimen/result_padding_start</item>
+        <item name="android:paddingEnd">@dimen/result_padding_end</item>
+        <item name="android:gravity">bottom</item>
+        <item name="android:textSize">@dimen/result_textsize</item>
+    </style>
+
+    <style name="HistoryItemTextStyle" parent="DisplayTextStyle">
+        <item name="android:layout_gravity">bottom|end</item>
+        <item name="android:paddingTop">@dimen/history_item_text_padding_top</item>
+        <item name="android:paddingBottom">@dimen/history_item_text_padding_bottom</item>
+        <!-- Note: result_padding_start == formula_padding_start. -->
+        <item name="android:paddingStart">@dimen/result_padding_start</item>
+        <item name="android:paddingEnd">@dimen/result_padding_end</item>
+        <item name="android:textSize">@dimen/result_textsize</item>
     </style>
 
     <style name="PadButtonStyle" parent="@android:style/Widget.Material.Light.Button.Borderless">
@@ -34,8 +75,44 @@
         <item name="android:includeFontPadding">false</item>
         <item name="android:minWidth">0dip</item>
         <item name="android:minHeight">0dip</item>
+        <item name="android:onClick">onButtonClick</item>
         <item name="android:textAllCaps">false</item>
         <item name="android:textColor">@color/pad_button_text_color</item>
+
+
+        <!-- Attributes from androidx.appcompat.gridlayout -->
+        <item name="layout_gravity">fill</item>
+        <item name="layout_rowWeight">1</item>
+        <item name="layout_columnWeight">1</item>
+    </style>
+
+    <style name="PadButtonStyle.Advanced">
+        <item name="android:background">@drawable/pad_button_advanced_background</item>
+        <item name="android:textColor">@color/pad_button_advanced_text_color</item>
+        <item name="android:textSize">14dip</item>
+    </style>
+
+    <style name="PadButtonStyle.Advanced.Text">
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textSize">12dip</item>
+    </style>
+
+    <style name="PadButtonStyle.Numeric">
+        <item name="android:textSize">16dip</item>
+    </style>
+
+    <style name="PadButtonStyle.Numeric.Equals">
+        <item name="android:visibility">visible</item>
+<!--        <item name="android:background">#FFd66039</item>-->
+    </style>
+
+    <style name="PadButtonStyle.Operator1">
+        <item name="android:textSize">14dip</item>
+    </style>
+
+    <style name="PadButtonStyle.Operator.Text">
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textSize">12dip</item>
     </style>
 
     <style name="PadLayoutStyle">
@@ -43,6 +120,21 @@
         <item name="android:layout_height">match_parent</item>
     </style>
 
+    <style name="PadLayoutStyle.Advanced">
+        <item name="android:background">#3b3c3f</item>
+        <item name="android:paddingTop">2dip</item>
+        <item name="android:paddingBottom">8dip</item>
+
+    </style>
+
+    <style name="PadLayoutStyle.Numeric">
+        <item name="android:layout_width">0dip</item>
+        <item name="android:layout_weight">7</item>
+        <item name="android:paddingTop">2dip</item>
+        <item name="android:paddingBottom">8dip</item>
+        <item name="android:paddingStart">8dip</item>
+        <item name="android:paddingEnd">8dip</item>
+    </style>
     <!-- //Bkav AnhBM: Sua lai de hieu ung mo ra co xam xam den-->
     <style name="CalculatorTheme" parent="@android:style/Theme.Material.Light.NoActionBar">
         <item name="android:colorPrimary">@color/calculator_accent_color</item>
@@ -52,34 +144,14 @@
         <item name="android:colorBackground">@color/default_background</item>
 
     </style>
-
-
-    <!-- trungnvd style button operator -->
-    <style name="PadButtonOperatorStyle" parent="@android:style/Widget.Material.Light.Button.Borderless">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:background">@drawable/pad_button_background</item>
-        <item name="android:fontFamily">sans-serif-light</item>
-        <item name="android:gravity">center</item>
-        <item name="android:includeFontPadding">false</item>
-        <item name="android:minWidth">0dip</item>
-        <item name="android:minHeight">0dip</item>
-        <item name="android:textAllCaps">false</item>
-        <item name="android:textColor">@color/pad_button_text_operator_color</item>
-    </style>
-
-    <!-- trungnvd style image button operator -->
-    <style name="PadButtonOperatorImageStyle" parent="@android:style/Widget.Material.Light.Button.Borderless">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">match_parent</item>
-        <item name="android:background">@drawable/icon_more</item>
-        <item name="android:fontFamily">sans-serif-light</item>
-        <item name="android:gravity">center</item>
-        <item name="android:includeFontPadding">false</item>
-        <item name="android:minWidth">0dip</item>
-        <item name="android:minHeight">0dip</item>
-        <item name="android:textAllCaps">false</item>
-        <item name="android:textColor">@color/pad_button_text_operator_color</item>
+    <style name="PadLayoutStyle.Operator">
+<!--        <item name="android:background">@color/pad_operator_background_color</item>-->
+        <item name="android:layout_width">0dip</item>
+        <item name="android:layout_weight">140</item>
+        <item name="android:paddingTop">4dip</item>
+        <item name="android:paddingBottom">4dip</item>
+        <item name="android:paddingStart">120dip</item>
+        <item name="android:paddingEnd">12dip</item>
     </style>
 
 </resources>

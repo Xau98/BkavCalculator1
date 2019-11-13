@@ -1,0 +1,62 @@
+{
+    "logs": [
+        {
+            "outputFile": "/home/tiennvh/Desktop/ExactCalculator/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-w230dp-h475dp-port-v13/values-w230dp-h475dp-port-v13.xml",
+            "map": [
+                {
+                    "source": "/home/tiennvh/Desktop/ExactCalculator/app/src/main/res/values-w230dp-h475dp-port/layout.xml",
+                    "from": {
+                        "startLines": "18,19,21,20",
+                        "startColumns": "4,4,4,4",
+                        "startOffsets": "661,752,903,823",
+                        "endColumns": "90,70,75,79",
+                        "endOffsets": "747,818,974,898"
+                    },
+                    "to": {
+                        "startLines": "14,15,16,17",
+                        "startColumns": "4,4,4,4",
+                        "startOffsets": "683,774,845,921",
+                        "endColumns": "90,70,75,79",
+                        "endOffsets": "769,840,916,996"
+                    }
+                },
+                {
+                    "source": "/home/tiennvh/Desktop/ExactCalculator/app/src/main/res/values-w230dp-h475dp-port/styles.xml",
+                    "from": {
+                        "startLines": "19,25,30,34,38,42,47,55,64",
+                        "startColumns": "4,4,4,4,4,4,4,4,4",
+                        "startOffsets": "721,1001,1167,1274,1392,1500,1666,1991,2368",
+                        "endLines": "23,28,32,36,40,45,53,62,71",
+                        "endColumns": "12,12,12,12,12,12,12,12,12",
+                        "endOffsets": "995,1161,1268,1386,1494,1660,1985,2362,2740"
+                    },
+                    "to": {
+                        "startLines": "18,23,27,30,33,36,40,47,55",
+                        "startColumns": "4,4,4,4,4,4,4,4,4",
+                        "startOffsets": "1001,1280,1445,1551,1668,1775,1940,2264,2640",
+                        "endLines": "22,26,29,32,35,39,46,54,62",
+                        "endColumns": "12,12,12,12,12,12,12,12,12",
+                        "endOffsets": "1275,1440,1546,1663,1770,1935,2259,2635,3012"
+                    }
+                },
+                {
+                    "source": "/home/tiennvh/Desktop/ExactCalculator/app/src/main/res/values-w230dp-h475dp-port/dimens.xml",
+                    "from": {
+                        "startLines": "24,23,20,22,21,19,25,29,31,30,28,32",
+                        "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4",
+                        "startOffsets": "967,914,753,862,808,702,1020,1165,1272,1219,1114,1323",
+                        "endColumns": "52,52,54,51,53,50,52,53,50,52,50,47",
+                        "endOffsets": "1015,962,803,909,857,748,1068,1214,1318,1267,1160,1366"
+                    },
+                    "to": {
+                        "startLines": "2,3,4,5,6,7,8,9,10,11,12,13",
+                        "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4",
+                        "startOffsets": "55,108,161,216,268,322,373,426,480,531,584,635",
+                        "endColumns": "52,52,54,51,53,50,52,53,50,52,50,47",
+                        "endOffsets": "103,156,211,263,317,368,421,475,526,579,630,678"
+                    }
+                }
+            ]
+        }
+    ]
+}

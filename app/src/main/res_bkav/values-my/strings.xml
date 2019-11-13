@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-
-<resources>
-    <!--Bkav Phongngb -->
-    <string name="clear_history">ရှင်းလင်းမည်</string>
-    <string name="button_history">သုံးခဲ့သမျှ</string>
-    <string name="textview_no_history">အသုံးပြုခဲ့မှု မရှိပါ</string>
-</resources>

@@ -1,0 +1,62 @@
+{
+    "logs": [
+        {
+            "outputFile": "/home/tiennvh/Desktop/ExactCalculator/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-w375dp-h275dp-v13/values-w375dp-h275dp-v13.xml",
+            "map": [
+                {
+                    "source": "/home/tiennvh/Desktop/ExactCalculator/app/src/main/res/values-w375dp-h275dp/layout.xml",
+                    "from": {
+                        "startLines": "18,19,21,20",
+                        "startColumns": "4,4,4,4",
+                        "startOffsets": "661,752,903,823",
+                        "endColumns": "90,70,75,79",
+                        "endOffsets": "747,818,974,898"
+                    },
+                    "to": {
+                        "startLines": "3,4,5,6",
+                        "startColumns": "4,4,4,4",
+                        "startOffsets": "188,279,350,426",
+                        "endColumns": "90,70,75,79",
+                        "endOffsets": "274,345,421,501"
+                    }
+                },
+                {
+                    "source": "/home/tiennvh/Desktop/ExactCalculator/app/src/main/res/values-w375dp-h275dp/styles.xml",
+                    "from": {
+                        "startLines": "19,25,30,34,38,42,47,55,64",
+                        "startColumns": "4,4,4,4,4,4,4,4,4",
+                        "startOffsets": "721,1001,1167,1274,1389,1497,1663,1986,2361",
+                        "endLines": "23,28,32,36,40,45,53,62,71",
+                        "endColumns": "12,12,12,12,12,12,12,12,12",
+                        "endOffsets": "995,1161,1268,1383,1491,1657,1980,2355,2732"
+                    },
+                    "to": {
+                        "startLines": "7,12,16,19,22,25,29,36,44",
+                        "startColumns": "4,4,4,4,4,4,4,4,4",
+                        "startOffsets": "506,785,950,1056,1170,1277,1442,1764,2138",
+                        "endLines": "11,15,18,21,24,28,35,43,51",
+                        "endColumns": "12,12,12,12,12,12,12,12,12",
+                        "endOffsets": "780,945,1051,1165,1272,1437,1759,2133,2509"
+                    }
+                },
+                {
+                    "source": "/home/tiennvh/Desktop/ExactCalculator/app/src/main/res/values-w375dp-h275dp/dimens.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "104",
+                        "endColumns": "89",
+                        "endOffsets": "189"
+                    },
+                    "to": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "100",
+                        "endColumns": "87",
+                        "endOffsets": "183"
+                    }
+                }
+            ]
+        }
+    ]
+}

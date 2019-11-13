@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014 The Android Open Source Project
+ * Copyright (C) 2015 The Android Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,32 +18,62 @@ package com.android.calculator2;
 
 import android.content.Context;
 import android.content.res.Resources;
-import android.support.v4.view.PagerAdapter;
-import android.support.v4.view.ViewPager;
+import android.graphics.Color;
+import androidx.viewpager.widget.PagerAdapter;
+import androidx.viewpager.widget.ViewPager;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.GestureDetector;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.widget.TextView;
-import android.widget.Toast;
-
-import com.bkav.calculator2.R;
 
 public class CalculatorPadViewPager extends ViewPager {
 
-
     private final PagerAdapter mStaticPagerAdapter = new PagerAdapter() {
-
         @Override
         public int getCount() {
             return getChildCount();
         }
 
         @Override
-        public Object instantiateItem(ViewGroup container, int position) {
-            return getChildAt(position);
+        public View instantiateItem(ViewGroup container, final int position) {
+            final View child = getChildAt(position);
+
+            // Set a OnClickListener to scroll to item's position when it isn't the current item.
+            child.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    setCurrentItem(position, true /* smoothScroll */);
+                }
+            });
+            // Set an OnTouchListener to always return true for onTouch events so that a touch
+            // sequence cannot pass through the item to the item below.
+            child.setOnTouchListener(new OnTouchListener() {
+                @Override
+                public boolean onTouch(View v, MotionEvent event) {
+                    v.onTouchEvent(event);
+                    return true;
+                }
+            });
+
+            // Set an OnHoverListener to always return true for onHover events so that focus cannot
+            // pass through the item to the item below.
+            child.setOnHoverListener(new OnHoverListener() {
+                @Override
+                public boolean onHover(View v, MotionEvent event) {
+                    v.onHoverEvent(event);
+                    return true;
+                }
+            });
+            // Make the item focusable so it can be selected via a11y.
+            child.setFocusable(true);
+            // Set the content description of the item which will be used by a11y to identify it.
+            child.setContentDescription(getPageTitle(position));
+
+            return child;
         }
 
         @Override
@@ -51,127 +81,100 @@ public class CalculatorPadViewPager extends ViewPager {
             removeViewAt(position);
         }
 
-        //Bkav Phongngb: method kiem tra xem cac doi tuong duoc tra ve boi insatantiateItem duoc ket noi voi cac view duoc cung cap
         @Override
         public boolean isViewFromObject(View view, Object object) {
             return view == object;
         }
 
         @Override
-        public float getPageWidth(int position) { // Bkav phongngb set lai hien thi cua ba man hinh tren viewpager
-            if (position == 0) {
-                return 0.80f;// Bkav ThanhNgD: 0.84 -> 0.80
-            } else if (position == 2) {
-                return (0.75f);//Bkav ThanhNgD: 0.84 -> 0.75
-            } else {
-                return (float) (mScreenWidth + mWidthDistanceRight) / mScreenWidth;
+        public float getPageWidth(int position) {
+            return  1.0f;
+        }
 
-            }
-            //BKAV AnhBM
-            //return  position == 1 ? 0.8f :(float) (mScreenWidth + mWidthDistanceRight) / mScreenWidth;
+        @Override
+        public CharSequence getPageTitle(int position) {
+            final String[] pageDescriptions = getContext().getResources()
+                    .getStringArray(R.array.desc_pad_pages);
+            return pageDescriptions[position];
         }
     };
-
-    public void recursivelySetEnabled(View view, boolean enabled) {
-        if (view instanceof ViewGroup) {
-            // Bkav ThanhNgD: Can` chuyen view thanh` viewGrop vi`: view chuyen` vao` gom` nhieu` child view, ma`
-            // method setEnable() o duoi' chi thuc hien dc voi' cac base view nhu TextView, Button...
-            final ViewGroup viewGroup = (ViewGroup) view;
-            // Thuc hien de quy lai method nay` voi' tat' ca cac' child view cua viewGroup
-            // Method nay` se chay vao` else{} chu' k vao` day nua~ vi` viewGroup.getChildAt(childIndex)
-            // luc' nay` la` base view -> (view instanceof ViewGroup) la` false
-            for (int childIndex = 0; childIndex < viewGroup.getChildCount(); ++childIndex) {
-                recursivelySetEnabled(viewGroup.getChildAt(childIndex), enabled);
-            }
-        } else {
-            // Bkav ThanhNgD: setEnabled(...) xu li kha nang Touchables( co' the cham.) cua view
-            // false -> vo hieu hoa' Touchables, true -> bat Touchables
-            view.setEnabled(enabled);
-        }
-    }
 
     private final OnPageChangeListener mOnPageChangeListener = new SimpleOnPageChangeListener() {
         @Override
         public void onPageSelected(int position) {
-            if (getAdapter() == mStaticPagerAdapter) {
-                TextView emptyElement = (TextView) getChildAt(0).findViewById(R.id.emptyElement);
-                for (int childIndex = 0; childIndex < getChildCount(); ++childIndex) {
-                    // Xu ly bug khi lich su trong'(emptyElement dang VISIBLE ) van click button 123... cua page 1
-                    if(emptyElement != null && getCurrentItem() == 0 && emptyElement.getVisibility() == VISIBLE){
-                        CalculatorNumericPadLayout calculatorNumericPadLayout
-                                = (CalculatorNumericPadLayout) getChildAt(1).findViewById(R.id.pad_numeric);
-                        recursivelySetEnabled( calculatorNumericPadLayout, false);
-                    }
-                    else {
-                        //Bkav ThanhNgD: childIndex == position -> true
-                        // Neu' la` childIndex == position thi` page dang chon moi' click dc, page khac'
-                        // du` co' hien cung k the click vi`  setEnabled() = false
-                        // Con` la` true thi` neu' view dc hien tren windown thi` co the click
-                        recursivelySetEnabled( getChildAt(childIndex), true);
+            for (int i = getChildCount() - 1; i >= 0; --i) {
+                final View child = getChildAt(i);
+                // Only the "peeking" or covered page should be clickable.
+                child.setClickable(i != position);
+
+                // Prevent clicks and accessibility focus from going through to descendants of
+                // other pages which are covered by the current page.
+                if (child instanceof ViewGroup) {
+                    final ViewGroup childViewGroup = (ViewGroup) child;
+                    for (int j = childViewGroup.getChildCount() - 1; j >= 0; --j) {
+                        childViewGroup.getChildAt(j)
+                                .setImportantForAccessibility(i == position
+                                        ? IMPORTANT_FOR_ACCESSIBILITY_AUTO
+                                        : IMPORTANT_FOR_ACCESSIBILITY_NO_HIDE_DESCENDANTS);
                     }
                 }
             }
-        }
-
-        //Bkav phongngb khi scroll se draw background advenced
-        @Override
-        public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-            super.onPageScrolled(position, positionOffset, positionOffsetPixels);
-            if (mIScrollViewPager != null)
-                mIScrollViewPager.onScroll(position, positionOffset, positionOffsetPixels);
         }
     };
 
     private final PageTransformer mPageTransformer = new PageTransformer() {
         @Override
         public void transformPage(View view, float position) {
-            // Phongngb : Check neu lon hon 3 view . neu view hien thi len man hinh la view 1
-            // thi di chuyen cac view kia
-            if (getChildCount() > 2) {
-                if (view.equals(getChildAt(1))) {
-                    view.setTranslationX(getWidth() * -position);
-                }
+            if (position < 0.0f) {
+                // Pin the left page to the left side.
+                view.setTranslationX(getWidth() * -position);
+                view.setAlpha(Math.max(1.0f + position, 0.0f));
+            } else {
+                // Use the default slide transition when moving to the next page.
+                view.setTranslationX(0.0f);
+                view.setAlpha(1.0f);
             }
-
-//            Bkav AnhBM: Bo logic goc
-//            if (position < 0.0f) {
-//                // Pin the left page to the left side.
-//                view.setTranslationX(getWidth() * -position);
-//
-//                //AnhBM: Bo do khong can hieu ung alpha khi vuot sang nua
-//                //view.setAlpha(Math.max(1.0f + position, 0.0f));
-//            } else {
-//                // Use the default slide transition when moving to the next page.
-//                view.setTranslationX(0.0f);
-//                view.setAlpha(1.0f);
-//            }
         }
     };
 
+    private final GestureDetector.SimpleOnGestureListener mGestureWatcher =
+            new GestureDetector.SimpleOnGestureListener() {
+        @Override
+        public boolean onDown(MotionEvent e) {
+            // Return true so calls to onSingleTapUp are not blocked.
+            return true;
+        }
+
+        @Override
+        public boolean onSingleTapUp(MotionEvent ev) {
+            if (mClickedItemIndex != -1) {
+                getChildAt(mClickedItemIndex).performClick();
+                mClickedItemIndex = -1;
+                return true;
+            }
+            return super.onSingleTapUp(ev);
+        }
+    };
+
+    private final GestureDetector mGestureDetector;
+
+    private int mClickedItemIndex = -1;
 
     public CalculatorPadViewPager(Context context) {
-        this(context, null);
+        this(context, null /* attrs */);
     }
 
     public CalculatorPadViewPager(Context context, AttributeSet attrs) {
         super(context, attrs);
 
+        mGestureDetector = new GestureDetector(context, mGestureWatcher);
+        mGestureDetector.setIsLongpressEnabled(false);
+
         setAdapter(mStaticPagerAdapter);
-        //Bkav AnhBM: bo de dung cho cau truc pageview moi
-//        setBackgroundColor(getResources().getColor(android.R.color.black));
-//        setPageMargin(getResources().getDimensionPixelSize(R.dimen.pad_page_margin));
-        setOnPageChangeListener(mOnPageChangeListener);
-        // Bkav Phongngb : de cho viewPager co the reverse drawing
-        setPageTransformer(/*false*/true, mPageTransformer);
 
-        // Bkav AnhBM
-        WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
-        DisplayMetrics dm = new DisplayMetrics();
-        wm.getDefaultDisplay().getMetrics(dm);
-        mScreenWidth = dm.widthPixels;
+        setPageTransformer(false, mPageTransformer);
+        addOnPageChangeListener(mOnPageChangeListener);
 
-        final Resources res = getResources();
-        mWidthDistanceRight = res.getDimensionPixelOffset(R.dimen.width_distance_right);
     }
 
     @Override
@@ -179,24 +182,74 @@ public class CalculatorPadViewPager extends ViewPager {
         super.onFinishInflate();
 
         // Invalidate the adapter's data set since children may have been added during inflation.
-        if (getAdapter() == mStaticPagerAdapter) {
-            mStaticPagerAdapter.notifyDataSetChanged();
+        getAdapter().notifyDataSetChanged();
+
+        // Let page change listener know about our initial position.
+        mOnPageChangeListener.onPageSelected(getCurrentItem());
+    }
+
+    @Override
+    public boolean onInterceptTouchEvent(MotionEvent ev) {
+        try {
+            // Always intercept touch events when a11y focused since otherwise they will be
+            // incorrectly offset by a11y before being dispatched to children.
+            if (isAccessibilityFocused() || super.onInterceptTouchEvent(ev)) {
+                return true;
+            }
+
+            // Only allow the current item to receive touch events.
+            final int action = ev.getActionMasked();
+            if (action == MotionEvent.ACTION_DOWN || action == MotionEvent.ACTION_POINTER_DOWN) {
+                // If a child is a11y focused then we must always intercept the touch event
+                // since it will be incorrectly offset by a11y.
+                final int childCount = getChildCount();
+                for (int childIndex = childCount - 1; childIndex >= 0; --childIndex) {
+                    if (getChildAt(childIndex).isAccessibilityFocused()) {
+                        mClickedItemIndex = childIndex;
+                        return true;
+                    }
+                }
+
+                if (action == MotionEvent.ACTION_DOWN) {
+                    mClickedItemIndex = -1;
+                }
+
+                // Otherwise if touch is on a non-current item then intercept.
+                final int actionIndex = ev.getActionIndex();
+                final float x = ev.getX(actionIndex) + getScrollX();
+                final float y = ev.getY(actionIndex) + getScrollY();
+                for (int i = childCount - 1; i >= 0; --i) {
+                    final int childIndex = getChildDrawingOrder(childCount, i);
+                    final View child = getChildAt(childIndex);
+                    if (child.getVisibility() == VISIBLE
+                            && x >= child.getLeft() && x < child.getRight()
+                            && y >= child.getTop() && y < child.getBottom()) {
+                        if (action == MotionEvent.ACTION_DOWN) {
+                            mClickedItemIndex = childIndex;
+                        }
+                        return childIndex != getCurrentItem();
+                    }
+                }
+            }
+
+            return false;
+        } catch (IllegalArgumentException e) {
+            Log.e("Calculator", "Error intercepting touch event", e);
+            return false;
         }
     }
 
-    /******************** Bkav **********************/
-    private int mScreenWidth;
-
-    private int mWidthDistanceRight;
-    private IScrollViewPager mIScrollViewPager;
-
-    public interface IScrollViewPager {
-        void onScroll(int i, float v, int i1);
+    @Override
+    public boolean onTouchEvent(MotionEvent ev) {
+        try {
+            // Allow both the gesture detector and super to handle the touch event so they both see
+            // the full sequence of events. This should be safe since the gesture detector only
+            // handle clicks and super only handles swipes.
+            mGestureDetector.onTouchEvent(ev);
+            return super.onTouchEvent(ev);
+        } catch (IllegalArgumentException e) {
+            Log.e("Calculator", "Error processing touch event", e);
+            return false;
+        }
     }
-
-    public void setOnScrollViewPager(IScrollViewPager mIScrollViewPager) {
-        this.mIScrollViewPager = mIScrollViewPager;
-    }
-
-
 }

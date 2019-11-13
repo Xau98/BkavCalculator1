@@ -1,39 +1,29 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion 29
+    buildToolsVersion "29.0.2"
+
     defaultConfig {
-        multiDexEnabled true
-        applicationId "com.bkav.calculator"
+        applicationId "com.android.calculator2"
         minSdkVersion 21
-        targetSdkVersion 28
-        versionCode 1
-        versionName "1.0"
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        targetSdkVersion 29
     }
+
     buildTypes {
         release {
             minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-        }
-    }
-    sourceSets {
-        main {
-            res.srcDirs = ['src/main/res','src/main/res-aosp','src/main/res_bkav']
-            java.srcDirs = ['src/main/java']
-            manifest.srcFile 'src/main/AndroidManifest.xml'
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
         }
     }
 }
 
 dependencies {
-    compile fileTree(include: ['*.jar'], dir: 'libs')
-    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
-        exclude group: 'com.android.support', module: 'support-annotations'
-    })
-    implementation 'com.android.support:appcompat-v7:28.0.0'
-    implementation 'com.android.support:support-v4:28.0.0'
-    implementation 'com.xlythe:math-library:1.0.0'
-    implementation 'com.xlythe:floating-view:1.1.1'
-    implementation files('libs/arity-2.1.7.jar')
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation 'androidx.appcompat:appcompat:1.1.0'
+    //recycler View + Card View
+    implementation 'androidx.recyclerview:recyclerview:1.1.0-rc01'
+    // Material design components
+    implementation 'com.google.android.material:material:1.2.0-alpha01'
+    implementation 'com.android.support:gridlayout-v7:29.0.2'
 }
