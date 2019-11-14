@@ -40,7 +40,7 @@ public class KeyMaps {
      * Pure function.
      */
     public static String toString(Context context, int id) {
-        switch(id) {
+        switch (id) {
             case R.id.const_pi:
                 return context.getString(R.string.const_pi);
             case R.id.const_e:
@@ -122,7 +122,7 @@ public class KeyMaps {
     public static byte toByte(int id) {
         char result;
         // We only use characters with single-byte UTF8 encodings in the range 0x20-0x7F.
-        switch(id) {
+        switch (id) {
             case R.id.const_pi:
                 result = 'p';
                 break;
@@ -193,7 +193,18 @@ public class KeyMaps {
             default:
                 throw new AssertionError("Unexpected key id");
         }
-        return (byte)result;
+        return (byte) result;
+    }
+
+    public static int fromByteINV(byte b) {
+        switch (b) {
+            case 26:
+                return R.id.op_sqrt;
+            case -71:
+                return R.id.fun_arccos;
+            default:
+                return View.NO_ID;
+        }
     }
 
     /**
@@ -201,7 +212,8 @@ public class KeyMaps {
      * key id.
      */
     public static int fromByte(byte b) {
-        switch((char)b) {
+        Log.d("tien", "fromByte: " + b);
+        switch ((char) b) {
             case 'p':
                 return R.id.const_pi;
             case 'e':
@@ -246,8 +258,13 @@ public class KeyMaps {
                 return R.id.op_sub;
             case '2':
                 return R.id.op_sqr;
+            case '4':
+                return R.id.op_sqrt;
+
+
             default:
-                throw new AssertionError("Unexpected single byte operator encoding");
+                return View.NO_ID;
+
         }
     }
 
@@ -259,7 +276,7 @@ public class KeyMaps {
      * Pure function.
      */
     public static String toDescriptiveString(Context context, int id) {
-        switch(id) {
+        switch (id) {
             case R.id.op_fact:
                 return context.getString(R.string.desc_op_fact);
             case R.id.fun_sin:
@@ -307,7 +324,7 @@ public class KeyMaps {
      * Pure function.
      */
     public static boolean isBinary(int id) {
-        switch(id) {
+        switch (id) {
             case R.id.op_pow:
             case R.id.op_mul:
             case R.id.op_div:
@@ -324,7 +341,7 @@ public class KeyMaps {
      * Pure function.
      */
     public static boolean isTrigFunc(int id) {
-        switch(id) {
+        switch (id) {
             case R.id.fun_sin:
             case R.id.fun_cos:
             case R.id.fun_tan:
@@ -345,7 +362,7 @@ public class KeyMaps {
         if (isTrigFunc(id)) {
             return true;
         }
-        switch(id) {
+        switch (id) {
             case R.id.fun_ln:
             case R.id.fun_log:
             case R.id.fun_exp:
@@ -360,7 +377,7 @@ public class KeyMaps {
      * Pure function.
      */
     public static boolean isPrefix(int id) {
-        switch(id) {
+        switch (id) {
             case R.id.op_sqrt:
             case R.id.op_sub:
                 return true;
@@ -395,28 +412,28 @@ public class KeyMaps {
      */
     public static int digVal(int id) {
         switch (id) {
-        case R.id.digit_0:
-            return 0;
-        case R.id.digit_1:
-            return 1;
-        case R.id.digit_2:
-            return 2;
-        case R.id.digit_3:
-            return 3;
-        case R.id.digit_4:
-            return 4;
-        case R.id.digit_5:
-            return 5;
-        case R.id.digit_6:
-            return 6;
-        case R.id.digit_7:
-            return 7;
-        case R.id.digit_8:
-            return 8;
-        case R.id.digit_9:
-            return 9;
-        default:
-            return NOT_DIGIT;
+            case R.id.digit_0:
+                return 0;
+            case R.id.digit_1:
+                return 1;
+            case R.id.digit_2:
+                return 2;
+            case R.id.digit_3:
+                return 3;
+            case R.id.digit_4:
+                return 4;
+            case R.id.digit_5:
+                return 5;
+            case R.id.digit_6:
+                return 6;
+            case R.id.digit_7:
+                return 7;
+            case R.id.digit_8:
+                return 8;
+            case R.id.digit_9:
+                return 9;
+            default:
+                return NOT_DIGIT;
         }
     }
 
@@ -425,29 +442,29 @@ public class KeyMaps {
      * Pure function.
      */
     public static int keyForDigVal(int v) {
-        switch(v) {
-        case 0:
-            return R.id.digit_0;
-        case 1:
-            return R.id.digit_1;
-        case 2:
-            return R.id.digit_2;
-        case 3:
-            return R.id.digit_3;
-        case 4:
-            return R.id.digit_4;
-        case 5:
-            return R.id.digit_5;
-        case 6:
-            return R.id.digit_6;
-        case 7:
-            return R.id.digit_7;
-        case 8:
-            return R.id.digit_8;
-        case 9:
-            return R.id.digit_9;
-        default:
-            return View.NO_ID;
+        switch (v) {
+            case 0:
+                return R.id.digit_0;
+            case 1:
+                return R.id.digit_1;
+            case 2:
+                return R.id.digit_2;
+            case 3:
+                return R.id.digit_3;
+            case 4:
+                return R.id.digit_4;
+            case 5:
+                return R.id.digit_5;
+            case 6:
+                return R.id.digit_6;
+            case 7:
+                return R.id.digit_7;
+            case 8:
+                return R.id.digit_8;
+            case 9:
+                return R.id.digit_9;
+            default:
+                return View.NO_ID;
         }
     }
 
@@ -544,8 +561,8 @@ public class KeyMaps {
             default:
                 if (c == mDecimalPt) return R.id.dec_point;
                 if (c == mPiChar) return R.id.const_pi;
-                    // pi is not translated, but it might be typable on a Greek keyboard,
-                    // or pasted in, so we check ...
+                // pi is not translated, but it might be typable on a Greek keyboard,
+                // or pasted in, so we check ...
                 return View.NO_ID;
         }
     }
@@ -555,7 +572,7 @@ public class KeyMaps {
      * when mapping keyboard input to button ids.
      */
     static void addButtonToFunMap(int button_id) {
-        Button button = (Button)mActivity.findViewById(button_id);
+        Button button = (Button) mActivity.findViewById(button_id);
         sKeyValForFun.put(button.getText().toString(), button_id);
     }
 
@@ -564,7 +581,7 @@ public class KeyMaps {
      * when translating numbers on output.
      */
     static void addButtonToOutputMap(char c, int button_id) {
-        Button button = (Button)mActivity.findViewById(button_id);
+        Button button = (Button) mActivity.findViewById(button_id);
         sOutputForResultChar.put(c, button.getText().toString());
     }
 
@@ -575,7 +592,7 @@ public class KeyMaps {
     static void validateMaps() {
         Locale locale = Locale.getDefault();
         if (!locale.equals(sLocaleForMaps)) {
-            Log.v ("Calculator", "Setting locale to: " + locale.toLanguageTag());
+            Log.v("Calculator", "Setting locale to: " + locale.toLanguageTag());
             sKeyValForFun = new HashMap<String, Integer>();
             sKeyValForFun.put("sin", R.id.fun_sin);
             sKeyValForFun.put("cos", R.id.fun_cos);
@@ -600,9 +617,9 @@ public class KeyMaps {
 
             // Set locale-dependent character "constants"
             mDecimalPt =
-                DecimalFormatSymbols.getInstance().getDecimalSeparator();
-                // We recognize this in keyboard input, even if we use
-                // a different character.
+                    DecimalFormatSymbols.getInstance().getDecimalSeparator();
+            // We recognize this in keyboard input, even if we use
+            // a different character.
             Resources res = mActivity.getResources();
             mPiChar = 0;
             String piString = res.getString(R.string.const_pi);
@@ -629,7 +646,7 @@ public class KeyMaps {
             addButtonToOutputMap('-', R.id.op_sub);
             addButtonToOutputMap('.', R.id.dec_point);
             for (int i = 0; i <= 9; ++i) {
-                addButtonToOutputMap((char)('0' + i), keyForDigVal(i));
+                addButtonToOutputMap((char) ('0' + i), keyForDigVal(i));
             }
 
             sLocaleForMaps = locale;

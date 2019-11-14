@@ -284,8 +284,8 @@ public class Calculator extends Activity
     private SharedPreferences mSharedPreferences;
     private String mSharePreFile = "SaveCalCulator";
 
-    private String mINPUT = ""; 
-    
+    private String mINPUT = "";
+
     // Characters that were recently entered at the end of the display that have not yet
     // been added to the underlying expression.
     private String mUnprocessedChars = null;
@@ -446,7 +446,7 @@ public class Calculator extends Activity
         mFormulaText.setOnTextSizeChangeListener(this);
         mFormulaText.addTextChangedListener(mFormulaTextWatcher);
         mDeleteButton.setOnLongClickListener(this);
-
+        mSharedPreferences = getSharedPreferences(mSharePreFile, MODE_PRIVATE);
         if (savedInstanceState != null) {
             restoreInstanceState(savedInstanceState);
         } else {
@@ -454,27 +454,91 @@ public class Calculator extends Activity
             mEvaluator.clearMain();
             showAndMaybeHideToolbar();
             onInverseToggled(false);
-        }
-        restoreDisplay();
-        setBlurBackground();
-        // Bkav TienNVh :
-        mSharedPreferences = getSharedPreferences(mSharePreFile, MODE_PRIVATE);
-        final String formulatext = mSharedPreferences.getString("FormulaText", "");
-        int orientation = getResources().getConfiguration().orientation;
 
-        mFormulaText.setText(formulatext);
-        if (!formulatext.equals("")) {
-            for (int i = 0; i < formulatext.length(); i++) {
-                char splitFormulatext = formulatext.charAt(i);
-                if (KeyMaps.keyForDigVal((int) splitFormulatext) == View.NO_ID) {
-                    if (KeyMaps.keyForChar(splitFormulatext) != View.NO_ID) {
-                        addExplicitKeyToExpr(KeyMaps.keyForChar(splitFormulatext));
+            // Bkav TienNVh :
+            final String formulatext = mSharedPreferences.getString("FormulaText", "");
+            mFormulaText.setText(formulatext);
+            if (!formulatext.equals("")) {
+                Log.d(TAG, "onCreate 0: " + formulatext);
+                for (int i = 0; i < formulatext.length(); ) {
+                    char splitFormulatext = formulatext.charAt(i);
+                    if (KeyMaps.keyForDigVal((int) splitFormulatext) == View.NO_ID) {
+                        if (KeyMaps.keyForChar(splitFormulatext) != View.NO_ID) {
+                            if (i < formulatext.length() - 2 && (byte) formulatext.charAt(i + 2) == 112) {
+                                addExplicitKeyToExpr(R.id.fun_exp);
+                                i = i + 4;
+                                continue;
+                            } else {
+                                addExplicitKeyToExpr(KeyMaps.keyForChar(splitFormulatext));
+                                i++;
+                                continue;
+                            }
+                        } else {
+                            // byte b= (byte) '\u207B';//-71
+                            if ((byte) splitFormulatext == 26) {
+                                addExplicitKeyToExpr(R.id.op_sqrt);
+                                i++;
+                                continue;
+                            } else {
+                                switch (splitFormulatext) {
+
+                                    case 's':
+
+                                        if ((byte) formulatext.charAt(i + 3) != 40) {
+                                            addExplicitKeyToExpr(R.id.fun_arcsin);
+                                            i = i + 6;
+                                        } else {
+                                            addExplicitKeyToExpr(R.id.fun_sin);
+                                            i = i + 4;
+                                        }
+                                        continue;
+                                    case 'c':
+                                        if ((byte) formulatext.charAt(i + 3) != 40) {
+                                            addExplicitKeyToExpr(R.id.fun_arccos);
+                                            i = i + 6;
+                                        } else {
+                                            addExplicitKeyToExpr(R.id.fun_cos);
+                                            i = i + 4;
+                                        }
+                                        continue;
+                                    case 't':
+                                        if ((byte) formulatext.charAt(i + 3) != 30) {
+                                            addExplicitKeyToExpr(R.id.fun_arctan);
+                                            i = i + 6;
+                                        } else {
+                                            addExplicitKeyToExpr(R.id.fun_tan);
+                                            i = i + 4;
+                                        }
+                                        continue;
+                                    case 'l':
+                                        if ((byte) formulatext.charAt(i + 2) == 103) {
+                                            addExplicitKeyToExpr(R.id.fun_log);
+                                            i = i + 4;
+                                        } else {
+                                            addExplicitKeyToExpr(R.id.fun_ln);
+                                            i = i + 3;
+                                        }
+                                        continue;
+                                    default:
+                                        if ((byte) formulatext.charAt(i) == -78) {
+                                            addExplicitKeyToExpr(R.id.op_sqr);
+                                            i++;
+                                            continue;
+                                        }
+                                }
+                            }
+                        }
+                    } else {
+                        addExplicitKeyToExpr(KeyMaps.keyForDigVal((int) splitFormulatext));
+                        i++;
                     }
-                } else {
-                    addExplicitKeyToExpr(KeyMaps.keyForDigVal((int) splitFormulatext));
                 }
             }
         }
+        restoreDisplay();
+        setBlurBackground();
+
+
     }
 
     @Override
@@ -587,6 +651,7 @@ public class Calculator extends Activity
         outState.putBoolean(KEY_SHOW_TOOLBAR, mDisplayView.isToolbarVisible());
         // We must wait for asynchronous writes to complete, since outState may contain
         // references to expressions being written.
+
         mEvaluator.waitForWrites();
     }
 
@@ -656,9 +721,20 @@ public class Calculator extends Activity
     }
 
     @Override
-    protected void onDestroy() {
-        mDragLayout.removeDragCallback(this);
+    protected void onStop() {
+        super.onStop();
+        //TienNvh : Luu trang thais
+        Log.d(TAG, "onStop: " + mFormulaText.getText());
+        SharedPreferences.Editor editor = mSharedPreferences.edit();
+        editor.putString("FormulaText", mFormulaText.getText() + "");
+        editor.apply();
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        mEvaluator.delete();
+        mDragLayout.removeDragCallback(this);
         super.onDestroy();
 
     }
@@ -970,7 +1046,6 @@ public class Calculator extends Activity
             case R.id.toggle_inv:
                 final boolean selected = !mInverseToggle.isSelected();
                 mInverseToggle.setSelected(selected);
-                Log.d(TAG, "onButtonClick: " + selected);
                 onInverseToggled(selected);
                 if (mCurrentState == CalculatorState.RESULT) {
                     mResultText.redisplay();   // In case we cancelled reevaluation.
@@ -1008,10 +1083,10 @@ public class Calculator extends Activity
                 return;
 
             case R.id.op_m_c:
-                mINPUT="";
+                mINPUT = "";
                 return;
             case R.id.op_m_r:
-                 mFormulaText.setText(mINPUT);
+                mFormulaText.setText(mINPUT);
                 if (!mINPUT.equals("")) {
                     for (int i = 0; i < mINPUT.length(); i++) {
                         char splitFormulatext = mINPUT.charAt(i);
@@ -1026,11 +1101,13 @@ public class Calculator extends Activity
                 }
                 return;
             case R.id.op_m_plus:
-                mINPUT=mResultText.getText()+"";
+
+// (mInput.equals("")) ? mFormulaEditText.getText().toString() : "+" + mFormulaEditText.getText().toString()
+                mINPUT += (mINPUT.equals("")) ? mResultText.getText().toString() : "+" + mResultText.getText() + "";
                 onEquals();
                 return;
             case R.id.op_m_sub:
-                mINPUT= mResultText.getText()+"*-1";
+                mINPUT = mResultText.getText() + "";
                 if (!mINPUT.equals("")) {
                     for (int i = 0; i < mINPUT.length(); i++) {
                         char splitFormulatext = mINPUT.charAt(i);
@@ -1184,10 +1261,6 @@ public class Calculator extends Activity
                 setState(CalculatorState.EVALUATE);
                 mEvaluator.requireResult(Evaluator.MAIN_INDEX, this, mResultText);
             }
-            //TienNvh : Luu trang thais
-            SharedPreferences.Editor editor = mSharedPreferences.edit();
-            editor.putString("FormulaText", mFormulaText.getText() + "");
-            editor.apply();
         }
     }
 

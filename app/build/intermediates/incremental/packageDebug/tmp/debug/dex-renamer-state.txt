@@ -1,4 +1,4 @@
-#Wed Nov 13 18:41:05 ICT 2019
+#Thu Nov 14 17:22:32 ICT 2019
 base.0=/home/tiennvh/Desktop/BkavCalculator/app/build/intermediates/dex/debug/mergeExtDexDebug/out/classes.dex
 path.1=classes.dex
 renamed.1=classes2.dex
