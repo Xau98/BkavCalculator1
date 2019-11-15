@@ -1,0 +1,26 @@
+{
+    "logs": [
+        {
+            "outputFile": "/home/tiennvh/Desktop/BkavCalculator/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-w360dp-h720dp-land-v13/values-w360dp-h720dp-land-v13.xml",
+            "map": [
+                {
+                    "source": "/home/tiennvh/Desktop/BkavCalculator/app/src/main/res/values-w360dp-h720dp-land/layout.xml",
+                    "from": {
+                        "startLines": "18,19,20,21",
+                        "startColumns": "4,4,4,4",
+                        "startOffsets": "661,752,823,899",
+                        "endColumns": "90,70,75,79",
+                        "endOffsets": "747,818,894,974"
+                    },
+                    "to": {
+                        "startLines": "2,3,4,5",
+                        "startColumns": "4,4,4,4",
+                        "startOffsets": "55,146,217,293",
+                        "endColumns": "90,70,75,79",
+                        "endOffsets": "141,212,288,368"
+                    }
+                }
+            ]
+        }
+    ]
+}

@@ -455,7 +455,7 @@ public class Calculator extends Activity
             showAndMaybeHideToolbar();
             onInverseToggled(false);
 
-            // Bkav TienNVh :
+            // Bkav TienNVh : lay trang thai cuoi cung
             final String formulatext = mSharedPreferences.getString("FormulaText", "");
             mFormulaText.setText(formulatext);
             if (!formulatext.equals("")) {
@@ -723,8 +723,7 @@ public class Calculator extends Activity
     @Override
     protected void onStop() {
         super.onStop();
-        //TienNvh : Luu trang thais
-        Log.d(TAG, "onStop: " + mFormulaText.getText());
+        //TienNvh : Luu phep tinh cuoi cung
         SharedPreferences.Editor editor = mSharedPreferences.edit();
         editor.putString("FormulaText", mFormulaText.getText() + "");
         editor.apply();
@@ -736,7 +735,6 @@ public class Calculator extends Activity
         mEvaluator.delete();
         mDragLayout.removeDragCallback(this);
         super.onDestroy();
-
     }
 
     /**
@@ -1081,13 +1079,15 @@ public class Calculator extends Activity
                     mPadViewPager.setCurrentItem(mPadViewPager.getCurrentItem() - 1);
                 }
                 return;
-
+//Bkav  TienNVh: Click cac nut mc , mr, m+, m-
             case R.id.op_m_c:
                 mINPUT = "";
                 return;
             case R.id.op_m_r:
-                mFormulaText.setText(mINPUT);
+                mEvaluator.clearMain();
+
                 if (!mINPUT.equals("")) {
+                    mINPUT = "0" + mINPUT;// do mInput co the la 1 so , co the la 1 phep tinh . truong hop la so (0-a=-a) , (0a=a)
                     for (int i = 0; i < mINPUT.length(); i++) {
                         char splitFormulatext = mINPUT.charAt(i);
                         if (KeyMaps.keyForDigVal((int) splitFormulatext) == View.NO_ID) {
@@ -1099,29 +1099,40 @@ public class Calculator extends Activity
                         }
                     }
                 }
+                onEquals();
                 return;
             case R.id.op_m_plus:
-
-// (mInput.equals("")) ? mFormulaEditText.getText().toString() : "+" + mFormulaEditText.getText().toString()
-                mINPUT += (mINPUT.equals("")) ? mResultText.getText().toString() : "+" + mResultText.getText() + "";
+                if (mINPUT.equals("") && !mResultText.getText().equals("")) {
+                    mINPUT = mResultText.getText() + "";
+                } else {
+                    mINPUT = mINPUT + "+" + mResultText.getText() + "";
+                }
                 onEquals();
                 return;
             case R.id.op_m_sub:
-                mINPUT = mResultText.getText() + "";
-                if (!mINPUT.equals("")) {
-                    for (int i = 0; i < mINPUT.length(); i++) {
-                        char splitFormulatext = mINPUT.charAt(i);
-                        if (KeyMaps.keyForDigVal((int) splitFormulatext) == View.NO_ID) {
-                            if (KeyMaps.keyForChar(splitFormulatext) != View.NO_ID) {
-                                addExplicitKeyToExpr(KeyMaps.keyForChar(splitFormulatext));
+                if (!mResultText.getText().equals("")) {
+                    String input = "-" + mResultText.getText();
+                    mEvaluator.clearMain();
+                    if (!input.equals("")) {
+                        for (int i = 0; i < input.length(); i++) {
+                            char splitFormulatext = input.charAt(i);
+                            if (KeyMaps.keyForDigVal((int) splitFormulatext) == View.NO_ID) {
+                                if (KeyMaps.keyForChar(splitFormulatext) != View.NO_ID) {
+                                    addExplicitKeyToExpr(KeyMaps.keyForChar(splitFormulatext));
+                                }
+                            } else {
+                                addExplicitKeyToExpr(KeyMaps.keyForDigVal((int) splitFormulatext));
                             }
-                        } else {
-                            addExplicitKeyToExpr(KeyMaps.keyForDigVal((int) splitFormulatext));
                         }
+                        redisplayAfterFormulaChange();
                     }
-                }
-                onEquals();
+                    if (mINPUT.equals("")) {
+                        mINPUT = input + "";
+                    } else {
+                        mINPUT = mINPUT + input + "";
+                    }
 
+                }
                 return;
             default:
                 cancelIfEvaluating(false);
