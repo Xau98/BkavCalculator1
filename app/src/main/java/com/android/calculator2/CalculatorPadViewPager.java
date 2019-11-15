@@ -17,6 +17,7 @@
 package com.android.calculator2;
 
 import android.content.Context;
+import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.Color;
 import androidx.viewpager.widget.PagerAdapter;
@@ -35,7 +36,9 @@ public class CalculatorPadViewPager extends ViewPager {
     private final PagerAdapter mStaticPagerAdapter = new PagerAdapter() {
         @Override
         public int getCount() {
-            return getChildCount();
+
+
+            return 3;
         }
 
         @Override
@@ -43,42 +46,42 @@ public class CalculatorPadViewPager extends ViewPager {
             final View child = getChildAt(position);
 
             // Set a OnClickListener to scroll to item's position when it isn't the current item.
-            child.setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    setCurrentItem(position, true /* smoothScroll */);
-                }
-            });
+//            child.setOnClickListener(new OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    setCurrentItem(position, true /* smoothScroll */);
+//                }
+//            });
             // Set an OnTouchListener to always return true for onTouch events so that a touch
             // sequence cannot pass through the item to the item below.
-            child.setOnTouchListener(new OnTouchListener() {
-                @Override
-                public boolean onTouch(View v, MotionEvent event) {
-                    v.onTouchEvent(event);
-                    return true;
-                }
-            });
+//            child.setOnTouchListener(new OnTouchListener() {
+//                @Override
+//                public boolean onTouch(View v, MotionEvent event) {
+//                    v.onTouchEvent(event);
+//                    return true;
+//                }
+//            });
 
             // Set an OnHoverListener to always return true for onHover events so that focus cannot
             // pass through the item to the item below.
-            child.setOnHoverListener(new OnHoverListener() {
-                @Override
-                public boolean onHover(View v, MotionEvent event) {
-                    v.onHoverEvent(event);
-                    return true;
-                }
-            });
+//            child.setOnHoverListener(new OnHoverListener() {
+//                @Override
+//                public boolean onHover(View v, MotionEvent event) {
+//                    v.onHoverEvent(event);
+//                    return true;
+//                }
+//            });
             // Make the item focusable so it can be selected via a11y.
-            child.setFocusable(true);
+         //   child.setFocusable(true);
             // Set the content description of the item which will be used by a11y to identify it.
-            child.setContentDescription(getPageTitle(position));
+        //    child.setContentDescription(getPageTitle(position));
 
             return child;
         }
 
         @Override
         public void destroyItem(ViewGroup container, int position, Object object) {
-            removeViewAt(position);
+         //   removeViewAt(position);
         }
 
         @Override
@@ -88,7 +91,14 @@ public class CalculatorPadViewPager extends ViewPager {
 
         @Override
         public float getPageWidth(int position) {
-            return  1.0f;
+            if(position==0){
+
+                return 0.8f;
+            }
+
+          return 1.0f;
+
+
         }
 
         @Override
@@ -125,15 +135,16 @@ public class CalculatorPadViewPager extends ViewPager {
     private final PageTransformer mPageTransformer = new PageTransformer() {
         @Override
         public void transformPage(View view, float position) {
-            if (position < 0.0f) {
+            if (getChildCount()>=2) {
                 // Pin the left page to the left side.
+                if(view.equals(getChildAt(1)))
                 view.setTranslationX(getWidth() * -position);
-                view.setAlpha(Math.max(1.0f + position, 0.0f));
-            } else {
-                // Use the default slide transition when moving to the next page.
-                view.setTranslationX(0.0f);
-                view.setAlpha(1.0f);
-            }
+       }
+            //else {
+//                // Use the default slide transition when moving to the next page.
+//                view.setTranslationX(0.0f);
+//                view.setAlpha(1.0f);
+//            }
         }
     };
 

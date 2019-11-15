@@ -20,7 +20,6 @@
     android:id="@+id/display"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-
     android:elevation="10dip"
     android:orientation="vertical">
 
@@ -39,6 +38,8 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:ellipsize="none"
+           android:gravity="top"
+           android:paddingTop="0dp"
             android:maxLines="1"
             android:textColor="@color/display_formula_text_color" />
 
@@ -50,7 +51,37 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:bufferType="spannable"
+        android:paddingTop="0dp"
         android:singleLine="true"
         android:textColor="@color/display_result_text_color" />
-
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/result">
+    <Button
+        android:id="@+id/bt_history"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/result"
+        android:layout_marginBottom="0dp"
+        android:textColor="#66FFFFFF"
+        android:onClick="onButtonClick"
+        android:background="@null"
+        android:paddingBottom="0dp"
+        android:text="History" />
+    <ImageView
+        android:id="@+id/more"
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:contentDescription="@string/desc_clr"
+        android:onClick="onButtonClick"
+        android:paddingLeft="20dp"
+        android:paddingRight="30dp"
+        android:paddingTop="30dp"
+        android:paddingBottom="20dp"
+        android:src="@drawable/icon_more"
+        android:textColor="#59FFFFFF" />
+    </RelativeLayout>
 </com.android.calculator2.CalculatorDisplay>

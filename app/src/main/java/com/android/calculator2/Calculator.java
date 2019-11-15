@@ -401,7 +401,8 @@ public class Calculator extends Activity
         mResultText.setEvaluator(mEvaluator, Evaluator.MAIN_INDEX);
         KeyMaps.setActivity(this);
         mCheckPermission = new CheckPermission(this);
-        mPadViewPager = (ViewPager) findViewById(R.id.pad_pager1);
+        mPadViewPager = (ViewPager) findViewById(R.id.pad_pager);
+        mPadViewPager.setCurrentItem(1);
         mDeleteButton = findViewById(R.id.del);
         mClearButton = findViewById(R.id.clr);
         View numberPad = findViewById(R.id.pad_numeric);
@@ -1022,7 +1023,7 @@ public class Calculator extends Activity
             mDisplayView.hideToolbar();
         }
     }
-
+boolean mStatrusTabHistory=false;
     public void onButtonClick(View view) {
         // Any animation is ended before we get here.
         mCurrentButton = view;
@@ -1032,6 +1033,22 @@ public class Calculator extends Activity
 
         final int id = view.getId();
         switch (id) {
+            case R.id.bt_history:
+                int orientation = getResources().getConfiguration().orientation;
+                if (orientation == Configuration.ORIENTATION_PORTRAIT) {
+                    if (mPadViewPager == null || mPadViewPager.getCurrentItem() == 1) {
+                        mPadViewPager.setCurrentItem(mPadViewPager.getCurrentItem() - 1);
+                    } else if (mPadViewPager == null || mPadViewPager.getCurrentItem() == 0) {
+                        mPadViewPager.setCurrentItem(mPadViewPager.getCurrentItem() + 1);
+                    }
+                } else {
+//                    if (mViewPager == null || mViewPager.getCurrentItem() == 1) {
+//                        mViewPager.setCurrentItem(mViewPager.getCurrentItem() - 1);
+//                    } else if (mViewPager == null || mViewPager.getCurrentItem() == 0) {
+//                        mViewPager.setCurrentItem(mViewPager.getCurrentItem() + 1);
+//                    }
+                }
+                break;
             case R.id.eq:
                 onEquals();
                 break;
@@ -1524,8 +1541,7 @@ public class Calculator extends Activity
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);
-
-        getMenuInflater().inflate(R.menu.activity_calculator, menu);
+        //   getMenuInflater().inflate(R.menu.activity_calculator, menu);
         return true;
     }
 
@@ -1534,16 +1550,14 @@ public class Calculator extends Activity
         super.onPrepareOptionsMenu(menu);
 
         // Show the leading option when displaying a result.
-        menu.findItem(R.id.menu_leading).setVisible(mCurrentState == CalculatorState.RESULT);
-
+        //  menu.findItem(R.id.menu_leading).setVisible(mCurrentState == CalculatorState.RESULT);
         // Show the fraction option when displaying a rational result.
-        boolean visible = mCurrentState == CalculatorState.RESULT;
-        final UnifiedReal mainResult = mEvaluator.getResult(Evaluator.MAIN_INDEX);
+        //boolean visible = mCurrentState == CalculatorState.RESULT;
+        // final UnifiedReal mainResult = mEvaluator.getResult(Evaluator.MAIN_INDEX);
         // mainResult should never be null, but it happens. Check as a workaround to protect
         // against crashes until we find the root cause (b/34763650).
-        visible &= mainResult != null && mainResult.exactlyDisplayable();
-        menu.findItem(R.id.menu_fraction).setVisible(visible);
-
+        //  visible &= mainResult != null && mainResult.exactlyDisplayable();
+        //   menu.findItem(R.id.menu_fraction).setVisible(visible);
         return true;
     }
 
@@ -1580,7 +1594,7 @@ public class Calculator extends Activity
 
     public void onStartDraggingOpen() {
         mDisplayView.hideToolbar();
-        showHistoryFragment();
+      //  showHistoryFragment();
     }
 
     @Override

@@ -2416,6 +2416,10 @@
         "source": "/home/tiennvh/.gradle/caches/transforms-2/files-2.1/a10c515599ba72b77fad2d423a5fcbf5/material-1.2.0-alpha01/res/drawable/design_ic_visibility_off.xml"
     },
     {
+        "merged": "/home/tiennvh/Desktop/BkavCalculator/app/build/intermediates/res/merged/debug/drawable_icon_more.png.flat",
+        "source": "/home/tiennvh/Desktop/BkavCalculator/app/src/main/res/drawable/icon_more.png"
+    },
+    {
         "merged": "/home/tiennvh/Desktop/BkavCalculator/app/build/intermediates/res/merged/debug/drawable-xhdpi-v4_abc_ic_menu_cut_mtrl_alpha.png.flat",
         "source": "/home/tiennvh/.gradle/caches/transforms-2/files-2.1/f5bdf8930f5b0dade80802408310dda6/appcompat-1.1.0/res/drawable-xhdpi-v4/abc_ic_menu_cut_mtrl_alpha.png"
     },

@@ -1390,6 +1390,7 @@ drawable ic_mtrl_checked_circle
 drawable ic_mtrl_chip_checked_black
 drawable ic_mtrl_chip_checked_circle
 drawable ic_mtrl_chip_close_circle
+drawable icon_more
 drawable mtrl_dialog_background
 drawable mtrl_dropdown_arrow
 drawable mtrl_ic_arrow_drop_down
@@ -1492,6 +1493,7 @@ id auto
 id beginning
 id blocking
 id bottom
+id bt_history
 id buttonPanel
 id cancel_button
 id center
@@ -1627,6 +1629,7 @@ id month_navigation_fragment_toggle
 id month_navigation_next
 id month_navigation_previous
 id month_title
+id more
 id mtrl_calendar_day_selector_frame
 id mtrl_calendar_days_of_week
 id mtrl_calendar_frame
@@ -1675,7 +1678,7 @@ id outline
 id pad_advanced
 id pad_numeric
 id pad_operator
-id pad_pager1
+id pad_pager
 id parallax
 id parentPanel
 id parent_matrix

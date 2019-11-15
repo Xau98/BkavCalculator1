@@ -6,11 +6,9 @@
                 {
                     "source": "/home/tiennvh/Desktop/BkavCalculator/app/src/main/res/values-sw720dp-land/layout.xml",
                     "from": {
-                        "startLines": "18,19,20,21",
-                        "startColumns": "4,4,4,4",
-                        "startOffsets": "661,752,823,899",
-                        "endColumns": "90,70,75,79",
-                        "endOffsets": "747,818,894,974"
+                        "startLines": "-1,-1,-1,-1",
+                        "startColumns": "-1,-1,-1,-1",
+                        "startOffsets": "-1,-1,-1,-1"
                     },
                     "to": {
                         "startLines": "2,3,4,5",
@@ -23,12 +21,12 @@
                 {
                     "source": "/home/tiennvh/Desktop/BkavCalculator/app/src/main/res/values-sw720dp-land/styles.xml",
                     "from": {
-                        "startLines": "19,25,30,34,38,42,47,56,65",
-                        "startColumns": "4,4,4,4,4,4,4,4,4",
-                        "startOffsets": "721,1001,1168,1275,1390,1498,1664,2042,2421",
-                        "endLines": "23,28,32,36,40,45,54,63,72",
-                        "endColumns": "12,12,12,12,12,12,12,12,12",
-                        "endOffsets": "995,1162,1269,1384,1492,1658,2036,2415,2794"
+                        "startLines": "19,-1,-1,-1,-1,-1,-1,-1,-1",
+                        "startColumns": "4,-1,-1,-1,-1,-1,-1,-1,-1",
+                        "startOffsets": "721,-1,-1,-1,-1,-1,-1,-1,-1",
+                        "endLines": "23,-1,-1,-1,-1,-1,-1,-1,-1",
+                        "endColumns": "12,-1,-1,-1,-1,-1,-1,-1,-1",
+                        "endOffsets": "995,-1,-1,-1,-1,-1,-1,-1,-1"
                     },
                     "to": {
                         "startLines": "6,11,15,18,21,24,28,36,44",
