@@ -18,17 +18,23 @@ package com.android.calculator2;
 
 import android.animation.Animator;
 import android.app.Fragment;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
+
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toolbar;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 
+import static android.content.Context.MODE_PRIVATE;
 import static androidx.recyclerview.widget.RecyclerView.SCROLL_STATE_DRAGGING;
 
 public class HistoryFragment extends Fragment implements DragLayout.DragCallback {
@@ -39,24 +45,30 @@ public class HistoryFragment extends Fragment implements DragLayout.DragCallback
     private final DragController mDragController = new DragController();
 
     private RecyclerView mRecyclerView;
-    private HistoryAdapter mAdapter;
+    private BkavHistoryAdapter mAdapter;
     private DragLayout mDragLayout;
-
+    private SharedPreferences mSharedPreferences;
     private Evaluator mEvaluator;
 
     private ArrayList<HistoryItem> mDataSet = new ArrayList<>();
-
+private ArrayList<String> mListHistory=new ArrayList<>();
     private boolean mIsDisplayEmpty;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mAdapter = new HistoryAdapter(mDataSet);
+        mSharedPreferences = getActivity().getSharedPreferences("SaveCalCulator", MODE_PRIVATE);
+        String savehistory = mSharedPreferences.getString("SaveHistory", "");
+        String sliptSaveHistory[]=savehistory.split(";");
+        mListHistory = new ArrayList<String>(Arrays.asList(sliptSaveHistory));
+        mAdapter = new BkavHistoryAdapter(mListHistory);
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
+        Log.d(TAG, "onCreate: ");
         final View view = inflater.inflate(
                 R.layout.fragment_history, container, false /* attachToRoot */);
 
@@ -77,29 +89,29 @@ public class HistoryFragment extends Fragment implements DragLayout.DragCallback
         // The size of the RecyclerView is not affected by the adapter's contents.
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setAdapter(mAdapter);
-
-        final Toolbar toolbar = (Toolbar) view.findViewById(R.id.history_toolbar);
-        toolbar.inflateMenu(R.menu.fragment_history);
-        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                if (item.getItemId() == R.id.menu_clear_history) {
-                    final Calculator calculator = (Calculator) getActivity();
-                    AlertDialogFragment.showMessageDialog(calculator, "" /* title */,
-                            getString(R.string.dialog_clear),
-                            getString(R.string.menu_clear_history),
-                            CLEAR_DIALOG_TAG);
-                    return true;
-                }
-                return onOptionsItemSelected(item);
-            }
-        });
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getActivity().onBackPressed();
-            }
-        });
+//
+   //     final Toolbar toolbar = (Toolbar) view.findViewById(R.id.history_toolbar);
+//        toolbar.inflateMenu(R.menu.fragment_history);
+//        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+//            @Override
+//            public boolean onMenuItemClick(MenuItem item) {
+//                if (item.getItemId() == R.id.menu_clear_history) {
+//                    final Calculator calculator = (Calculator) getActivity();
+//                    AlertDialogFragment.showMessageDialog(calculator, "" /* title */,
+//                            getString(R.string.dialog_clear),
+//                            getString(R.string.menu_clear_history),
+//                            CLEAR_DIALOG_TAG);
+//                    return true;
+//                }
+//                return onOptionsItemSelected(item);
+//            }
+//        });
+//        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                getActivity().onBackPressed();
+//            }
+//        });
         return view;
     }
 
@@ -109,7 +121,7 @@ public class HistoryFragment extends Fragment implements DragLayout.DragCallback
 
         final Calculator activity = (Calculator) getActivity();
         mEvaluator = Evaluator.getInstance(activity);
-        mAdapter.setEvaluator(mEvaluator);
+        //mAdapter.setEvaluator(mEvaluator);
 
         final boolean isResultLayout = activity.isResultLayout();
         final boolean isOneLine = activity.isOneLine();
@@ -146,10 +158,10 @@ public class HistoryFragment extends Fragment implements DragLayout.DragCallback
             newDataSet.add(new HistoryItem());
         }
         mDataSet = newDataSet;
-        mAdapter.setDataSet(mDataSet);
-        mAdapter.setIsResultLayout(isResultLayout);
-        mAdapter.setIsOneLine(activity.isOneLine());
-        mAdapter.setIsDisplayEmpty(mIsDisplayEmpty);
+//        mAdapter.setDataSet(mDataSet);
+//        mAdapter.setIsResultLayout(isResultLayout);
+//        mAdapter.setIsOneLine(activity.isOneLine());
+//        mAdapter.setIsDisplayEmpty(mIsDisplayEmpty);
         mAdapter.notifyDataSetChanged();
     }
 

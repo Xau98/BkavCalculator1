@@ -109,6 +109,7 @@
         android:visibility="gone"
         app:layout_row="1"
         app:layout_column="3" />
+
     <Button
         android:id="@+id/op_m_plus"
         style="@style/PadButtonStyle.Advanced"

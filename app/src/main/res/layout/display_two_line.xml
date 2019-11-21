@@ -68,10 +68,9 @@
         android:onClick="onButtonClick"
         android:background="@null"
         android:paddingBottom="0dp"
-        android:text="History" />
+        android:text="@string/title_history" />
     <ImageView
-        android:id="@+id/more"
-        android:visibility="gone"
+        android:id="@+id/bt_more"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
@@ -79,9 +78,9 @@
         android:onClick="onButtonClick"
         android:paddingLeft="20dp"
         android:paddingRight="30dp"
-        android:paddingTop="30dp"
-        android:paddingBottom="20dp"
-        android:src="@drawable/icon_more"
-        android:textColor="#59FFFFFF" />
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:src="@drawable/ic_more_vert_black_24dp"
+  />
     </RelativeLayout>
 </com.android.calculator2.CalculatorDisplay>

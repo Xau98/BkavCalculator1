@@ -36,8 +36,6 @@ public class CalculatorPadViewPager extends ViewPager {
     private final PagerAdapter mStaticPagerAdapter = new PagerAdapter() {
         @Override
         public int getCount() {
-
-
             return 3;
         }
 
@@ -91,14 +89,13 @@ public class CalculatorPadViewPager extends ViewPager {
 
         @Override
         public float getPageWidth(int position) {
+            int orientation = getResources().getConfiguration().orientation;
             if(position==0){
-
-                return 0.8f;
+                if(orientation==Configuration.ORIENTATION_LANDSCAPE)
+                    return 0.385f;
+                return 0.705f/0.9f;
             }
-
           return 1.0f;
-
-
         }
 
         @Override

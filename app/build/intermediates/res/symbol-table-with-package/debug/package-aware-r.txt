@@ -1386,6 +1386,7 @@ drawable ic_launcher_background
 drawable ic_launcher_foreground
 drawable ic_menu_arrow_down_black_24dp
 drawable ic_menu_arrow_up_black_24dp
+drawable ic_more_vert_black_24dp
 drawable ic_mtrl_checked_circle
 drawable ic_mtrl_chip_checked_black
 drawable ic_mtrl_chip_checked_circle
@@ -1494,6 +1495,7 @@ id beginning
 id blocking
 id bottom
 id bt_history
+id bt_more
 id buttonPanel
 id cancel_button
 id center
@@ -1527,6 +1529,7 @@ id dec_point
 id decor_content_parent
 id default_activity_button
 id del
+id delHistory
 id design_bottom_sheet
 id design_menu_item_action_area
 id design_menu_item_action_area_stub
@@ -1548,6 +1551,7 @@ id display
 id drag_layout
 id dropdown_menu
 id edit_query
+id emptyElement
 id empty_history_view
 id end
 id enterAlways
@@ -1587,7 +1591,6 @@ id history_formula_container
 id history_frame
 id history_recycler_view
 id history_result
-id history_toolbar
 id home
 id homeAsUp
 id horizontal
@@ -1603,6 +1606,7 @@ id largeLabel
 id left
 id line1
 id line3
+id linear_layout_history
 id listMode
 id list_item
 id lparen
@@ -1629,7 +1633,6 @@ id month_navigation_fragment_toggle
 id month_navigation_next
 id month_navigation_previous
 id month_title
-id more
 id mtrl_calendar_day_selector_frame
 id mtrl_calendar_days_of_week
 id mtrl_calendar_frame
@@ -1689,6 +1692,7 @@ id progress_circular
 id progress_horizontal
 id radio
 id relativeLayout1234
+id relativeLayout_history
 id result
 id right
 id right_icon
@@ -1760,6 +1764,8 @@ id textinput_error
 id textinput_helper_text
 id textinput_prefix_text
 id textinput_suffix_text
+id textview_history
+id textview_result
 id time
 id title
 id titleDividerNoCustom
@@ -1873,6 +1879,7 @@ layout display_two_line
 layout empty_history_view
 layout fragment_history
 layout history_item
+layout line_history
 layout mtrl_alert_dialog
 layout mtrl_alert_dialog_actions
 layout mtrl_alert_dialog_title

@@ -664,6 +664,10 @@
         "source": "/home/tiennvh/.gradle/caches/transforms-2/files-2.1/f5bdf8930f5b0dade80802408310dda6/appcompat-1.1.0/res/drawable-xhdpi-v4/abc_btn_switch_to_on_mtrl_00012.9.png"
     },
     {
+        "merged": "/home/tiennvh/Desktop/BkavCalculator/app/build/intermediates/res/merged/debug/layout_line_history.xml.flat",
+        "source": "/home/tiennvh/Desktop/BkavCalculator/app/src/main/res/layout/line_history.xml"
+    },
+    {
         "merged": "/home/tiennvh/Desktop/BkavCalculator/app/build/intermediates/res/merged/debug/color-v23_abc_tint_spinner.xml.flat",
         "source": "/home/tiennvh/.gradle/caches/transforms-2/files-2.1/f5bdf8930f5b0dade80802408310dda6/appcompat-1.1.0/res/color-v23/abc_tint_spinner.xml"
     },
@@ -1606,6 +1610,10 @@
     {
         "merged": "/home/tiennvh/Desktop/BkavCalculator/app/build/intermediates/res/merged/debug/drawable_abc_ic_arrow_drop_right_black_24dp.xml.flat",
         "source": "/home/tiennvh/.gradle/caches/transforms-2/files-2.1/f5bdf8930f5b0dade80802408310dda6/appcompat-1.1.0/res/drawable/abc_ic_arrow_drop_right_black_24dp.xml"
+    },
+    {
+        "merged": "/home/tiennvh/Desktop/BkavCalculator/app/build/intermediates/res/merged/debug/drawable_ic_more_vert_black_24dp.xml.flat",
+        "source": "/home/tiennvh/Desktop/BkavCalculator/app/src/main/res/drawable/ic_more_vert_black_24dp.xml"
     },
     {
         "merged": "/home/tiennvh/Desktop/BkavCalculator/app/build/intermediates/res/merged/debug/layout_pad_advanced_4x4.xml.flat",

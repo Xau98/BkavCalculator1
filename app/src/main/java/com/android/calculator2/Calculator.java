@@ -55,6 +55,9 @@ import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.annotation.StringRes;
 import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
 import android.os.PersistableBundle;
@@ -96,6 +99,8 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
 import java.text.DecimalFormatSymbols;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 import static com.android.calculator2.CalculatorFormula.OnFormulaContextMenuClickListener;
 
@@ -267,6 +272,7 @@ public class Calculator extends Activity
     private CalculatorResult mResultText;
     private HorizontalScrollView mFormulaContainer;
     private DragLayout mDragLayout;
+
     private ViewPager mPadViewPager;
     private View mDeleteButton;
     private View mClearButton;
@@ -274,7 +280,9 @@ public class Calculator extends Activity
     private View mMainCalculator;
     private TextView mInverseToggle;
     private TextView mModeToggle;
-
+private RecyclerView mRecyclerViewSaveHistory;
+private ArrayList<String> mListHistory=new ArrayList<>();
+private BkavHistoryAdapter mHistoryAdapter;
     private View[] mInvertibleButtons;
     private View[] mInverseButtons;
 
@@ -282,6 +290,7 @@ public class Calculator extends Activity
     private Animator mCurrentAnimator;
     // Bkav TienNvh:
     private SharedPreferences mSharedPreferences;
+
     private String mSharePreFile = "SaveCalCulator";
 
     private String mINPUT = "";
@@ -394,6 +403,7 @@ public class Calculator extends Activity
         mFormulaText = (CalculatorFormula) findViewById(R.id.formula);
         mResultText = (CalculatorResult) findViewById(R.id.result);
         mFormulaContainer = (HorizontalScrollView) findViewById(R.id.formula_container);
+        mRecyclerViewSaveHistory=(RecyclerView) findViewById(R.id.history_recycler_view);
 
 
         mEvaluator = Evaluator.getInstance(this);
@@ -458,9 +468,9 @@ public class Calculator extends Activity
 
             // Bkav TienNVh : lay trang thai cuoi cung
             final String formulatext = mSharedPreferences.getString("FormulaText", "");
+            final String savehistory = mSharedPreferences.getString("SaveHistory", "");
             mFormulaText.setText(formulatext);
             if (!formulatext.equals("")) {
-                Log.d(TAG, "onCreate 0: " + formulatext);
                 for (int i = 0; i < formulatext.length(); ) {
                     char splitFormulatext = formulatext.charAt(i);
                     if (KeyMaps.keyForDigVal((int) splitFormulatext) == View.NO_ID) {
@@ -482,9 +492,7 @@ public class Calculator extends Activity
                                 continue;
                             } else {
                                 switch (splitFormulatext) {
-
                                     case 's':
-
                                         if ((byte) formulatext.charAt(i + 3) != 40) {
                                             addExplicitKeyToExpr(R.id.fun_arcsin);
                                             i = i + 6;
@@ -536,11 +544,74 @@ public class Calculator extends Activity
                 }
             }
         }
+        //Bkav TienNVh : Shows ketqua
         restoreDisplay();
+        //Bkav TienNVh :Setbackground
         setBlurBackground();
+        //Bkav TienNVh :Load tab history
+        onRefeshSaveHistory();
+        //Bkav TienNVh : Ko cho click xuyen len lich su
+        findViewById(R.id.relativeLayout_history).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
 
+            }
+        });
+        //Bkav TienNVh : an tab history khi xoay ngang
+        findViewById(R.id.emptyElement).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
 
+            }
+        });
+
+        int orientation = getResources().getConfiguration().orientation;
+        if(orientation!=Configuration.ORIENTATION_PORTRAIT){
+            findViewById(R.id.bt_more).setVisibility(View.GONE);
+        }
     }
+    public void onRefeshSaveHistory(){
+        String savehistory = mSharedPreferences.getString("SaveHistory", "");
+        if(!savehistory.equals("")) {
+            String sliptSaveHistory[] = savehistory.split(";");
+            mListHistory = new ArrayList<String>(Arrays.asList(sliptSaveHistory));
+            mHistoryAdapter = new BkavHistoryAdapter(mListHistory);
+            mHistoryAdapter.setmOnClickItemSaveHistory(new BkavHistoryAdapter.onClickItemSaveHistory() {
+                @Override
+                public void onClick(String result) {
+                    for (int i = 0; i < result.length(); i++) {
+                        char splitFormulatext = result.charAt(i);
+                        if (KeyMaps.keyForDigVal((int) splitFormulatext) == View.NO_ID) {
+                            if (KeyMaps.keyForChar(splitFormulatext) != View.NO_ID) {
+                                addExplicitKeyToExpr(KeyMaps.keyForChar(splitFormulatext));
+                            }
+                        } else {
+                            addExplicitKeyToExpr(KeyMaps.keyForDigVal((int) splitFormulatext));
+                        }
+                    }
+
+                    restoreDisplay();
+
+                }
+            });
+            LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
+            layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+            layoutManager.setReverseLayout(false);
+            layoutManager.setStackFromEnd(true);
+            mRecyclerViewSaveHistory.setLayoutManager(layoutManager);
+            mRecyclerViewSaveHistory.addItemDecoration(new DividerItemDecoration(mRecyclerViewSaveHistory.getContext(),DividerItemDecoration.VERTICAL));
+            mRecyclerViewSaveHistory.setAdapter(mHistoryAdapter);
+            mRecyclerViewSaveHistory.scrollToPosition(mListHistory.size()-1);
+            mRecyclerViewSaveHistory.setVisibility(View.VISIBLE);
+            findViewById(R.id.emptyElement).setVisibility(View.GONE);
+            findViewById(R.id.delHistory).setVisibility(View.VISIBLE);
+        }else {
+            findViewById(R.id.emptyElement).setVisibility(View.VISIBLE);
+            findViewById(R.id.delHistory).setVisibility(View.GONE);
+            mRecyclerViewSaveHistory.setVisibility(View.GONE);
+        }
+
+    }//3/2 1.75*1
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState, @Nullable PersistableBundle persistentState) {
@@ -775,33 +846,44 @@ public class Calculator extends Activity
 
     @Override
     public boolean dispatchTouchEvent(MotionEvent e) {
-        if (e.getActionMasked() == MotionEvent.ACTION_DOWN) {
-            stopActionModeOrContextMenu();
-            final HistoryFragment historyFragment = getHistoryFragment();
-            if (mDragLayout.isOpen() && historyFragment != null) {
-                historyFragment.stopActionModeOrContextMenu();
-            }
-        }
+//        if (e.getActionMasked() == MotionEvent.ACTION_DOWN) {
+//            stopActionModeOrContextMenu();
+//            final HistoryFragment historyFragment = getHistoryFragment();
+//            if (mDragLayout.isOpen() && historyFragment != null) {
+//                historyFragment.stopActionModeOrContextMenu();
+//            }
+//        }
         return super.dispatchTouchEvent(e);
     }
 
     @Override
     public void onBackPressed() {
         if (!stopActionModeOrContextMenu()) {
-            final HistoryFragment historyFragment = getHistoryFragment();
-            if (mDragLayout.isOpen() && historyFragment != null) {
-                if (!historyFragment.stopActionModeOrContextMenu()) {
-                    removeHistoryFragment();
-                }
-                return;
-            }
+     //       final HistoryFragment historyFragment = getHistoryFragment();
+//            if (mDragLayout.isOpen() && historyFragment != null) {
+//
+//                if (!historyFragment.stopActionModeOrContextMenu()) {
+//                    mPadViewPager.setCurrentItem(mPadViewPager.getCurrentItem() + 1);
+//                    Log.d(TAG, "onBackPressed:1 ");
+//                }
+//                return;
+//            }
+
+
             if (mPadViewPager != null && mPadViewPager.getCurrentItem() != 0) {
                 // Select the previous pad.
+
+                Log.d(TAG, "onBackPressed 10: "+mPadViewPager.getCurrentItem());
                 mPadViewPager.setCurrentItem(mPadViewPager.getCurrentItem() - 1);
+
             } else {
+if( mPadViewPager.getCurrentItem()== 1)
+    mPadViewPager.setCurrentItem(mPadViewPager.getCurrentItem() - 1);
+else
                 // If the user is currently looking at the first pad (or the pad is not paged),
                 // allow the system to handle the Back button.
                 super.onBackPressed();
+                Log.d(TAG, "onBackPressed 0: "+mPadViewPager.getCurrentItem());
             }
         }
     }
@@ -874,39 +956,32 @@ public class Calculator extends Activity
     private void onInverseToggled(boolean showInverse) {
         mInverseToggle.setSelected(showInverse);
         if (showInverse) {
-
             mInverseToggle.setContentDescription(getString(R.string.desc_inv_on));
             for (View invertibleButton : mInvertibleButtons) {
                 invertibleButton.setVisibility(View.GONE);
-
-                if (mPadViewPager == null) {
-                    findViewById(R.id.op_m_plus).setVisibility(View.GONE);
-                    findViewById(R.id.op_m_sub).setVisibility(View.GONE);
-                }
             }
+
             for (View inverseButton : mInverseButtons) {
                 inverseButton.setVisibility(View.VISIBLE);
-                if (mPadViewPager == null) {
-                    findViewById(R.id.op_m_r).setVisibility(View.VISIBLE);
-                    findViewById(R.id.op_m_c).setVisibility(View.VISIBLE);
-                }
             }
+            //Bkav TienNVh: hide m+, m-
+                findViewById(R.id.op_m_plus).setVisibility(View.GONE);
+                findViewById(R.id.op_m_sub).setVisibility(View.GONE);
+                findViewById(R.id.op_m_r).setVisibility(View.VISIBLE);
+                findViewById(R.id.op_m_c).setVisibility(View.VISIBLE);
         } else {
             mInverseToggle.setContentDescription(getString(R.string.desc_inv_off));
             for (View invertibleButton : mInvertibleButtons) {
                 invertibleButton.setVisibility(View.VISIBLE);
-                if (mPadViewPager == null) {
-                    findViewById(R.id.op_m_plus).setVisibility(View.VISIBLE);
-                    findViewById(R.id.op_m_sub).setVisibility(View.VISIBLE);
-                }
             }
             for (View inverseButton : mInverseButtons) {
                 inverseButton.setVisibility(View.GONE);
-                if (mPadViewPager == null) {
-                    findViewById(R.id.op_m_r).setVisibility(View.GONE);
-                    findViewById(R.id.op_m_c).setVisibility(View.GONE);
-                }
             }
+            //Bkav TienNVh: show m+, m-
+                findViewById(R.id.op_m_plus).setVisibility(View.VISIBLE);
+                findViewById(R.id.op_m_sub).setVisibility(View.VISIBLE);
+                findViewById(R.id.op_m_r).setVisibility(View.GONE);
+                findViewById(R.id.op_m_c).setVisibility(View.GONE);
         }
     }
 
@@ -1023,18 +1098,33 @@ public class Calculator extends Activity
             mDisplayView.hideToolbar();
         }
     }
-boolean mStatrusTabHistory=false;
+
     public void onButtonClick(View view) {
         // Any animation is ended before we get here.
         mCurrentButton = view;
         stopActionModeOrContextMenu();
         // See onKey above for the rationale behind some of the behavior below:
         cancelUnrequested();
-
+        int orientation = getResources().getConfiguration().orientation;
         final int id = view.getId();
         switch (id) {
+            case R.id.bt_more:
+                if (orientation == Configuration.ORIENTATION_PORTRAIT) {
+                    if (mPadViewPager == null || mPadViewPager.getCurrentItem() == 1) {
+                        mPadViewPager.setCurrentItem(mPadViewPager.getCurrentItem() + 1);
+                    } else if (mPadViewPager == null || mPadViewPager.getCurrentItem() == 2) {
+                        mPadViewPager.setCurrentItem(mPadViewPager.getCurrentItem() - 1);
+                    }
+                }
+                break;
+            case R.id.delHistory:
+                SharedPreferences.Editor editor = mSharedPreferences.edit();
+                editor.putString("SaveHistory", "");
+                editor.apply();
+                onRefeshSaveHistory();
+
+                break;
             case R.id.bt_history:
-                int orientation = getResources().getConfiguration().orientation;
                 if (orientation == Configuration.ORIENTATION_PORTRAIT) {
                     if (mPadViewPager == null || mPadViewPager.getCurrentItem() == 1) {
                         mPadViewPager.setCurrentItem(mPadViewPager.getCurrentItem() - 1);
@@ -1092,8 +1182,10 @@ boolean mStatrusTabHistory=false;
             case R.id.op_pct:
                 addExplicitKeyToExpr(id);
                 redisplayAfterFormulaChange();
-                if (mPadViewPager != null) {
-                    mPadViewPager.setCurrentItem(mPadViewPager.getCurrentItem() - 1);
+                if (orientation == Configuration.ORIENTATION_PORTRAIT) {
+                    if (mPadViewPager != null) {
+                        mPadViewPager.setCurrentItem(mPadViewPager.getCurrentItem() - 1);
+                    }
                 }
                 return;
 //Bkav  TienNVh: Click cac nut mc , mr, m+, m-
@@ -1102,7 +1194,6 @@ boolean mStatrusTabHistory=false;
                 return;
             case R.id.op_m_r:
                 mEvaluator.clearMain();
-
                 if (!mINPUT.equals("")) {
                     mINPUT = "0" + mINPUT;// do mInput co the la 1 so , co the la 1 phep tinh . truong hop la so (0-a=-a) , (0a=a)
                     for (int i = 0; i < mINPUT.length(); i++) {
@@ -1127,8 +1218,8 @@ boolean mStatrusTabHistory=false;
                 onEquals();
                 return;
             case R.id.op_m_sub:
-                if (!mResultText.getText().equals("")) {
-                    String input = "-" + mResultText.getText();
+                if (!mResultText.getText().equals("") &&!mResultText.getText().equals("0") && !mFormulaText.getText().equals("")) {
+                    String input = "-1*" + mResultText.getText();
                     mEvaluator.clearMain();
                     if (!input.equals("")) {
                         for (int i = 0; i < input.length(); i++) {
@@ -1141,14 +1232,17 @@ boolean mStatrusTabHistory=false;
                                 addExplicitKeyToExpr(KeyMaps.keyForDigVal((int) splitFormulatext));
                             }
                         }
-                        redisplayAfterFormulaChange();
-                    }
-                    if (mINPUT.equals("")) {
-                        mINPUT = input + "";
-                    } else {
-                        mINPUT = mINPUT + input + "";
+
+                        Log.d(TAG, mINPUT+"onButtonClick: "+input);
+                   mFormulaText.setText(mResultText.getText()+"");
+                   onEquals();
                     }
 
+                    if (mINPUT.equals("")) {
+                        mINPUT = ""+ mResultText.getText() ;
+                    } else {
+                        mINPUT = mINPUT  + mResultText.getText();
+                    }
                 }
                 return;
             default:
@@ -1185,7 +1279,6 @@ boolean mStatrusTabHistory=false;
     @Override
     public boolean onLongClick(View view) {
         mCurrentButton = view;
-
         if (view.getId() == R.id.del) {
             onClear();
             return true;
@@ -1288,6 +1381,15 @@ boolean mStatrusTabHistory=false;
             } else if (mEvaluator.getExpr(Evaluator.MAIN_INDEX).hasInterestingOps()) {
                 setState(CalculatorState.EVALUATE);
                 mEvaluator.requireResult(Evaluator.MAIN_INDEX, this, mResultText);
+            //Bkav TienNVh: luu vao lich su
+                if(mResultText.getText().length()!=0) {
+                    Log.d(TAG, Evaluator.MAIN_INDEX+"onEquals: "+mResultText.getText().length());
+                    final String savehistoryold = mSharedPreferences.getString("SaveHistory", "");
+                    SharedPreferences.Editor editor = mSharedPreferences.edit();
+                    editor.putString("SaveHistory", savehistoryold + "" + mFormulaText.getText() + "=" + mResultText.getText() + ";");
+                    editor.apply();
+                    onRefeshSaveHistory();
+                }
             }
         }
     }
@@ -1560,26 +1662,26 @@ boolean mStatrusTabHistory=false;
         //   menu.findItem(R.id.menu_fraction).setVisible(visible);
         return true;
     }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.menu_history:
-                showHistoryFragment();
-                return true;
-            case R.id.menu_leading:
-                displayFull();
-                return true;
-            case R.id.menu_fraction:
-                displayFraction();
-                return true;
-            case R.id.menu_licenses:
-                startActivity(new Intent(this, Licenses.class));
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
+//
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        switch (item.getItemId()) {
+//            case R.id.menu_history:
+//                showHistoryFragment();
+//                return true;
+//            case R.id.menu_leading:
+//                displayFull();
+//                return true;
+//            case R.id.menu_fraction:
+//                displayFraction();
+//                return true;
+//            case R.id.menu_licenses:
+//                startActivity(new Intent(this, Licenses.class));
+//                return true;
+//            default:
+//                return super.onOptionsItemSelected(item);
+//        }
+//    }
 
     /* Begin override CloseCallback method. */
 
@@ -1660,12 +1762,14 @@ boolean mStatrusTabHistory=false;
     private void showHistoryFragment() {
         if (getHistoryFragment() != null) {
             // If the fragment already exists, do nothing.
+
             return;
         }
 
         final FragmentManager manager = getFragmentManager();
         if (manager == null || manager.isDestroyed() || !prepareForHistory()) {
             // If the history fragment can not be shown, close the draglayout.
+
             mDragLayout.setClosed();
             return;
         }
