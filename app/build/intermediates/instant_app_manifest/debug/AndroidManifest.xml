@@ -36,7 +36,8 @@
         <activity
             android:name="com.android.calculator2.Calculator"
             android:label="@string/app_name"
-            android:launchMode="singleTask" >
+            android:launchMode="singleTask"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustNothing" >
             <layout
                 android:minHeight="220dp"
                 android:minWidth="230dp" />

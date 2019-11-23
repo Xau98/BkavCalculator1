@@ -18,7 +18,7 @@
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
     <style name="DisplayTextStyle" parent="@android:style/Widget.Material.Light.TextView">
-        <item name="android:cursorVisible">false</item>
+        <item name="android:cursorVisible">true</item>
         <item name="android:fontFamily">sans-serif-light</item>
         <item name="android:includeFontPadding">false</item>
         <item name="android:gravity">bottom|end</item>

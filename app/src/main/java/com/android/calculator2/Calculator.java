@@ -62,6 +62,7 @@ import androidx.viewpager.widget.ViewPager;
 
 import android.os.PersistableBundle;
 import android.text.Editable;
+import android.text.InputType;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.TextUtils;
@@ -83,6 +84,7 @@ import android.view.ViewTreeObserver;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.AccelerateDecelerateInterpolator;
+import android.widget.EditText;
 import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -183,6 +185,7 @@ public class Calculator extends Activity
                     if (observer.isAlive()) {
                         observer.removeOnPreDrawListener(this);
                     }
+                    Log.d("TienNVh", "onPreDraw: "+mFormulaText.isCursorVisible());
                     return false;
                 }
             };
@@ -280,9 +283,9 @@ public class Calculator extends Activity
     private View mMainCalculator;
     private TextView mInverseToggle;
     private TextView mModeToggle;
-private RecyclerView mRecyclerViewSaveHistory;
-private ArrayList<String> mListHistory=new ArrayList<>();
-private BkavHistoryAdapter mHistoryAdapter;
+    private RecyclerView mRecyclerViewSaveHistory;
+    private ArrayList<String> mListHistory = new ArrayList<>();
+    private BkavHistoryAdapter mHistoryAdapter;
     private View[] mInvertibleButtons;
     private View[] mInverseButtons;
 
@@ -403,7 +406,7 @@ private BkavHistoryAdapter mHistoryAdapter;
         mFormulaText = (CalculatorFormula) findViewById(R.id.formula);
         mResultText = (CalculatorResult) findViewById(R.id.result);
         mFormulaContainer = (HorizontalScrollView) findViewById(R.id.formula_container);
-        mRecyclerViewSaveHistory=(RecyclerView) findViewById(R.id.history_recycler_view);
+        mRecyclerViewSaveHistory = (RecyclerView) findViewById(R.id.history_recycler_view);
 
 
         mEvaluator = Evaluator.getInstance(this);
@@ -453,7 +456,7 @@ private BkavHistoryAdapter mHistoryAdapter;
 
         mFormulaText.setOnContextMenuClickListener(mOnFormulaContextMenuClickListener);
         mFormulaText.setOnDisplayMemoryOperationsListener(mOnDisplayMemoryOperationsListener);
-
+        mFormulaText.setEnabled(true);
         mFormulaText.setOnTextSizeChangeListener(this);
         mFormulaText.addTextChangedListener(mFormulaTextWatcher);
         mDeleteButton.setOnLongClickListener(this);
@@ -468,7 +471,6 @@ private BkavHistoryAdapter mHistoryAdapter;
 
             // Bkav TienNVh : lay trang thai cuoi cung
             final String formulatext = mSharedPreferences.getString("FormulaText", "");
-            final String savehistory = mSharedPreferences.getString("SaveHistory", "");
             mFormulaText.setText(formulatext);
             if (!formulatext.equals("")) {
                 for (int i = 0; i < formulatext.length(); ) {
@@ -566,13 +568,14 @@ private BkavHistoryAdapter mHistoryAdapter;
         });
 
         int orientation = getResources().getConfiguration().orientation;
-        if(orientation!=Configuration.ORIENTATION_PORTRAIT){
+        if (orientation != Configuration.ORIENTATION_PORTRAIT) {
             findViewById(R.id.bt_more).setVisibility(View.GONE);
         }
     }
-    public void onRefeshSaveHistory(){
+
+    public void onRefeshSaveHistory() {
         String savehistory = mSharedPreferences.getString("SaveHistory", "");
-        if(!savehistory.equals("")) {
+        if (!savehistory.equals("")) {
             String sliptSaveHistory[] = savehistory.split(";");
             mListHistory = new ArrayList<String>(Arrays.asList(sliptSaveHistory));
             mHistoryAdapter = new BkavHistoryAdapter(mListHistory);
@@ -599,13 +602,13 @@ private BkavHistoryAdapter mHistoryAdapter;
             layoutManager.setReverseLayout(false);
             layoutManager.setStackFromEnd(true);
             mRecyclerViewSaveHistory.setLayoutManager(layoutManager);
-            mRecyclerViewSaveHistory.addItemDecoration(new DividerItemDecoration(mRecyclerViewSaveHistory.getContext(),DividerItemDecoration.VERTICAL));
+            mRecyclerViewSaveHistory.addItemDecoration(new DividerItemDecoration(mRecyclerViewSaveHistory.getContext(), DividerItemDecoration.VERTICAL));
             mRecyclerViewSaveHistory.setAdapter(mHistoryAdapter);
-            mRecyclerViewSaveHistory.scrollToPosition(mListHistory.size()-1);
+            mRecyclerViewSaveHistory.scrollToPosition(mListHistory.size() - 1);
             mRecyclerViewSaveHistory.setVisibility(View.VISIBLE);
             findViewById(R.id.emptyElement).setVisibility(View.GONE);
             findViewById(R.id.delHistory).setVisibility(View.VISIBLE);
-        }else {
+        } else {
             findViewById(R.id.emptyElement).setVisibility(View.VISIBLE);
             findViewById(R.id.delHistory).setVisibility(View.GONE);
             mRecyclerViewSaveHistory.setVisibility(View.GONE);
@@ -844,22 +847,11 @@ private BkavHistoryAdapter mHistoryAdapter;
         }
     }
 
-    @Override
-    public boolean dispatchTouchEvent(MotionEvent e) {
-//        if (e.getActionMasked() == MotionEvent.ACTION_DOWN) {
-//            stopActionModeOrContextMenu();
-//            final HistoryFragment historyFragment = getHistoryFragment();
-//            if (mDragLayout.isOpen() && historyFragment != null) {
-//                historyFragment.stopActionModeOrContextMenu();
-//            }
-//        }
-        return super.dispatchTouchEvent(e);
-    }
 
     @Override
     public void onBackPressed() {
         if (!stopActionModeOrContextMenu()) {
-     //       final HistoryFragment historyFragment = getHistoryFragment();
+            //       final HistoryFragment historyFragment = getHistoryFragment();
 //            if (mDragLayout.isOpen() && historyFragment != null) {
 //
 //                if (!historyFragment.stopActionModeOrContextMenu()) {
@@ -873,17 +865,17 @@ private BkavHistoryAdapter mHistoryAdapter;
             if (mPadViewPager != null && mPadViewPager.getCurrentItem() != 0) {
                 // Select the previous pad.
 
-                Log.d(TAG, "onBackPressed 10: "+mPadViewPager.getCurrentItem());
+                Log.d(TAG, "onBackPressed 10: " + mPadViewPager.getCurrentItem());
                 mPadViewPager.setCurrentItem(mPadViewPager.getCurrentItem() - 1);
 
             } else {
-if( mPadViewPager.getCurrentItem()== 1)
-    mPadViewPager.setCurrentItem(mPadViewPager.getCurrentItem() - 1);
-else
-                // If the user is currently looking at the first pad (or the pad is not paged),
-                // allow the system to handle the Back button.
-                super.onBackPressed();
-                Log.d(TAG, "onBackPressed 0: "+mPadViewPager.getCurrentItem());
+                if (mPadViewPager.getCurrentItem() == 1)
+                    mPadViewPager.setCurrentItem(mPadViewPager.getCurrentItem() - 1);
+                else
+                    // If the user is currently looking at the first pad (or the pad is not paged),
+                    // allow the system to handle the Back button.
+                    super.onBackPressed();
+                Log.d(TAG, "onBackPressed 0: " + mPadViewPager.getCurrentItem());
             }
         }
     }
@@ -955,6 +947,7 @@ else
     //Bkav TienNVh:
     private void onInverseToggled(boolean showInverse) {
         mInverseToggle.setSelected(showInverse);
+        int orientation = getResources().getConfiguration().orientation;
         if (showInverse) {
             mInverseToggle.setContentDescription(getString(R.string.desc_inv_on));
             for (View invertibleButton : mInvertibleButtons) {
@@ -965,10 +958,12 @@ else
                 inverseButton.setVisibility(View.VISIBLE);
             }
             //Bkav TienNVh: hide m+, m-
+            if (orientation != Configuration.ORIENTATION_PORTRAIT) {
                 findViewById(R.id.op_m_plus).setVisibility(View.GONE);
                 findViewById(R.id.op_m_sub).setVisibility(View.GONE);
                 findViewById(R.id.op_m_r).setVisibility(View.VISIBLE);
                 findViewById(R.id.op_m_c).setVisibility(View.VISIBLE);
+            }
         } else {
             mInverseToggle.setContentDescription(getString(R.string.desc_inv_off));
             for (View invertibleButton : mInvertibleButtons) {
@@ -978,10 +973,12 @@ else
                 inverseButton.setVisibility(View.GONE);
             }
             //Bkav TienNVh: show m+, m-
+            if (orientation != Configuration.ORIENTATION_PORTRAIT) {
                 findViewById(R.id.op_m_plus).setVisibility(View.VISIBLE);
                 findViewById(R.id.op_m_sub).setVisibility(View.VISIBLE);
                 findViewById(R.id.op_m_r).setVisibility(View.GONE);
                 findViewById(R.id.op_m_c).setVisibility(View.GONE);
+            }
         }
     }
 
@@ -1218,7 +1215,7 @@ else
                 onEquals();
                 return;
             case R.id.op_m_sub:
-                if (!mResultText.getText().equals("") &&!mResultText.getText().equals("0") && !mFormulaText.getText().equals("")) {
+                if (!mResultText.getText().equals("") && !mResultText.getText().equals("0") && !mFormulaText.getText().equals("")) {
                     String input = "-1*" + mResultText.getText();
                     mEvaluator.clearMain();
                     if (!input.equals("")) {
@@ -1233,15 +1230,15 @@ else
                             }
                         }
 
-                        Log.d(TAG, mINPUT+"onButtonClick: "+input);
-                   mFormulaText.setText(mResultText.getText()+"");
-                   onEquals();
+                        Log.d(TAG, mINPUT + "onButtonClick: " + input);
+                        mFormulaText.setText(mResultText.getText() + "");
+                        onEquals();
                     }
 
                     if (mINPUT.equals("")) {
-                        mINPUT = ""+ mResultText.getText() ;
+                        mINPUT = "" + mResultText.getText();
                     } else {
-                        mINPUT = mINPUT  + mResultText.getText();
+                        mINPUT = mINPUT + mResultText.getText();
                     }
                 }
                 return;
@@ -1265,6 +1262,8 @@ else
     void redisplayFormula() {
         SpannableStringBuilder formula
                 = mEvaluator.getExpr(Evaluator.MAIN_INDEX).toSpannableStringBuilder(this);
+
+
         Log.d(TAG, "redisplayFormula: " + formula.toString());
         if (mUnprocessedChars != null) {
             // Add and highlight characters we couldn't process.
@@ -1381,9 +1380,9 @@ else
             } else if (mEvaluator.getExpr(Evaluator.MAIN_INDEX).hasInterestingOps()) {
                 setState(CalculatorState.EVALUATE);
                 mEvaluator.requireResult(Evaluator.MAIN_INDEX, this, mResultText);
-            //Bkav TienNVh: luu vao lich su
-                if(mResultText.getText().length()!=0) {
-                    Log.d(TAG, Evaluator.MAIN_INDEX+"onEquals: "+mResultText.getText().length());
+                //Bkav TienNVh: luu vao lich su
+                if (mResultText.getText().length() != 0) {
+                    Log.d(TAG, Evaluator.MAIN_INDEX + "onEquals: " + mResultText.getText().length());
                     final String savehistoryold = mSharedPreferences.getString("SaveHistory", "");
                     SharedPreferences.Editor editor = mSharedPreferences.edit();
                     editor.putString("SaveHistory", savehistoryold + "" + mFormulaText.getText() + "=" + mResultText.getText() + ";");
@@ -1696,7 +1695,7 @@ else
 
     public void onStartDraggingOpen() {
         mDisplayView.hideToolbar();
-      //  showHistoryFragment();
+        //  showHistoryFragment();
     }
 
     @Override

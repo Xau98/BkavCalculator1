@@ -20,12 +20,12 @@ import android.content.Context;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.util.AttributeSet;
-import android.widget.TextView;
+import android.widget.EditText;
 
 /**
- * Extended {@link TextView} that supports ascent/baseline alignment.
+ * Extended { } that supports ascent/baseline alignment.
  */
-public class AlignedTextView extends TextView {
+public class AlignedTextView extends EditText {
 
     private static final String LATIN_CAPITAL_LETTER = "H";
 

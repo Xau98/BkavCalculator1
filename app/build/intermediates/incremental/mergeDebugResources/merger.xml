@@ -5716,7 +5716,7 @@
     </style><style name="Theme.Licenses">
         <item name="android:title">@string/menu_licenses</item>
     </style></file><file path="/home/tiennvh/Desktop/BkavCalculator/app/src/main/res/values/color.xml" qualifiers=""><color name="calculator_accent_color">#16617e</color><color name="calculator_primary_color">#00BCD4</color><color name="calculator_statusbar_color">#0096A9</color><color name="calculator_error_color">#F40056</color><color name="display_background_color">#76000000</color><color name="display_formula_text_color">#fff</color><color name="display_result_text_color">#fff</color><color name="display_result_exponent_text_color">#40000000</color><color name="pad_numeric_background_color">#DE262b32</color><color name="pad_operator_background_color">#663a4852</color><color name="pad_advanced_background_color">#1DE9B6</color><color name="pad_button_text_color">#FFF</color><color name="pad_button_advanced_text_color">#FFF</color><color name="pad_button_ripple_color">#33FFFFFF</color><color name="pad_button_advanced_ripple_color">#1A000000</color><color name="empty_history_color">#EEEEEE</color><color name="default_background">#333333</color></file><file path="/home/tiennvh/Desktop/BkavCalculator/app/src/main/res/values/styles.xml" qualifiers=""><style name="DisplayTextStyle" parent="@android:style/Widget.Material.Light.TextView">
-        <item name="android:cursorVisible">false</item>
+        <item name="android:cursorVisible">true</item>
         <item name="android:fontFamily">sans-serif-light</item>
         <item name="android:includeFontPadding">false</item>
         <item name="android:gravity">bottom|end</item>
