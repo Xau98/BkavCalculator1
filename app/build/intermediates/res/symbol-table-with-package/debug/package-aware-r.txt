@@ -1773,6 +1773,7 @@ id title_template
 id toggle_inv
 id toggle_mode
 id toolbar
+id toolbarapp
 id top
 id topPanel
 id touch_outside

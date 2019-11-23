@@ -108,7 +108,6 @@ public class CalculatorFormula extends AlignedTextView implements MenuItem.OnMen
 
         // Ensure we are at least as big as our parent.
         final int width = MeasureSpec.getSize(widthMeasureSpec);
-        Log.d("TienNVh", "onMeasure: "+width);
         if (getMinimumWidth() != width) {
             setMinimumWidth(width);
         }
@@ -225,12 +224,6 @@ public class CalculatorFormula extends AlignedTextView implements MenuItem.OnMen
         Log.d("TienNVh", "onSelectionChanged: "+selStart+" - "+selEnd);
     }
 
-    @Override
-    public boolean onTouchEvent(MotionEvent event) {
-        setCursorVisible(true);
-        Log.d("TienNVh", "onTouchEvent: "+isCursorVisible());
-        return super.onTouchEvent(event);
-    }
 
     public boolean stopActionModeOrContextMenu() {
         if (mActionMode != null) {

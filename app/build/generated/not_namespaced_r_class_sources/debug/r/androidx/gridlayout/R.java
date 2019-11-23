@@ -139,8 +139,8 @@ public final class R {
         public static final int text2 = 0x7f09014b;
         public static final int time = 0x7f090159;
         public static final int title = 0x7f09015a;
-        public static final int top = 0x7f090160;
-        public static final int vertical = 0x7f09016d;
+        public static final int top = 0x7f090161;
+        public static final int vertical = 0x7f09016e;
     }
     public static final class integer {
         private integer() {}

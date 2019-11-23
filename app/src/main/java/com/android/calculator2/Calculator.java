@@ -185,7 +185,6 @@ public class Calculator extends Activity
                     if (observer.isAlive()) {
                         observer.removeOnPreDrawListener(this);
                     }
-                    Log.d("TienNVh", "onPreDraw: "+mFormulaText.isCursorVisible());
                     return false;
                 }
             };
@@ -271,6 +270,7 @@ public class Calculator extends Activity
 
     private CalculatorDisplay mDisplayView;
     private TextView mModeView;
+    private Toolbar mToolbar;
     private CalculatorFormula mFormulaText;
     private CalculatorResult mResultText;
     private HorizontalScrollView mFormulaContainer;
@@ -566,13 +566,17 @@ public class Calculator extends Activity
 
             }
         });
-
+// Bkav TienNVh : Khi xoay hide button more
         int orientation = getResources().getConfiguration().orientation;
         if (orientation != Configuration.ORIENTATION_PORTRAIT) {
             findViewById(R.id.bt_more).setVisibility(View.GONE);
         }
+        // Bkav TienNVh : Lam trong suot status bar
+        mToolbar = (Toolbar) findViewById(R.id.toolbarapp);
+        makeStatusBarTransparent(mToolbar);
     }
 
+    // Bkav TienNVh : Load tab History
     public void onRefeshSaveHistory() {
         String savehistory = mSharedPreferences.getString("SaveHistory", "");
         if (!savehistory.equals("")) {
@@ -592,9 +596,7 @@ public class Calculator extends Activity
                             addExplicitKeyToExpr(KeyMaps.keyForDigVal((int) splitFormulatext));
                         }
                     }
-
                     restoreDisplay();
-
                 }
             });
             LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
@@ -613,8 +615,7 @@ public class Calculator extends Activity
             findViewById(R.id.delHistory).setVisibility(View.GONE);
             mRecyclerViewSaveHistory.setVisibility(View.GONE);
         }
-
-    }//3/2 1.75*1
+    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState, @Nullable PersistableBundle persistentState) {
@@ -624,6 +625,7 @@ public class Calculator extends Activity
     private CheckPermission mCheckPermission;
     private WallpaperBlurCompat mWallpaperBlurCompat;
 
+    // Bkav TienNVh : set background cho hinh nen
     private Bitmap getBluredBackgroundFromRom() {
         if (mWallpaperBlurCompat == null) {
             mWallpaperBlurCompat = new WallpaperBlurCompat(this, mCheckPermission);
@@ -657,7 +659,7 @@ public class Calculator extends Activity
     }
 
     /**
-     * AnhBM: ham thuc hien lam trong suot status bar
+     * Bkav TienNVh: ham thuc hien lam trong suot status bar
      */
     private void makeStatusBarTransparent(Toolbar toolbar) {
 
@@ -669,9 +671,9 @@ public class Calculator extends Activity
         // AnhBM: cho toolbar padding 1 doan dung bang statusbar height,
         // viec setpadding ko dung view co the lam hong animation tab
         // Retrieve the AppCompact Toolbar
-
-        View view = findViewById(R.id.toolbar);
-        view.setPadding(0, getStatusBarHeight(), 0, 0);
+        //
+                View view = findViewById(R.id.toolbarapp);
+                view.setPadding(0, getStatusBarHeight(), 0, 0);
     }
 
     /**
@@ -690,9 +692,7 @@ public class Calculator extends Activity
     @Override
     protected void onResume() {
         super.onResume();
-        if (mDisplayView.isToolbarVisible()) {
-            showAndMaybeHideToolbar();
-        }
+
         // If HistoryFragment is showing, hide the main Calculator elements from accessibility.
         // This is because Talkback does not use visibility as a cue for RelativeLayout elements,
         // and RelativeLayout is the base class of DragLayout.
