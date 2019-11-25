@@ -1146,10 +1146,8 @@ public class Calculator extends Activity
                 break;
             case R.id.eq:
                 onEquals();
-                Log.d("TienNVh", "onButtonClick: test");
                 break;
             case R.id.del:
-                Log.d("TienNVh", "onButtonClick: hello");
                 onDelete();
                 break;
             case R.id.clr:
@@ -1218,50 +1216,49 @@ public class Calculator extends Activity
                 redisplayAfterFormulaChange();
                 return;
             case R.id.op_m_plus:
-                if (mCurrentState != CalculatorState.ERROR)
-                    if (mINPUT.equals("")) {
-                        if (mCurrentState == CalculatorState.RESULT) {
-                            mINPUT = mResultText.getText() + "";
-                        } else {
-                            mINPUT = mFormulaText.getText() + "";
-                        }
-                    } else {
-                        if (mCurrentState == CalculatorState.RESULT) {
-                            mINPUT = mINPUT + "+" + mResultText.getText();
-                        } else {
-                            Log.d("TienNVh", "onButtonClick 2: ");
-                            mINPUT = mINPUT + "+" + mFormulaText.getText();
-                        }
-                    }
-
                 onEquals();
+                if (mINPUT.equals("")) {
+                    if (mCurrentState == CalculatorState.ANIMATE || mCurrentState == CalculatorState.RESULT) {
+                        mINPUT = mResultText.getText() + "";
+                    } else {
+                        mINPUT = mFormulaText.getText() + "";
+                    }
+                } else {
+                    if (mCurrentState == CalculatorState.ANIMATE || mCurrentState == CalculatorState.RESULT) {
+                        mINPUT = mINPUT + "+" + mResultText.getText();
+                    } else {
+                        mINPUT = mINPUT + "+" + mFormulaText.getText();
+                    }
+                }
                 return;
             case R.id.op_m_sub:
-                if (!mResultText.getText().equals("") && !mResultText.getText().equals("0") && !mFormulaText.getText().equals("")) {
-                    String input = "-1*" + mResultText.getText();
-                    mEvaluator.clearMain();
-                    if (!input.equals("")) {
-                        for (int i = 0; i < input.length(); i++) {
-                            char splitFormulatext = input.charAt(i);
-                            if (KeyMaps.keyForDigVal((int) splitFormulatext) == View.NO_ID) {
-                                if (KeyMaps.keyForChar(splitFormulatext) != View.NO_ID) {
-                                    addExplicitKeyToExpr(KeyMaps.keyForChar(splitFormulatext));
-                                }
-                            } else {
-                                addExplicitKeyToExpr(KeyMaps.keyForDigVal((int) splitFormulatext));
-                            }
-                        }
-
-                        Log.d(TAG, mINPUT + "onButtonClick: " + input);
-                        mFormulaText.setText(mResultText.getText() + "");
-                        onEquals();
-                    }
-
-                    if (mINPUT.equals("")) {
-                        mINPUT = "" + mResultText.getText();
+                onEquals();
+                String input = "";
+                if (mINPUT.equals("")) {
+                    if (mCurrentState == CalculatorState.ANIMATE || mCurrentState == CalculatorState.RESULT) {
+                        // Bkav TienNVh : nhap vao la phep tinh thi lay ket qua
+                        input = mResultText.getText() + "";
                     } else {
-                        mINPUT = mINPUT + mResultText.getText();
+                        // Bkav TienNVh : nhap vao la so
+                        input = mFormulaText.getText() + "";
                     }
+                    // Bkav TienNVh : Xet truong hop so am  // --a= a
+                    if (input.charAt(0) == KeyMaps.MINUS_SIGN) {
+                        mINPUT = input.substring(1);
+                    } else
+                        mINPUT = Character.toString(KeyMaps.MINUS_SIGN) + input;
+
+                } else {
+                    if (mCurrentState == CalculatorState.ANIMATE || mCurrentState == CalculatorState.RESULT) {
+                        input = "" + mResultText.getText();
+                    } else {
+                        input = "" + mFormulaText.getText();
+                    }
+
+                    if (input.charAt(0) == KeyMaps.MINUS_SIGN) {
+                        mINPUT = mINPUT + "+" + input.substring(1);
+                    } else
+                        mINPUT = mINPUT + Character.toString(KeyMaps.MINUS_SIGN) + input;
                 }
                 return;
             default:
@@ -1285,8 +1282,6 @@ public class Calculator extends Activity
         SpannableStringBuilder formula
                 = mEvaluator.getExpr(Evaluator.MAIN_INDEX).toSpannableStringBuilder(this);
 
-
-        Log.d(TAG, "redisplayFormula: " + formula.toString());
         if (mUnprocessedChars != null) {
             // Add and highlight characters we couldn't process.
             formula.append(mUnprocessedChars, mUnprocessedColorSpan,
@@ -1398,6 +1393,7 @@ public class Calculator extends Activity
         if (mCurrentState == CalculatorState.INPUT) {
             Log.d("TienNVh", "onEquals: ");
             if (haveUnprocessed()) {
+                Log.d("TienNVh", "onEquals 2: ");
                 setState(CalculatorState.EVALUATE);
                 onError(Evaluator.MAIN_INDEX, R.string.error_syntax);
             } else if (mEvaluator.getExpr(Evaluator.MAIN_INDEX).hasInterestingOps()) {
