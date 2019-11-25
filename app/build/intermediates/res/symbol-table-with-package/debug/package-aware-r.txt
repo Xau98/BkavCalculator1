@@ -1551,6 +1551,7 @@ id display
 id drag_layout
 id dropdown_menu
 id edit_query
+id empty
 id emptyElement
 id empty_history_view
 id end

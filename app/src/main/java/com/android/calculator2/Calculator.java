@@ -85,6 +85,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.EditText;
+import android.widget.GridLayout;
 import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -284,6 +285,7 @@ public class Calculator extends Activity
     private TextView mInverseToggle;
     private TextView mModeToggle;
     private RecyclerView mRecyclerViewSaveHistory;
+    // Bkav TienNVh : Tao mang de chua ds phep tinh trong history
     private ArrayList<String> mListHistory = new ArrayList<>();
     private BkavHistoryAdapter mHistoryAdapter;
     private View[] mInvertibleButtons;
@@ -291,11 +293,9 @@ public class Calculator extends Activity
 
     private View mCurrentButton;
     private Animator mCurrentAnimator;
-    // Bkav TienNvh:
     private SharedPreferences mSharedPreferences;
-
     private String mSharePreFile = "SaveCalCulator";
-
+    // Bkav TienNVh : Bien luu tam thoi khi dung m+ , m-
     private String mINPUT = "";
 
     // Characters that were recently entered at the end of the display that have not yet
@@ -406,8 +406,14 @@ public class Calculator extends Activity
         mFormulaText = (CalculatorFormula) findViewById(R.id.formula);
         mResultText = (CalculatorResult) findViewById(R.id.result);
         mFormulaContainer = (HorizontalScrollView) findViewById(R.id.formula_container);
+        // Bkav TienNVh :
         mRecyclerViewSaveHistory = (RecyclerView) findViewById(R.id.history_recycler_view);
-
+        findViewById(R.id.pad_advanced).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d("TienNVh", "onClick: 2");
+            }
+        });
 
         mEvaluator = Evaluator.getInstance(this);
         mEvaluator.setCallback(mEvaluatorCallback);
@@ -566,10 +572,11 @@ public class Calculator extends Activity
 
             }
         });
-// Bkav TienNVh : Khi xoay hide button more
+        // Bkav TienNVh : Khi xoay hide button more , set height cho button Xoa
         int orientation = getResources().getConfiguration().orientation;
         if (orientation != Configuration.ORIENTATION_PORTRAIT) {
             findViewById(R.id.bt_more).setVisibility(View.GONE);
+            findViewById(R.id.delHistory).getLayoutParams().height = 150;
         }
         // Bkav TienNVh : Lam trong suot status bar
         mToolbar = (Toolbar) findViewById(R.id.toolbarapp);
@@ -672,8 +679,8 @@ public class Calculator extends Activity
         // viec setpadding ko dung view co the lam hong animation tab
         // Retrieve the AppCompact Toolbar
         //
-                View view = findViewById(R.id.toolbarapp);
-                view.setPadding(0, getStatusBarHeight(), 0, 0);
+        View view = findViewById(R.id.toolbarapp);
+        view.setPadding(0, getStatusBarHeight(), 0, 0);
     }
 
     /**
@@ -1105,6 +1112,7 @@ public class Calculator extends Activity
         int orientation = getResources().getConfiguration().orientation;
         final int id = view.getId();
         switch (id) {
+
             case R.id.bt_more:
                 if (orientation == Configuration.ORIENTATION_PORTRAIT) {
                     if (mPadViewPager == null || mPadViewPager.getCurrentItem() == 1) {
@@ -1191,8 +1199,8 @@ public class Calculator extends Activity
                 return;
             case R.id.op_m_r:
                 mEvaluator.clearMain();
+                Log.d("TienNVh", "onButtonClick: " + mINPUT);
                 if (!mINPUT.equals("")) {
-                    mINPUT = "0" + mINPUT;// do mInput co the la 1 so , co the la 1 phep tinh . truong hop la so (0-a=-a) , (0a=a)
                     for (int i = 0; i < mINPUT.length(); i++) {
                         char splitFormulatext = mINPUT.charAt(i);
                         if (KeyMaps.keyForDigVal((int) splitFormulatext) == View.NO_ID) {
@@ -1205,13 +1213,25 @@ public class Calculator extends Activity
                     }
                 }
                 onEquals();
+                redisplayAfterFormulaChange();
                 return;
             case R.id.op_m_plus:
-                if (mINPUT.equals("") && !mResultText.getText().equals("")) {
-                    mINPUT = mResultText.getText() + "";
-                } else {
-                    mINPUT = mINPUT + "+" + mResultText.getText() + "";
-                }
+                if (mCurrentState != CalculatorState.ERROR)
+                    if (mINPUT.equals("")) {
+                        if (mCurrentState == CalculatorState.RESULT) {
+                            mINPUT = mResultText.getText() + "";
+                        } else {
+                            mINPUT = mFormulaText.getText() + "";
+                        }
+                    } else {
+                        if (mCurrentState == CalculatorState.RESULT) {
+                            mINPUT = mINPUT + "+" + mResultText.getText();
+                        } else {
+                            Log.d("TienNVh", "onButtonClick 2: ");
+                            mINPUT = mINPUT + "+" + mFormulaText.getText();
+                        }
+                    }
+
                 onEquals();
                 return;
             case R.id.op_m_sub:
@@ -1374,6 +1394,7 @@ public class Calculator extends Activity
     private void onEquals() {
         // Ignore if in non-INPUT state, or if there are no operators.
         if (mCurrentState == CalculatorState.INPUT) {
+            Log.d("TienNVh", "onEquals: ");
             if (haveUnprocessed()) {
                 setState(CalculatorState.EVALUATE);
                 onError(Evaluator.MAIN_INDEX, R.string.error_syntax);
@@ -1382,7 +1403,6 @@ public class Calculator extends Activity
                 mEvaluator.requireResult(Evaluator.MAIN_INDEX, this, mResultText);
                 //Bkav TienNVh: luu vao lich su
                 if (mResultText.getText().length() != 0) {
-                    Log.d(TAG, Evaluator.MAIN_INDEX + "onEquals: " + mResultText.getText().length());
                     final String savehistoryold = mSharedPreferences.getString("SaveHistory", "");
                     SharedPreferences.Editor editor = mSharedPreferences.edit();
                     editor.putString("SaveHistory", savehistoryold + "" + mFormulaText.getText() + "=" + mResultText.getText() + ";");

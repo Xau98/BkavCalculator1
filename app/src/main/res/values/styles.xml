@@ -33,7 +33,7 @@
         <item name="android:gravity">bottom</item>
         <item name="minTextSize">@dimen/formula_min_textsize</item>
         <item name="maxTextSize">@dimen/formula_max_textsize</item>
-        <item name="stepTextSize">@dimen/formula_step_textsize</item>
+        <item name="stepTextSize">1dp</item>
     </style>
     <!--Bkav AnhBM: them style-->
     <style name="PadLayoutStyle.BkavAdvanced">

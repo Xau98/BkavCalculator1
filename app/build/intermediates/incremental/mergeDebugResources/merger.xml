@@ -5729,7 +5729,7 @@
         <item name="android:gravity">bottom</item>
         <item name="minTextSize">@dimen/formula_min_textsize</item>
         <item name="maxTextSize">@dimen/formula_max_textsize</item>
-        <item name="stepTextSize">@dimen/formula_step_textsize</item>
+        <item name="stepTextSize">1dp</item>
     </style><style name="PadLayoutStyle.BkavAdvanced">
 
         <item name="android:elevation">4dip</item>
@@ -5955,10 +5955,10 @@
         <item name="android:textSize">20dip</item>
     </style><style name="PadLayoutStyle.Advanced">
         <item name="android:elevation">4dip</item>
-        <item name="android:paddingTop">12dip</item>
-        <item name="android:paddingBottom">20dip</item>
-        <item name="android:paddingStart">20dip</item>
-        <item name="android:paddingEnd">20dip</item>
+        <item name="android:paddingTop">0dip</item>
+        <item name="android:paddingBottom">0dip</item>
+        <item name="android:paddingStart">0dip</item>
+        <item name="android:paddingEnd">0dip</item>
     </style><style name="PadLayoutStyle.Numeric">
         <item name="android:layout_width">0dip</item>
         <item name="android:layout_weight">11</item>

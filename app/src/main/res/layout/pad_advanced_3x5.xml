@@ -22,8 +22,14 @@
     style="@style/PadLayoutStyle.Advanced"
     android:background="#3b3c3f"
     app:rowCount="5"
-    app:columnCount="4">
-
+    app:columnCount="4"
+    >
+    <Button
+        android:id="@+id/empty"
+        style="@style/PadButtonStyle.Advanced.Text"
+        android:background="@drawable/pad_button_inverse_background"
+        app:layout_row="0"
+        app:layout_column="0" />
     <Button
         android:id="@+id/toggle_inv"
         style="@style/PadButtonStyle.Advanced.Text"

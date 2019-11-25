@@ -85,6 +85,7 @@ public class CalculatorFormula extends AlignedTextView implements MenuItem.OnMen
                 R.styleable.CalculatorFormula_minTextSize, getTextSize());
         mStepTextSize = a.getDimension(R.styleable.CalculatorFormula_stepTextSize,
                 (mMaximumTextSize - mMinimumTextSize) / 3);
+
         a.recycle();
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
