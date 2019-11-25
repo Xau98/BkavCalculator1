@@ -1149,6 +1149,7 @@ public class Calculator extends Activity
                 Log.d("TienNVh", "onButtonClick: test");
                 break;
             case R.id.del:
+                Log.d("TienNVh", "onButtonClick: hello");
                 onDelete();
                 break;
             case R.id.clr:
