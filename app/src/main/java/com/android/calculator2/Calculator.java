@@ -1146,6 +1146,7 @@ public class Calculator extends Activity
                 break;
             case R.id.eq:
                 onEquals();
+                Log.d("TienNVh", "onButtonClick: test");
                 break;
             case R.id.del:
                 onDelete();
