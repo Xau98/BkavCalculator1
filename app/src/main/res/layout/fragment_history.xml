@@ -52,14 +52,14 @@
         />
     <TextView
         android:id="@+id/emptyElement"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_centerInParent="true"
         android:text="@string/no_history"
         android:maxLines="1"
         android:elevation="14dp"
         android:textColor="#ffffff"
-        android:drawableTop="@drawable/ic_history_grey600_48dp"
+        android:gravity="center"
         android:textSize="19.0sp"
         android:visibility="gone" />
 

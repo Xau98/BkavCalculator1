@@ -293,6 +293,7 @@ public class Calculator extends Activity
 
     private View mCurrentButton;
     private Animator mCurrentAnimator;
+    // Bkav TienNVh :
     private SharedPreferences mSharedPreferences;
     private String mSharePreFile = "SaveCalCulator";
     // Bkav TienNVh : Bien luu tam thoi khi dung m+ , m-
@@ -408,12 +409,6 @@ public class Calculator extends Activity
         mFormulaContainer = (HorizontalScrollView) findViewById(R.id.formula_container);
         // Bkav TienNVh :
         mRecyclerViewSaveHistory = (RecyclerView) findViewById(R.id.history_recycler_view);
-        findViewById(R.id.pad_advanced).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.d("TienNVh", "onClick: 2");
-            }
-        });
 
         mEvaluator = Evaluator.getInstance(this);
         mEvaluator.setCallback(mEvaluatorCallback);
@@ -466,6 +461,7 @@ public class Calculator extends Activity
         mFormulaText.setOnTextSizeChangeListener(this);
         mFormulaText.addTextChangedListener(mFormulaTextWatcher);
         mDeleteButton.setOnLongClickListener(this);
+        // Bkav TienNVh :
         mSharedPreferences = getSharedPreferences(mSharePreFile, MODE_PRIVATE);
         if (savedInstanceState != null) {
             restoreInstanceState(savedInstanceState);
@@ -493,7 +489,6 @@ public class Calculator extends Activity
                                 continue;
                             }
                         } else {
-                            // byte b= (byte) '\u207B';//-71
                             if ((byte) splitFormulatext == 26) {
                                 addExplicitKeyToExpr(R.id.op_sqrt);
                                 i++;
@@ -569,15 +564,16 @@ public class Calculator extends Activity
         findViewById(R.id.emptyElement).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
             }
         });
+
         // Bkav TienNVh : Khi xoay hide button more , set height cho button Xoa
         int orientation = getResources().getConfiguration().orientation;
         if (orientation != Configuration.ORIENTATION_PORTRAIT) {
             findViewById(R.id.bt_more).setVisibility(View.GONE);
             findViewById(R.id.delHistory).getLayoutParams().height = 150;
         }
+
         // Bkav TienNVh : Lam trong suot status bar
         mToolbar = (Toolbar) findViewById(R.id.toolbarapp);
         makeStatusBarTransparent(mToolbar);
@@ -622,6 +618,7 @@ public class Calculator extends Activity
             findViewById(R.id.delHistory).setVisibility(View.GONE);
             mRecyclerViewSaveHistory.setVisibility(View.GONE);
         }
+
     }
 
     @Override
@@ -846,7 +843,6 @@ public class Calculator extends Activity
     @Override
     public void onUserInteraction() {
         super.onUserInteraction();
-
         // If there's an animation in progress, end it immediately, so the user interaction can
         // be handled.
         if (mCurrentAnimator != null) {
@@ -854,35 +850,15 @@ public class Calculator extends Activity
         }
     }
 
-
+// Bkav TienNVh :
     @Override
     public void onBackPressed() {
         if (!stopActionModeOrContextMenu()) {
-            //       final HistoryFragment historyFragment = getHistoryFragment();
-//            if (mDragLayout.isOpen() && historyFragment != null) {
-//
-//                if (!historyFragment.stopActionModeOrContextMenu()) {
-//                    mPadViewPager.setCurrentItem(mPadViewPager.getCurrentItem() + 1);
-//                    Log.d(TAG, "onBackPressed:1 ");
-//                }
-//                return;
-//            }
-
-
-            if (mPadViewPager != null && mPadViewPager.getCurrentItem() != 0) {
-                // Select the previous pad.
-
-                Log.d(TAG, "onBackPressed 10: " + mPadViewPager.getCurrentItem());
-                mPadViewPager.setCurrentItem(mPadViewPager.getCurrentItem() - 1);
-
+            // Bkav TienNVh : Xu ly vuot back
+            if ( mPadViewPager.getCurrentItem() != 1) {
+                    mPadViewPager.setCurrentItem(1);
             } else {
-                if (mPadViewPager.getCurrentItem() == 1)
-                    mPadViewPager.setCurrentItem(mPadViewPager.getCurrentItem() - 1);
-                else
-                    // If the user is currently looking at the first pad (or the pad is not paged),
-                    // allow the system to handle the Back button.
                     super.onBackPressed();
-                Log.d(TAG, "onBackPressed 0: " + mPadViewPager.getCurrentItem());
             }
         }
     }
@@ -964,7 +940,7 @@ public class Calculator extends Activity
             for (View inverseButton : mInverseButtons) {
                 inverseButton.setVisibility(View.VISIBLE);
             }
-            //Bkav TienNVh: hide m+, m-
+            //Bkav TienNVh: hide m+, m- (Xoay ngang)
             if (orientation != Configuration.ORIENTATION_PORTRAIT) {
                 findViewById(R.id.op_m_plus).setVisibility(View.GONE);
                 findViewById(R.id.op_m_sub).setVisibility(View.GONE);
@@ -979,7 +955,7 @@ public class Calculator extends Activity
             for (View inverseButton : mInverseButtons) {
                 inverseButton.setVisibility(View.GONE);
             }
-            //Bkav TienNVh: show m+, m-
+            //Bkav TienNVh: show m+, m- (Xoay ngang)
             if (orientation != Configuration.ORIENTATION_PORTRAIT) {
                 findViewById(R.id.op_m_plus).setVisibility(View.VISIBLE);
                 findViewById(R.id.op_m_sub).setVisibility(View.VISIBLE);
@@ -1112,7 +1088,7 @@ public class Calculator extends Activity
         int orientation = getResources().getConfiguration().orientation;
         final int id = view.getId();
         switch (id) {
-
+            // Bkav TienNVh : Tab tinh nang mo rong
             case R.id.bt_more:
                 if (orientation == Configuration.ORIENTATION_PORTRAIT) {
                     if (mPadViewPager == null || mPadViewPager.getCurrentItem() == 1) {
@@ -1122,13 +1098,14 @@ public class Calculator extends Activity
                     }
                 }
                 break;
+                // Bkav TienNVh : Delete History
             case R.id.delHistory:
                 SharedPreferences.Editor editor = mSharedPreferences.edit();
                 editor.putString("SaveHistory", "");
                 editor.apply();
                 onRefeshSaveHistory();
-
                 break;
+                // Bkav TienNVh : Tab History
             case R.id.bt_history:
                 if (orientation == Configuration.ORIENTATION_PORTRAIT) {
                     if (mPadViewPager == null || mPadViewPager.getCurrentItem() == 1) {
@@ -1181,7 +1158,7 @@ public class Calculator extends Activity
                     evaluateInstantIfNecessary();
                 }
                 return;
-            //Bkav  TienNVh: Click cac nut % , ! , pi , dong item mo rong
+            //Bkav  TienNVh: Click cac nut % , ! , pi dong item mo rong
             case R.id.const_pi:
             case R.id.op_fact:
             case R.id.op_pct:
@@ -1193,7 +1170,7 @@ public class Calculator extends Activity
                     }
                 }
                 return;
-//Bkav  TienNVh: Click cac nut mc , mr, m+, m-
+             //Bkav  TienNVh: Click cac nut mc , mr, m+, m-
             case R.id.op_m_c:
                 mINPUT = "";
                 return;
@@ -1390,10 +1367,8 @@ public class Calculator extends Activity
 
     private void onEquals() {
         // Ignore if in non-INPUT state, or if there are no operators.
-        if (mCurrentState == CalculatorState.INPUT) {
-            Log.d("TienNVh", "onEquals: ");
-            if (haveUnprocessed()) {
-                Log.d("TienNVh", "onEquals 2: ");
+        if (mCurrentState == CalculatorState.INPUT) { 
+            if (haveUnprocessed()) { 
                 setState(CalculatorState.EVALUATE);
                 onError(Evaluator.MAIN_INDEX, R.string.error_syntax);
             } else if (mEvaluator.getExpr(Evaluator.MAIN_INDEX).hasInterestingOps()) {
