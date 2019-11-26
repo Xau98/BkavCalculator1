@@ -618,7 +618,12 @@ public class Calculator extends Activity
             findViewById(R.id.delHistory).setVisibility(View.GONE);
             mRecyclerViewSaveHistory.setVisibility(View.GONE);
         }
-
+        // Bkav TienNVh :  Chan click xuyen history
+        findViewById(R.id.emptyElement).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+            }
+        });
     }
 
     @Override
