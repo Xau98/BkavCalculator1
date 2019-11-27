@@ -60,6 +60,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
+import android.os.Handler;
 import android.os.PersistableBundle;
 import android.text.Editable;
 import android.text.InputType;
@@ -277,7 +278,7 @@ public class Calculator extends Activity
     private HorizontalScrollView mFormulaContainer;
     private DragLayout mDragLayout;
 
-    private ViewPager mPadViewPager;
+    private CalculatorPadViewPager mPadViewPager;
     private View mDeleteButton;
     private View mClearButton;
     private View mEqualButton;
@@ -415,7 +416,7 @@ public class Calculator extends Activity
         mResultText.setEvaluator(mEvaluator, Evaluator.MAIN_INDEX);
         KeyMaps.setActivity(this);
         mCheckPermission = new CheckPermission(this);
-        mPadViewPager = (ViewPager) findViewById(R.id.pad_pager);
+        mPadViewPager = (CalculatorPadViewPager) findViewById(R.id.pad_pager);
         mPadViewPager.setCurrentItem(1);
         mDeleteButton = findViewById(R.id.del);
         mClearButton = findViewById(R.id.clr);
@@ -554,18 +555,18 @@ public class Calculator extends Activity
         //Bkav TienNVh :Load tab history
         onRefeshSaveHistory();
         //Bkav TienNVh : Ko cho click xuyen len lich su
-        findViewById(R.id.relativeLayout_history).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-            }
-        });
+//        findViewById(R.id.relativeLayout_history).setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//
+//            }
+//        });
         //Bkav TienNVh : an tab history khi xoay ngang
-        findViewById(R.id.emptyElement).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-            }
-        });
+//        findViewById(R.id.emptyElement).setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//            }
+//        });
 
         // Bkav TienNVh : Khi xoay hide button more , set height cho button Xoa
         int orientation = getResources().getConfiguration().orientation;
@@ -624,6 +625,31 @@ public class Calculator extends Activity
             public void onClick(View v) {
             }
         });
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+        if (mPadViewPager != null) {
+            mPadViewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+                @Override
+                public void onPageScrolled(int i, float v, int i1) {
+//                    mRelativeLayoutHistory.setInforScrollViewpager(bitmapBlurHis, i, v, i1);
+                }
+
+                @Override
+                public void onPageSelected(int i) {
+                    //Bkav ThanhNgD: Goi lai onPageSelected() de nhan su kien khi changed page
+                    // de xu li bug lich su trong' khi o page 0 van~ click dc button 123... cua page 1
+                 mPadViewPager.getmOnPageChangeListener().onPageSelected(i);
+                }
+
+                @Override
+                public void onPageScrollStateChanged(int i) {
+                }
+            });
+        }
+            }
+        }, 1000);
     }
 
     @Override

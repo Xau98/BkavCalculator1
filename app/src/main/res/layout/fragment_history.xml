@@ -21,6 +21,8 @@
     android:layout_height="match_parent"
     android:clipChildren="false"
     android:elevation="7dp"
+    android:clickable="false"
+    android:focusable="false"
     android:id="@+id/relativeLayout_history"
     android:background="#464646"
     android:orientation="vertical">
@@ -53,7 +55,7 @@
     <TextView
         android:id="@+id/emptyElement"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:text="@string/no_history"
         android:maxLines="1"
