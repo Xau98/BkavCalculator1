@@ -35,7 +35,6 @@ public class CalculatorPadViewPager extends ViewPager {
     private final PagerAdapter mStaticPagerAdapter = new PagerAdapter() {
         @Override
         public int getCount() {
-            Log.d("TienNVh", "getCount: " + getChildCount());
             return getChildCount();
         }
 
@@ -55,6 +54,7 @@ public class CalculatorPadViewPager extends ViewPager {
             return view == object;
         }
 
+        // Bkav TienNVh :
         @Override
         public float getPageWidth(int position) {
             int orientation = getResources().getConfiguration().orientation;
@@ -73,7 +73,6 @@ public class CalculatorPadViewPager extends ViewPager {
             return pageDescriptions[position];
         }
     };
-    //Bkav ThanhNgD: Them method nay`
 
     public void recursivelySetEnabled(View view, boolean enabled) {
 
@@ -81,7 +80,6 @@ public class CalculatorPadViewPager extends ViewPager {
             // Bkav ThanhNgD: Can` chuyen view thanh` viewGrop vi`: view chuyen` vao` gom` nhieu` child view, ma`
             // method setEnable() o duoi' chi thuc hien dc voi' cac base view nhu TextView, Button...
             final ViewGroup viewGroup = (ViewGroup) view;
-            Log.d("TienNVh", "onPageSelected 0: " + viewGroup.getChildCount());
             // Thuc hien de quy lai method nay` voi' tat' ca cac' child view cua viewGroup
             // Method nay` se chay vao` else{} chu' k vao` day nua~ vi` viewGroup.getChildAt(childIndex)
             // luc' nay` la` base view -> (view instanceof ViewGroup) la` false
@@ -92,9 +90,6 @@ public class CalculatorPadViewPager extends ViewPager {
         } else {
             // Bkav ThanhNgD: setEnabled(...) xu li kha nang Touchables( co' the cham.) cua view
             // false -> vo hieu hoa' Touchables, true -> bat Touchables
-
-            Log.d("TienNVh", "recursivelySetEnabled: " + view);
-
             view.setEnabled(enabled);
 
         }
@@ -104,30 +99,28 @@ public class CalculatorPadViewPager extends ViewPager {
     public OnPageChangeListener getmOnPageChangeListener() {
         return mOnPageChangeListener;
     }
-
+// Bkav TienNVh :
     private final OnPageChangeListener mOnPageChangeListener = new SimpleOnPageChangeListener() {
         @Override
         public void onPageSelected(int position) {
-
             if (getAdapter() == mStaticPagerAdapter) {
-                Log.d("TienNVh", "onPageSelected: " + getChildCount());
-
-                TextView emptyElement = (TextView) getChildAt(0).findViewById(R.id.emptyElement);
+              //  TextView emptyElement = (TextView) getChildAt(0).findViewById(R.id.emptyElement);
                 for (int childIndex = 0; childIndex < getChildCount(); ++childIndex) {
                     recursivelySetEnabled(getChildAt(childIndex), true);
+                }
                     // Xu ly bug khi lich su trong'(emptyElement dang VISIBLE ) van click button 123... cua page 1
-                    if (emptyElement != null && getCurrentItem() == 0 && emptyElement.getVisibility() == VISIBLE) {
+//                     if (emptyElement != null && getCurrentItem() == 0 && emptyElement.getVisibility() == VISIBLE) {
 //                        GridLayout calculatorNumericPadLayout
 //                                = (GridLayout) getChildAt(1).findViewById(R.id.pad_numeric);
 //                        recursivelySetEnabled( calculatorNumericPadLayout, false);
-                    } else {
-                        //Bkav ThanhNgD: childIndex == position -> true
-                        // Neu' la` childIndex == position thi` page dang chon moi' click dc, page khac'
-                        // du` co' hien cung k the click vi`  setEnabled() = false
-                        // Con` la` true thi` neu' view dc hien tren windown thi` co the click
+//                            } else {
+                    //Bkav ThanhNgD: childIndex == position -> true
+                    // Neu' la` childIndex == position thi` page dang chon moi' click dc, page khac'
+                    // du` co' hien cung k the click vi`  setEnabled() = false
+                    // Con` la` true thi` neu' view dc hien tren windown thi` co the click
 //                        recursivelySetEnabled( getChildAt(childIndex), true);
-                    }
-                }
+                    //         }
+
             }
         }
 
@@ -149,15 +142,9 @@ public class CalculatorPadViewPager extends ViewPager {
                 // Pin the left page to the left side.
                 if (view.equals(getChildAt(1))) {
                     float sizeTrans = getWidth() * -position;
-                    Log.d("TienNVh", "transformPage: " + getWidth() + " : " + position + " : " + view.getTranslationX() + " : " + view.getX());
                     view.setTranslationX(sizeTrans);
                 }
             }
-            //else {
-//                // Use the default slide transition when moving to the next page.
-//                view.setTranslationX(0.0f);
-//                view.setAlpha(1.0f);
-//            }
         }
     };
 
@@ -211,6 +198,7 @@ public class CalculatorPadViewPager extends ViewPager {
         // Let page change listener know about our initial position.
         // mOnPageChangeListener.onPageSelected(getCurrentItem());
     }
+    // Bkav TienNVh : Bỏ
 //
 //    @Override
 //    public boolean onInterceptTouchEvent(MotionEvent ev) {

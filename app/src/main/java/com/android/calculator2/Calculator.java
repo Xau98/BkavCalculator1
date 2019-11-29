@@ -105,6 +105,7 @@ import java.io.ObjectOutputStream;
 import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Locale;
 
 import static com.android.calculator2.CalculatorFormula.OnFormulaContextMenuClickListener;
 
@@ -473,100 +474,22 @@ public class Calculator extends Activity
             onInverseToggled(false);
 
             // Bkav TienNVh : lay trang thai cuoi cung
-            final String formulatext = mSharedPreferences.getString("FormulaText", "");
-            mFormulaText.setText(formulatext);
-            if (!formulatext.equals("")) {
-                for (int i = 0; i < formulatext.length(); ) {
-                    char splitFormulatext = formulatext.charAt(i);
-                    if (KeyMaps.keyForDigVal((int) splitFormulatext) == View.NO_ID) {
-                        if (KeyMaps.keyForChar(splitFormulatext) != View.NO_ID) {
-                            if (i < formulatext.length() - 2 && (byte) formulatext.charAt(i + 2) == 112) {
-                                addExplicitKeyToExpr(R.id.fun_exp);
-                                i = i + 4;
-                                continue;
-                            } else {
-                                addExplicitKeyToExpr(KeyMaps.keyForChar(splitFormulatext));
-                                i++;
-                                continue;
-                            }
-                        } else {
-                            if ((byte) splitFormulatext == 26) {
-                                addExplicitKeyToExpr(R.id.op_sqrt);
-                                i++;
-                                continue;
-                            } else {
-                                switch (splitFormulatext) {
-                                    case 's':
-                                        if ((byte) formulatext.charAt(i + 3) != 40) {
-                                            addExplicitKeyToExpr(R.id.fun_arcsin);
-                                            i = i + 6;
-                                        } else {
-                                            addExplicitKeyToExpr(R.id.fun_sin);
-                                            i = i + 4;
-                                        }
-                                        continue;
-                                    case 'c':
-                                        if ((byte) formulatext.charAt(i + 3) != 40) {
-                                            addExplicitKeyToExpr(R.id.fun_arccos);
-                                            i = i + 6;
-                                        } else {
-                                            addExplicitKeyToExpr(R.id.fun_cos);
-                                            i = i + 4;
-                                        }
-                                        continue;
-                                    case 't':
-                                        if ((byte) formulatext.charAt(i + 3) != 30) {
-                                            addExplicitKeyToExpr(R.id.fun_arctan);
-                                            i = i + 6;
-                                        } else {
-                                            addExplicitKeyToExpr(R.id.fun_tan);
-                                            i = i + 4;
-                                        }
-                                        continue;
-                                    case 'l':
-                                        if ((byte) formulatext.charAt(i + 2) == 103) {
-                                            addExplicitKeyToExpr(R.id.fun_log);
-                                            i = i + 4;
-                                        } else {
-                                            addExplicitKeyToExpr(R.id.fun_ln);
-                                            i = i + 3;
-                                        }
-                                        continue;
-                                    default:
-                                        if ((byte) formulatext.charAt(i) == -78) {
-                                            addExplicitKeyToExpr(R.id.op_sqr);
-                                            i++;
-                                            continue;
-                                        }
-                                }
-                            }
-                        }
-                    } else {
-                        addExplicitKeyToExpr(KeyMaps.keyForDigVal((int) splitFormulatext));
-                        i++;
-                    }
-                }
-            }
+//            final String formulatext = mSharedPreferences.getString("FormulaText", "");
+//            addExplicitStringToExpr(formulatext);
         }
         //Bkav TienNVh : Shows ketqua
-        restoreDisplay();
+        //restoreDisplay();
         //Bkav TienNVh :Setbackground
         setBlurBackground();
         //Bkav TienNVh :Load tab history
         onRefeshSaveHistory();
         //Bkav TienNVh : Ko cho click xuyen len lich su
-//        findViewById(R.id.relativeLayout_history).setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//
-//            }
-//        });
-        //Bkav TienNVh : an tab history khi xoay ngang
-//        findViewById(R.id.emptyElement).setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//            }
-//        });
+        findViewById(R.id.relativeLayout_history).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
 
         // Bkav TienNVh : Khi xoay hide button more , set height cho button Xoa
         int orientation = getResources().getConfiguration().orientation;
@@ -629,27 +552,115 @@ public class Calculator extends Activity
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-        if (mPadViewPager != null) {
-            mPadViewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-                @Override
-                public void onPageScrolled(int i, float v, int i1) {
+                if (mPadViewPager != null) {
+                    mPadViewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+                        @Override
+                        public void onPageScrolled(int i, float v, int i1) {
 //                    mRelativeLayoutHistory.setInforScrollViewpager(bitmapBlurHis, i, v, i1);
-                }
+                        }
 
-                @Override
-                public void onPageSelected(int i) {
-                    //Bkav ThanhNgD: Goi lai onPageSelected() de nhan su kien khi changed page
-                    // de xu li bug lich su trong' khi o page 0 van~ click dc button 123... cua page 1
-                 mPadViewPager.getmOnPageChangeListener().onPageSelected(i);
-                }
+                        @Override
+                        public void onPageSelected(int i) {
+                            //Bkav ThanhNgD: Goi lai onPageSelected() de nhan su kien khi changed page
+                            // de xu li bug lich su trong' khi o page 0 van~ click dc button 123... cua page 1
+                            mPadViewPager.getmOnPageChangeListener().onPageSelected(i);
+                        }
 
-                @Override
-                public void onPageScrollStateChanged(int i) {
+                        @Override
+                        public void onPageScrollStateChanged(int i) {
+                        }
+                    });
                 }
-            });
-        }
             }
         }, 1000);
+    }
+
+    public void addExplicitStringToExpr(String formulatext) {
+        if (!formulatext.equals("")) {
+            for (int i = 0; i < formulatext.length(); ) {
+                char splitFormulatext = formulatext.charAt(i);
+
+                if (splitFormulatext == ',' || splitFormulatext == '.') {
+                    if ((splitFormulatext == ',' && Locale.getDefault().toString().equals("vi_VN")) ||
+                            (splitFormulatext == '.' && !Locale.getDefault().toString().equals("vi_VN"))) {
+                        addExplicitKeyToExpr(R.id.dec_point);
+                        i++;
+                        continue;
+                    } else {
+                        i++;
+                        continue;
+                    }
+                }
+
+                if (KeyMaps.keyForDigVal((int) splitFormulatext) == View.NO_ID) {
+                    if (KeyMaps.keyForChar(splitFormulatext) != View.NO_ID) {
+                        if (i < formulatext.length() - 2 && (byte) formulatext.charAt(i + 2) == 112) {
+                            addExplicitKeyToExpr(R.id.fun_exp);
+                            i = i + 4;
+                            continue;
+                        } else {
+                            addExplicitKeyToExpr(KeyMaps.keyForChar(splitFormulatext));
+                            i++;
+                            continue;
+                        }
+                    } else {
+                        if ((byte) splitFormulatext == 26) {
+                            addExplicitKeyToExpr(R.id.op_sqrt);
+                            i++;
+                            continue;
+                        } else {
+                            switch (splitFormulatext) {
+                                case 's':
+                                    if ((byte) formulatext.charAt(i + 3) != 40) {
+                                        addExplicitKeyToExpr(R.id.fun_arcsin);
+                                        i = i + 6;
+                                    } else {
+                                        addExplicitKeyToExpr(R.id.fun_sin);
+                                        i = i + 4;
+                                    }
+                                    continue;
+                                case 'c':
+                                    if ((byte) formulatext.charAt(i + 3) != 40) {
+                                        addExplicitKeyToExpr(R.id.fun_arccos);
+                                        i = i + 6;
+                                    } else {
+                                        addExplicitKeyToExpr(R.id.fun_cos);
+                                        i = i + 4;
+                                    }
+                                    continue;
+                                case 't':
+                                    if ((byte) formulatext.charAt(i + 3) != 30) {
+                                        addExplicitKeyToExpr(R.id.fun_arctan);
+                                        i = i + 6;
+                                    } else {
+                                        addExplicitKeyToExpr(R.id.fun_tan);
+                                        i = i + 4;
+                                    }
+                                    continue;
+                                case 'l':
+                                    if ((byte) formulatext.charAt(i + 2) == 103) {
+                                        addExplicitKeyToExpr(R.id.fun_log);
+                                        i = i + 4;
+                                    } else {
+                                        addExplicitKeyToExpr(R.id.fun_ln);
+                                        i = i + 3;
+                                    }
+                                    continue;
+                                default:
+                                    if ((byte) formulatext.charAt(i) == -78) {
+                                        addExplicitKeyToExpr(R.id.op_sqr);
+                                        i++;
+                                        continue;
+                                    }
+                            }
+                        }
+                    }
+                } else {
+                    addExplicitKeyToExpr(KeyMaps.keyForDigVal((int) splitFormulatext));
+                    i++;
+                }
+            }
+        }
     }
 
     @Override
@@ -660,14 +671,14 @@ public class Calculator extends Activity
     private CheckPermission mCheckPermission;
     private WallpaperBlurCompat mWallpaperBlurCompat;
 
-    // Bkav TienNVh : set background cho hinh nen
+    // Bkav TienNVh : lay hinh nen
     private Bitmap getBluredBackgroundFromRom() {
         if (mWallpaperBlurCompat == null) {
             mWallpaperBlurCompat = new WallpaperBlurCompat(this, mCheckPermission);
         }
         return mWallpaperBlurCompat.getWallpaperBlur();
     }
-
+    // Bkav TienNVh : set background cho hinh nen
     private void setBlurBackground() {
         Bitmap backgroundBitmapFromRom = getBluredBackgroundFromRom();
         mDragLayout.setBackground(new BitmapDrawable(backgroundBitmapFromRom));
@@ -679,7 +690,7 @@ public class Calculator extends Activity
     public void denyPermission(String[] pers) {
 
     }
-
+// Bkav TienNVh : Cap quyen
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     public void acceptPermission(String[] pers) {
@@ -724,9 +735,30 @@ public class Calculator extends Activity
         return result;
     }
 
+// Bkav TienNVh : Xu ly dau phay theo ngon ngu
     @Override
     protected void onResume() {
         super.onResume();
+        mEvaluator.clearMain();
+        String language = mSharedPreferences.getString("Language", "vi_VN");
+        String formulaText = mSharedPreferences.getString("FormulaText", "");
+        String languageCurrent = Locale.getDefault().toString();
+        if (!language.equals("")) {
+            if (!language.equals(languageCurrent)) {
+                if (languageCurrent.equals("vi_VN")) {
+                    formulaText = formulaText.replace(",", "");
+                    formulaText = formulaText.replace(".", ",");
+                } else {
+                    formulaText = formulaText.replace(".", "");
+                    formulaText = formulaText.replace(",", ".");
+                }
+            }
+        }
+        addExplicitStringToExpr(formulaText);
+        restoreDisplay();
+        Log.d("TienNVh", "onResume 458: "+mFormulaText.length());
+        if(mFormulaText.length()>0)
+          mFormulaText.setSelection(mFormulaText.length());
 
         // If HistoryFragment is showing, hide the main Calculator elements from accessibility.
         // This is because Talkback does not use visibility as a cue for RelativeLayout elements,
@@ -836,6 +868,7 @@ public class Calculator extends Activity
         //TienNvh : Luu phep tinh cuoi cung
         SharedPreferences.Editor editor = mSharedPreferences.edit();
         editor.putString("FormulaText", mFormulaText.getText() + "");
+        editor.putString("Language", Locale.getDefault().toString() + "");
         editor.apply();
 
     }
@@ -881,15 +914,15 @@ public class Calculator extends Activity
         }
     }
 
-// Bkav TienNVh :
+    // Bkav TienNVh :
     @Override
     public void onBackPressed() {
         if (!stopActionModeOrContextMenu()) {
             // Bkav TienNVh : Xu ly vuot back
-            if ( mPadViewPager.getCurrentItem() != 1) {
-                    mPadViewPager.setCurrentItem(1);
+            if (mPadViewPager.getCurrentItem() != 1) {
+                mPadViewPager.setCurrentItem(1);
             } else {
-                    super.onBackPressed();
+                super.onBackPressed();
             }
         }
     }
@@ -1113,6 +1146,7 @@ public class Calculator extends Activity
     public void onButtonClick(View view) {
         // Any animation is ended before we get here.
         mCurrentButton = view;
+        int postionCursor = mFormulaText.getSelectionStart(); // vi tri con tro
         stopActionModeOrContextMenu();
         // See onKey above for the rationale behind some of the behavior below:
         cancelUnrequested();
@@ -1129,27 +1163,19 @@ public class Calculator extends Activity
                     }
                 }
                 break;
-                // Bkav TienNVh : Delete History
+            // Bkav TienNVh : Delete History
             case R.id.delHistory:
                 SharedPreferences.Editor editor = mSharedPreferences.edit();
                 editor.putString("SaveHistory", "");
                 editor.apply();
                 onRefeshSaveHistory();
                 break;
-                // Bkav TienNVh : Tab History
+            // Bkav TienNVh : Tab History
             case R.id.bt_history:
-                if (orientation == Configuration.ORIENTATION_PORTRAIT) {
-                    if (mPadViewPager == null || mPadViewPager.getCurrentItem() == 1) {
-                        mPadViewPager.setCurrentItem(mPadViewPager.getCurrentItem() - 1);
-                    } else if (mPadViewPager == null || mPadViewPager.getCurrentItem() == 0) {
-                        mPadViewPager.setCurrentItem(mPadViewPager.getCurrentItem() + 1);
-                    }
-                } else {
-//                    if (mViewPager == null || mViewPager.getCurrentItem() == 1) {
-//                        mViewPager.setCurrentItem(mViewPager.getCurrentItem() - 1);
-//                    } else if (mViewPager == null || mViewPager.getCurrentItem() == 0) {
-//                        mViewPager.setCurrentItem(mViewPager.getCurrentItem() + 1);
-//                    }
+                if (mPadViewPager == null || mPadViewPager.getCurrentItem() == 1) {
+                    mPadViewPager.setCurrentItem(mPadViewPager.getCurrentItem() - 1);
+                } else if (mPadViewPager == null || mPadViewPager.getCurrentItem() == 0) {
+                    mPadViewPager.setCurrentItem(mPadViewPager.getCurrentItem() + 1);
                 }
                 break;
             case R.id.eq:
@@ -1201,7 +1227,7 @@ public class Calculator extends Activity
                     }
                 }
                 return;
-             //Bkav  TienNVh: Click cac nut mc , mr, m+, m-
+            //Bkav  TienNVh: Click cac nut mc , mr, m+, m-
             case R.id.op_m_c:
                 mINPUT = "";
                 return;
@@ -1275,10 +1301,25 @@ public class Calculator extends Activity
                     // For consistency, append as uninterpreted characters.
                     // This may actually be useful for a left parenthesis.
                     addChars(KeyMaps.toString(this, id), true);
+                    Log.d("TienNVh", "onButtonClick 111: ");
 
                 } else {
-                    addExplicitKeyToExpr(id);
-                    redisplayAfterFormulaChange();
+                    //addExplicitKeyToExpr(id);
+                    String newtext = KeyMaps.toString(this, id);
+                    int lengthold = mFormulaText.length();// do dai cua chuoi
+
+                    if (lengthold >= postionCursor) {
+                        mPostionCursorToRight = lengthold - postionCursor;
+
+                        String slipt1 = mFormulaText.getText().toString().substring(0, postionCursor);
+                        String slipt2 = mFormulaText.getText().toString().substring(postionCursor, lengthold);
+                        String formulaText = slipt1 + newtext + slipt2;
+                        Log.d("TienNVh", "onButtonClick 8: " + formulaText);
+                        mEvaluator.clearMain();
+                        addExplicitStringToExpr(formulaText);
+                        redisplayAfterFormulaChange();
+                        changePostionCursor();
+                    }
 
                 }
                 break;
@@ -1286,10 +1327,25 @@ public class Calculator extends Activity
         showOrHideToolbar();
     }
 
+    private int mPostionCursorToRight = 0;
+
+    public void changePostionCursor() {
+        int postionCursor = mFormulaText.getSelectionStart(); // vi tri con tro
+
+        int lengthold = mFormulaText.length();// do dai cua chuoi
+        if (lengthold >= mPostionCursorToRight && mPostionCursorToRight != 0) {
+            Log.d("TienNVh" + lengthold, "onButtonClick 3: " + mPostionCursorToRight);
+            mFormulaText.setSelection(lengthold - mPostionCursorToRight);
+        } else {
+            if (mPostionCursorToRight == 0)
+                mFormulaText.setSelection(lengthold);
+        }
+    }
+
     void redisplayFormula() {
         SpannableStringBuilder formula
                 = mEvaluator.getExpr(Evaluator.MAIN_INDEX).toSpannableStringBuilder(this);
-
+        Log.d("TienNVh", "redisplayFormula: " + mUnprocessedChars);
         if (mUnprocessedChars != null) {
             // Add and highlight characters we couldn't process.
             formula.append(mUnprocessedChars, mUnprocessedColorSpan,
@@ -1398,8 +1454,8 @@ public class Calculator extends Activity
 
     private void onEquals() {
         // Ignore if in non-INPUT state, or if there are no operators.
-        if (mCurrentState == CalculatorState.INPUT) { 
-            if (haveUnprocessed()) { 
+        if (mCurrentState == CalculatorState.INPUT) {
+            if (haveUnprocessed()) {
                 setState(CalculatorState.EVALUATE);
                 onError(Evaluator.MAIN_INDEX, R.string.error_syntax);
             } else if (mEvaluator.getExpr(Evaluator.MAIN_INDEX).hasInterestingOps()) {
@@ -1417,6 +1473,18 @@ public class Calculator extends Activity
         }
     }
 
+    @Override
+    protected void onPause() {
+
+        // Bkav TienNVh : Luu trang thai ngon ngu.
+        Log.d("TienNVh", "onPause: ");
+        SharedPreferences.Editor editor = mSharedPreferences.edit();
+        editor.putString("Language", Locale.getDefault().toString());
+        editor.apply();
+        super.onPause();
+    }
+
+
     private void onDelete() {
         // Delete works like backspace; remove the last character or operator from the expression.
         // Note that we handle keyboard delete exactly like the delete button.  For
@@ -1429,13 +1497,43 @@ public class Calculator extends Activity
         if (haveUnprocessed()) {
             mUnprocessedChars = mUnprocessedChars.substring(0, mUnprocessedChars.length() - 1);
         } else {
-            mEvaluator.delete();
+            final Editable formulaText = mFormulaText.getEditableText();
+            int postionCursor = mFormulaText.getSelectionEnd();
+            Log.d("TienNVh", "onDelete 2: " + postionCursor);
+            mPostionCursorToRight = formulaText.length() - postionCursor;
+
+            final int formulaLength = formulaText.length() - mPostionCursorToRight;
+            Log.d("TienNVh" + mPostionCursorToRight, formulaText + "onDelete: " + formulaLength);
+            String locale = Locale.getDefault().toString();
+            Log.d("TienNVh", "onDelete: " + locale);
+            char comma;
+            if (locale.equals("vi_VN")) {
+                comma = '.';
+            } else {
+                comma = ',';
+            }
+
+            if (formulaLength > 0) {
+                if (formulaText.charAt(formulaLength - 1) == comma) {
+                    formulaText.delete(formulaLength - 2, formulaLength);
+                    Log.d("TienNVh", "onDelete 0: " + formulaText);
+                } else {
+                    formulaText.delete(formulaLength - 1, formulaLength);
+                }
+                mEvaluator.clearMain();
+                addExplicitStringToExpr(formulaText.toString());
+            }
+
+            int postionCursor2 = mFormulaText.getSelectionStart();
+            mPostionCursorToRight = mFormulaText.length() - postionCursor2;
         }
         if (mEvaluator.getExpr(Evaluator.MAIN_INDEX).isEmpty() && !haveUnprocessed()) {
             // Resulting formula won't be announced, since it's empty.
             announceClearedForAccessibility();
         }
         redisplayAfterFormulaChange();
+
+        changePostionCursor();
     }
 
     private void reveal(View sourceView, int colorRes, AnimatorListener listener) {

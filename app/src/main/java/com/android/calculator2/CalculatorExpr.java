@@ -231,15 +231,18 @@ class CalculatorExpr {
          * Assumes the constant is nonempty.
          */
         public void delete() {
+
             if (mExponent != 0) {
                 mExponent /= 10;
                 // Once zero, it can only be added back with addExponent.
             } else if (!mFraction.isEmpty()) {
                 mFraction = mFraction.substring(0, mFraction.length() - 1);
+                Log.d("TienNVh", "delete 0: "+mFraction);
             } else if (mSawDecimal) {
                 mSawDecimal = false;
             } else {
                 mWhole = mWhole.substring(0, mWhole.length() - 1);
+                Log.d("TienNVh", "delete 1: "+mWhole);
             }
         }
 
@@ -581,6 +584,7 @@ class CalculatorExpr {
         if (s == 0) {
             return;
         }
+        Log.d("TienNVh", "delete: "+s);
         Token last = mExpr.get(s-1);
         if (last instanceof Constant) {
             Constant c = (Constant)last;
@@ -589,6 +593,7 @@ class CalculatorExpr {
                 return;
             }
         }
+
         mExpr.remove(s-1);
     }
 

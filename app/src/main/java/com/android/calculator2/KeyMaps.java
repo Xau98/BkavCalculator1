@@ -88,7 +88,10 @@ public class KeyMaps {
                 // Button label doesn't work.
                 return context.getString(R.string.squared);
             case R.id.dec_point:
-                return context.getString(R.string.dec_point);
+                if (Locale.getDefault().toString().equals("vi_VN"))
+                    return ",";
+                else
+                    return context.getString(R.string.dec_point);
             case R.id.digit_0:
                 return context.getString(R.string.digit_0);
             case R.id.digit_1:
