@@ -6,8 +6,8 @@
     android:layout_height="wrap_content"
     android:layout_gravity="center"
     android:orientation="vertical"
-    android:paddingTop="10.67dp"
-    android:paddingBottom="7.67dp">
+    android:paddingTop="5dp"
+    android:paddingBottom="5dp">
 
     <TextView
         android:id="@+id/textview_result"
@@ -20,12 +20,14 @@
         android:paddingBottom="5dp"
         android:textAlignment="center"
         android:textColor="#ffffff"
+        android:fontFamily="sans-serif-thin"
         android:textSize="30sp" />
 
     <TextView
         android:id="@+id/textview_history"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:fontFamily="sans-serif-thin"
         android:layout_gravity="center_vertical|right"
         android:paddingBottom="5dp"
         android:gravity="center"
@@ -34,4 +36,10 @@
         android:textAlignment="center"
         android:textColor="#ffffff"
         android:textSize="16sp" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_margin="5dp"
+        android:layout_marginBottom="0dp"
+        android:background="#2A1a1c1f"/>
 </LinearLayout>

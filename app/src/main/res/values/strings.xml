@@ -117,13 +117,13 @@
     <!-- Equals button (e.g. "1 + 2 = ?"). [CHAR_LIMIT=1] -->
     <string name="eq" translatable="false">=</string>
     <!-- Clear button to clear the currently entered expression. [CHAR_LIMIT=4] -->
-    <string name="clr">clr</string>
+    <string name="clr">Clr</string>
     <!--
       Announced when all characters are removed from Formula, e.g. after clear. [CHAR_LIMIT=NONE]
       -->
-    <string name="cleared">cleared</string>
+    <string name="cleared">Cleared</string>
     <!-- Delete button to remove last entered token. [CHAR_LIMIT=4] -->
-    <string name="del">del</string>
+    <string name="del">Del</string>
     <!-- Toggle button to show/hide inverse functions. [CHAR_LIMIT=4] -->
     <string name="inv" translatable="false">inv</string>
 

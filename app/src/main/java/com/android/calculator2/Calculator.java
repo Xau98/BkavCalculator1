@@ -472,13 +472,7 @@ public class Calculator extends Activity
             mEvaluator.clearMain();
             showAndMaybeHideToolbar();
             onInverseToggled(false);
-
-            // Bkav TienNVh : lay trang thai cuoi cung
-//            final String formulatext = mSharedPreferences.getString("FormulaText", "");
-//            addExplicitStringToExpr(formulatext);
         }
-        //Bkav TienNVh : Shows ketqua
-        //restoreDisplay();
         //Bkav TienNVh :Setbackground
         setBlurBackground();
         //Bkav TienNVh :Load tab history
@@ -531,7 +525,6 @@ public class Calculator extends Activity
             layoutManager.setReverseLayout(false);
             layoutManager.setStackFromEnd(true);
             mRecyclerViewSaveHistory.setLayoutManager(layoutManager);
-            mRecyclerViewSaveHistory.addItemDecoration(new DividerItemDecoration(mRecyclerViewSaveHistory.getContext(), DividerItemDecoration.VERTICAL));
             mRecyclerViewSaveHistory.setAdapter(mHistoryAdapter);
             mRecyclerViewSaveHistory.scrollToPosition(mListHistory.size() - 1);
             mRecyclerViewSaveHistory.setVisibility(View.VISIBLE);
@@ -574,7 +567,7 @@ public class Calculator extends Activity
             }
         }, 1000);
     }
-
+// Bkav TienNVh :
     public void addExplicitStringToExpr(String formulatext) {
         if (!formulatext.equals("")) {
             for (int i = 0; i < formulatext.length(); ) {
@@ -1484,7 +1477,7 @@ public class Calculator extends Activity
         super.onPause();
     }
 
-
+// Bkav TienNVh :
     private void onDelete() {
         // Delete works like backspace; remove the last character or operator from the expression.
         // Note that we handle keyboard delete exactly like the delete button.  For
@@ -1492,6 +1485,7 @@ public class Calculator extends Activity
         // function name typed on a physical keyboard.
         // This should be impossible in RESULT state.
         // If there is an in-progress explicit evaluation, just cancel it and return.
+
         if (cancelIfEvaluating(false)) return;
         setState(CalculatorState.INPUT);
         if (haveUnprocessed()) {
@@ -1501,7 +1495,6 @@ public class Calculator extends Activity
             int postionCursor = mFormulaText.getSelectionEnd();
             Log.d("TienNVh", "onDelete 2: " + postionCursor);
             mPostionCursorToRight = formulaText.length() - postionCursor;
-
             final int formulaLength = formulaText.length() - mPostionCursorToRight;
             Log.d("TienNVh" + mPostionCursorToRight, formulaText + "onDelete: " + formulaLength);
             String locale = Locale.getDefault().toString();
@@ -1512,7 +1505,6 @@ public class Calculator extends Activity
             } else {
                 comma = ',';
             }
-
             if (formulaLength > 0) {
                 if (formulaText.charAt(formulaLength - 1) == comma) {
                     formulaText.delete(formulaLength - 2, formulaLength);
@@ -1532,7 +1524,6 @@ public class Calculator extends Activity
             announceClearedForAccessibility();
         }
         redisplayAfterFormulaChange();
-
         changePostionCursor();
     }
 
@@ -1783,26 +1774,7 @@ public class Calculator extends Activity
         //   menu.findItem(R.id.menu_fraction).setVisible(visible);
         return true;
     }
-//
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        switch (item.getItemId()) {
-//            case R.id.menu_history:
-//                showHistoryFragment();
-//                return true;
-//            case R.id.menu_leading:
-//                displayFull();
-//                return true;
-//            case R.id.menu_fraction:
-//                displayFraction();
-//                return true;
-//            case R.id.menu_licenses:
-//                startActivity(new Intent(this, Licenses.class));
-//                return true;
-//            default:
-//                return super.onOptionsItemSelected(item);
-//        }
-//    }
+
 
     /* Begin override CloseCallback method. */
 

@@ -28,6 +28,7 @@
         android:layout_height="wrap_content"
         android:fontFamily="sans-serif-medium"
         android:textAllCaps="true"
+        android:textColor="@color/display_formula_text_color"
         android:textSize="8sp" />
 
 </Toolbar>
