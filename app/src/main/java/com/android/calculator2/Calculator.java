@@ -1208,18 +1208,6 @@ public class Calculator extends Activity
                     evaluateInstantIfNecessary();
                 }
                 return;
-            //Bkav  TienNVh: Click cac nut % , ! , pi dong item mo rong
-            case R.id.const_pi:
-            case R.id.op_fact:
-            case R.id.op_pct:
-                addExplicitKeyToExpr(id);
-                redisplayAfterFormulaChange();
-                if (orientation == Configuration.ORIENTATION_PORTRAIT) {
-                    if (mPadViewPager != null) {
-                        mPadViewPager.setCurrentItem(mPadViewPager.getCurrentItem() - 1);
-                    }
-                }
-                return;
             //Bkav  TienNVh: Click cac nut mc , mr, m+, m-
             case R.id.op_m_c:
                 mINPUT = "";
@@ -1288,6 +1276,15 @@ public class Calculator extends Activity
                         mINPUT = mINPUT + Character.toString(KeyMaps.MINUS_SIGN) + input;
                 }
                 return;
+            //Bkav  TienNVh: Click cac nut % , ! , pi dong item mo rong
+            case R.id.const_pi:
+            case R.id.op_fact:
+            case R.id.op_pct:
+                if (orientation == Configuration.ORIENTATION_PORTRAIT) {
+                    if (mPadViewPager != null) {
+                        mPadViewPager.setCurrentItem(mPadViewPager.getCurrentItem() - 1);
+                    }
+                }
             default:
                 cancelIfEvaluating(false);
                 if (haveUnprocessed()) {
