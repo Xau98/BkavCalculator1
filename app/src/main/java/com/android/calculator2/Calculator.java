@@ -1303,11 +1303,9 @@ public class Calculator extends Activity
                     int lengthold = mFormulaText.length();// do dai cua chuoi
                     if (lengthold >= postionCursor) {
                         mPostionCursorToRight = lengthold - postionCursor;
-
                         String slipt1 = mFormulaText.getText().toString().substring(0, postionCursor);
                         String slipt2 = mFormulaText.getText().toString().substring(postionCursor, lengthold);
                         String formulaText = slipt1 + newtext + slipt2;
-                        Log.d("TienNVh", "onButtonClick 8: " + formulaText);
                         mEvaluator.clearMain();
                         addExplicitStringToExpr(formulaText);
                         redisplayAfterFormulaChange();
