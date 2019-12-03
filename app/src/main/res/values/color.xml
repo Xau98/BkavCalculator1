@@ -39,7 +39,8 @@
     <color name="display_result_text_color">#fff</color>
 
     <!-- Lighter color for exponent while scrolling. -->
-    <color name="display_result_exponent_text_color">#40000000</color>
+<!--    Bkav TienNVh : Sua chu E sang mau trang -->
+    <color name="display_result_exponent_text_color">#ffffff</color>
 
     <!-- Background color for the numeric pad. -->
     <color name="pad_numeric_background_color">#DE262b32</color>

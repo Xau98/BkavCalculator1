@@ -1300,9 +1300,7 @@ public class Calculator extends Activity
                 } else {
                     //addExplicitKeyToExpr(id);
                     String  newtext = KeyMaps.toString(this, id);
-                    Log.d("TienNVh", "onButtonClick newtext: ");
                     int lengthold = mFormulaText.length();// do dai cua chuoi
-
                     if (lengthold >= postionCursor) {
                         mPostionCursorToRight = lengthold - postionCursor;
 
