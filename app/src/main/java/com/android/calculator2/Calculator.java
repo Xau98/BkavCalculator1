@@ -567,7 +567,8 @@ public class Calculator extends Activity
             }
         }, 1000);
     }
-// Bkav TienNVh :
+
+    // Bkav TienNVh :
     public void addExplicitStringToExpr(String formulatext) {
         if (!formulatext.equals("")) {
             for (int i = 0; i < formulatext.length(); ) {
@@ -622,7 +623,7 @@ public class Calculator extends Activity
                                     }
                                     continue;
                                 case 't':
-                                    if ((byte) formulatext.charAt(i + 3) != 30) {
+                                    if ((byte) formulatext.charAt(i + 3) != 40) {
                                         addExplicitKeyToExpr(R.id.fun_arctan);
                                         i = i + 6;
                                     } else {
@@ -671,6 +672,7 @@ public class Calculator extends Activity
         }
         return mWallpaperBlurCompat.getWallpaperBlur();
     }
+
     // Bkav TienNVh : set background cho hinh nen
     private void setBlurBackground() {
         Bitmap backgroundBitmapFromRom = getBluredBackgroundFromRom();
@@ -683,7 +685,8 @@ public class Calculator extends Activity
     public void denyPermission(String[] pers) {
 
     }
-// Bkav TienNVh : Cap quyen
+
+    // Bkav TienNVh : Cap quyen
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     public void acceptPermission(String[] pers) {
@@ -728,7 +731,7 @@ public class Calculator extends Activity
         return result;
     }
 
-// Bkav TienNVh : Xu ly dau phay theo ngon ngu
+    // Bkav TienNVh : Xu ly dau phay theo ngon ngu
     @Override
     protected void onResume() {
         super.onResume();
@@ -749,9 +752,9 @@ public class Calculator extends Activity
         }
         addExplicitStringToExpr(formulaText);
         restoreDisplay();
-        Log.d("TienNVh", "onResume 458: "+mFormulaText.length());
-        if(mFormulaText.length()>0)
-          mFormulaText.setSelection(mFormulaText.length());
+        Log.d("TienNVh", "onResume 458: " + mFormulaText.length());
+        if (mFormulaText.length() > 0)
+            mFormulaText.setSelection(mFormulaText.length());
 
         // If HistoryFragment is showing, hide the main Calculator elements from accessibility.
         // This is because Talkback does not use visibility as a cue for RelativeLayout elements,
@@ -1474,7 +1477,7 @@ public class Calculator extends Activity
         super.onPause();
     }
 
-// Bkav TienNVh :
+    // Bkav TienNVh :
     private void onDelete() {
         // Delete works like backspace; remove the last character or operator from the expression.
         // Note that we handle keyboard delete exactly like the delete button.  For
@@ -1490,24 +1493,46 @@ public class Calculator extends Activity
         } else {
             final Editable formulaText = mFormulaText.getEditableText();
             int postionCursor = mFormulaText.getSelectionEnd();
-            Log.d("TienNVh", "onDelete 2: " + postionCursor);
             mPostionCursorToRight = formulaText.length() - postionCursor;
             final int formulaLength = formulaText.length() - mPostionCursorToRight;
-            Log.d("TienNVh" + mPostionCursorToRight, formulaText + "onDelete: " + formulaLength);
             String locale = Locale.getDefault().toString();
-            Log.d("TienNVh", "onDelete: " + locale);
+
             char comma;
+            // Bkav TienNVh : Xet truong hop:  dau phay tuy thuoc vao ngon ngu
+            // Bkav TienNVh :
             if (locale.equals("vi_VN")) {
                 comma = '.';
             } else {
                 comma = ',';
             }
+
             if (formulaLength > 0) {
-                if (formulaText.charAt(formulaLength - 1) == comma) {
+                if (formulaText.charAt(formulaLength - 1) == comma) { // Bkav TienNVh : Truong hop xoa dau ngan cach
                     formulaText.delete(formulaLength - 2, formulaLength);
-                    Log.d("TienNVh", "onDelete 0: " + formulaText);
                 } else {
-                    formulaText.delete(formulaLength - 1, formulaLength);
+                    if (formulaText.charAt(formulaLength - 1) == '(') {
+                        if ((byte) formulaText.charAt(formulaLength - 3) == 123) { //Bkav TienNVh TH: arccos() , arcsin() ,arctan()
+                            formulaText.delete(formulaLength - 6, formulaLength);
+                        } else {
+                            if ((byte) formulaText.charAt(formulaLength - 3) == 'l') { //Bkav TienNVh TH: ln()
+                                formulaText.delete(formulaLength - 3, formulaLength);
+                            } else {// Bkav TienNVh :  sin() , cos() , tan(), exp(), log()
+                                switch (formulaText.charAt(formulaLength - 4)) {
+                                    case 'c':
+                                    case 's':
+                                    case 't':
+                                    case 'e':
+                                    case 'l':
+                                        formulaText.delete(formulaLength - 4, formulaLength);
+                                        break;
+                                    default:// Bkav TienNVh :  Truong hop : '('
+                                        formulaText.delete(formulaLength - 1, formulaLength);
+                                        break;
+                                }
+                            }
+                        }
+                    } else
+                        formulaText.delete(formulaLength - 1, formulaLength);
                 }
                 mEvaluator.clearMain();
                 addExplicitStringToExpr(formulaText.toString());
