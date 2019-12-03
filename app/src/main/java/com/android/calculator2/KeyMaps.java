@@ -76,6 +76,9 @@ public class KeyMaps {
                 return context.getString(R.string.rparen);
             case R.id.op_pow:
                 return context.getString(R.string.op_pow);
+            case R.id.fun_10pow:
+                // Bkav TienNVh : 10^
+                return context.getString(R.string.op_10pow);
             case R.id.op_mul:
                 return context.getString(R.string.op_mul);
             case R.id.op_div:

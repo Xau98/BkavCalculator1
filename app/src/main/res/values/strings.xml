@@ -323,5 +323,6 @@
     <string name="button_mc">Button mc</string>
     <string name="m_sub">m-</string>
     <string name="button_m_sub">Button m-</string>
+    <string name="op_10pow">10^</string>
 
 </resources>

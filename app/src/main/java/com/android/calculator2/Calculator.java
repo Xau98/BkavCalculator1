@@ -640,6 +640,7 @@ public class Calculator extends Activity
                                         i = i + 3;
                                     }
                                     continue;
+
                                 default:
                                     if ((byte) formulatext.charAt(i) == -78) {
                                         addExplicitKeyToExpr(R.id.op_sqr);
@@ -1298,7 +1299,8 @@ public class Calculator extends Activity
 
                 } else {
                     //addExplicitKeyToExpr(id);
-                    String newtext = KeyMaps.toString(this, id);
+                    String  newtext = KeyMaps.toString(this, id);
+                    Log.d("TienNVh", "onButtonClick newtext: ");
                     int lengthold = mFormulaText.length();// do dai cua chuoi
 
                     if (lengthold >= postionCursor) {
@@ -1507,6 +1509,7 @@ public class Calculator extends Activity
             }
 
             if (formulaLength > 0) {
+                Log.d("TienNVh", "onDelete: "+(byte)formulaText.charAt(formulaLength - 1));
                 if (formulaText.charAt(formulaLength - 1) == comma) { // Bkav TienNVh : Truong hop xoa dau ngan cach
                     formulaText.delete(formulaLength - 2, formulaLength);
                 } else {
