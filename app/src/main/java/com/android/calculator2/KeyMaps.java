@@ -548,8 +548,10 @@ public class KeyMaps {
             case '\u00F7': // DIVISION SIGN
                 return R.id.op_div;
             // We no longer localize function names, so they can't start with an 'e' or 'p'.
-            case 'e':
+
             case 'E':
+                return R.id.fun_10pow;
+            case 'e':
                 return R.id.const_e;
             case 'p':
             case 'P':
