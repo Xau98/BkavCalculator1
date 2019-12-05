@@ -573,7 +573,23 @@ public class Calculator extends Activity
 
         if (!formulatext.equals("")) {
             Log.d("TienNVh", "addExplicitStringToExpr 0101: "+formulatext);
-
+            if (formulatext.contains("…")) {
+                String resultText=mResultText.getText().toString();
+          // Bkav TienNVh : Xac dinh chuoi sau E
+                // Bkav TienNVh : Xac dinh vi tri E
+                int postionE = resultText.indexOf('E');
+                Log.d("TienNVh", "addExplicitStringToExpr 0: "+postionE);
+                // Bkav TienNVh : Cat chuoi sau E
+                String sliptLastE=resultText.substring(postionE);
+                Log.d("TienNVh", "addExplicitStringToExpr 1: "+sliptLastE);
+                // Bkav TienNVh : Xac dinh vi tri trong chuoi fomulatext
+                int postionSlipt = formulatext.indexOf(sliptLastE);
+                // Bkav TienNVh :
+                String newtext= formulatext.substring(postionSlipt);
+                Log.d("TienNVh", postionSlipt+"addExplicitStringToExpr: ");
+                Log.d("TienNVh", formulatext+"addExplicitStringToExpr    " + mResultText.getText());
+                addExplicitStringToExpr(resultText+newtext);
+            } else {
                 Log.d("TienNVh", "addExplicitStringToExpr 9999: " + mResultText.getText());
                 for (int i = 0; i < formulatext.length(); ) {
                     char splitFormulatext = formulatext.charAt(i);
@@ -608,9 +624,14 @@ public class Calculator extends Activity
                             } else {
                                 switch (splitFormulatext) {
                                     case 's':
-                                        if ((byte) formulatext.charAt(i + 3) != 40) {
+                                        if ((byte) formulatext.charAt(i + 3) != 40) { // Bkav TienNVh :  '('= 40
+                                            if ((byte) formulatext.charAt(i + 3) == 94) {// Bkav TienNVh :  '-'=94
                                                 addExplicitKeyToExpr(R.id.fun_arcsin);
                                                 i = i + 6;
+                                            } else {
+                                                mUnprocessedChars = formulatext;
+                                                return;
+                                            }
                                         } else {
                                             addExplicitKeyToExpr(R.id.fun_sin);
                                             i = i + 4;
@@ -659,6 +680,7 @@ public class Calculator extends Activity
                     }
                 }
             }
+        }
     }
 
     @Override
@@ -1146,6 +1168,7 @@ public class Calculator extends Activity
     public void onButtonClick(View view) {
         // Bkav TienNVh : Set show cursor trong trường hợp trước đó Click btutton '='
         mFormulaText.setCursorVisible(true);
+        Log.d("TienNVh", mCurrentState+"onButtonClick: " + mFormulaText.getText());
         // Any animation is ended before we get here.
         mCurrentButton = view;
         int postionCursor = mFormulaText.getSelectionStart(); // vi tri con tro
@@ -1300,17 +1323,22 @@ public class Calculator extends Activity
                     // For consistency, append as uninterpreted characters.
                     // This may actually be useful for a left parenthesis.
                     addChars(KeyMaps.toString(this, id), true);
-                    Log.d("TienNVh", "onButtonClick 111: ");
 
                 } else {
                     //addExplicitKeyToExpr(id);
-                    Log.d("TienNVh", "onButtonClick: " + mFormulaText.getText());
+                    String formulatext=mFormulaText.getText().toString();
                     String newtext = KeyMaps.toString(this, id);
-                    int lengthold = mFormulaText.length();// do dai cua chuoi
-                    if (lengthold >= postionCursor) {
+                // Bkav TienNVh : Truowng hop lay ket qua de tiep tuc tinh tiep
+                    if( mCurrentState==CalculatorState.RESULT){
+                        formulatext=mResultText.getText().toString();
+                        postionCursor=formulatext.length()+newtext.length()-1;
+                    }
+
+                    int lengthold =formulatext.length();// do dai cua chuoi
+                    if (lengthold >= postionCursor  ) {
                         mPostionCursorToRight = lengthold - postionCursor;
-                        String slipt1 = mFormulaText.getText().toString().substring(0, postionCursor);
-                        String slipt2 = mFormulaText.getText().toString().substring(postionCursor, lengthold);
+                        String slipt1 = formulatext.substring(0, postionCursor);
+                        String slipt2 = formulatext.substring(postionCursor, lengthold);
                         String formulaText = slipt1 + newtext + slipt2;
                         mEvaluator.clearMain();
                         addExplicitStringToExpr(formulaText);
@@ -1453,7 +1481,6 @@ public class Calculator extends Activity
         // Ignore if in non-INPUT state, or if there are no operators.
         if (mCurrentState == CalculatorState.INPUT) {
             if (haveUnprocessed()) {
-                Log.d("TienNVh", "onEquals: ");
                 setState(CalculatorState.EVALUATE);
                 onError(Evaluator.MAIN_INDEX, R.string.error_syntax);
             } else if (mEvaluator.getExpr(Evaluator.MAIN_INDEX).hasInterestingOps()) {
@@ -1466,9 +1493,6 @@ public class Calculator extends Activity
                     editor.putString("SaveHistory", savehistoryold + "" + mFormulaText.getText() + "=" + mResultText.getText() + ";");
                     editor.apply();
                     onRefeshSaveHistory();
-                    // Bkav TienNVh :
-                    mFormulaText.setCursorVisible(false);
-                    mFormulaText.setText("");
                 }
             }
         }
