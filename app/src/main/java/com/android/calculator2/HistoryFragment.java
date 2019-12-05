@@ -61,7 +61,7 @@ private ArrayList<String> mListHistory=new ArrayList<>();
         String savehistory = mSharedPreferences.getString("SaveHistory", "");
         String sliptSaveHistory[]=savehistory.split(";");
         mListHistory = new ArrayList<String>(Arrays.asList(sliptSaveHistory));
-        mAdapter = new BkavHistoryAdapter(mListHistory);
+        mAdapter = new BkavHistoryAdapter(getActivity(),mListHistory);
 
     }
 

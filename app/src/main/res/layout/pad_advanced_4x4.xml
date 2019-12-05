@@ -21,6 +21,7 @@
     android:id="@+id/pad_advanced"
     style="@style/PadLayoutStyle.Advanced"
     android:background="#3b3c3f"
+   android:paddingTop="5dp"
     app:rowCount="4"
     app:columnCount="4">
 

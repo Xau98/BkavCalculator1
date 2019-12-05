@@ -21,6 +21,7 @@
         <item name="android:background">@drawable/pad_button_advanced_background</item>
         <item name="android:textColor">@color/pad_button_advanced_text_color</item>
         <item name="android:textSize">23dip</item>
+        <item name="android:textStyle">bold</item>
     </style>
 
     <style name="PadButtonStyle.Advanced.Text">
@@ -62,8 +63,6 @@
         <item name="android:layout_weight">11</item>
         <item name="android:paddingTop">12dip</item>
         <item name="android:paddingBottom">20dip</item>
-        <item name="android:paddingStart">12dip</item>
-        <item name="android:paddingEnd">12dip</item>
     </style>
 
     <style name="PadLayoutStyle.Operator">

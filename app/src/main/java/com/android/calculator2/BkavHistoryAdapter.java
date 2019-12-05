@@ -1,5 +1,7 @@
 package com.android.calculator2;
 
+import android.content.Context;
+import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,8 +16,10 @@ import java.util.ArrayList;
 public class BkavHistoryAdapter extends RecyclerView.Adapter <BkavHistoryAdapter.RecyclerViewHoler> {
     private ArrayList<String> listHistory;
     private onClickItemSaveHistory mOnClickItemSaveHistory;
-    public BkavHistoryAdapter(ArrayList<String> listHistory) {
+    private Context mContext;
+    public BkavHistoryAdapter(Context context, ArrayList<String> listHistory) {
         this.listHistory = listHistory;
+        mContext=context;
     }
 
     public void setmOnClickItemSaveHistory(onClickItemSaveHistory mOnClickItemSaveHistory) {
@@ -58,7 +62,9 @@ public class BkavHistoryAdapter extends RecyclerView.Adapter <BkavHistoryAdapter
             mFormula=itemView.findViewById(R.id.textview_history);
             mResult=itemView.findViewById(R.id.textview_result);
             mLinearLayout=itemView.findViewById(R.id.linear_layout_history);
-
+            Typeface myTypeface = Typeface.createFromAsset(mContext.getAssets(), "fonts/helveticaNeueThin.ttf");
+            mFormula.setTypeface(myTypeface);
+            mResult.setTypeface(myTypeface);
         }
     }
     interface onClickItemSaveHistory{

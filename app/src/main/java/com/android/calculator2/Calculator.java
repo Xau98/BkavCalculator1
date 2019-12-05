@@ -45,6 +45,7 @@ import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Rect;
+import android.graphics.Typeface;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Build;
@@ -85,6 +86,7 @@ import android.view.ViewTreeObserver;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.AccelerateDecelerateInterpolator;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridLayout;
 import android.widget.HorizontalScrollView;
@@ -492,10 +494,39 @@ public class Calculator extends Activity
             findViewById(R.id.delHistory).getLayoutParams().height = 150;
         }
 
+        // Bkav TienNVh : Set font number
+        setFontNumber();
+
         // Bkav TienNVh : Lam trong suot status bar
         mToolbar = (Toolbar) findViewById(R.id.toolbarapp);
         makeStatusBarTransparent(mToolbar);
+
     }
+
+void setFontNumber(){
+    Typeface myTypeface = Typeface.createFromAsset(getAssets(), "fonts/helveticaNeueThin.ttf");
+    Button digit_0,digit_1,digit_2, digit_3,digit_4,digit_5, digit_6, digit_7,digit_8, digit_9;
+    digit_0=findViewById(R.id.digit_0);
+    digit_0.setTypeface(myTypeface);
+    digit_1=findViewById(R.id.digit_1);
+    digit_1.setTypeface(myTypeface);
+    digit_2=findViewById(R.id.digit_2);
+    digit_2.setTypeface(myTypeface);
+    digit_3=findViewById(R.id.digit_3);
+    digit_3.setTypeface(myTypeface);
+    digit_4=findViewById(R.id.digit_4);
+    digit_4.setTypeface(myTypeface);
+    digit_5=findViewById(R.id.digit_5);
+    digit_5.setTypeface(myTypeface);
+    digit_6=findViewById(R.id.digit_6);
+    digit_6.setTypeface(myTypeface);
+    digit_7=findViewById(R.id.digit_7);
+    digit_7.setTypeface(myTypeface);
+    digit_8=findViewById(R.id.digit_8);
+    digit_8.setTypeface(myTypeface);
+    digit_9=findViewById(R.id.digit_9);
+    digit_9.setTypeface(myTypeface);
+}
 
     // Bkav TienNVh : Load tab History
     public void onRefeshSaveHistory() {
@@ -503,7 +534,7 @@ public class Calculator extends Activity
         if (!savehistory.equals("")) {
             String sliptSaveHistory[] = savehistory.split(";");
             mListHistory = new ArrayList<String>(Arrays.asList(sliptSaveHistory));
-            mHistoryAdapter = new BkavHistoryAdapter(mListHistory);
+            mHistoryAdapter = new BkavHistoryAdapter(getApplication(),mListHistory);
             mHistoryAdapter.setmOnClickItemSaveHistory(new BkavHistoryAdapter.onClickItemSaveHistory() {
                 @Override
                 public void onClick(String result) {
@@ -1166,9 +1197,6 @@ public class Calculator extends Activity
     }
 
     public void onButtonClick(View view) {
-        // Bkav TienNVh : Set show cursor trong trường hợp trước đó Click btutton '='
-        mFormulaText.setCursorVisible(true);
-        Log.d("TienNVh", mCurrentState+"onButtonClick: " + mFormulaText.getText());
         // Any animation is ended before we get here.
         mCurrentButton = view;
         int postionCursor = mFormulaText.getSelectionStart(); // vi tri con tro
@@ -1335,14 +1363,19 @@ public class Calculator extends Activity
                     }
 
                     int lengthold =formulatext.length();// do dai cua chuoi
-                    if (lengthold >= postionCursor  ) {
-                        mPostionCursorToRight = lengthold - postionCursor;
+                    if (lengthold >= postionCursor || mCurrentState==CalculatorState.RESULT ) {
+                        mPostionCursorToRight = lengthold - postionCursor;// Bkav TienNVh : Vi tri con tro tinh tu ben phai sang
+                        // Bkav TienNVh : Chen chuoi moi nhap vao vi tri con tro
                         String slipt1 = formulatext.substring(0, postionCursor);
                         String slipt2 = formulatext.substring(postionCursor, lengthold);
                         String formulaText = slipt1 + newtext + slipt2;
+                        // Bkav TienNVh : Xoa tat ca cac phep tinh cu
                         mEvaluator.clearMain();
+                        // Bkav TienNVh : Them Cac phep tinh sau khi sua
                         addExplicitStringToExpr(formulaText);
+                        // Bkav TienNVh : Show ket qua neu chuoi ky tu nhap vao la phep tinh
                         redisplayAfterFormulaChange();
+                        // Bkav TienNVh : Thay doi vi tri con tro sau
                         changePostionCursor();
                     }
 
