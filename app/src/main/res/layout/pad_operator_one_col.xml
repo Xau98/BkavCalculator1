@@ -20,6 +20,7 @@
     style="@style/PadLayoutStyle.Operator"
     android:background="@color/pad_operator_background_color"
     android:paddingEnd="1dp"
+    android:paddingTop="5dp"
     android:paddingBottom="0dp"
     app:columnCount="1"
     app:rowCount="5">
@@ -30,7 +31,6 @@
         style="@style/PadButtonStyle.Operator"
         android:contentDescription="@string/desc_op_div"
         android:text="@string/op_div"
-
         app:layout_column="0"
         app:layout_row="0" />
 
@@ -62,6 +62,8 @@
         android:id="@+id/eq"
         style="@style/PadButtonStyle.Numeric.Equals"
         android:background="#FFd66039"
+        android:layout_height="47dp"
+
         android:contentDescription="@string/desc_eq"
         android:text="@string/eq"
         app:layout_column="0"

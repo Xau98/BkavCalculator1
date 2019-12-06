@@ -59,26 +59,26 @@
         android:layout_height="wrap_content"
         android:bufferType="spannable"
         android:paddingTop="0dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="12dp"
         android:singleLine="true"
         android:textColor="@color/display_result_text_color" />
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="14dp"
+        android:layout_marginBottom="22dp"
         android:layout_below="@+id/result">
 
         <Button
             android:id="@+id/bt_history"
             android:layout_width="wrap_content"
-            android:layout_height="20dp"
+            android:layout_height="22dp"
             android:layout_below="@+id/result"
             android:layout_marginBottom="0dp"
             android:background="@null"
             android:onClick="onButtonClick"
-           android:paddingLeft="20dp"
-            android:paddingBottom="0dp"
+           android:paddingLeft="2dp"
+            android:paddingTop="2dp"
             android:text="@string/title_history"
             android:textSize="17dp"
             android:textStyle="normal"

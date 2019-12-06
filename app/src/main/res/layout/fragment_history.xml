@@ -81,5 +81,5 @@
         android:text="@string/menu_clear_history"
         android:textAllCaps="false"
         android:textColor="#fff"
-        android:textSize="20sp" />
+        android:textSize="25sp" />
 </RelativeLayout>

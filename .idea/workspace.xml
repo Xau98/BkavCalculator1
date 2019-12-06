@@ -16,9 +16,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ac9bea0b-70d1-44fa-9642-a5f1677d6e9c" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/android/calculator2/Calculator.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/android/calculator2/Calculator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout-land/display_two_line.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout-land/display_two_line.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/display_two_line.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/display_two_line.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_history.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_history.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/pad_operator_one_col.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/pad_operator_one_col.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/values-sw360dp-port/styles.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values-sw360dp-port/styles.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/values-w520dp-h275dp-land/styles.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values-w520dp-h275dp-land/styles.xml" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -49,33 +53,14 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/android/calculator2/Calculator.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="205">
-              <caret line="510" column="40" selection-start-line="510" selection-start-column="40" selection-end-line="510" selection-end-column="40" />
+            <state relative-caret-position="352">
+              <caret line="1706" column="40" lean-forward="true" selection-start-line="1706" selection-start-column="40" selection-end-line="1706" selection-end-column="40" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/android/calculator2/CalculatorFormula.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="897">
-              <caret line="312" column="60" lean-forward="true" selection-start-line="312" selection-start-column="60" selection-end-line="312" selection-end-column="60" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/display_two_line.xml">
-          <provider editor-type-id="android-designer2" />
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="301">
-              <caret line="45" column="37" lean-forward="true" selection-start-line="45" selection-start-column="37" selection-end-line="45" selection-end-column="37" />
             </state>
           </provider>
         </entry>
@@ -156,31 +141,31 @@
         <option value="$PROJECT_DIR$/app/src/main/res/values-en-rXC/strings.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/android/calculator2/CalculatorResult.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/history_item.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/fragment_history.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/line_history.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/values/color.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/values/strings.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/android/calculator2/KeyMaps.java" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/pad_numeric.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/values-vi/strings.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/pad_operator_one_col.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/toolbar.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/drawable/ic_more_vert_black_24dp.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout-land/display_two_line.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/values-sw720dp-land/styles.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/values-w520dp-h375dp-land/styles.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/values-w375dp-h275dp/styles.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/pad_advanced_5x3.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/pad_advanced_4x4.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/values/styles.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/values-w520dp-h275dp-land/styles.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/pad_operator_two_col.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/values-sw360dp-port/styles.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/android/calculator2/HistoryFragment.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/android/calculator2/BkavHistoryAdapter.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/android/calculator2/Calculator.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/android/calculator2/CalculatorFormula.java" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/fragment_history.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout-land/display_two_line.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/values-w520dp-h275dp-land/styles.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/pad_operator_two_col.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/android/calculator2/Calculator.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/display_two_line.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/values-sw360dp-port/styles.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/pad_numeric.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/pad_operator_one_col.xml" />
       </list>
     </option>
   </component>
@@ -298,7 +283,7 @@
     <property name="android.project.structure.proportion" value="0.15" />
     <property name="android.sdk.path" value="/media/quangndb/SubSystem/sdk" />
     <property name="last_directory_selection" value="$PROJECT_DIR$/app/src/main/res/mipmap-xxhdpi" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/app/src/main/assets" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../bkav/BkavCalculator" />
     <property name="project.structure.last.edited" value="SDK Location" />
     <property name="project.structure.proportion" value="0.17" />
     <property name="project.structure.side.proportion" value="0.2" />
@@ -484,7 +469,7 @@
     <editor active="true" />
     <layout>
       <window_info id="Captures" order="0" side_tool="true" weight="0.25" />
-      <window_info content_ui="combo" id="Project" order="1" visible="true" weight="0.23076923" />
+      <window_info active="true" content_ui="combo" id="Project" order="1" visible="true" weight="0.23076923" />
       <window_info id="Structure" order="2" side_tool="true" />
       <window_info id="Favorites" order="3" side_tool="true" />
       <window_info id="Build Variants" order="4" side_tool="true" />
@@ -493,13 +478,13 @@
       <window_info id="Resources Explorer" order="7" weight="0.14056447" />
       <window_info id="Capture Tool" order="8" />
       <window_info anchor="bottom" id="Run" order="0" weight="0.39740822" />
-      <window_info anchor="bottom" x="90" y="358" width="1807" height="388" id="Logcat" order="1" visible="true" weight="0.24190065" />
+      <window_info anchor="bottom" x="90" y="358" width="1807" height="388" id="Logcat" order="1" weight="0.24190065" />
       <window_info anchor="bottom" id="TODO" order="2" sideWeight="0.4997233" weight="0.32937366" />
       <window_info anchor="bottom" id="Find" order="3" weight="0.33693305" />
-      <window_info anchor="bottom" id="Terminal" order="4" weight="0.29310346" />
+      <window_info anchor="bottom" id="Terminal" order="4" weight="0.2926566" />
       <window_info anchor="bottom" id="Event Log" order="5" sideWeight="0.5002767" side_tool="true" weight="0.32937366" />
       <window_info anchor="bottom" id="Version Control" order="6" weight="0.32721382" />
-      <window_info anchor="bottom" id="Build" order="7" weight="0.24946004" />
+      <window_info anchor="bottom" id="Build" order="7" visible="true" weight="0.24946004" />
       <window_info anchor="bottom" id="Debug" order="8" weight="0.44060475" />
       <window_info anchor="bottom" id="Android Profiler" order="9" />
       <window_info anchor="right" id="Capture Analysis" order="0" />
@@ -507,7 +492,7 @@
       <window_info anchor="right" id="Theme Preview" order="2" />
       <window_info anchor="right" id="Key Promoter X" order="3" />
       <window_info anchor="right" id="Palette&#9;" order="4" />
-      <window_info active="true" anchor="right" id="Preview" order="5" sideWeight="0.05399568" visible="true" weight="0.32374102" />
+      <window_info anchor="right" id="Preview" order="5" sideWeight="0.05399568" weight="0.32374102" />
       <window_info anchor="right" id="Device File Explorer" order="6" sideWeight="0.94600433" side_tool="true" weight="0.3370227" />
       <window_info anchor="right" id="Assistant" order="7" weight="0.32982844" />
       <window_info anchor="right" id="Hierarchy" order="8" weight="0.32982844" />
@@ -565,275 +550,196 @@
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/captures/com.android.calculator2_2019.12.05_15.58.li">
+    <entry file="file://$PROJECT_DIR$/captures/com.android.calculator2_2019.12.06_08.46.li">
       <provider selected="true" editor-type-id="capture-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/captures/com.android.calculator2_2019.12.05_15.59.li">
+    <entry file="file://$PROJECT_DIR$/captures/com.android.calculator2_2019.12.06_08.47.li">
       <provider selected="true" editor-type-id="capture-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/captures/com.android.calculator2_2019.12.05_16.05.li">
+    <entry file="file://$PROJECT_DIR$/captures/com.android.calculator2_2019.12.06_08.48.li">
       <provider selected="true" editor-type-id="capture-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/captures/com.android.calculator2_2019.12.05_16.08.li">
+    <entry file="file://$PROJECT_DIR$/captures/com.android.calculator2_2019.12.06_08.49.li">
       <provider selected="true" editor-type-id="capture-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/toolbar.xml">
-      <provider editor-type-id="android-designer2" />
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="209">
-          <caret line="21" column="27" selection-start-line="21" selection-start-column="27" selection-end-line="21" selection-end-column="27" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/captures/com.android.calculator2_2019.12.05_16.15.li">
+    <entry file="file://$PROJECT_DIR$/captures/com.android.calculator2_2019.12.06_08.50.li">
       <provider selected="true" editor-type-id="capture-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/captures/com.android.calculator2_2019.12.05_16.17.li">
+    <entry file="file://$PROJECT_DIR$/captures/com.android.calculator2_2019.12.06_08.51.li">
       <provider selected="true" editor-type-id="capture-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/captures/com.android.calculator2_2019.12.05_16.18.li">
+    <entry file="file://$PROJECT_DIR$/captures/com.android.calculator2_2019.12.06_08.54.li">
       <provider selected="true" editor-type-id="capture-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/captures/com.android.calculator2_2019.12.05_16.19.li">
+    <entry file="file://$PROJECT_DIR$/captures/com.android.calculator2_2019.12.06_08.55.li">
       <provider selected="true" editor-type-id="capture-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/captures/com.android.calculator2_2019.12.05_16.20.li">
+    <entry file="file://$PROJECT_DIR$/captures/com.android.calculator2_2019.12.06_08.55-1.li">
       <provider selected="true" editor-type-id="capture-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/ic_more_vert_black_24dp.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="23">
-          <caret line="1" column="59" selection-start-line="1" selection-start-column="59" selection-end-line="1" selection-end-column="59" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/captures/com.android.calculator2_2019.12.05_16.24.li">
-      <provider selected="true" editor-type-id="capture-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/captures/com.android.calculator2_2019.12.05_16.44.li">
-      <provider selected="true" editor-type-id="capture-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/captures/com.android.calculator2_2019.12.05_16.45.li">
-      <provider selected="true" editor-type-id="capture-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/captures/com.android.calculator2_2019.12.05_16.53.li">
-      <provider selected="true" editor-type-id="capture-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/pad_operator_one_col.xml">
-      <provider editor-type-id="android-designer2" />
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="161">
-          <caret line="49" column="29" lean-forward="true" selection-start-line="49" selection-start-column="29" selection-end-line="49" selection-end-column="29" />
-          <folding>
-            <element signature="e#1670#1691#0" expanded="true" />
-            <element signature="e#1713#1729#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/captures/com.android.calculator2_2019.12.05_16.55.li">
-      <provider selected="true" editor-type-id="capture-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/captures/com.android.calculator2_2019.12.05_16.56.li">
+    <entry file="file://$PROJECT_DIR$/captures/com.android.calculator2_2019.12.06_08.58.li">
       <provider selected="true" editor-type-id="capture-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout-land/display_two_line.xml">
       <provider editor-type-id="android-designer2" />
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="278">
-          <caret line="79" column="37" lean-forward="true" selection-start-line="79" selection-start-column="37" selection-end-line="79" selection-end-column="37" />
+        <state relative-caret-position="300">
+          <caret line="73" column="47" lean-forward="true" selection-start-line="73" selection-start-column="47" selection-end-line="73" selection-end-column="47" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/captures/com.android.calculator2_2019.12.05_16.58.li">
+    <entry file="file://$PROJECT_DIR$/captures/com.android.calculator2_2019.12.06_08.59.li">
       <provider selected="true" editor-type-id="capture-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/captures/com.android.calculator2_2019.12.05_16.59.li">
+    <entry file="file://$PROJECT_DIR$/captures/com.android.calculator2_2019.12.06_09.02.li">
       <provider selected="true" editor-type-id="capture-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/captures/com.android.calculator2_2019.12.05_17.01.li">
-      <provider selected="true" editor-type-id="capture-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/values-w520dp-h500dp-land/styles.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="133">
-          <caret line="31" column="38" lean-forward="true" selection-start-line="31" selection-start-column="38" selection-end-line="31" selection-end-column="40" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/captures/com.android.calculator2_2019.12.05_17.09.li">
-      <provider selected="true" editor-type-id="capture-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/values-w520dp-h375dp-land/styles.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="64">
-          <caret line="31" column="38" lean-forward="true" selection-start-line="31" selection-start-column="38" selection-end-line="31" selection-end-column="40" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_calculator_land.xml">
-      <provider editor-type-id="android-designer2" />
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="393">
-          <caret line="48" column="46" selection-start-line="48" selection-start-column="46" selection-end-line="48" selection-end-column="46" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/captures/com.android.calculator2_2019.12.05_17.11.li">
-      <provider selected="true" editor-type-id="capture-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/values-w375dp-h275dp/styles.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="271">
-          <caret line="49" column="42" selection-start-line="49" selection-start-column="42" selection-end-line="49" selection-end-column="42" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/captures/com.android.calculator2_2019.12.05_17.12.li">
-      <provider selected="true" editor-type-id="capture-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/pad_advanced_5x3.xml">
-      <provider editor-type-id="android-designer2" />
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="276">
-          <caret line="21" column="42" lean-forward="true" selection-start-line="21" selection-start-column="42" selection-end-line="22" selection-end-column="32" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/captures/com.android.calculator2_2019.12.05_17.14.li">
-      <provider selected="true" editor-type-id="capture-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/captures/com.android.calculator2_2019.12.05_17.15.li">
-      <provider selected="true" editor-type-id="capture-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/values-sw720dp-land/styles.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="225">
-          <caret line="19" column="17" selection-start-line="19" selection-start-column="17" selection-end-line="19" selection-end-column="17" />
-        </state>
-      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/values-w520dp-h275dp-land/styles.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="239">
-          <caret line="23" column="43" selection-start-line="23" selection-start-column="43" selection-end-line="23" selection-end-column="43" />
+        <state relative-caret-position="237">
+          <caret line="64" lean-forward="true" selection-start-line="64" selection-end-line="64" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/captures/com.android.calculator2_2019.12.06_09.10.li">
+      <provider selected="true" editor-type-id="capture-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/captures/com.android.calculator2_2019.12.06_09.16.li">
+      <provider selected="true" editor-type-id="capture-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/captures/com.android.calculator2_2019.12.06_09.21.li">
+      <provider selected="true" editor-type-id="capture-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/captures/com.android.calculator2_2019.12.06_09.25.li">
+      <provider selected="true" editor-type-id="capture-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/captures/com.android.calculator2_2019.12.06_09.26.li">
+      <provider selected="true" editor-type-id="capture-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/captures/com.android.calculator2_2019.12.06_09.27.li">
+      <provider selected="true" editor-type-id="capture-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/captures/com.android.calculator2_2019.12.06_09.29.li">
+      <provider selected="true" editor-type-id="capture-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/captures/com.android.calculator2_2019.12.06_09.29-1.li">
+      <provider selected="true" editor-type-id="capture-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/captures/com.android.calculator2_2019.12.06_09.32.li">
+      <provider selected="true" editor-type-id="capture-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/captures/com.android.calculator2_2019.12.06_09.34.li">
+      <provider selected="true" editor-type-id="capture-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/captures/com.android.calculator2_2019.12.06_09.36.li">
+      <provider selected="true" editor-type-id="capture-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/captures/com.android.calculator2_2019.12.06_09.40.li">
+      <provider selected="true" editor-type-id="capture-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/captures/com.android.calculator2_2019.12.06_09.42.li">
+      <provider selected="true" editor-type-id="capture-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/captures/com.android.calculator2_2019.12.06_09.43.li">
+      <provider selected="true" editor-type-id="capture-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/captures/com.android.calculator2_2019.12.06_09.53.li">
+      <provider selected="true" editor-type-id="capture-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/captures/com.android.calculator2_2019.12.06_09.53-1.li">
+      <provider selected="true" editor-type-id="capture-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/captures/com.android.calculator2_2019.12.06_09.58.li">
+      <provider selected="true" editor-type-id="capture-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/captures/com.android.calculator2_2019.12.06_10.00.li">
+      <provider selected="true" editor-type-id="capture-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/captures/com.android.calculator2_2019.12.06_10.00-1.li">
+      <provider selected="true" editor-type-id="capture-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/display_two_line.xml">
+      <provider editor-type-id="android-designer2" />
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="276">
+          <caret line="81" column="34" selection-start-line="81" selection-start-column="34" selection-end-line="81" selection-end-column="34" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/pad_operator_two_col.xml">
       <provider editor-type-id="android-designer2" />
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="230">
-          <caret line="70" column="8" selection-start-line="70" selection-start-column="8" selection-end-line="70" selection-end-column="8" />
+        <state relative-caret-position="253">
+          <caret line="50" column="37" lean-forward="true" selection-start-line="50" selection-start-column="37" selection-end-line="50" selection-end-column="37" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/captures/com.android.calculator2_2019.12.05_17.30.li">
+    <entry file="file://$PROJECT_DIR$/captures/com.android.calculator2_2019.12.06_10.19.li">
       <provider selected="true" editor-type-id="capture-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/captures/com.android.calculator2_2019.12.06_10.21.li">
+      <provider selected="true" editor-type-id="capture-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/captures/com.android.calculator2_2019.12.06_10.22.li">
+      <provider selected="true" editor-type-id="capture-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/captures/com.android.calculator2_2019.12.06_10.24.li">
+      <provider selected="true" editor-type-id="capture-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/captures/com.android.calculator2_2019.12.06_10.25.li">
+      <provider selected="true" editor-type-id="capture-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/captures/com.android.calculator2_2019.12.06_10.26.li">
+      <provider selected="true" editor-type-id="capture-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/captures/com.android.calculator2_2019.12.06_10.29.li">
+      <provider selected="true" editor-type-id="capture-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/captures/com.android.calculator2_2019.12.06_10.29-1.li">
+      <provider selected="true" editor-type-id="capture-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/captures/com.android.calculator2_2019.12.06_10.30.li">
+      <provider selected="true" editor-type-id="capture-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/captures/com.android.calculator2_2019.12.06_10.31.li">
+      <provider selected="true" editor-type-id="capture-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/captures/com.android.calculator2_2019.12.06_10.33.li">
+      <provider selected="true" editor-type-id="capture-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/captures/com.android.calculator2_2019.12.06_10.33-1.li">
+      <provider selected="true" editor-type-id="capture-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/pad_operator_one_col.xml">
+      <provider editor-type-id="android-designer2" />
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="340">
+          <caret line="64" column="33" selection-start-line="64" selection-start-column="33" selection-end-line="64" selection-end-column="33" />
+        </state>
+      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/values-sw360dp-port/styles.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="133">
-          <caret line="23" column="43" selection-start-line="23" selection-start-column="43" selection-end-line="23" selection-end-column="43" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/pad_advanced_4x4.xml">
-      <provider editor-type-id="android-designer2" />
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="391">
-          <caret line="53" column="32" selection-start-line="53" selection-start-column="32" selection-end-line="53" selection-end-column="32" />
-          <folding>
-            <element signature="e#1422#1447#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/assets/fonts/helveticaneue-light.ttf">
-      <provider selected="true" editor-type-id="fontseditor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/assets/fonts/helveticaNeueThin.ttf">
-      <provider selected="true" editor-type-id="fontseditor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/pad_advanced_3x5.xml">
-      <provider editor-type-id="android-designer2" />
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="207">
-          <caret line="23" column="20" lean-forward="true" selection-start-line="23" selection-start-column="20" selection-end-line="23" selection-end-column="20" />
-          <folding>
-            <element signature="e#4173#4196#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="237">
+          <caret line="45" column="43" selection-start-line="45" selection-start-column="43" selection-end-line="45" selection-end-column="43" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/pad_numeric.xml">
       <provider editor-type-id="android-designer2" />
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="345">
-          <caret line="27" column="32" selection-start-line="27" selection-start-column="25" selection-end-line="27" selection-end-column="32" />
+        <state relative-caret-position="410">
+          <caret line="22" column="20" lean-forward="true" selection-start-line="22" selection-start-column="20" selection-end-line="22" selection-end-column="20" />
         </state>
       </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/values/styles.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="190">
-          <caret line="94" selection-start-line="94" selection-end-line="94" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_history.xml">
-      <provider editor-type-id="android-designer2" />
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-138" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/android/calculator2/DragLayout.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="147">
-          <caret line="96" selection-start-line="96" selection-end-line="96" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/android/calculator2/BkavHistoryAdapter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="667">
-          <caret line="58" column="35" lean-forward="true" selection-start-line="58" selection-start-column="35" selection-end-line="58" selection-end-column="35" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/android/calculator2/HistoryFragment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="214">
-          <caret line="63" column="55" selection-start-line="63" selection-start-column="55" selection-end-line="63" selection-end-column="55" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/line_history.xml">
-      <provider editor-type-id="android-designer2" />
-      <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/android/calculator2/Calculator.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="205">
-          <caret line="510" column="40" selection-start-line="510" selection-start-column="40" selection-end-line="510" selection-end-column="40" />
+        <state relative-caret-position="352">
+          <caret line="1706" column="40" lean-forward="true" selection-start-line="1706" selection-start-column="40" selection-end-line="1706" selection-end-column="40" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/android/calculator2/CalculatorFormula.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="897">
-          <caret line="312" column="60" lean-forward="true" selection-start-line="312" selection-start-column="60" selection-end-line="312" selection-end-column="60" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/display_two_line.xml">
-      <provider editor-type-id="android-designer2" />
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="301">
-          <caret line="45" column="37" lean-forward="true" selection-start-line="45" selection-start-column="37" selection-end-line="45" selection-end-column="37" />
         </state>
       </provider>
     </entry>

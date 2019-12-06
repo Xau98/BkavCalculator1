@@ -21,7 +21,7 @@
     <color name="calculator_accent_color">#16617e</color>
 
     <!-- Primary color (Color for the toolbars). -->
-    <color name="calculator_primary_color">#00BCD4</color>
+    <color name="calculator_primary_color">#161b22</color>
 
     <!-- Status bar color. -->
     <color name="calculator_statusbar_color">#0096A9</color>

@@ -506,7 +506,19 @@ public class Calculator extends Activity
     // Bkav TienNVh :
     void setFontNumber() {
         Typeface myTypeface = Typeface.createFromAsset(getAssets(), "fonts/helveticaNeueThin.ttf");
-        Button digit_0, digit_1, digit_2, digit_3, digit_4, digit_5, digit_6, digit_7, digit_8, digit_9;
+        Button digit_0, digit_1, digit_2, digit_3, digit_4, digit_5, digit_6, digit_7, digit_8, digit_9, op_div, op_mul, op_sub  ,op_add ,op_eq ;
+        // Bkav TienNVh :
+        op_div = findViewById(R.id.op_div);
+        op_div.setTypeface(myTypeface);
+        op_mul = findViewById(R.id.op_mul);
+        op_mul.setTypeface(myTypeface);
+        op_sub = findViewById(R.id.op_sub);
+        op_sub.setTypeface(myTypeface);
+        op_add = findViewById(R.id.op_add);
+        op_add.setTypeface(myTypeface);
+        op_eq = findViewById(R.id.eq);
+        op_eq.setTypeface(myTypeface);
+        // Bkav TienNVh :
         digit_0 = findViewById(R.id.digit_0);
         digit_0.setTypeface(myTypeface);
         digit_1 = findViewById(R.id.digit_1);
