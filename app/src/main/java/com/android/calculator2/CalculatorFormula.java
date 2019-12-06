@@ -197,7 +197,6 @@ public class CalculatorFormula extends AlignedTextView implements MenuItem.OnMen
      */
     public void changeTextTo(CharSequence newText) {
         final CharSequence oldText = getText();
-        Log.d("TienNVh", newText+"changeTextTo 0: "+oldText);
         final char separator = KeyMaps.translateResult(",").charAt(0);
         final CharSequence added = StringUtils.getExtensionIgnoring(newText, oldText, separator);
         if (added != null) {
@@ -218,29 +217,7 @@ public class CalculatorFormula extends AlignedTextView implements MenuItem.OnMen
         } else {
             announceForAccessibility(newText);
         }
-        Log.d("TienNVh", "changeTextTo: "+newText);
         setText(newText, BufferType.NORMAL);
-    }
-
-    @Override
-    protected void onSelectionChanged(int selStart, int selEnd) {
-        super.onSelectionChanged(selStart, selEnd);
-setSelection(selStart);
-        Log.d("TienNVh", getSelectionEnd()+"onSelectionChanged: "+selStart+" - "+selEnd);
-//        Editable text = getText();
-//        MathSpannable[] spans = text.getSpans(0, text.length(), MathSpannable.class);
-//        for (MathSpannable span : spans) {
-//            log("onSelectionChanged  " + handle + " " + selEnd);
-//            int start = text.getSpanStart(span);
-//            int end = text.getSpanEnd(span);
-//            if (handle > start && handle < end) {
-//                log("notifying span(" + span.getEquation() + ") that its cursor is " + (handle - start));
-//                span.setCursor(handle - start);
-//            } else {
-//
-//                span.setCursor(-1);
-//            }
-//        }
     }
 
 
@@ -414,9 +391,7 @@ setSelection(selStart);
     public interface OnTextSizeChangeListener {
         void onTextSizeChanged(TextView textView, float oldSize);
     }
-public  interface OnPostionCurcos{
-        void onPostion(int start , int end);
-}
+
     public interface OnFormulaContextMenuClickListener {
         boolean onPaste(ClipData clip);
         void onMemoryRecall();

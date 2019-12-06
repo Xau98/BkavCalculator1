@@ -237,12 +237,10 @@ class CalculatorExpr {
                 // Once zero, it can only be added back with addExponent.
             } else if (!mFraction.isEmpty()) {
                 mFraction = mFraction.substring(0, mFraction.length() - 1);
-                Log.d("TienNVh", "delete 0: "+mFraction);
             } else if (mSawDecimal) {
                 mSawDecimal = false;
             } else {
                 mWhole = mWhole.substring(0, mWhole.length() - 1);
-                Log.d("TienNVh", "delete 1: "+mWhole);
             }
         }
 
@@ -480,7 +478,6 @@ class CalculatorExpr {
         int s = mExpr.size();
         final int d = KeyMaps.digVal(id);// number
         final boolean binary = KeyMaps.isBinary(id);// Operator
-        Log.d("tienNVH", d+"add: "+binary);
         Token lastTok = s == 0 ? null : mExpr.get(s-1);
         int lastOp = lastTok instanceof Operator ? ((Operator) lastTok).id : 0;
         // Quietly replace a trailing binary operator with another one, unless the second
@@ -507,7 +504,6 @@ class CalculatorExpr {
                     if (last instanceof PreEval) {
                         // addAdd explicit multiplication to avoid confusing display.
                         mExpr.add(new Operator(R.id.op_mul));
-                        Log.d("TienNVH", "add: ");
                         s++;
                     }
                     mExpr.add(new Constant());
@@ -584,7 +580,6 @@ class CalculatorExpr {
         if (s == 0) {
             return;
         }
-        Log.d("TienNVh", "delete: "+s);
         Token last = mExpr.get(s-1);
         if (last instanceof Constant) {
             Constant c = (Constant)last;
@@ -657,7 +652,6 @@ class CalculatorExpr {
         EvalRet(int p, UnifiedReal v) {
             pos = p;
             val = v;
-            Log.d("TienNVh", p+"EvalRet: "+v);
         }
     }
 
@@ -863,7 +857,6 @@ class CalculatorExpr {
         final EvalRet result1 = evalSuffix(i, ec);
         int cpos = result1.pos;  // current position
         UnifiedReal val = result1.val;   // value so far
-        Log.d("evalFactor", "evalFactor: "+val);
         if (isOperator(cpos, R.id.op_pow, ec)) {
             final EvalRet exp = evalSignedFactor(cpos + 1, ec);
             cpos = exp.pos;
@@ -964,9 +957,6 @@ class CalculatorExpr {
 
     private EvalRet evalExpr(int i, EvalContext ec) throws SyntaxException {
         EvalRet tmp = evalTerm(i, ec);// nhaan , chia
-
-
-        Log.d("TienNVh 0", "evalExpr: "+tmp.val);
         boolean is_plus;
         int cpos = tmp.pos;
         UnifiedReal val = tmp.val;
@@ -980,12 +970,10 @@ class CalculatorExpr {
                 if (is_plus) {
                     val = val.add(tmp.val);
                 } else {
-                    Log.d("TienNVh 3", val+"evalExpr: "+tmp.val);
                     val = val.subtract(tmp.val);
 
                 }
             }
-            Log.d("TienNVh", "evalExpr: "+val);
             cpos = tmp.pos;
         }
         return new EvalRet(cpos, val);
@@ -1120,10 +1108,8 @@ class CalculatorExpr {
             // expressions, and don't generate an error where we previously displayed an instant
             // result.  This reflects the Android L design.
             int prefixLen = trailingBinaryOpsStart();
-            Log.d("TienNVh", "eval: prefixLen"+prefixLen+"//degreeMode :"+degreeMode+"//er"+er.toString());
             EvalContext ec = new EvalContext(degreeMode, prefixLen, er);
             EvalRet res = evalExpr(0, ec);
-            Log.d("eval", ec.mExprResolver+"eval:e "+res.val.toStringTruncated(50));
             if (res.pos != prefixLen) {
                 throw new SyntaxException("Failed to parse full expression");
             }

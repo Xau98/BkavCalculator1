@@ -59,9 +59,12 @@ public class CalculatorPadViewPager extends ViewPager {
         public float getPageWidth(int position) {
             int orientation = getResources().getConfiguration().orientation;
             if (position == 0) {
-                if (orientation == Configuration.ORIENTATION_LANDSCAPE)
+                if (orientation == Configuration.ORIENTATION_LANDSCAPE){
                     return 0.385f;
-                return 0.705f / 0.9f;
+                }
+                else {
+                    return 0.705f / 0.9f;
+                }
             }
             return 1.0f;
         }
@@ -74,24 +77,19 @@ public class CalculatorPadViewPager extends ViewPager {
         }
     };
 
+    // Bkav TienNVh : hàm này mục đích là Lấy hết tất cả các view con trong ViewGroup để setEnable  (cho phép click vào view con)
     public void recursivelySetEnabled(View view, boolean enabled) {
-
+        // Bkav TienNVh :  Kiểm tra view có phải là ViewGroup không ? .
+       // Nếu đúng thì tiếp tục tìm view con trong viewGroup
+        // Bkav TienNVh : Nếu sai thì setEnable cho view con ý
         if (view instanceof ViewGroup) {
-            // Bkav ThanhNgD: Can` chuyen view thanh` viewGrop vi`: view chuyen` vao` gom` nhieu` child view, ma`
-            // method setEnable() o duoi' chi thuc hien dc voi' cac base view nhu TextView, Button...
             final ViewGroup viewGroup = (ViewGroup) view;
-            // Thuc hien de quy lai method nay` voi' tat' ca cac' child view cua viewGroup
-            // Method nay` se chay vao` else{} chu' k vao` day nua~ vi` viewGroup.getChildAt(childIndex)
-            // luc' nay` la` base view -> (view instanceof ViewGroup) la` false
             for (int childIndex = 0; childIndex < viewGroup.getChildCount(); ++childIndex) {
+                // Bkav TienNVh : Dùng để quy để thục hiện setEnable cho view con
                 recursivelySetEnabled(viewGroup.getChildAt(childIndex), enabled);
             }
-
         } else {
-            // Bkav ThanhNgD: setEnabled(...) xu li kha nang Touchables( co' the cham.) cua view
-            // false -> vo hieu hoa' Touchables, true -> bat Touchables
             view.setEnabled(enabled);
-
         }
     }
 
@@ -99,28 +97,17 @@ public class CalculatorPadViewPager extends ViewPager {
     public OnPageChangeListener getmOnPageChangeListener() {
         return mOnPageChangeListener;
     }
-// Bkav TienNVh :
+
+    // Bkav TienNVh : Sự kiện lắng nghe khi chuyển tab
     private final OnPageChangeListener mOnPageChangeListener = new SimpleOnPageChangeListener() {
         @Override
         public void onPageSelected(int position) {
             if (getAdapter() == mStaticPagerAdapter) {
-              //  TextView emptyElement = (TextView) getChildAt(0).findViewById(R.id.emptyElement);
+                // Bkav TienNVh : Lấy ra toàn bộ các viewGroup
                 for (int childIndex = 0; childIndex < getChildCount(); ++childIndex) {
+                    // Bkav TienNVh : Thực hiện setEnable cho các view con trong mỗi ViewGroup
                     recursivelySetEnabled(getChildAt(childIndex), true);
                 }
-                    // Xu ly bug khi lich su trong'(emptyElement dang VISIBLE ) van click button 123... cua page 1
-//                     if (emptyElement != null && getCurrentItem() == 0 && emptyElement.getVisibility() == VISIBLE) {
-//                        GridLayout calculatorNumericPadLayout
-//                                = (GridLayout) getChildAt(1).findViewById(R.id.pad_numeric);
-//                        recursivelySetEnabled( calculatorNumericPadLayout, false);
-//                            } else {
-                    //Bkav ThanhNgD: childIndex == position -> true
-                    // Neu' la` childIndex == position thi` page dang chon moi' click dc, page khac'
-                    // du` co' hien cung k the click vi`  setEnabled() = false
-                    // Con` la` true thi` neu' view dc hien tren windown thi` co the click
-//                        recursivelySetEnabled( getChildAt(childIndex), true);
-                    //         }
-
             }
         }
 
@@ -198,70 +185,5 @@ public class CalculatorPadViewPager extends ViewPager {
         // Let page change listener know about our initial position.
         // mOnPageChangeListener.onPageSelected(getCurrentItem());
     }
-    // Bkav TienNVh : Bỏ
-//
-//    @Override
-//    public boolean onInterceptTouchEvent(MotionEvent ev) {
-//        try {
-//            // Always intercept touch events when a11y focused since otherwise they will be
-//            // incorrectly offset by a11y before being dispatched to children.
-//            if (isAccessibilityFocused() || super.onInterceptTouchEvent(ev)) {
-//                return true;
-//            }
-//
-//            // Only allow the current item to receive touch events.
-//            final int action = ev.getActionMasked();
-//            if (action == MotionEvent.ACTION_DOWN || action == MotionEvent.ACTION_POINTER_DOWN) {
-//                // If a child is a11y focused then we must always intercept the touch event
-//                // since it will be incorrectly offset by a11y.
-//                final int childCount = getChildCount();
-//                for (int childIndex = childCount - 1; childIndex >= 0; --childIndex) {
-//                    if (getChildAt(childIndex).isAccessibilityFocused()) {
-//                        mClickedItemIndex = childIndex;
-//                        return true;
-//                    }
-//                }
-//
-//                if (action == MotionEvent.ACTION_DOWN) {
-//                    mClickedItemIndex = -1;
-//                }
-//
-//                // Otherwise if touch is on a non-current item then intercept.
-//                final int actionIndex = ev.getActionIndex();
-//                final float x = ev.getX(actionIndex) + getScrollX();
-//                final float y = ev.getY(actionIndex) + getScrollY();
-//                for (int i = childCount - 1; i >= 0; --i) {
-//                    final int childIndex = getChildDrawingOrder(childCount, i);
-//                    final View child = getChildAt(childIndex);
-//                    if (child.getVisibility() == VISIBLE
-//                            && x >= child.getLeft() && x < child.getRight()
-//                            && y >= child.getTop() && y < child.getBottom()) {
-//                        if (action == MotionEvent.ACTION_DOWN) {
-//                            mClickedItemIndex = childIndex;
-//                        }
-//                        return childIndex != getCurrentItem();
-//                    }
-//                }
-//            }
-//
-//            return false;
-//        } catch (IllegalArgumentException e) {
-//            Log.e("Calculator", "Error intercepting touch event", e);
-//            return false;
-//        }
-//    }
 
-//    @Override
-//    public boolean onTouchEvent(MotionEvent ev) {
-//        try {
-//            // Allow both the gesture detector and super to handle the touch event so they both see
-//            // the full sequence of events. This should be safe since the gesture detector only
-//            // handle clicks and super only handles swipes.
-//            mGestureDetector.onTouchEvent(ev);
-//            return super.onTouchEvent(ev);
-//        } catch (IllegalArgumentException e) {
-//            Log.e("Calculator", "Error processing touch event", e);
-//            return false;
-//        }
-//    }
 }

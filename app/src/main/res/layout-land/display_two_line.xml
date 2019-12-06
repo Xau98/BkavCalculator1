@@ -13,7 +13,7 @@
   See the License for the specific language governing permissions and
   limitations under the License.
   -->
-
+<!--Bkav TienNVh : Giao dien xoay ngang cua hien thi-->
 <com.android.calculator2.CalculatorDisplay xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/display"
     android:layout_width="match_parent"
@@ -51,7 +51,7 @@
 <!--        Bkav TienNVh : Cho phep nhap phep tinh -->
 <!--        android:focusableInTouchMode="true"        -->
     </com.android.calculator2.CalculatorScrollView>
-
+<!-- Bkav TienNVh : Sửa layout_height = match_parent thành wrap_content  -->
     <com.android.calculator2.CalculatorResult
         android:id="@+id/result"
         style="@style/DisplayTextStyle.Result"

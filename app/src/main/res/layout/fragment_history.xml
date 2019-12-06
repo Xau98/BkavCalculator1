@@ -53,6 +53,7 @@
         app:layoutManager="LinearLayoutManager"
         app:reverseLayout="true"
         />
+<!--    Bkav TienNVh : Khi không có lịch sử thì hiện textview này-->
     <TextView
         android:id="@+id/emptyElement"
         android:layout_width="match_parent"
