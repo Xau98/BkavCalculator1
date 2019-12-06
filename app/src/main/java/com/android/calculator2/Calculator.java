@@ -503,30 +503,31 @@ public class Calculator extends Activity
 
     }
 
-void setFontNumber(){
-    Typeface myTypeface = Typeface.createFromAsset(getAssets(), "fonts/helveticaNeueThin.ttf");
-    Button digit_0,digit_1,digit_2, digit_3,digit_4,digit_5, digit_6, digit_7,digit_8, digit_9;
-    digit_0=findViewById(R.id.digit_0);
-    digit_0.setTypeface(myTypeface);
-    digit_1=findViewById(R.id.digit_1);
-    digit_1.setTypeface(myTypeface);
-    digit_2=findViewById(R.id.digit_2);
-    digit_2.setTypeface(myTypeface);
-    digit_3=findViewById(R.id.digit_3);
-    digit_3.setTypeface(myTypeface);
-    digit_4=findViewById(R.id.digit_4);
-    digit_4.setTypeface(myTypeface);
-    digit_5=findViewById(R.id.digit_5);
-    digit_5.setTypeface(myTypeface);
-    digit_6=findViewById(R.id.digit_6);
-    digit_6.setTypeface(myTypeface);
-    digit_7=findViewById(R.id.digit_7);
-    digit_7.setTypeface(myTypeface);
-    digit_8=findViewById(R.id.digit_8);
-    digit_8.setTypeface(myTypeface);
-    digit_9=findViewById(R.id.digit_9);
-    digit_9.setTypeface(myTypeface);
-}
+    // Bkav TienNVh :
+    void setFontNumber() {
+        Typeface myTypeface = Typeface.createFromAsset(getAssets(), "fonts/helveticaNeueThin.ttf");
+        Button digit_0, digit_1, digit_2, digit_3, digit_4, digit_5, digit_6, digit_7, digit_8, digit_9;
+        digit_0 = findViewById(R.id.digit_0);
+        digit_0.setTypeface(myTypeface);
+        digit_1 = findViewById(R.id.digit_1);
+        digit_1.setTypeface(myTypeface);
+        digit_2 = findViewById(R.id.digit_2);
+        digit_2.setTypeface(myTypeface);
+        digit_3 = findViewById(R.id.digit_3);
+        digit_3.setTypeface(myTypeface);
+        digit_4 = findViewById(R.id.digit_4);
+        digit_4.setTypeface(myTypeface);
+        digit_5 = findViewById(R.id.digit_5);
+        digit_5.setTypeface(myTypeface);
+        digit_6 = findViewById(R.id.digit_6);
+        digit_6.setTypeface(myTypeface);
+        digit_7 = findViewById(R.id.digit_7);
+        digit_7.setTypeface(myTypeface);
+        digit_8 = findViewById(R.id.digit_8);
+        digit_8.setTypeface(myTypeface);
+        digit_9 = findViewById(R.id.digit_9);
+        digit_9.setTypeface(myTypeface);
+    }
 
     // Bkav TienNVh : Load tab History
     public void onRefeshSaveHistory() {
@@ -534,7 +535,7 @@ void setFontNumber(){
         if (!savehistory.equals("")) {
             String sliptSaveHistory[] = savehistory.split(";");
             mListHistory = new ArrayList<String>(Arrays.asList(sliptSaveHistory));
-            mHistoryAdapter = new BkavHistoryAdapter(getApplication(),mListHistory);
+            mHistoryAdapter = new BkavHistoryAdapter(getApplication(), mListHistory);
             mHistoryAdapter.setmOnClickItemSaveHistory(new BkavHistoryAdapter.onClickItemSaveHistory() {
                 @Override
                 public void onClick(String result) {
@@ -603,23 +604,23 @@ void setFontNumber(){
     public void addExplicitStringToExpr(String formulatext) {
 
         if (!formulatext.equals("")) {
-            Log.d("TienNVh", "addExplicitStringToExpr 0101: "+formulatext);
+            Log.d("TienNVh", "addExplicitStringToExpr 0101: " + formulatext);
             if (formulatext.contains("…")) {
-                String resultText=mResultText.getText().toString();
-          // Bkav TienNVh : Xac dinh chuoi sau E
+                String resultText = mResultText.getText().toString();
+                // Bkav TienNVh : Xac dinh chuoi sau E
                 // Bkav TienNVh : Xac dinh vi tri E
                 int postionE = resultText.indexOf('E');
-                Log.d("TienNVh", "addExplicitStringToExpr 0: "+postionE);
+                Log.d("TienNVh", "addExplicitStringToExpr 0: " + postionE);
                 // Bkav TienNVh : Cat chuoi sau E
-                String sliptLastE=resultText.substring(postionE);
-                Log.d("TienNVh", "addExplicitStringToExpr 1: "+sliptLastE);
+                String sliptLastE = resultText.substring(postionE);
+                Log.d("TienNVh", "addExplicitStringToExpr 1: " + sliptLastE);
                 // Bkav TienNVh : Xac dinh vi tri trong chuoi fomulatext
                 int postionSlipt = formulatext.indexOf(sliptLastE);
                 // Bkav TienNVh :
-                String newtext= formulatext.substring(postionSlipt);
-                Log.d("TienNVh", postionSlipt+"addExplicitStringToExpr: ");
-                Log.d("TienNVh", formulatext+"addExplicitStringToExpr    " + mResultText.getText());
-                addExplicitStringToExpr(resultText+newtext);
+                String newtext = formulatext.substring(postionSlipt);
+                Log.d("TienNVh", postionSlipt + "addExplicitStringToExpr: ");
+                Log.d("TienNVh", formulatext + "addExplicitStringToExpr    " + mResultText.getText());
+                addExplicitStringToExpr(resultText + newtext);
             } else {
                 Log.d("TienNVh", "addExplicitStringToExpr 9999: " + mResultText.getText());
                 for (int i = 0; i < formulatext.length(); ) {
@@ -1354,16 +1355,16 @@ void setFontNumber(){
 
                 } else {
                     //addExplicitKeyToExpr(id);
-                    String formulatext=mFormulaText.getText().toString();
+                    String formulatext = mFormulaText.getText().toString();
                     String newtext = KeyMaps.toString(this, id);
-                // Bkav TienNVh : Truowng hop lay ket qua de tiep tuc tinh tiep
-                    if( mCurrentState==CalculatorState.RESULT){
-                        formulatext=mResultText.getText().toString();
-                        postionCursor=formulatext.length()+newtext.length()-1;
+                    // Bkav TienNVh : Truowng hop lay ket qua de tiep tuc tinh tiep
+                    if (mCurrentState == CalculatorState.RESULT) {
+                        formulatext = mResultText.getText().toString();
+                        postionCursor = formulatext.length() + newtext.length() - 1;
                     }
 
-                    int lengthold =formulatext.length();// do dai cua chuoi
-                    if (lengthold >= postionCursor || mCurrentState==CalculatorState.RESULT ) {
+                    int lengthold = formulatext.length();// do dai cua chuoi
+                    if (lengthold >= postionCursor || mCurrentState == CalculatorState.RESULT) {
                         mPostionCursorToRight = lengthold - postionCursor;// Bkav TienNVh : Vi tri con tro tinh tu ben phai sang
                         // Bkav TienNVh : Chen chuoi moi nhap vao vi tri con tro
                         String slipt1 = formulatext.substring(0, postionCursor);
