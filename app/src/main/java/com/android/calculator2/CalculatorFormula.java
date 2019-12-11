@@ -99,6 +99,16 @@ public class CalculatorFormula extends AlignedTextView implements MenuItem.OnMen
     }
 
     @Override
+    protected void onSelectionChanged(int selStart, int selEnd) {
+        super.onSelectionChanged(selStart, selEnd);
+        // Bkav TienNVh : set vi tri cuoi cung ko hien thi con tro
+        if (getSelectionEnd() == length()) {
+            setCursorVisible(false);
+        } else
+            setCursorVisible(true);
+    }
+
+    @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         if (!isLaidOut()) {
             // Prevent shrinking/resizing with our variable textSize.
@@ -306,7 +316,7 @@ public class CalculatorFormula extends AlignedTextView implements MenuItem.OnMen
         setOnCreateContextMenuListener(new OnCreateContextMenuListener() {
             @Override
             public void onCreateContextMenu(ContextMenu contextMenu, View view,
-                    ContextMenu.ContextMenuInfo contextMenuInfo) {
+                                            ContextMenu.ContextMenuInfo contextMenuInfo) {
                 final MenuInflater inflater = new MenuInflater(getContext());
                 createContextMenu(inflater, contextMenu);
                 mContextMenu = contextMenu;
@@ -394,6 +404,7 @@ public class CalculatorFormula extends AlignedTextView implements MenuItem.OnMen
 
     public interface OnFormulaContextMenuClickListener {
         boolean onPaste(ClipData clip);
+
         void onMemoryRecall();
     }
 }

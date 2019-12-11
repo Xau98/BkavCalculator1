@@ -170,6 +170,7 @@ public class CalculatorDisplay extends LinearLayout
      * Shows the toolbar.
      * @param autoHide Automatically ide toolbar again after delay
      */
+
     public void showToolbar(boolean autoHide) {
         // Only animate if we have been laid out at least once.
         if (isLaidOut()) {
