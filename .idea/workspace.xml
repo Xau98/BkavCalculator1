@@ -6,17 +6,21 @@
     </shared>
   </component>
   <component name="AndroidLogFilters">
+    <option name="TOOL_WINDOW_CUSTOM_FILTER" value="onButtonClick" />
     <option name="TOOL_WINDOW_LOG_LEVEL" value="verbose" />
     <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="Show only selected application" />
     <option name="TOOL_WINDOW_REGEXP_FILTER" value="false" />
   </component>
   <component name="BookmarkManager">
-    <bookmark url="file://$PROJECT_DIR$/app/src/main/java/com/android/calculator2/CalculatorPadViewPager.java" line="131" mnemonic="1" />
+    <bookmark url="file://$PROJECT_DIR$/app/src/main/java/com/android/calculator2/CalculatorResult.java" line="755" mnemonic="1" />
+    <bookmark url="file://$PROJECT_DIR$/app/src/main/java/com/android/calculator2/CalculatorResult.java" line="762" mnemonic="2" />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ac9bea0b-70d1-44fa-9642-a5f1677d6e9c" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/android/calculator2/Calculator.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/android/calculator2/Calculator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/android/calculator2/CalculatorResult.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/android/calculator2/CalculatorResult.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/android/calculator2/Evaluator.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/android/calculator2/Evaluator.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -27,7 +31,7 @@
   <component name="DefaultGradleProjectSettings">
     <option name="isMigrated" value="true" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="1234567" />
+  <component name="ExecutionTargetManager" SELECTED_TARGET="Pixel_3_XL_Edited_API_28" />
   <component name="ExternalProjectsManager">
     <system id="GRADLE">
       <state>
@@ -47,50 +51,20 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/android/calculator2/Calculator.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="788">
-              <caret line="1667" column="58" lean-forward="true" selection-start-line="1667" selection-start-column="58" selection-end-line="1667" selection-end-column="58" />
+            <state relative-caret-position="144">
+              <caret line="544" column="39" lean-forward="true" selection-start-line="544" selection-start-column="39" selection-end-line="544" selection-end-column="39" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#9194#9409#0" expanded="true" />
-                <element signature="e#9408#9409#0" expanded="true" />
-                <element signature="e#46603#46604#0" expanded="true" />
-                <element signature="e#46636#46637#0" expanded="true" />
-                <element signature="e#47268#47269#0" expanded="true" />
-                <element signature="e#47313#47314#0" expanded="true" />
-                <element signature="e#95610#95611#0" expanded="true" />
-                <element signature="e#96295#96296#0" expanded="true" />
-                <element signature="e#104788#104789#0" expanded="true" />
+                <element signature="e#96508#96509#0" expanded="true" />
+                <element signature="e#96547#96548#0" expanded="true" />
+                <element signature="e#97177#97178#0" expanded="true" />
+                <element signature="e#97232#97233#0" expanded="true" />
+                <element signature="e#105680#105681#0" expanded="true" />
+                <element signature="e#105725#105726#0" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/android/calculator2/BkavHistoryAdapter.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="92">
-              <caret line="15" column="20" lean-forward="true" selection-start-line="15" selection-start-column="20" selection-end-line="15" selection-end-column="20" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/android/calculator2/HistoryFragment.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="489">
-              <caret line="61" column="57" lean-forward="true" selection-start-line="61" selection-start-column="57" selection-end-line="61" selection-end-column="57" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/android/calculator2/CalculatorFormula.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="943">
-              <caret line="393" lean-forward="true" selection-start-line="393" selection-end-line="393" />
             </state>
           </provider>
         </entry>
@@ -98,31 +72,26 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/android/calculator2/Evaluator.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="16583">
-              <caret line="783" column="53" selection-start-line="783" selection-start-column="53" selection-end-line="783" selection-end-column="53" />
+            <state relative-caret-position="13708">
+              <caret line="658" column="70" selection-start-line="658" selection-start-column="70" selection-end-line="658" selection-end-column="70" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/android/calculator2/CalculatorPadViewPager.java">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/android/calculator2/CalculatorResult.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="230">
-              <caret line="35" column="17" selection-start-line="35" selection-start-column="17" selection-end-line="35" selection-end-column="17" />
-              <folding>
-                <element signature="e#1217#1218#0" expanded="true" />
-                <element signature="e#1263#1264#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="20677">
+              <caret line="958" column="28" selection-start-line="958" selection-start-column="28" selection-end-line="958" selection-end-column="28" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_calculator_port.xml">
-          <provider editor-type-id="android-designer2" />
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/android/calculator2/CalculatorFormula.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="989">
-              <caret line="43" column="7" selection-start-line="43" selection-start-column="7" selection-end-line="43" selection-end-column="7" />
+            <state relative-caret-position="7820">
+              <caret line="394" column="21" selection-start-line="394" selection-start-column="21" selection-end-line="394" selection-end-column="21" />
             </state>
           </provider>
         </entry>
@@ -130,8 +99,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/android/calculator2/KeyMaps.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="11661">
-              <caret line="532" column="22" selection-start-line="532" selection-start-column="22" selection-end-line="532" selection-end-column="22" />
+            <state relative-caret-position="8993">
+              <caret line="414" column="31" selection-start-line="414" selection-start-column="31" selection-end-line="414" selection-end-column="31" />
               <folding>
                 <element signature="e#17430#17431#0" expanded="true" />
                 <element signature="e#17459#17460#0" expanded="true" />
@@ -143,18 +112,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/android/calculator2/CalculatorExpr.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="24219">
-              <caret line="1105" column="77" selection-start-line="1105" selection-start-column="77" selection-end-line="1105" selection-end-column="77" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/display_two_line.xml">
-          <provider editor-type-id="android-designer2" />
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1541">
-              <caret line="67" column="19" selection-start-line="67" selection-start-column="19" selection-end-line="67" selection-end-column="19" />
+            <state relative-caret-position="13869">
+              <caret line="651" column="8" selection-start-line="651" selection-start-column="8" selection-end-line="651" selection-end-column="8" />
             </state>
           </provider>
         </entry>
@@ -171,10 +130,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>R.id.op_m_p</find>
-      <find>android:cursorVisible</find>
-      <find>Formaula</find>
-      <find>setKEy</find>
       <find>onKey</find>
       <find>cursorVisible</find>
       <find>DisplayTextStyle</find>
@@ -201,6 +156,10 @@
       <find>getCount</find>
       <find>changePostionCursor</find>
       <find>changeTextTo</find>
+      <find>E</find>
+      <find>onEvaluate</find>
+      <find>mR</find>
+      <find>mResultText.getText()</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -219,7 +178,6 @@
         <option value="$PROJECT_DIR$/app/src/main/java/com/android/calculator2/DragController.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/android/calculator2/HistoryAdapter.java" />
         <option value="$USER_HOME$/AndroidStudio/DeviceExplorer/bkav-bphone_b1114-1234567/data/data/com.android.calculator2/shared_prefs/SaveCalCulator.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/android/calculator2/Evaluator.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/android/calculator2/AlignedTextView.java" />
         <option value="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/values/dimens.xml" />
@@ -231,7 +189,6 @@
         <option value="$PROJECT_DIR$/app/src/main/res/values-en-rGB/strings.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/values-en-rIN/strings.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/values-en-rXC/strings.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/android/calculator2/CalculatorResult.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/line_history.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/values/strings.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/values-vi/strings.xml" />
@@ -258,8 +215,10 @@
         <option value="$PROJECT_DIR$/app/src/main/java/com/android/calculator2/CalculatorPadViewPager.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/android/calculator2/KeyMaps.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/android/calculator2/CalculatorExpr.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/android/calculator2/Calculator.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/android/calculator2/HistoryFragment.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/android/calculator2/Evaluator.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/android/calculator2/CalculatorResult.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/android/calculator2/Calculator.java" />
       </list>
     </option>
   </component>
@@ -275,28 +234,9 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="AndroidView">
-        <subPane>
-          <expand>
-            <path>
-              <item name="BkavCalculator" type="1abcf292:AndroidViewProjectNode" />
-              <item name="app" type="feadf853:AndroidModuleNode" />
-            </path>
-            <path>
-              <item name="BkavCalculator" type="1abcf292:AndroidViewProjectNode" />
-              <item name="app" type="feadf853:AndroidModuleNode" />
-              <item name="java" type="edd41e36:AndroidSourceTypeNode" />
-            </path>
-            <path>
-              <item name="BkavCalculator" type="1abcf292:AndroidViewProjectNode" />
-              <item name="app" type="feadf853:AndroidModuleNode" />
-              <item name="java" type="edd41e36:AndroidSourceTypeNode" />
-              <item name="calculator2" type="cbb59c9e:AndroidPsiDirectoryNode" />
-            </path>
-          </expand>
-          <select />
-        </subPane>
-      </pane>
+      <pane id="AndroidView" />
+      <pane id="ProjectPane" />
+      <pane id="PackagesPane" />
       <pane id="Scope">
         <subPane subId="Scope 'Default Changelist'; set:Default Changelist; class com.intellij.packageDependencies.ChangeListScope">
           <expand>
@@ -343,8 +283,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
-      <pane id="ProjectPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -359,7 +297,7 @@
     <property name="android.project.structure.proportion" value="0.15" />
     <property name="android.sdk.path" value="/media/quangndb/SubSystem/sdk" />
     <property name="last_directory_selection" value="$PROJECT_DIR$/app/src/main/res/mipmap-xxhdpi" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../bkav/BkavCalculator" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="project.structure.last.edited" value="Project" />
     <property name="project.structure.proportion" value="0.17" />
     <property name="project.structure.side.proportion" value="0.2" />
@@ -554,15 +492,15 @@
       <window_info id="Resources Explorer" order="7" weight="0.14056447" />
       <window_info id="Capture Tool" order="8" />
       <window_info anchor="bottom" id="Run" order="0" weight="0.2138229" />
-      <window_info anchor="bottom" x="90" y="358" width="1807" height="388" id="Logcat" order="1" weight="0.22090517" />
+      <window_info anchor="bottom" x="90" y="358" width="1807" height="388" id="Logcat" order="1" weight="0.26831895" />
       <window_info anchor="bottom" id="TODO" order="2" sideWeight="0.4997233" weight="0.32937366" />
       <window_info anchor="bottom" id="Find" order="3" weight="0.33693305" />
-      <window_info anchor="bottom" id="Terminal" order="4" visible="true" weight="0.29157668" />
+      <window_info anchor="bottom" id="Terminal" order="4" weight="0.29157668" />
       <window_info anchor="bottom" id="Event Log" order="5" sideWeight="0.5002767" side_tool="true" weight="0.32937366" />
       <window_info anchor="bottom" id="Version Control" order="6" weight="0.32721382" />
-      <window_info anchor="bottom" id="Build" order="7" weight="0.24946004" />
+      <window_info anchor="bottom" id="Build" order="7" visible="true" weight="0.24946004" />
       <window_info anchor="bottom" id="Debug" order="8" weight="0.44060475" />
-      <window_info anchor="bottom" id="Android Profiler" order="9" />
+      <window_info anchor="bottom" id="Android Profiler" order="9" show_stripe_button="false" />
       <window_info anchor="right" id="Capture Analysis" order="0" />
       <window_info anchor="right" id="Gradle" order="1" weight="0.32982844" />
       <window_info anchor="right" id="Theme Preview" order="2" />
@@ -610,6 +548,16 @@
     <option name="LAST_COMMIT_MESSAGE" value="C8/11" />
   </component>
   <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/calculator2/CalculatorPadViewPager.java</url>
+          <line>131</line>
+          <properties />
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
     <watches-manager>
       <configuration name="app">
         <watch expression="52" language="JAVA" />
@@ -626,9 +574,6 @@
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/captures/com.android.calculator2_2019.12.06_09.26.li">
-      <provider selected="true" editor-type-id="capture-editor" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/captures/com.android.calculator2_2019.12.06_09.27.li">
       <provider selected="true" editor-type-id="capture-editor" />
     </entry>
@@ -794,21 +739,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/android/calculator2/Evaluator.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="16583">
-          <caret line="783" column="53" selection-start-line="783" selection-start-column="53" selection-end-line="783" selection-end-column="53" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/android/calculator2/CalculatorPadViewPager.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="230">
           <caret line="35" column="17" selection-start-line="35" selection-start-column="17" selection-end-line="35" selection-end-column="17" />
-          <folding>
-            <element signature="e#1217#1218#0" expanded="true" />
-            <element signature="e#1263#1264#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -820,24 +754,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/android/calculator2/KeyMaps.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="11661">
-          <caret line="532" column="22" selection-start-line="532" selection-start-column="22" selection-end-line="532" selection-end-column="22" />
-          <folding>
-            <element signature="e#17430#17431#0" expanded="true" />
-            <element signature="e#17459#17460#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/android/calculator2/CalculatorExpr.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="24219">
-          <caret line="1105" column="77" selection-start-line="1105" selection-start-column="77" selection-end-line="1105" selection-end-column="77" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/display_two_line.xml">
       <provider editor-type-id="android-designer2" />
       <provider selected="true" editor-type-id="text-editor">
@@ -846,10 +762,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/android/calculator2/CalculatorFormula.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/android/calculator2/HistoryFragment.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="943">
-          <caret line="393" lean-forward="true" selection-start-line="393" selection-end-line="393" />
+        <state relative-caret-position="236">
+          <caret line="50" column="33" lean-forward="true" selection-start-line="50" selection-start-column="33" selection-end-line="50" selection-end-column="33" />
         </state>
       </provider>
     </entry>
@@ -862,27 +778,56 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/android/calculator2/Calculator.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="788">
-          <caret line="1667" column="58" lean-forward="true" selection-start-line="1667" selection-start-column="58" selection-end-line="1667" selection-end-column="58" />
+        <state relative-caret-position="144">
+          <caret line="544" column="39" lean-forward="true" selection-start-line="544" selection-start-column="39" selection-end-line="544" selection-end-column="39" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#9194#9409#0" expanded="true" />
-            <element signature="e#9408#9409#0" expanded="true" />
-            <element signature="e#46603#46604#0" expanded="true" />
-            <element signature="e#46636#46637#0" expanded="true" />
-            <element signature="e#47268#47269#0" expanded="true" />
-            <element signature="e#47313#47314#0" expanded="true" />
-            <element signature="e#95610#95611#0" expanded="true" />
-            <element signature="e#96295#96296#0" expanded="true" />
-            <element signature="e#104788#104789#0" expanded="true" />
+            <element signature="e#96508#96509#0" expanded="true" />
+            <element signature="e#96547#96548#0" expanded="true" />
+            <element signature="e#97177#97178#0" expanded="true" />
+            <element signature="e#97232#97233#0" expanded="true" />
+            <element signature="e#105680#105681#0" expanded="true" />
+            <element signature="e#105725#105726#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/android/calculator2/HistoryFragment.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/android/calculator2/Evaluator.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="489">
-          <caret line="61" column="57" lean-forward="true" selection-start-line="61" selection-start-column="57" selection-end-line="61" selection-end-column="57" />
+        <state relative-caret-position="13708">
+          <caret line="658" column="70" selection-start-line="658" selection-start-column="70" selection-end-line="658" selection-end-column="70" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/android/calculator2/CalculatorResult.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="20677">
+          <caret line="958" column="28" selection-start-line="958" selection-start-column="28" selection-end-line="958" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/android/calculator2/CalculatorFormula.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="7820">
+          <caret line="394" column="21" selection-start-line="394" selection-start-column="21" selection-end-line="394" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/android/calculator2/KeyMaps.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="8993">
+          <caret line="414" column="31" selection-start-line="414" selection-start-column="31" selection-end-line="414" selection-end-column="31" />
+          <folding>
+            <element signature="e#17430#17431#0" expanded="true" />
+            <element signature="e#17459#17460#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/android/calculator2/CalculatorExpr.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="13869">
+          <caret line="651" column="8" selection-start-line="651" selection-start-column="8" selection-end-line="651" selection-end-column="8" />
         </state>
       </provider>
     </entry>

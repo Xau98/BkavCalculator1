@@ -575,7 +575,6 @@ public class Evaluator implements CalculatorExpr.ExprResolver {
                 if (res == null) {
                     try {
                         res = mExprInfo.mExpr.eval(mDm, Evaluator.this);
-                        Log.d("doInBackground", res+"doInBackground: "+res.toStringTruncated(50));
                         if (isCancelled()) {
                             // TODO: This remains very slightly racey. Fix this.
                             throw new CR.AbortedException();
@@ -593,7 +592,6 @@ public class Evaluator implements CalculatorExpr.ExprResolver {
                 }
                 int precOffset = INIT_PREC;
                 String initResult = res.toStringTruncated(precOffset);
-                Log.d("doInBackground", "doInBackground: "+initResult);
                 int msd = getMsdIndexOf(initResult);
                 if (msd == INVALID_MSD) {
                     int leadingZeroBits = res.leadingBinaryZeroes();
@@ -657,7 +655,6 @@ public class Evaluator implements CalculatorExpr.ExprResolver {
             }
             // mExprInfo.mVal was already set asynchronously by child thread.
             mExprInfo.mResultString = result.newResultString;
-            Log.d("onPostExecute", "onPostExecute: "+result.newResultString);
             mExprInfo.mResultStringOffset = result.newResultStringOffset;
             final int dotIndex = mExprInfo.mResultString.indexOf('.');
             String truncatedWholePart = mExprInfo.mResultString.substring(0, dotIndex);

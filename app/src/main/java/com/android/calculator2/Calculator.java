@@ -562,6 +562,9 @@ public class Calculator extends Activity
                         }
                     }
                     restoreDisplay();
+                    // Bkav TienNVh :dịch chuyển con trỏ về cuối cùng
+                    mFormulaText.setSelection(mFormulaText.getText().length());
+
                 }
             });
             LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
@@ -1378,7 +1381,6 @@ public class Calculator extends Activity
                 return;
             case R.id.op_m_r:
                 mEvaluator.clearMain();
-                Log.d("TienNVh", "onButtonClick: " + mINPUT);
                 if (!mINPUT.equals("")) {
                     for (int i = 0; i < mINPUT.length(); i++) {
                         char splitFormulatext = mINPUT.charAt(i);
@@ -1393,6 +1395,8 @@ public class Calculator extends Activity
                 }
                 onEquals();
                 redisplayAfterFormulaChange();
+                // Bkav TienNVh : Dịch chuyển con trỏ cuối cùng
+                mFormulaText.setSelection(mFormulaText.getText().length());
                 return;
 
             // Bkav TienNVh : Tính năng m+
@@ -1404,7 +1408,7 @@ public class Calculator extends Activity
                 if (mINPUT.equals("")) {
                     if (mCurrentState == CalculatorState.ANIMATE || mCurrentState == CalculatorState.RESULT) {
                         // Bkav TienNVh : Trường hợp các ký tự nhập vào là phép tính thì lấy kết quả để lưu
-                        mINPUT = mResultText.getText() + "";
+                        mINPUT = mTruncatedWholeNumber + "";
                     } else {
                         // Bkav TienNVh : Trường họp cào là 1 số thì lấy các ký tự nhập vào để lưu
                         mINPUT = mFormulaText.getText() + "";
@@ -1412,7 +1416,7 @@ public class Calculator extends Activity
                 } else {
                     // Bkav TienNVh : Trường hơp : biến mINPUT đã có nội dung thì lấy nội dung của mINPUT cũ nối với nội dung mới
                     if (mCurrentState == CalculatorState.ANIMATE || mCurrentState == CalculatorState.RESULT) {
-                        mINPUT = mINPUT + "+" + mResultText.getText();
+                        mINPUT = mINPUT + "+" + mTruncatedWholeNumber;
                     } else {
                         mINPUT = mINPUT + "+" + mFormulaText.getText();
                     }
@@ -1425,7 +1429,7 @@ public class Calculator extends Activity
                 String input = "";
                 // Bkav TienNVh : Truong hop cac ky tu nhap vao khong phai la phep tinh
                 if (mCurrentState == CalculatorState.ANIMATE || mCurrentState == CalculatorState.RESULT) {
-                    input = "" + mResultText.getText();
+                    input = "" + mTruncatedWholeNumber;
                 } else {
                     input = "" + mFormulaText.getText();
                 }
@@ -1472,9 +1476,11 @@ public class Calculator extends Activity
                     // addChars(KeyMaps.toString(this, id), true);
                     String formulatext = mFormulaText.getText().toString();
                     String newtext = KeyMaps.toString(this, id);
+
                     // Bkav TienNVh : Truowng hop lay ket qua de tiep tuc tinh tiep
                     if (mCurrentState == CalculatorState.RESULT) {
-                        formulatext = mResultText.getText().toString();
+                        // Bkav TienNVh :
+                        formulatext = mTruncatedWholeNumber;
                         postionCursor = formulatext.length() + newtext.length() - 1;
                     }
 
@@ -1502,7 +1508,10 @@ public class Calculator extends Activity
                     String newtext = KeyMaps.toString(this, id);
                     // Bkav TienNVh : Truowng hop lay ket qua de tiep tuc tinh tiep
                     if (mCurrentState == CalculatorState.RESULT) {
-                        formulatext = mResultText.getText().toString();
+                        // Bkav TienNVh : Trường hợp đã click '*'
+                        // Bkav TienNVh :
+                        formulatext = mTruncatedWholeNumber;
+                        // Bkav TienNVh : set lai vi tri con tro tính từ bên phải sang
                         postionCursor = formulatext.length() + newtext.length() - 1;
                     }
 
@@ -1569,10 +1578,12 @@ public class Calculator extends Activity
         return false;
     }
 
+    // Bkav TienNVh : Tạo biến để lưu kết quả đầy đủ trong trường hợp "E"
+    String mTruncatedWholeNumber = null;
+
     // Initial evaluation completed successfully.  Initiate display.
     public void onEvaluate(long index, int initDisplayPrec, int msd, int leastDigPos,
                            String truncatedWholeNumber) {
-        Log.d("onEvaluate", "onEvaluate: " + truncatedWholeNumber);
         if (index != Evaluator.MAIN_INDEX) {
             throw new AssertionError("Unexpected evaluation result index\n");
         }
@@ -1581,11 +1592,15 @@ public class Calculator extends Activity
         invalidateOptionsMenu();
 
         mResultText.onEvaluate(index, initDisplayPrec, msd, leastDigPos, truncatedWholeNumber);
+
         if (mCurrentState != CalculatorState.INPUT) {
             // In EVALUATE, INIT, RESULT, or INIT_FOR_RESULT state.
+            // Bkav TienNVh : Trường hợp click "=" cho ra kết quả
+            mTruncatedWholeNumber = truncatedWholeNumber;
             onResult(mCurrentState == CalculatorState.EVALUATE /* animate */,
                     mCurrentState == CalculatorState.INIT_FOR_RESULT
                             || mCurrentState == CalculatorState.RESULT /* previously preserved */);
+
         }
     }
 
@@ -1667,11 +1682,16 @@ public class Calculator extends Activity
                 //Bkav TienNVh: luu vao lich su
                 if (mResultText.getText().length() != 0) {
                     String textNew = mFormulaText.getText() + "=" + mResultText.getText() + ";";
+                    // Bkav TienNVh : Trường hợp kết quả có "E" thì lấy kết quả đầy đủ để lưu
+                    if (mResultText.getText().toString().contains("E") && mTruncatedWholeNumber != null) {
+                        textNew = mFormulaText.getText() + "=" + mTruncatedWholeNumber + ";";
+                    }
                     // Bkav TienNVh : Tranh luu ket qua trung nhau
                     String savehistoryold = mSharedPreferences.getString("SaveHistory", "");
                     if (savehistoryold.contains(textNew)) {
                         savehistoryold = savehistoryold.replace(textNew, "");
                     }
+
                     // Bkav TienNVh : Luu ket qua vao lich su
                     SharedPreferences.Editor editor = mSharedPreferences.edit();
                     editor.putString("SaveHistory", savehistoryold + textNew);

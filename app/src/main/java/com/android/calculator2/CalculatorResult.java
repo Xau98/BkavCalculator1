@@ -672,8 +672,6 @@ public class CalculatorResult extends AlignedTextView implements MenuItem.OnMenu
         final int msdIndex = truncated ? -1 : getNaiveMsdIndexOf(in);  // INVALID_MSD is OK.
 
         String result = in;
-        Log.d(TAG,  "formatResult: "+result+"//precOffset:"+precOffset+"//maxDigs:"+maxDigs+"// truncated"+truncated);
-        Log.d(TAG, "formatResult: 2 //lastDisplayedOffset: "+lastDisplayedOffset[0]);
         boolean needEllipsis = false;
         if (truncated || (negative && result.charAt(0) != '-')) {
             needEllipsis = true;
@@ -682,7 +680,6 @@ public class CalculatorResult extends AlignedTextView implements MenuItem.OnMenu
             // Ellipsis may be removed again in the type(1) scientific notation case.
         }
         final int decIndex = result.indexOf('.');// cat so sau dau phay
-        Log.d(TAG, "formatResult: 3"+decIndex);
         if (lastDisplayedOffset != null) {
             lastDisplayedOffset[0] = precOffset;
         }
@@ -811,6 +808,7 @@ public class CalculatorResult extends AlignedTextView implements MenuItem.OnMenu
                 result = KeyMaps.ELLIPSIS + result;
             }
         }
+
         return result;
     }
 
@@ -832,7 +830,6 @@ public class CalculatorResult extends AlignedTextView implements MenuItem.OnMenu
         final int requestedPrecOffset[] = {precOffset};
         final String rawResult = mEvaluator.getString(mIndex, requestedPrecOffset, mMaxCharOffset,
                 maxSize, truncated, negative, this);
-        Log.d(TAG, "getFullCopyText: rawResult"+rawResult);
         return formatResult(rawResult, requestedPrecOffset[0], maxSize, truncated[0], negative[0],
                 lastDisplayedOffset, forcePrecision, forceSciNotation, insertCommas);
    }
@@ -873,7 +870,6 @@ public class CalculatorResult extends AlignedTextView implements MenuItem.OnMenu
         // It's reasonable to compute and copy the exact result instead.
         int fractionLsdOffset = Math.max(0, mLsdOffset);
         String rawResult = mEvaluator.getResult(mIndex).toStringTruncated(fractionLsdOffset);
-        Log.d(TAG, "getFullCopyText: rawResult"+rawResult);
         if (mLsdOffset <= -1) {
             // Result has trailing decimal point. Remove it.
             rawResult = rawResult.substring(0, rawResult.length() - 1);
@@ -959,10 +955,8 @@ public class CalculatorResult extends AlignedTextView implements MenuItem.OnMenu
             formattedResult.setSpan(mExponentColorSpan, expIndex, result.length(),
                                     Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
             setText(formattedResult);
-            Log.d(TAG, "redisplay: "+formattedResult.toString());
         } else {
             setText(result);
-            Log.d(TAG, "redisplay: "+result);
         }
         mLastDisplayedOffset = lastDisplayedOffset[0];
         mValid = true;
