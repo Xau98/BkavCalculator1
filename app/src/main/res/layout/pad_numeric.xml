@@ -21,6 +21,7 @@
     android:id="@+id/pad_numeric"
     style="@style/PadLayoutStyle.Numeric"
     app:rowCount="4"
+
     android:paddingBottom="0dp"
     app:columnCount="3">
 
@@ -115,6 +116,7 @@
         android:contentDescription="@string/desc_clr"
         android:textAllCaps="true"
         android:text="@string/clr"
+
         android:visibility="gone"
         app:layout_row="3"
         app:layout_column="2" />

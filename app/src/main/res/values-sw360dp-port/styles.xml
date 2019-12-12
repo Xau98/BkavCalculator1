@@ -20,13 +20,14 @@
     <style name="PadButtonStyle.Advanced">
         <item name="android:background">@drawable/pad_button_advanced_background</item>
         <item name="android:textColor">@color/pad_button_advanced_text_color</item>
-        <item name="android:textSize">23dip</item>
         <item name="android:textStyle">bold</item>
+        <item name="android:textSize">18dp</item>
     </style>
 
     <style name="PadButtonStyle.Advanced.Text">
         <item name="android:textAllCaps">true</item>
-        <item name="android:textSize">20dip</item>
+
+        <item name="android:textStyle">bold</item>
     </style>
 
     <style name="PadButtonStyle.Numeric">
@@ -34,18 +35,23 @@
         <item name="android:includeFontPadding">false</item>
         <item name="android:background">@drawable/pad_button_advanced_background</item>
         <item name="android:textSize">65dip</item>
-        <item name="android:layout_marginLeft">3dp</item>
+        <item name="android:layout_marginLeft">8dp</item>
     </style>
 
     <style name="PadButtonStyle.Numeric.Equals">
+        <item name="android:layout_marginLeft">0dp</item>
         <item name="android:textSize">27dip</item>
         <item name="android:visibility">visible</item>
+        <item name="android:fontFamily">sans-serif-light</item>
+        <item name="android:textStyle">normal</item>
     </style>
 
     <style name="PadButtonStyle.Operator">
         <item name="android:paddingBottom">5dp</item>
         <item name="android:layout_marginTop">3dp</item>
         <item name="android:textSize">27dip</item>
+        <item name="android:fontFamily">sans-serif-light</item>
+        <item name="android:textStyle">normal</item>
     </style>
 
     <style name="PadButtonStyle.Operator.Text">
@@ -65,7 +71,7 @@
     <style name="PadLayoutStyle.Numeric">
         <item name="android:layout_width">0dip</item>
         <item name="android:layout_weight">11</item>
-        <item name="android:paddingTop">12dip</item>
+        <item name="android:paddingTop">0dip</item>
         <item name="android:paddingBottom">20dip</item>
     </style>
 
