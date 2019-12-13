@@ -539,7 +539,6 @@ public class Calculator extends Activity
     }
 
     Bitmap bitmapBlurHis = null;
-
     // Bkav TienNVh : Load tab History và giao diện của tab History và Advanced
     public void onRefeshSaveHistory() {
         // Bkav TienNVh : Các phép toàn được lưu vào lịch sử bằng SharedPreferences

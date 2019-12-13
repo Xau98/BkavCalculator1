@@ -91,13 +91,15 @@
         <ImageView
             android:id="@+id/bt_more"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             android:layout_alignParentRight="true"
             android:contentDescription="more"
             android:onClick="onButtonClick"
-            android:paddingLeft="20dp"
-            android:paddingTop="23dp"
-            android:paddingRight="19dp"
-            android:src="@drawable/ic_more_vert_black_24dp" />
+            android:paddingLeft="12dp"
+            android:paddingTop="26dp"
+            android:paddingBottom="10dp"
+            android:layout_marginBottom="0dp"
+            android:paddingRight="28dp"
+            android:src="@drawable/icon_more" />
     </RelativeLayout>
 </com.android.calculator2.CalculatorDisplay>
