@@ -22,7 +22,9 @@
 
     <!-- Primary color (Color for the toolbars). -->
     <color name="calculator_primary_color">#161b22</color>
-
+<!--    Bkav TienNVh : -->
+    <color name="colorHistory">#A6464646</color>
+    <color name="colorAdvanced">#A6464646</color>
     <!-- Status bar color. -->
     <color name="calculator_statusbar_color">#0096A9</color>
 

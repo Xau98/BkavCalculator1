@@ -43,7 +43,10 @@ import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Matrix;
+import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.graphics.drawable.BitmapDrawable;
@@ -70,6 +73,7 @@ import android.text.Spanned;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.text.style.ForegroundColorSpan;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.Property;
 import android.view.ActionMode;
@@ -280,7 +284,7 @@ public class Calculator extends Activity
     private CalculatorResult mResultText;
     private HorizontalScrollView mFormulaContainer;
     private DragLayout mDragLayout;
-
+    private RelativeLayout mRootView;
     private CalculatorPadViewPager mPadViewPager;
     private View mDeleteButton;
     private View mClearButton;
@@ -387,6 +391,9 @@ public class Calculator extends Activity
         }
     }
 
+    private BkavHistoryLayout mRelativeLayoutHistory;
+    private BkavAdvancedLayout mCalculatorPadLayout;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -404,7 +411,7 @@ public class Calculator extends Activity
                 mDisplayView.setForceToolbarVisible(isVisible);
             }
         });
-
+        mRelativeLayoutHistory = (BkavHistoryLayout) findViewById(R.id.relativeLayout_history);
         mMainCalculator = findViewById(R.id.main_calculator);
         mDisplayView = (CalculatorDisplay) findViewById(R.id.display);
         mModeView = (TextView) findViewById(R.id.mode);
@@ -531,13 +538,20 @@ public class Calculator extends Activity
         dec_point.setTypeface(myTypeface);
     }
 
-    // Bkav TienNVh : Load tab History
+    Bitmap bitmapBlurHis = null;
+
+    // Bkav TienNVh : Load tab History và giao diện của tab History và Advanced
     public void onRefeshSaveHistory() {
+        // Bkav TienNVh : Các phép toàn được lưu vào lịch sử bằng SharedPreferences
+        // Bkav TienNVh : Phép toàn lưu theo : ví dụ  "3+5=8;"
+        // Ngăn cách giữa các phép toán là ";"
+        // Ngăn cách giữa phép tính và kết quả là "="
         String savehistory = mSharedPreferences.getString("SaveHistory", "");
         if (!savehistory.equals("")) {
             String sliptSaveHistory[] = savehistory.split(";");
             mListHistory = new ArrayList<String>(Arrays.asList(sliptSaveHistory));
             mHistoryAdapter = new BkavHistoryAdapter(getApplication(), mListHistory);
+            // Bkav TienNVh :  Xử lý click vào item History
             mHistoryAdapter.setmOnClickItemSaveHistory(new BkavHistoryAdapter.onClickItemSaveHistory() {
                 @Override
                 public void onClick(String result) {
@@ -554,7 +568,6 @@ public class Calculator extends Activity
                     restoreDisplay();
                     // Bkav TienNVh :dịch chuyển con trỏ về cuối cùng
                     mFormulaText.setSelection(mFormulaText.getText().length());
-
                 }
             });
             LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
@@ -568,6 +581,7 @@ public class Calculator extends Activity
             findViewById(R.id.emptyElement).setVisibility(View.GONE);
             findViewById(R.id.delHistory).setVisibility(View.VISIBLE);
         } else {
+            // Bkav TienNVh :  Trường hợp không có lịch sử
             findViewById(R.id.emptyElement).setVisibility(View.VISIBLE);
             findViewById(R.id.delHistory).setVisibility(View.GONE);
             mRecyclerViewSaveHistory.setVisibility(View.GONE);
@@ -578,15 +592,50 @@ public class Calculator extends Activity
             public void onClick(View v) {
             }
         });
+
+        final int orientation = getResources().getConfiguration().orientation;
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
+                // Bkav TienNVh :  set background cho tab History
+                Bitmap bitmap = convertViewToBitmap(mDragLayout);
+                BlurManager blur = new BlurManager();
+                Bitmap cutBitmapHistory = cutImageToBackgroundHistory(bitmap);
+                Bitmap mContainerFilter = Bitmap.createBitmap(cutBitmapHistory.getWidth(), cutBitmapHistory.getHeight(),
+                        Bitmap.Config.ARGB_8888);
+                mContainerFilter.eraseColor(getResources().getColor(R.color.colorHistory));
+                Bitmap bmHistory = overlayBitmap(mContainerFilter, cutBitmapHistory, 255);
+                blur.bitmapScale(0.05f).build(getApplicationContext(), bmHistory);
+                bitmapBlurHis = blur.blur(20f);
+                // Bkav TienNVh :  Set background cho tab Advanced
+                BlurManager blurAd = new BlurManager();
+                final Bitmap cutBitmapAd = cutImageToBackgroundAdvence(bitmap);
+                Bitmap mContainerFilter1 = Bitmap.createBitmap(cutBitmapHistory.getWidth(), cutBitmapHistory.getHeight(),
+                        Bitmap.Config.ARGB_8888);
+                mContainerFilter1.eraseColor(getResources().getColor(R.color.colorHistory));
+                Bitmap bmAd = overlayBitmap(mContainerFilter1, cutBitmapAd, 255);
+                blurAd.bitmapScale(0.05f).build(getApplicationContext(), bmAd);
+                final Bitmap bitmapBlurAd = blurAd.blur(20f);
+                // Bkav TienNVh : sự kiện sang trang
                 if (mPadViewPager != null) {
                     mPadViewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
                         @Override
-                        public void onPageScrolled(int i, float v, int i1) {
-//                    mRelativeLayoutHistory.setInforScrollViewpager(bitmapBlurHis, i, v, i1);
+                        public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                            if (position == 0) {
+                                // Bkav TienNVh :  position =0 là tab history
+                                mRelativeLayoutHistory.setInforScrollViewpager(bitmapBlurHis,
+                                        position, positionOffset, positionOffsetPixels);
+                            } else if (position == 2) {
+                                // Bkav TienNVh : position =2 la tab Advanced
+                                if (orientation == Configuration.ORIENTATION_PORTRAIT) {
+                                    if (bitmapBlurAd != null) {
+                                        mCalculatorPadLayout = (BkavAdvancedLayout) findViewById(R.id.pad_advanced);
+                                        mCalculatorPadLayout.setInforScrollViewpager(bitmapBlurAd
+                                                , position, positionOffset, positionOffsetPixels);
+                                    }
+                                }
+                            }
                         }
 
                         @Override
@@ -602,164 +651,223 @@ public class Calculator extends Activity
                     });
                 }
             }
-        }, 1000);
+        }, 100);
+    }
+
+    //    Bkav Phongngb tao ra 1 bitmap b1 tuong tu nhu mot bitmap thu 2
+    public Bitmap overlayBitmap(Bitmap b1, /*onto*/Bitmap b2, int alpha) {
+        Paint p = new Paint();
+        p.setAlpha(alpha);
+        Bitmap bmOverlay = Bitmap.createBitmap(b2.getWidth(), b2.getHeight(), b2.getConfig());
+        Canvas canvas = new Canvas(bmOverlay);
+
+        Matrix matrix = new Matrix();
+        canvas.drawBitmap(b2, matrix, null);
+        canvas.drawBitmap(b1, matrix, p);
+        return bmOverlay;
+    }
+
+    //    Bkav Phongngb convert view to bitmap
+    private Bitmap convertViewToBitmap(View view) {
+        if (view != null)
+            view.setDrawingCacheEnabled(true);
+        view.buildDrawingCache();
+        Bitmap bm = view.getDrawingCache();
+        return bm;
+    }
+
+    //Bkav TienNVh : Cut bitmap phan nam duoi history
+    private Bitmap cutImageToBackgroundHistory(Bitmap bitmap) {
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        int mScreenHeight = displayMetrics.heightPixels;
+        int mScreenWidth = displayMetrics.widthPixels;
+
+        int heightChild = findViewById(R.id.relativeLayout_history).getHeight();
+        Bitmap cutBitmap = null;
+        int orientation = getResources().getConfiguration().orientation;
+        if (bitmap != null && orientation == Configuration.ORIENTATION_PORTRAIT) {
+            cutBitmap = Bitmap.createBitmap(bitmap, 0, mScreenHeight - heightChild,
+                    (int) (mScreenWidth * 0.8), heightChild);
+
+        } else {
+            // Bkav TienNVh :
+            if ((heightChild - 100) > 0)
+                cutBitmap = Bitmap.createBitmap(bitmap, 0, mScreenHeight - heightChild,
+                        (int) (mScreenWidth * 0.4), heightChild - 100);
+        }
+        return cutBitmap;
+    }
+
+    // Bkav TienNVh : cutbitmap phan nam duoi advence
+    private Bitmap cutImageToBackgroundAdvence(Bitmap bitmap) {
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        int mScreenHeight = displayMetrics.heightPixels;
+        int heightChild = findViewById(R.id.relativeLayout_history).getHeight();
+        Bitmap cutBitmap = null;
+        if (bitmap != null) {
+            cutBitmap = Bitmap.createBitmap(bitmap, (int) (bitmap.getWidth() * 0.2),
+                    mScreenHeight - heightChild, (int) (bitmap.getWidth() * 0.8), heightChild - 100);
+        }
+        return cutBitmap;
     }
 
     // Bkav TienNVh : Chuyen ky tu sang ID
     public void addExplicitStringToExpr(String formulatext) {
         if (!formulatext.equals("")) {
-                for (int i = 0; i < formulatext.length(); ) {
-                    // Bkav TienNVh : Lay tung ky tu trong chuoi
-                    char splitFormulatext = formulatext.charAt(i);
-                    // Bkav TienNVh : xử lý dấu ngăn cách và dấu phẩy
-                    if (splitFormulatext == ',' || splitFormulatext == '.') {
-                        // Bkav TienNVh : Trường hợp Ngôn ngữ tiếng việt dấu ',' tương ứng với dấu phẩy và dấu ngăn cách là '.'
-                        // Bkav TienNVh : Trường hợp ngôn ngữ khác tiếng viết '.' tương ứng với dấu phẩy và dấu ngăn cách là dấu ','
-                        if ((splitFormulatext == ',' && Locale.getDefault().toString().equals("vi_VN")) ||
-                                (splitFormulatext == '.' && !Locale.getDefault().toString().equals("vi_VN"))) {
-                            // Bkav TienNVh : Trường hợp dấu phẩy
-                            addExplicitKeyToExpr(R.id.dec_point);
-                            i++;
-                            continue;
-                        } else {
-                            // Bkav TienNVh : Trường hợp dấu ngăn cách
-                            i++;
-                            continue;
-                        }
+            for (int i = 0; i < formulatext.length(); ) {
+                // Bkav TienNVh : Lay tung ky tu trong chuoi
+                char splitFormulatext = formulatext.charAt(i);
+                // Bkav TienNVh : xử lý dấu ngăn cách và dấu phẩy
+                if (splitFormulatext == ',' || splitFormulatext == '.') {
+                    // Bkav TienNVh : Trường hợp Ngôn ngữ tiếng việt dấu ',' tương ứng với dấu phẩy và dấu ngăn cách là '.'
+                    // Bkav TienNVh : Trường hợp ngôn ngữ khác tiếng viết '.' tương ứng với dấu phẩy và dấu ngăn cách là dấu ','
+                    if ((splitFormulatext == ',' && Locale.getDefault().toString().equals("vi_VN")) ||
+                            (splitFormulatext == '.' && !Locale.getDefault().toString().equals("vi_VN"))) {
+                        // Bkav TienNVh : Trường hợp dấu phẩy
+                        addExplicitKeyToExpr(R.id.dec_point);
+                        i++;
+                        continue;
+                    } else {
+                        // Bkav TienNVh : Trường hợp dấu ngăn cách
+                        i++;
+                        continue;
                     }
-                    // Bkav TienNVh :  Kiểm tra ký tự có phải số không ?
-                    if (KeyMaps.keyForDigVal((int) splitFormulatext) == View.NO_ID) {
-                        // Bkav TienNVh : Kiểm tra ký tự có phải phép tính không?
-                        if (KeyMaps.keyForChar(splitFormulatext) != View.NO_ID) {
-                            // Bkav TienNVh :  trường hợp trùng  e với exp() , để phân biệt thì phải dựa vào ký tự p
-                            if (i < formulatext.length() - 2 && (byte) formulatext.charAt(i + 2) == 112) {// Bkav TienNVh : 'p'=112
-                                // Bkav TienNVh : Trường hợp ký tự là exp(
-                                addExplicitKeyToExpr(R.id.fun_exp);
-                                // Bkav TienNVh : tăng lên 4 vì độ dài chuỗi exp( là 4
-                                i = i + 4;
-                                continue;
-                            } else {
-                                // Bkav TienNVh :
-                                if (i < formulatext.length() - 2 && splitFormulatext == 'e' && (byte) formulatext.charAt(i + 2) != 112) {// Bkav TienNVh : 'p'=112
-                                    // Bkav TienNVh : truong hop co ky tu chen o giua cum
-                                    int postion = mFormulaText.getSelectionStart();
-                                    mPostionCursorToRight = formulatext.length() - postion - 1;
-                                    // Bkav TienNVh : Neu mUnprocessedChars!=null va !empty => Phep tinh ay loi
-                                    mUnprocessedChars = formulatext;
-                                    mEvaluator.clearMain();
-                                    mFormulaText.setText(mUnprocessedChars);
-                                    return;
-                                } else {
-                                    addExplicitKeyToExpr(KeyMaps.keyForChar(splitFormulatext));
-                                    i++;
-                                    continue;
-                                }
-                            }
+                }
+                // Bkav TienNVh :  Kiểm tra ký tự có phải số không ?
+                if (KeyMaps.keyForDigVal((int) splitFormulatext) == View.NO_ID) {
+                    // Bkav TienNVh : Kiểm tra ký tự có phải phép tính không?
+                    if (KeyMaps.keyForChar(splitFormulatext) != View.NO_ID) {
+                        // Bkav TienNVh :  trường hợp trùng  e với exp() , để phân biệt thì phải dựa vào ký tự p
+                        if (i < formulatext.length() - 2 && (byte) formulatext.charAt(i + 2) == 112) {// Bkav TienNVh : 'p'=112
+                            // Bkav TienNVh : Trường hợp ký tự là exp(
+                            addExplicitKeyToExpr(R.id.fun_exp);
+                            // Bkav TienNVh : tăng lên 4 vì độ dài chuỗi exp( là 4
+                            i = i + 4;
+                            continue;
                         } else {
-                            if ((byte) splitFormulatext == 26) {
-                                addExplicitKeyToExpr(R.id.op_sqrt);
+                            // Bkav TienNVh :
+                            if (i < formulatext.length() - 2 && splitFormulatext == 'e' && (byte) formulatext.charAt(i + 2) != 112) {// Bkav TienNVh : 'p'=112
+                                // Bkav TienNVh : truong hop co ky tu chen o giua cum
+                                int postion = mFormulaText.getSelectionStart();
+                                mPostionCursorToRight = formulatext.length() - postion - 1;
+                                // Bkav TienNVh : Neu mUnprocessedChars!=null va !empty => Phep tinh ay loi
+                                mUnprocessedChars = formulatext;
+                                mEvaluator.clearMain();
+                                mFormulaText.setText(mUnprocessedChars);
+                                return;
+                            } else {
+                                addExplicitKeyToExpr(KeyMaps.keyForChar(splitFormulatext));
                                 i++;
                                 continue;
-                            } else {
-                                switch (splitFormulatext) {
-                                    case 's':
-                                        if (formulatext.length() > 2 && (byte) formulatext.charAt(i + 3) != 40) { // Bkav TienNVh :  '('= 40
-                                            if ((byte) formulatext.charAt(i + 3) == 123) {// Bkav TienNVh :  '-'=123
-                                                addExplicitKeyToExpr(R.id.fun_arcsin);
-                                                i = i + 6;
-                                            } else {
-                                                // Bkav TienNVh :  Trường hợp chèn ký tự vào giữa cụm
-                                                insertCharacters(formulatext);
-                                                return;
-                                            }
-                                        } else {
-                                            // Bkav TienNVh : sln(in(
-                                            if ((byte) formulatext.charAt(i + 1) == 105) { // Bkav TienNVh : 'i'=105
-                                                addExplicitKeyToExpr(R.id.fun_sin);
-                                                i = i + 4;
-                                                // Bkav TienNVh : set lai trường hợp hết lỗi cú pháp
-                                                mUnprocessedChars = null;
-                                            } else {
-                                                // Bkav TienNVh :  Trường hợp chèn ký tự vào giữa cụm
-                                                insertCharacters(formulatext);
-                                                return;
-                                            }
-                                        }
-                                        continue;
-                                    case 'c':
-                                        if ((byte) formulatext.charAt(i + 3) != 40) {
-                                            if ((byte) formulatext.charAt(i + 3) == 94) {// Bkav TienNVh :  '-'=94
-                                                addExplicitKeyToExpr(R.id.fun_arccos);
-                                                i = i + 6;
-                                                // Bkav TienNVh : set lai trường hợp hết lỗi cú pháp
-                                                mUnprocessedChars = null;
-                                            } else {
-                                                // Bkav TienNVh :  Trường hợp chèn ký tự vào giữa cụm
-                                                insertCharacters(formulatext);
-                                                return;
-                                            }
-                                        } else {
-                                            addExplicitKeyToExpr(R.id.fun_cos);
-                                            i = i + 4;
-                                            // Bkav TienNVh : set lai trường hợp hết lỗi cú pháp
-                                            mUnprocessedChars = null;
-                                        }
-                                        continue;
-                                    case 't':
-                                        if ((byte) formulatext.charAt(i + 3) != 40) {
-                                            if ((byte) formulatext.charAt(i + 3) == 94) {// Bkav TienNVh :  '-'=94
-                                                addExplicitKeyToExpr(R.id.fun_arctan);
-                                                i = i + 6;
-                                                // Bkav TienNVh : set lai trường hợp hết lỗi cú pháp
-                                                mUnprocessedChars = null;
-                                            } else {
-                                                // Bkav TienNVh :  Trường hợp chèn ký tự vào giữa cụm
-                                                insertCharacters(formulatext);
-                                                return;
-                                            }
-                                        } else {
-                                            addExplicitKeyToExpr(R.id.fun_tan);
-                                            i = i + 4;
-                                            // Bkav TienNVh : set lai trường hợp hết lỗi cú pháp
-                                            mUnprocessedChars = null;
-                                        }
-                                        continue;
-                                    case 'l':
-                                        if ((byte) formulatext.charAt(i + 2) == 103) { // Bkav TienNVh : 'g'=103
-                                            addExplicitKeyToExpr(R.id.fun_log);
-                                            i = i + 4;
-                                            // Bkav TienNVh : set lai trường hợp hết lỗi cú pháp
-                                            mUnprocessedChars = null;
-                                        } else {
-                                            if ((byte) formulatext.charAt(i + 2) == 40) {// Bkav TienNVh : '('=40
-                                                addExplicitKeyToExpr(R.id.fun_ln);
-                                                i = i + 3;
-                                                // Bkav TienNVh : set lai trường hợp hết lỗi cú pháp
-                                                mUnprocessedChars = null;
-                                            } else {
-                                                // Bkav TienNVh :  Trường hợp chèn ký tự vào giữa cụm
-                                                insertCharacters(formulatext);
-                                                return;
-                                            }
-                                        }
-                                        continue;
-
-                                    default:
-                                        if ((byte) formulatext.charAt(i) == -78) {
-                                            addExplicitKeyToExpr(R.id.op_sqr);
-                                            i++;
-                                            continue;
-                                        }
-                                }
                             }
                         }
                     } else {
-                        addExplicitKeyToExpr(KeyMaps.keyForDigVal((int) splitFormulatext));
-                        i++;
+                        if ((byte) splitFormulatext == 26) {
+                            addExplicitKeyToExpr(R.id.op_sqrt);
+                            i++;
+                            continue;
+                        } else {
+                            switch (splitFormulatext) {
+                                case 's':
+                                    if (formulatext.length() > 2 && (byte) formulatext.charAt(i + 3) != 40) { // Bkav TienNVh :  '('= 40
+                                        if ((byte) formulatext.charAt(i + 3) == 123) {// Bkav TienNVh :  '-'=123
+                                            addExplicitKeyToExpr(R.id.fun_arcsin);
+                                            i = i + 6;
+                                        } else {
+                                            // Bkav TienNVh :  Trường hợp chèn ký tự vào giữa cụm
+                                            insertCharacters(formulatext);
+                                            return;
+                                        }
+                                    } else {
+                                        // Bkav TienNVh : sln(in(
+                                        if ((byte) formulatext.charAt(i + 1) == 105) { // Bkav TienNVh : 'i'=105
+                                            addExplicitKeyToExpr(R.id.fun_sin);
+                                            i = i + 4;
+                                            // Bkav TienNVh : set lai trường hợp hết lỗi cú pháp
+                                            mUnprocessedChars = null;
+                                        } else {
+                                            // Bkav TienNVh :  Trường hợp chèn ký tự vào giữa cụm
+                                            insertCharacters(formulatext);
+                                            return;
+                                        }
+                                    }
+                                    continue;
+                                case 'c':
+                                    if ((byte) formulatext.charAt(i + 3) != 40) {
+                                        if ((byte) formulatext.charAt(i + 3) == 94) {// Bkav TienNVh :  '-'=94
+                                            addExplicitKeyToExpr(R.id.fun_arccos);
+                                            i = i + 6;
+                                            // Bkav TienNVh : set lai trường hợp hết lỗi cú pháp
+                                            mUnprocessedChars = null;
+                                        } else {
+                                            // Bkav TienNVh :  Trường hợp chèn ký tự vào giữa cụm
+                                            insertCharacters(formulatext);
+                                            return;
+                                        }
+                                    } else {
+                                        addExplicitKeyToExpr(R.id.fun_cos);
+                                        i = i + 4;
+                                        // Bkav TienNVh : set lai trường hợp hết lỗi cú pháp
+                                        mUnprocessedChars = null;
+                                    }
+                                    continue;
+                                case 't':
+                                    if ((byte) formulatext.charAt(i + 3) != 40) {
+                                        if ((byte) formulatext.charAt(i + 3) == 94) {// Bkav TienNVh :  '-'=94
+                                            addExplicitKeyToExpr(R.id.fun_arctan);
+                                            i = i + 6;
+                                            // Bkav TienNVh : set lai trường hợp hết lỗi cú pháp
+                                            mUnprocessedChars = null;
+                                        } else {
+                                            // Bkav TienNVh :  Trường hợp chèn ký tự vào giữa cụm
+                                            insertCharacters(formulatext);
+                                            return;
+                                        }
+                                    } else {
+                                        addExplicitKeyToExpr(R.id.fun_tan);
+                                        i = i + 4;
+                                        // Bkav TienNVh : set lai trường hợp hết lỗi cú pháp
+                                        mUnprocessedChars = null;
+                                    }
+                                    continue;
+                                case 'l':
+                                    if ((byte) formulatext.charAt(i + 2) == 103) { // Bkav TienNVh : 'g'=103
+                                        addExplicitKeyToExpr(R.id.fun_log);
+                                        i = i + 4;
+                                        // Bkav TienNVh : set lai trường hợp hết lỗi cú pháp
+                                        mUnprocessedChars = null;
+                                    } else {
+                                        if ((byte) formulatext.charAt(i + 2) == 40) {// Bkav TienNVh : '('=40
+                                            addExplicitKeyToExpr(R.id.fun_ln);
+                                            i = i + 3;
+                                            // Bkav TienNVh : set lai trường hợp hết lỗi cú pháp
+                                            mUnprocessedChars = null;
+                                        } else {
+                                            // Bkav TienNVh :  Trường hợp chèn ký tự vào giữa cụm
+                                            insertCharacters(formulatext);
+                                            return;
+                                        }
+                                    }
+                                    continue;
+
+                                default:
+                                    if ((byte) formulatext.charAt(i) == -78) {
+                                        addExplicitKeyToExpr(R.id.op_sqr);
+                                        i++;
+                                        continue;
+                                    }
+                            }
+                        }
                     }
+                } else {
+                    addExplicitKeyToExpr(KeyMaps.keyForDigVal((int) splitFormulatext));
+                    i++;
                 }
             }
         }
+    }
 
     // Bkav TienNVh : truong hop co ky tu chen o giua cum
     public void insertCharacters(String formulatext) {

@@ -22,7 +22,6 @@
     style="@style/PadLayoutStyle.Operator"
     android:background="#663a4852"
     app:rowCount="3"
-
     app:columnCount="2">
 
 

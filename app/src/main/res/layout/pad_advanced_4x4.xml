@@ -14,13 +14,13 @@
   See the License for the specific language governing permissions and
   limitations under the License.
   -->
-
+<!--Bkav TienNVh : Chế độ xoay ngang -->
 <androidx.gridlayout.widget.GridLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/pad_advanced"
     style="@style/PadLayoutStyle.Advanced"
-    android:background="#3b3c3f"
+    android:background="#A6464646"
    android:paddingTop="5dp"
     app:rowCount="4"
     app:columnCount="4">

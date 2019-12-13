@@ -14,13 +14,13 @@
   See the License for the specific language governing permissions and
   limitations under the License.
   -->
-
-<androidx.gridlayout.widget.GridLayout
+<!--Bkav TienNVH : Dùng cho chiều dọc -->
+<com.android.calculator2.BkavAdvancedLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/pad_advanced"
     style="@style/PadLayoutStyle.Advanced"
-    android:background="#3b3c3f"
+    android:background="@color/colorAdvanced"
     app:rowCount="5"
     app:columnCount="4"
     >
@@ -239,4 +239,4 @@
         app:layout_row="4"
         app:layout_column="3" />
 
-</androidx.gridlayout.widget.GridLayout>
+</com.android.calculator2.BkavAdvancedLayout>

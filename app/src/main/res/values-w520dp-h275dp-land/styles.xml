@@ -40,6 +40,8 @@
 
     <style name="PadButtonStyle.Operator">
         <item name="android:textSize">17dip</item>
+        <item name="android:fontFamily">sans-serif-light</item>
+        <item name="android:textStyle">normal</item>
     </style>
 
     <style name="PadButtonStyle.Operator.Text">

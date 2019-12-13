@@ -14,7 +14,7 @@
   See the License for the specific language governing permissions and
   limitations under the License.
   -->
-<RelativeLayout
+<com.android.calculator2.BkavHistoryLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
@@ -24,8 +24,8 @@
     android:clickable="false"
     android:focusable="false"
     android:id="@+id/relativeLayout_history"
-    android:background="#464646"
-    android:orientation="vertical">
+    android:background="@color/colorHistory"
+  android:orientation="vertical">
 
 <!--    <Toolbar-->
 <!--        android:id="@+id/history_toolbar"-->
@@ -83,4 +83,4 @@
         android:textAllCaps="false"
         android:textColor="#fff"
         android:textSize="25sp" />
-</RelativeLayout>
+</com.android.calculator2.BkavHistoryLayout>
