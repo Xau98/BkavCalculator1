@@ -539,6 +539,7 @@ public class Calculator extends Activity
     }
 
     Bitmap bitmapBlurHis = null;
+
     // Bkav TienNVh : Load tab History và giao diện của tab History và Advanced
     public void onRefeshSaveHistory() {
         // Bkav TienNVh : Các phép toàn được lưu vào lịch sử bằng SharedPreferences
@@ -770,7 +771,7 @@ public class Calculator extends Activity
                         } else {
                             switch (splitFormulatext) {
                                 case 's':
-                                    if (formulatext.length() > 2 && (byte) formulatext.charAt(i + 3) != 40) { // Bkav TienNVh :  '('= 40
+                                    if (formulatext.length() > 3 && (byte) formulatext.charAt(i + 3) != 40) { // Bkav TienNVh :  '('= 40
                                         if ((byte) formulatext.charAt(i + 3) == 123) {// Bkav TienNVh :  '-'=123
                                             addExplicitKeyToExpr(R.id.fun_arcsin);
                                             i = i + 6;
@@ -1886,35 +1887,53 @@ public class Calculator extends Activity
                 // Bkav TienNVh : Trường hop ngược lại thì dùng dấu ',' để phân cách
                 comma = ',';
             }
-
+            // Bkav TienNVh :
             if (formulaLength > 0) {
                 if (formulaText.charAt(formulaLength - 1) == comma) {
                     // Bkav TienNVh : Truong hop xoa dau ngan cach
                     formulaText.delete(formulaLength - 2, formulaLength);
                 } else {
-                    if (formulaText.charAt(formulaLength - 1) == '(') {
-                        if ((byte) formulaText.charAt(formulaLength - 3) == 123) { //Bkav TienNVh TH: arccos() , arcsin() ,arctan()
+                    // Bkav TienNVh : Trường hợp trước con trỏ là "("
+                    if (formulaLength > 0 && formulaText.charAt(formulaLength - 1) == '(') {
+                        // Bkav TienNVh :
+                        if (formulaLength > 2 && (byte) formulaText.charAt(formulaLength - 3) == 123) {
+                            //Bkav TienNVh TH: arccos() , arcsin() ,arctan()
                             formulaText.delete(formulaLength - 6, formulaLength);
                         } else {
-                            if ((byte) formulaText.charAt(formulaLength - 3) == 'l') { //Bkav TienNVh TH: ln()
+                            if (formulaLength > 2 && formulaText.charAt(formulaLength - 3) == 'l') {
+                                //Bkav TienNVh TH: ln()
                                 formulaText.delete(formulaLength - 3, formulaLength);
-                            } else {// Bkav TienNVh :  sin() , cos() , tan(), exp(), log()
-                                switch (formulaText.charAt(formulaLength - 4)) {
-                                    case 'c':
-                                    case 's':
-                                    case 't':
-                                    case 'e':
-                                    case 'l':
-                                        formulaText.delete(formulaLength - 4, formulaLength);
-                                        break;
-                                    default:// Bkav TienNVh :  Truong hop : '('
-                                        formulaText.delete(formulaLength - 1, formulaLength);
-                                        break;
+                            } else {
+                                // Bkav TienNVh :  sin() , cos() , tan(), exp(), log()
+                                if (formulaLength > 3) {
+                                    switch (formulaText.charAt(formulaLength - 4)) {
+                                        case 'l':
+                                            // Bkav TienNVh : TH:  xoa ln((
+                                            if(formulaText.charAt(formulaLength - 1)=='('){
+                                                formulaText.delete(formulaLength - 1, formulaLength);
+                                                break;
+                                            }
+                                        case 'c':
+                                        case 's':
+                                        case 't':
+                                        case 'e':
+                                            formulaText.delete(formulaLength - 4, formulaLength);
+                                            break;
+                                        default:// Bkav TienNVh :  Truong hop : '('
+                                            formulaText.delete(formulaLength - 1, formulaLength);
+                                            break;
+                                    }
+                                } else {
+                                    // Bkav TienNVh :  Truong hop : '('
+                                    formulaText.delete(formulaLength - 1, formulaLength);
                                 }
                             }
                         }
-                    } else
+                    } else{
+                        // Bkav TienNVh : Xoá các ký tự có độ dài = 1
                         formulaText.delete(formulaLength - 1, formulaLength);
+                    }
+
                 }
                 mEvaluator.clearMain();
                 addExplicitStringToExpr(formulaText.toString());
