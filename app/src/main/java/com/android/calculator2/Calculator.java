@@ -507,6 +507,41 @@ public class Calculator extends Activity
         // Bkav TienNVh : Lam trong suot status bar
         mToolbar = (Toolbar) findViewById(R.id.toolbarapp);
         makeStatusBarTransparent(mToolbar);
+        // Bkav TienNVh : Nhận sự kiện chạm vào
+        mFormulaText.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                v.onTouchEvent(event);
+                String text= mFormulaText.getText().toString();
+                int handle=mFormulaText.getSelectionStart();
+                if(text.length()>= handle+1) {
+            // Bkav TienNVh :  Truong hop con tro dung truoc cac ky tu :'o, i ,n, g,x,p,s,a' thi no dich chuyen con tro ve sau dau (.
+            // Bkav TienNVh : Trong truong hop
+                    if(text.charAt(handle)=='i'||text.charAt(handle)=='n'||text.charAt(handle)=='o'||text.charAt(handle)=='s'
+                            ||text.charAt(handle)=='a'||text.charAt(handle)=='g'||text.charAt(handle)=='x'||text.charAt(handle)=='p'||text.charAt(handle)=='('){
+                        if(text.charAt(handle)=='s'){
+                            if(handle>0&& text.charAt(handle-1)=='o'){
+                                for(int i=handle;i<text.length();i++){
+                                    if(text.charAt(i)=='('){
+                                        mFormulaText.setSelection(i+1);
+                                        break;
+                                    }
+                                }
+                            }
+                        }else {
+                            for(int i=handle;i<text.length();i++){
+                                if(text.charAt(i)=='('){
+                                    mFormulaText.setSelection(i+1);
+                                    break;
+                                }
+                            }
+                        }
+
+                    }
+                }
+                return true;
+            }
+        });
 
     }
 
