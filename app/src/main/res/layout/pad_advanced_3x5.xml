@@ -32,18 +32,20 @@
         app:layout_column="0" />
     <Button
         android:id="@+id/toggle_inv"
-        style="@style/PadButtonStyle.Advanced.Text"
+        style="@style/PadButtonStyle.Advanced"
         android:background="@drawable/pad_button_inverse_background"
         android:contentDescription="@string/desc_inv_off"
         android:text="@string/inv"
+        android:textAllCaps="true"
         app:layout_row="0"
         app:layout_column="1" />
 
     <Button
         android:id="@+id/toggle_mode"
-        style="@style/PadButtonStyle.Advanced.Text"
+        style="@style/PadButtonStyle.Advanced"
         android:contentDescription="@string/desc_switch_deg"
         android:text="@string/mode_deg"
+        android:textAllCaps="true"
         app:layout_row="0"
         app:layout_column="2" />
 
