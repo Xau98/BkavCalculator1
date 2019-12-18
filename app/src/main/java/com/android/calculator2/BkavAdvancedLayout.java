@@ -17,14 +17,17 @@ public class BkavAdvancedLayout extends GridLayout {
     public BkavAdvancedLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
+
+
+    /****************************** Bkav **************************/
+
     private Bitmap mBitmap;
-    private int mPostion;
     private float mOffset;
     private int mOffsetPixel;
+    private int mWidthDistanceRight;
 
-    public void setInforScrollViewpager(Bitmap bitmap, int i, float v, int i1) {
+    public void setInforScrollViewpager(Bitmap bitmap, float v, int i1) {
         this.mBitmap = bitmap;
-        this.mPostion = i;
         this.mOffset = v;
         this.mOffsetPixel = i1;
 
@@ -32,6 +35,11 @@ public class BkavAdvancedLayout extends GridLayout {
         requestLayout();
     }
 
+    /**
+     * Bkav Phongngb
+     * Day la ham set background advanced khi keo den dau setBackground tuong ung den do
+     * @param canvas
+     */
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
@@ -39,7 +47,9 @@ public class BkavAdvancedLayout extends GridLayout {
         if (mBitmap != null) {
             Rect dest = new Rect(0, 0, getWidth(), getHeight());
             mPaint.setFilterBitmap(true);
-            canvas.translate((int) (mOffset * getWidth()), 0);
+
+            int delta = getWidth() - (int) (mOffsetPixel - mWidthDistanceRight);
+            canvas.translate(-delta + mOffset * mWidthDistanceRight, 0);
             canvas.drawBitmap(mBitmap, null, dest, mPaint);
         }
     }

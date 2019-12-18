@@ -492,8 +492,8 @@ public class Calculator extends Activity
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                // Bkav TienNVh :  set background cho tab History
                 Bitmap bitmap = convertViewToBitmap(mDragLayout);
+                // Bkav TienNVh :  set background cho tab History
                 BlurManager blur = new BlurManager();
                 Bitmap cutBitmapHistory = cutImageToBackgroundHistory(bitmap);
                 Bitmap mContainerFilter = Bitmap.createBitmap(cutBitmapHistory.getWidth(), cutBitmapHistory.getHeight(),
@@ -520,90 +520,100 @@ public class Calculator extends Activity
                                 // Bkav TienNVh :  position =0 là tab history
                                 mRelativeLayoutHistory.setInforScrollViewpager(bitmapBlurHis,
                                         position, positionOffset, positionOffsetPixels);
-                            } else if (position == 2) {
-                                // Bkav TienNVh : position =2 la tab Advanced
-                                if (orientation == Configuration.ORIENTATION_PORTRAIT) {
-                                    if (bitmapBlurAd != null) {
-                                        mCalculatorPadLayout = (BkavAdvancedLayout) findViewById(R.id.pad_advanced);
-                                        mCalculatorPadLayout.setInforScrollViewpager(bitmapBlurAd
-                                                , position, positionOffset, positionOffsetPixels);
+                            } else {
+                                if (position == 1) {
+                                    if (orientation == Configuration.ORIENTATION_PORTRAIT) {
+                                        if (bitmapBlurAd != null) {
+                                            mCalculatorPadLayout = (BkavAdvancedLayout) findViewById(R.id.pad_advanced);
+                                            mCalculatorPadLayout.setInforScrollViewpager(bitmapBlurAd, positionOffset, positionOffsetPixels);
+                                        }
                                     }
                                 }
-                            }
                         }
+                    }
 
-                        @Override
-                        public void onPageSelected(int i) {
-                            //Bkav ThanhNgD: Goi lai onPageSelected() de nhan su kien khi changed page
-                            // de xu li bug lich su trong' khi o page 0 van~ click dc button 123... cua page 1
-                            mPadViewPager.getmOnPageChangeListener().onPageSelected(i);
-                        }
+                    @Override
+                    public void onPageSelected ( int i){
+                        //Bkav ThanhNgD: Goi lai onPageSelected() de nhan su kien khi changed page
+                        // de xu li bug lich su trong' khi o page 0 van~ click dc button 123... cua page 1
+                        mPadViewPager.getmOnPageChangeListener().onPageSelected(i);
+                    }
 
-                        @Override
-                        public void onPageScrollStateChanged(int i) {
-                        }
-                    });
-                }
-            }
-        }, 100);
-
-        //Bkav TienNVh : Ko cho click xuyen len lich su
-        findViewById(R.id.relativeLayout_history).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-            }
-        });
-
-        // Bkav TienNVh : Khi xoay hide button more , set height cho button Xoa
-        if (orientation != Configuration.ORIENTATION_PORTRAIT) {
-            findViewById(R.id.bt_more).setVisibility(View.GONE);
-            findViewById(R.id.delHistory).getLayoutParams().height = 150;
-        }
-
-        // Bkav TienNVh : Set font number
-        setFontNumber();
-
-        // Bkav TienNVh : Lam trong suot status bar
-        mToolbar = (Toolbar) findViewById(R.id.toolbarapp);
-        makeStatusBarTransparent(mToolbar);
-        // Bkav TienNVh : Nhận sự kiện chạm vào
-        mFormulaText.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                v.onTouchEvent(event);
-                String text= mFormulaText.getText().toString();
-                int handle=mFormulaText.getSelectionStart();
-                if(text.length()>= handle+1) {
-            // Bkav TienNVh :  Truong hop con tro dung truoc cac ky tu :'o, i ,n, g,x,p,s,a' thi no dich chuyen con tro ve sau dau (.
-            // Bkav TienNVh : Trong truong hop
-                    if(text.charAt(handle)=='i'||text.charAt(handle)=='n'||text.charAt(handle)=='o'||text.charAt(handle)=='s'
-                            ||text.charAt(handle)=='a'||text.charAt(handle)=='g'||text.charAt(handle)=='x'||text.charAt(handle)=='p'||text.charAt(handle)=='('){
-                        if(text.charAt(handle)=='s'){
-                            if(handle>0&& text.charAt(handle-1)=='o'){
-                                for(int i=handle;i<text.length();i++){
-                                    if(text.charAt(i)=='('){
-                                        mFormulaText.setSelection(i+1);
-                                        break;
-                                    }
-                                }
-                            }
-                        }else {
-                            for(int i=handle;i<text.length();i++){
-                                if(text.charAt(i)=='('){
-                                    mFormulaText.setSelection(i+1);
-                                    break;
-                                }
-                            }
-                        }
+                    @Override
+                    public void onPageScrollStateChanged ( int i){
 
                     }
-                }
-                return true;
+                });
             }
-        });
+        }
+    },100);
 
+    //Bkav TienNVh : Ko cho click xuyen len lich su
+    findViewById(R.id.relativeLayout_history).
+
+    setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick (View view){
+
+        }
+    });
+
+    // Bkav TienNVh : Khi xoay hide button more , set height cho button Xoa
+        if(orientation !=Configuration.ORIENTATION_PORTRAIT)
+
+    {
+        findViewById(R.id.bt_more).setVisibility(View.GONE);
+        findViewById(R.id.delHistory).getLayoutParams().height = 150;
     }
+
+    // Bkav TienNVh : Set font number
+    setFontNumber();
+
+    // Bkav TienNVh : Lam trong suot status bar
+    mToolbar =(Toolbar)
+
+    findViewById(R.id.toolbarapp);
+
+    makeStatusBarTransparent(mToolbar);
+    // Bkav TienNVh : Nhận sự kiện chạm vào
+        mFormulaText.setOnTouchListener(new View.OnTouchListener()
+
+    {
+        @Override
+        public boolean onTouch (View v, MotionEvent event){
+        v.onTouchEvent(event);
+        String text = mFormulaText.getText().toString();
+        int handle = mFormulaText.getSelectionStart();
+        if (text.length() >= handle + 1) {
+            // Bkav TienNVh :  Truong hop con tro dung truoc cac ky tu :'o, i ,n, g,x,p,s,a' thi no dich chuyen con tro ve sau dau (.
+            // Bkav TienNVh : Trong truong hop
+            if (text.charAt(handle) == 'i' || text.charAt(handle) == 'n' || text.charAt(handle) == 'o' || text.charAt(handle) == 's'
+                    || text.charAt(handle) == 'a' || text.charAt(handle) == 'g' || text.charAt(handle) == 'x' || text.charAt(handle) == 'p' || text.charAt(handle) == '(') {
+                if (text.charAt(handle) == 's') {
+                    if (handle > 0 && text.charAt(handle - 1) == 'o') {
+                        for (int i = handle; i < text.length(); i++) {
+                            if (text.charAt(i) == '(') {
+                                mFormulaText.setSelection(i + 1);
+                                break;
+                            }
+                        }
+                    }
+                } else {
+                    for (int i = handle; i < text.length(); i++) {
+                        if (text.charAt(i) == '(') {
+                            mFormulaText.setSelection(i + 1);
+                            break;
+                        }
+                    }
+                }
+
+            }
+        }
+        return true;
+    }
+    });
+
+}
 
     // Bkav TienNVh :them font chu cho number
     void setFontNumber() {
@@ -741,7 +751,7 @@ public class Calculator extends Activity
         DisplayMetrics displayMetrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         int mScreenHeight = displayMetrics.heightPixels;
-        int heightChild = findViewById(R.id.relativeLayout_history).getHeight();
+        int heightChild = findViewById(R.id.pad_advanced).getHeight();
         Bitmap cutBitmap = null;
         if (bitmap != null) {
             cutBitmap = Bitmap.createBitmap(bitmap, (int) (bitmap.getWidth() * 0.2),
@@ -1949,7 +1959,7 @@ public class Calculator extends Activity
                                     switch (formulaText.charAt(formulaLength - 4)) {
                                         case 'l':
                                             // Bkav TienNVh : TH:  xoa ln((
-                                            if(formulaText.charAt(formulaLength - 2)=='('){
+                                            if (formulaText.charAt(formulaLength - 2) == '(') {
                                                 formulaText.delete(formulaLength - 1, formulaLength);
                                                 break;
                                             }
@@ -1969,7 +1979,7 @@ public class Calculator extends Activity
                                 }
                             }
                         }
-                    } else{
+                    } else {
                         // Bkav TienNVh : Xoá các ký tự có độ dài = 1
                         formulaText.delete(formulaLength - 1, formulaLength);
                     }
@@ -2484,7 +2494,7 @@ public class Calculator extends Activity
         stopActionModeOrContextMenu();
     }
 
-    public interface OnDisplayMemoryOperationsListener {
-        boolean shouldDisplayMemory();
-    }
+public interface OnDisplayMemoryOperationsListener {
+    boolean shouldDisplayMemory();
+}
 }
