@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<com.android.calculator2.EqualsImageButton xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/eq"
+    style="@style/PadButtonStyle.Operator"
+    android:layout_width="match_parent"
+    android:layout_height="98dp"
+    android:background="#FFd66039"
+    android:contentDescription="@string/desc_eq"
+    android:onClick="onButtonClick"
+    android:paddingRight="35dp"
+    android:src="@drawable/equals_btn"
+    android:textSize="27sp" />

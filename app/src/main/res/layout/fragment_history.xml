@@ -49,7 +49,7 @@
         android:fontFamily="sans-serif-thin"
         android:layout_above="@+id/delHistory"
         android:elevation="13dp"
-        android:paddingBottom="4dp"
+        android:paddingBottom="23dp"
         app:layoutManager="LinearLayoutManager"
         app:reverseLayout="true"
         />

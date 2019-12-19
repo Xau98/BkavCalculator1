@@ -63,7 +63,7 @@ public class CalculatorPadViewPager extends ViewPager {
                     return 0.385f;
                 }
                 else {
-                    return 0.705f / 0.9f;
+                    return 0.717f / 0.9f;
                 }
             }
             return 1.0f;

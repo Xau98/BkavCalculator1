@@ -488,8 +488,7 @@ public class Calculator extends Activity
         onRefeshSaveHistory();
 
         final int orientation = getResources().getConfiguration().orientation;
-        Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
+        mDragLayout.post(new Runnable() {
             @Override
             public void run() {
                 Bitmap bitmap = convertViewToBitmap(mDragLayout);
@@ -529,91 +528,86 @@ public class Calculator extends Activity
                                         }
                                     }
                                 }
+                            }
                         }
-                    }
 
-                    @Override
-                    public void onPageSelected ( int i){
-                        //Bkav ThanhNgD: Goi lai onPageSelected() de nhan su kien khi changed page
-                        // de xu li bug lich su trong' khi o page 0 van~ click dc button 123... cua page 1
-                        mPadViewPager.getmOnPageChangeListener().onPageSelected(i);
-                    }
+                        @Override
+                        public void onPageSelected(int i) {
+                            //Bkav ThanhNgD: Goi lai onPageSelected() de nhan su kien khi changed page
+                            // de xu li bug lich su trong' khi o page 0 van~ click dc button 123... cua page 1
+                            mPadViewPager.getmOnPageChangeListener().onPageSelected(i);
+                        }
 
+                        @Override
+                        public void onPageScrollStateChanged(int i) {
+
+                        }
+                    });
+                }
+            }
+        });
+        //Bkav TienNVh : Ko cho click xuyen len lich su
+        findViewById(R.id.relativeLayout_history).
+
+                setOnClickListener(new View.OnClickListener() {
                     @Override
-                    public void onPageScrollStateChanged ( int i){
+                    public void onClick(View view) {
 
                     }
                 });
-            }
+
+        // Bkav TienNVh : Khi xoay hide button more , set height cho button Xoa
+        if (orientation != Configuration.ORIENTATION_PORTRAIT) {
+            findViewById(R.id.bt_more).setVisibility(View.GONE);
+            findViewById(R.id.delHistory).getLayoutParams().height = 150;
         }
-    },100);
 
-    //Bkav TienNVh : Ko cho click xuyen len lich su
-    findViewById(R.id.relativeLayout_history).
+        // Bkav TienNVh : Set font number
+        setFontNumber();
 
-    setOnClickListener(new View.OnClickListener() {
-        @Override
-        public void onClick (View view){
+        // Bkav TienNVh : Lam trong suot status bar
+        mToolbar = (Toolbar)
 
-        }
-    });
+                findViewById(R.id.toolbarapp);
 
-    // Bkav TienNVh : Khi xoay hide button more , set height cho button Xoa
-        if(orientation !=Configuration.ORIENTATION_PORTRAIT)
-
-    {
-        findViewById(R.id.bt_more).setVisibility(View.GONE);
-        findViewById(R.id.delHistory).getLayoutParams().height = 150;
-    }
-
-    // Bkav TienNVh : Set font number
-    setFontNumber();
-
-    // Bkav TienNVh : Lam trong suot status bar
-    mToolbar =(Toolbar)
-
-    findViewById(R.id.toolbarapp);
-
-    makeStatusBarTransparent(mToolbar);
-    // Bkav TienNVh : Nhận sự kiện chạm vào
-        mFormulaText.setOnTouchListener(new View.OnTouchListener()
-
-    {
-        @Override
-        public boolean onTouch (View v, MotionEvent event){
-        v.onTouchEvent(event);
-        String text = mFormulaText.getText().toString();
-        int handle = mFormulaText.getSelectionStart();
-        if (text.length() >= handle + 1) {
-            // Bkav TienNVh :  Truong hop con tro dung truoc cac ky tu :'o, i ,n, g,x,p,s,a' thi no dich chuyen con tro ve sau dau (.
-            // Bkav TienNVh : Trong truong hop
-            if (text.charAt(handle) == 'i' || text.charAt(handle) == 'n' || text.charAt(handle) == 'o' || text.charAt(handle) == 's'
-                    || text.charAt(handle) == 'a' || text.charAt(handle) == 'g' || text.charAt(handle) == 'x' || text.charAt(handle) == 'p' || text.charAt(handle) == '(') {
-                if (text.charAt(handle) == 's') {
-                    if (handle > 0 && text.charAt(handle - 1) == 'o') {
-                        for (int i = handle; i < text.length(); i++) {
-                            if (text.charAt(i) == '(') {
-                                mFormulaText.setSelection(i + 1);
-                                break;
+        makeStatusBarTransparent(mToolbar);
+        // Bkav TienNVh : Nhận sự kiện chạm vào
+        mFormulaText.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                v.onTouchEvent(event);
+                String text = mFormulaText.getText().toString();
+                int handle = mFormulaText.getSelectionStart();
+                if (text.length() >= handle + 1) {
+                    // Bkav TienNVh :  Truong hop con tro dung truoc cac ky tu :'o, i ,n, g,x,p,s,a' thi no dich chuyen con tro ve sau dau (.
+                    // Bkav TienNVh : Trong truong hop
+                    if (text.charAt(handle) == 'i' || text.charAt(handle) == 'n' || text.charAt(handle) == 'o' || text.charAt(handle) == 's'
+                            || text.charAt(handle) == 'a' || text.charAt(handle) == 'g' || text.charAt(handle) == 'x' || text.charAt(handle) == 'p' || text.charAt(handle) == '(') {
+                        if (text.charAt(handle) == 's') {
+                            if (handle > 0 && text.charAt(handle - 1) == 'o') {
+                                for (int i = handle; i < text.length(); i++) {
+                                    if (text.charAt(i) == '(') {
+                                        mFormulaText.setSelection(i + 1);
+                                        break;
+                                    }
+                                }
+                            }
+                        } else {
+                            for (int i = handle; i < text.length(); i++) {
+                                if (text.charAt(i) == '(') {
+                                    mFormulaText.setSelection(i + 1);
+                                    break;
+                                }
                             }
                         }
-                    }
-                } else {
-                    for (int i = handle; i < text.length(); i++) {
-                        if (text.charAt(i) == '(') {
-                            mFormulaText.setSelection(i + 1);
-                            break;
-                        }
+
                     }
                 }
-
+                return true;
             }
-        }
-        return true;
-    }
-    });
+        });
 
-}
+    }
 
     // Bkav TienNVh :them font chu cho number
     void setFontNumber() {
@@ -716,11 +710,16 @@ public class Calculator extends Activity
 
     //    Bkav Phongngb convert view to bitmap
     private Bitmap convertViewToBitmap(View view) {
-        if (view != null)
-            view.setDrawingCacheEnabled(true);
-        view.buildDrawingCache();
-        Bitmap bm = view.getDrawingCache();
-        return bm;
+//        if (view != null)
+//            view.setDrawingCacheEnabled(true);
+//        view.buildDrawingCache();
+//        Bitmap bm = view.getDrawingCache();
+//        return bm;
+        Bitmap b = Bitmap.createBitmap(view.getWidth(), view.getHeight(), Bitmap.Config.ARGB_8888);
+        Canvas c = new Canvas(b);
+        view.layout(view.getLeft(), view.getTop(), view.getRight(), view.getBottom());
+        view.draw(c);
+        return b;
     }
 
     //Bkav TienNVh : Cut bitmap phan nam duoi history
@@ -2494,7 +2493,7 @@ public class Calculator extends Activity
         stopActionModeOrContextMenu();
     }
 
-public interface OnDisplayMemoryOperationsListener {
-    boolean shouldDisplayMemory();
-}
+    public interface OnDisplayMemoryOperationsListener {
+        boolean shouldDisplayMemory();
+    }
 }
