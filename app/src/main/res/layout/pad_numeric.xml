@@ -21,8 +21,8 @@
     android:id="@+id/pad_numeric"
     style="@style/PadLayoutStyle.Numeric"
     app:rowCount="4"
-
     android:paddingBottom="0dp"
+    android:paddingRight="0dp"
     app:columnCount="3">
 
     <Button
@@ -108,7 +108,9 @@
         android:contentDescription="@string/desc_del"
         android:paddingRight="2dp"
         android:text="@string/del"
-        android:layout_marginLeft="9dp"
+        android:layout_marginLeft="0dp"
+        android:layout_marginTop="0dp"
+        android:paddingLeft="9dp"
         android:fontFamily="sans-serif-thin"
         android:textSize="21dp"
         app:layout_row="3"
@@ -121,7 +123,9 @@
         android:textAllCaps="true"
         android:text="@string/clr"
         android:paddingRight="2dp"
-        android:layout_marginLeft="9dp"
+        android:layout_marginLeft="0dp"
+        android:layout_marginTop="0dp"
+        android:paddingLeft="9dp"
         android:fontFamily="sans-serif-thin"
         android:textSize="21dp"
         android:visibility="gone"

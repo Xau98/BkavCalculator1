@@ -34,8 +34,8 @@
         <item name="android:fontFamily">sans-serif-thin</item>
         <item name="android:includeFontPadding">false</item>
         <item name="android:background">@drawable/pad_button_advanced_background</item>
-        <item name="android:textSize">65dip</item>
-        <item name="android:layout_marginLeft">9dp</item>
+        <item name="android:textSize">66.67dip</item>
+        <item name="android:paddingLeft">9dp</item>
     </style>
 
     <style name="PadButtonStyle.Numeric.Equals">
@@ -47,8 +47,6 @@
     </style>
 
     <style name="PadButtonStyle.Operator">
-        <item name="android:paddingBottom">5dp</item>
-        <item name="android:layout_marginTop">3dp</item>
         <item name="android:textSize">27dip</item>
         <item name="android:fontFamily">sans-serif-light</item>
         <item name="android:textStyle">normal</item>
@@ -70,7 +68,7 @@
 
     <style name="PadLayoutStyle.Numeric">
         <item name="android:layout_width">0dip</item>
-        <item name="android:layout_weight">11.5</item>
+        <item name="android:layout_weight">11.25</item>
         <item name="android:paddingTop">0dip</item>
         <item name="android:paddingBottom">20dip</item>
     </style>
