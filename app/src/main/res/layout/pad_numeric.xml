@@ -106,13 +106,10 @@
         android:id="@+id/del"
         style="@style/PadButtonStyle.Operator.Text"
         android:contentDescription="@string/desc_del"
-        android:paddingRight="2dp"
         android:text="@string/del"
         android:layout_marginLeft="0dp"
         android:layout_marginTop="0dp"
-        android:paddingLeft="9dp"
         android:fontFamily="sans-serif-thin"
-        android:textSize="21dp"
         app:layout_row="3"
         app:layout_column="2" />
 
@@ -122,12 +119,9 @@
         android:contentDescription="@string/desc_clr"
         android:textAllCaps="true"
         android:text="@string/clr"
-        android:paddingRight="2dp"
         android:layout_marginLeft="0dp"
         android:layout_marginTop="0dp"
-        android:paddingLeft="9dp"
         android:fontFamily="sans-serif-thin"
-        android:textSize="21dp"
         android:visibility="gone"
         app:layout_row="3"
         app:layout_column="2" />

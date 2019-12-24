@@ -35,7 +35,6 @@
         <item name="android:includeFontPadding">false</item>
         <item name="android:background">@drawable/pad_button_advanced_background</item>
         <item name="android:textSize">66.67dip</item>
-        <item name="android:paddingLeft">9dp</item>
     </style>
 
     <style name="PadButtonStyle.Numeric.Equals">
@@ -55,7 +54,7 @@
     <style name="PadButtonStyle.Operator.Text">
         <item name="android:layout_marginLeft">3dp</item>
         <item name="android:textAllCaps">true</item>
-        <item name="android:textSize">20dip</item>
+        <item name="android:textSize">21dip</item>
     </style>
 
     <style name="PadLayoutStyle.Advanced">
@@ -68,8 +67,9 @@
 
     <style name="PadLayoutStyle.Numeric">
         <item name="android:layout_width">0dip</item>
-        <item name="android:layout_weight">11.25</item>
+        <item name="android:layout_weight">11.7</item>
         <item name="android:paddingTop">0dip</item>
+        <item name="android:gravity">center</item>
         <item name="android:paddingBottom">20dip</item>
     </style>
 
