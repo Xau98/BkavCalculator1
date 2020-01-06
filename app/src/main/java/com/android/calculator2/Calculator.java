@@ -238,7 +238,15 @@ public class Calculator extends Activity
                         mEvaluator.appendExpr(mEvaluator.getSavedIndex());
                         redisplayAfterFormulaChange();
                     } else {
-                        addChars(item.coerceToText(Calculator.this).toString(), false);
+                        // Bkav TienNVh : lay du lieu copy
+                        String textNew = item.coerceToText(Calculator.this).toString() + "";
+                        String result = mFormulaText.getText() + textNew;
+                        // Bkav TienNVh : Xoa cac phep tinh hiện tại
+                        mEvaluator.clearMain();
+                        // Bkav TienNVh : add cac phep tính mới
+                        addChars(result, false);
+                       // Bkav TienNVh : thay doi vi tri con tro
+                       changePostionCursor();
                     }
                     return true;
                 }

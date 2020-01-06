@@ -350,9 +350,12 @@ public class CalculatorFormula extends AlignedTextView implements MenuItem.OnMen
     }
 
     private void paste() {
+
+
         final ClipData primaryClip = mClipboardManager.getPrimaryClip();
         if (primaryClip != null && mOnContextMenuClickListener != null) {
             mOnContextMenuClickListener.onPaste(primaryClip);
+
         }
     }
 
@@ -363,6 +366,7 @@ public class CalculatorFormula extends AlignedTextView implements MenuItem.OnMen
                 mOnContextMenuClickListener.onMemoryRecall();
                 return true;
             case R.id.menu_paste:
+
                 paste();
                 return true;
             default:
