@@ -574,11 +574,7 @@ public class Calculator extends Activity
         setFontNumber();
 
         // Bkav TienNVh : Lam trong suot status bar
-        mToolbar = (Toolbar)
-
-                findViewById(R.id.toolbarapp);
-
-        makeStatusBarTransparent(mToolbar);
+        overlapStatusbar();
         // Bkav TienNVh : Nhận sự kiện chạm vào
         mFormulaText.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -741,7 +737,8 @@ public class Calculator extends Activity
         Bitmap cutBitmap = null;
         int orientation = getResources().getConfiguration().orientation;
         if (bitmap != null && orientation == Configuration.ORIENTATION_PORTRAIT) {
-            cutBitmap = Bitmap.createBitmap(bitmap, 0, mScreenHeight - heightChild,
+            int y = mScreenHeight - heightChild;
+            cutBitmap = Bitmap.createBitmap(bitmap, 0, y + heightChild > bitmap.getHeight() ? bitmap.getHeight() - heightChild : y,
                     (int) (mScreenWidth * 0.8), heightChild);
 
         } else {
@@ -1006,35 +1003,15 @@ public class Calculator extends Activity
 
     }
 
-    /**
-     * Bkav TienNVh: ham thuc hien lam trong suot status bar
-     */
-    private void makeStatusBarTransparent(Toolbar toolbar) {
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            Window w = getWindow(); // in Activity's onCreate() for instance
-            w.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
-        }
-
-        // AnhBM: cho toolbar padding 1 doan dung bang statusbar height,
-        // viec setpadding ko dung view co the lam hong animation tab
-        // Retrieve the AppCompact Toolbar
-        //
-        View view = findViewById(R.id.toolbarapp);
-        view.setPadding(0, getStatusBarHeight(), 0, 0);
-    }
-
-    /**
-     * AnhBM: tim chieu cao cua status bar
-     */
-    private int getStatusBarHeight() {
-
-        int result = 0;
-        int resourceId = getResources().getIdentifier("status_bar_height", "dimen", "android");
-        if (resourceId > 0) {
-            result = getResources().getDimensionPixelSize(resourceId);
-        }
-        return result;
+    //Bkav QuangNDb ham de len statusbar
+    private void overlapStatusbar() {
+        //Bkav QuangNDb overlap statusbar
+        Window window = getWindow();
+        window.getDecorView().setSystemUiVisibility(
+                View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                        | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
+        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        window.setStatusBarColor(Color.TRANSPARENT);
     }
 
     // Bkav TienNVh : Xu ly dau phay theo ngon ngu
@@ -1378,6 +1355,18 @@ public class Calculator extends Activity
         setState(CalculatorState.INPUT);
     }
 
+    /**
+     * Add the given button id to input expression, assuming it was explicitly
+     * typed/touched.
+     * We perform slightly more aggressive correction than in pasted expressions.
+     */
+    private void addExplicitKeyToExpr(int id) {
+        if (mCurrentState == CalculatorState.INPUT && id == R.id.op_sub) {
+            mEvaluator.getExpr(Evaluator.MAIN_INDEX).removeTrailingAdditiveOperators();
+        }
+        addKeyToExpr(id);
+    }
+
     // Add the given button id to input expression.
     // If appropriate, clear the expression before doing so.
     private void addKeyToExpr(int id) {
@@ -1389,18 +1378,6 @@ public class Calculator extends Activity
         if (!mEvaluator.append(id)) {
             // TODO: Some user visible feedback?
         }
-    }
-
-    /**
-     * Add the given button id to input expression, assuming it was explicitly
-     * typed/touched.
-     * We perform slightly more aggressive correction than in pasted expressions.
-     */
-    private void addExplicitKeyToExpr(int id) {
-        if (mCurrentState == CalculatorState.INPUT && id == R.id.op_sub) {
-            mEvaluator.getExpr(Evaluator.MAIN_INDEX).removeTrailingAdditiveOperators();
-        }
-        addKeyToExpr(id);
     }
 
     public void evaluateInstantIfNecessary() {

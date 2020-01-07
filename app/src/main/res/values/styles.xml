@@ -139,9 +139,8 @@
     </style>
     <!-- //Bkav AnhBM: Sua lai de hieu ung mo ra co xam xam den-->
     <style name="CalculatorTheme" parent="@android:style/Theme.Material.Light.NoActionBar">
-        <item name="android:colorPrimary">@color/calculator_accent_color</item>
         <!--<item name="android:navigationBarColor">@android:color/black</item>-->
-        <item name="android:statusBarColor">@color/calculator_accent_color</item>
+<!--        <item name="android:statusBarColor">@color/calculator_accent_color</item>-->
         <item name="android:windowContentOverlay">@null</item>
         <item name="android:colorBackground">@color/default_background</item>
 
