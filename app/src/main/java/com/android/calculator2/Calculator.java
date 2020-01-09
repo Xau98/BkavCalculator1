@@ -800,6 +800,7 @@ public class Calculator extends Activity
                         if (i < formulatext.length() - 2 && (byte) formulatext.charAt(i + 2) == 112) {// Bkav TienNVh : 'p'=112
                             // Bkav TienNVh : Trường hợp ký tự là exp(
                             addExplicitKeyToExpr(R.id.fun_exp);
+                            mUnprocessedChars = null;
                             // Bkav TienNVh : tăng lên 4 vì độ dài chuỗi exp( là 4
                             i = i + 4;
                             continue;
@@ -816,6 +817,7 @@ public class Calculator extends Activity
                                 return;
                             } else {
                                 addExplicitKeyToExpr(KeyMaps.keyForChar(splitFormulatext));
+                                mUnprocessedChars = null;
                                 i++;
                                 continue;
                             }
@@ -823,6 +825,7 @@ public class Calculator extends Activity
                     } else {
                         if ((byte) splitFormulatext == 26) {
                             addExplicitKeyToExpr(R.id.op_sqrt);
+                            mUnprocessedChars = null;
                             i++;
                             continue;
                         } else {
@@ -831,6 +834,7 @@ public class Calculator extends Activity
                                     if (formulatext.length() > i+3 && (byte) formulatext.charAt(i + 3) != 40) { // Bkav TienNVh :  '('= 40
                                         if ((byte) formulatext.charAt(i + 3) == 123) {// Bkav TienNVh :  '-'=123
                                             addExplicitKeyToExpr(R.id.fun_arcsin);
+                                            mUnprocessedChars = null;
                                             i = i + 6;
                                         } else {
                                             // Bkav TienNVh :  Trường hợp chèn ký tự vào giữa cụm
@@ -1803,6 +1807,7 @@ public class Calculator extends Activity
     }
 
     private void onEquals() {
+        addExplicitStringToExpr(mFormulaText.getText()+"");
         // Ignore if in non-INPUT state, or if there are no operators.
         if (mCurrentState == CalculatorState.INPUT) {
             if (haveUnprocessed()) {
@@ -1854,11 +1859,16 @@ public class Calculator extends Activity
         if (cancelIfEvaluating(false)) return;
         setState(CalculatorState.INPUT);
         if (haveUnprocessed()) {
+            mUnprocessedChars=mFormulaText.getText()+"";
             Log.d("TienNVh", "onDelete: "+mFormulaText.getSelectionEnd());
                 int position=mUnprocessedChars.length()-mFormulaText.getSelectionEnd();
             Log.d("TienNVh", "onDelete 895: "+position);
+            mPostionCursorToRight = mUnprocessedChars.length() - mFormulaText.getSelectionEnd();
+            if (mFormulaText.getSelectionEnd()>=1 && mUnprocessedChars.length()>0)
             mUnprocessedChars = mUnprocessedChars.substring(0,mFormulaText.getSelectionEnd()-1)+mUnprocessedChars.substring(mFormulaText.getSelectionEnd());
+
             addExplicitStringToExpr(mUnprocessedChars);
+
             Log.d("TienNVh", "onDelete 8989: "+mUnprocessedChars);
            changePostionCursor();
         } else {
