@@ -767,6 +767,8 @@ public class Calculator extends Activity
 
     // Bkav TienNVh : Chuyen ky tu sang ID
     public void addExplicitStringToExpr(String formulatext) {
+        mEvaluator.clearMain();
+        Log.d("TienNVh", "addExplicitStringToExpr 78: "+formulatext);
         if (!formulatext.equals("")) {
             for (int i = 0; i < formulatext.length(); ) {
                 // Bkav TienNVh : Lay tung ky tu trong chuoi
@@ -780,12 +782,15 @@ public class Calculator extends Activity
                         // Bkav TienNVh : Trường hợp dấu phẩy
                         addExplicitKeyToExpr(R.id.dec_point);
                         i++;
+                        mUnprocessedChars = null;
                         continue;
                     } else {
                         // Bkav TienNVh : Trường hợp dấu ngăn cách
                         i++;
+                        mUnprocessedChars = null;
                         continue;
                     }
+
                 }
                 // Bkav TienNVh :  Kiểm tra ký tự có phải số không ?
                 if (KeyMaps.keyForDigVal((int) splitFormulatext) == View.NO_ID) {
@@ -823,7 +828,7 @@ public class Calculator extends Activity
                         } else {
                             switch (splitFormulatext) {
                                 case 's':
-                                    if (formulatext.length() > 3 && (byte) formulatext.charAt(i + 3) != 40) { // Bkav TienNVh :  '('= 40
+                                    if (formulatext.length() > i+3 && (byte) formulatext.charAt(i + 3) != 40) { // Bkav TienNVh :  '('= 40
                                         if ((byte) formulatext.charAt(i + 3) == 123) {// Bkav TienNVh :  '-'=123
                                             addExplicitKeyToExpr(R.id.fun_arcsin);
                                             i = i + 6;
@@ -847,7 +852,7 @@ public class Calculator extends Activity
                                     }
                                     continue;
                                 case 'c':
-                                    if ((byte) formulatext.charAt(i + 3) != 40) {
+                                    if (formulatext.length() > i+3 && (byte) formulatext.charAt(i + 3) != 40) {
                                         if ((byte) formulatext.charAt(i + 3) == 94) {// Bkav TienNVh :  '-'=94
                                             addExplicitKeyToExpr(R.id.fun_arccos);
                                             i = i + 6;
@@ -866,7 +871,7 @@ public class Calculator extends Activity
                                     }
                                     continue;
                                 case 't':
-                                    if ((byte) formulatext.charAt(i + 3) != 40) {
+                                    if (formulatext.length() > i+3 && (byte) formulatext.charAt(i + 3) != 40) {
                                         if ((byte) formulatext.charAt(i + 3) == 94) {// Bkav TienNVh :  '-'=94
                                             addExplicitKeyToExpr(R.id.fun_arctan);
                                             i = i + 6;
@@ -908,7 +913,12 @@ public class Calculator extends Activity
                                     if ((byte) formulatext.charAt(i) == -78) {
                                         addExplicitKeyToExpr(R.id.op_sqr);
                                         i++;
+                                        mUnprocessedChars = null;
                                         continue;
+                                    }else {
+                                        mEvaluator.clearMain();
+                                        mUnprocessedChars=formulatext;
+                                        return;
                                     }
                             }
                         }
@@ -916,6 +926,7 @@ public class Calculator extends Activity
                 } else {
                     addExplicitKeyToExpr(KeyMaps.keyForDigVal((int) splitFormulatext));
                     i++;
+                    mUnprocessedChars = null;
                 }
             }
         }
@@ -1843,66 +1854,13 @@ public class Calculator extends Activity
         if (cancelIfEvaluating(false)) return;
         setState(CalculatorState.INPUT);
         if (haveUnprocessed()) {
-            // Bkav TienNVh : Trường hợp "Biểu thức không hợp lệ"
-            //mUnprocessedChars = mUnprocessedChars.substring(mFormulaText.getSelectionEnd(), mUnprocessedChars.length() - 1);
-            final Editable formulaText = mFormulaText.getEditableText();
-            int postionCursor = mFormulaText.getSelectionEnd();
-            mPostionCursorToRight = formulaText.length() - postionCursor;
-            final int formulaLength = formulaText.length() - mPostionCursorToRight;
-            String locale = Locale.getDefault().toString();
-            char comma;
-            // Bkav TienNVh : Xet truong hop:  dau phay tuy thuoc vao ngon ngu
-            if (locale.equals("vi_VN")) {
-                comma = '.';
-            } else {
-                comma = ',';
-            }
-            if (formulaLength > 0) {
-                if (formulaText.charAt(formulaLength - 1) == comma) { // Bkav TienNVh : Truong hop xoa dau ngan cach
-                    formulaText.delete(formulaLength - 2, formulaLength);
-                } else {
-                    if (formulaText.charAt(formulaLength - 1) == '(') {
-                        if (formulaLength >= 3) {
-                            // Bkav TienNVh : Kiem tra dieu kien
-                            if ((byte) formulaText.charAt(formulaLength - 3) == 123) {
-                                //Bkav TienNVh TH: arccos() , arcsin() ,arctan()
-                                formulaText.delete(formulaLength - 6, formulaLength);
-                            } else {
-                                if ((byte) formulaText.charAt(formulaLength - 3) == 'l') {
-                                    //Bkav TienNVh TH: ln()
-                                    formulaText.delete(formulaLength - 3, formulaLength);
-                                } else {
-                                    // Bkav TienNVh :  sin() , cos() , tan(), exp(), log()
-                                    switch (formulaText.charAt(formulaLength - 4)) {
-                                        case 'c':
-                                        case 's':
-                                        case 't':
-                                        case 'e':
-                                        case 'l':
-                                            formulaText.delete(formulaLength - 4, formulaLength);
-                                            break;
-                                        default:
-                                            // Bkav TienNVh :  Truong hop : '('
-                                            formulaText.delete(formulaLength - 1, formulaLength);
-                                            break;
-                                    }
-                                }
-                            }
-                        } else {
-                            // Bkav TienNVh : Xoá 1 ký tự
-                            formulaText.delete(formulaLength - 1, formulaLength);
-                        }
-                    } else
-                        formulaText.delete(formulaLength - 1, formulaLength);
-                }
-                // Bkav TienNVh :
-                mUnprocessedChars = formulaText.toString();
-                mEvaluator.clearMain();
-                addExplicitStringToExpr(formulaText.toString());
-            }
-
-            int postionCursor2 = mFormulaText.getSelectionStart();
-            mPostionCursorToRight = mFormulaText.length() - postionCursor2;
+            Log.d("TienNVh", "onDelete: "+mFormulaText.getSelectionEnd());
+                int position=mUnprocessedChars.length()-mFormulaText.getSelectionEnd();
+            Log.d("TienNVh", "onDelete 895: "+position);
+            mUnprocessedChars = mUnprocessedChars.substring(0,mFormulaText.getSelectionEnd()-1)+mUnprocessedChars.substring(mFormulaText.getSelectionEnd());
+            addExplicitStringToExpr(mUnprocessedChars);
+            Log.d("TienNVh", "onDelete 8989: "+mUnprocessedChars);
+           changePostionCursor();
         } else {
             final Editable formulaText = mFormulaText.getEditableText();
             // Bkav TienNVh : lấy vị trí con trỏ tính từ bên trái
@@ -1971,12 +1929,17 @@ public class Calculator extends Activity
                     }
 
                 }
+
                 mEvaluator.clearMain();
                 addExplicitStringToExpr(formulaText.toString());
             }
             // Bkav TienNVh : Vị trí con trỏ sau khi xoá
             int postionCursor2 = mFormulaText.getSelectionStart();
             mPostionCursorToRight = mFormulaText.length() - postionCursor2;
+            // Bkav TienNVh : Hiện thị kết quả phép tính sau khi thay đổi (Xoá )
+            redisplayAfterFormulaChange();
+            // Bkav TienNVh : Cập nhật vị trí con trỏ sau khi xoá
+            changePostionCursor();
         }
         if (mEvaluator.getExpr(Evaluator.MAIN_INDEX).isEmpty() && !haveUnprocessed()) {
             // Resulting formula won't be announced, since it's empty.
@@ -2374,6 +2337,7 @@ public class Calculator extends Activity
      * @param explicit  these characters were explicitly typed by the user, not pasted
      */
     private void addChars(String moreChars, boolean explicit) {
+        Log.d("TienNVh", "addChars: "+ moreChars);
         if (mUnprocessedChars != null) {
             moreChars = mUnprocessedChars + moreChars;
         }
