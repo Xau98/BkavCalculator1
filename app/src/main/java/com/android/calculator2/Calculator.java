@@ -1489,6 +1489,7 @@ public class Calculator extends Activity
                 }
                 break;
             case R.id.eq:
+                mStatusM =false;
                 onEquals();
                 break;
             case R.id.del:
@@ -1551,8 +1552,10 @@ public class Calculator extends Activity
 
             // Bkav TienNVh : Tính năng m+
             case R.id.op_m_plus:
+                mStatusM =true;
                 // Bkav TienNVh : Thuc hien phep tinh
                 onEquals();
+
                 // Bkav TienNVh : mINPUT là biến lưu tạm thời
                 // Bkav TienNVh : Kiem tra truong hop biến mINPUT đã có nội dung chưa
                 if (mINPUT.equals("")) {
@@ -1574,6 +1577,7 @@ public class Calculator extends Activity
                 return;
             // Bkav TienNVh :  m- tương tự như m+
             case R.id.op_m_sub:
+                mStatusM =true;
                 onEquals();
                 // Bkav TienNVh : Tạo biến cục bộ để luu noi dung mới
                 String input = "";
@@ -1653,17 +1657,20 @@ public class Calculator extends Activity
 
                 } else {
                     //addExplicitKeyToExpr(id);
+
                     String formulatext = mFormulaText.getText().toString();
+
                     String newtext = KeyMaps.toString(this, id);
                     // Bkav TienNVh : Truowng hop lay ket qua de tiep tuc tinh tiep
                     if (mCurrentState == CalculatorState.RESULT) {
-                        // Bkav TienNVh : Trường hợp đã click '*'
-                        // Bkav TienNVh :
-                        formulatext = mTruncatedWholeNumber;
-                        // Bkav TienNVh : set lai vi tri con tro tính từ bên phải sang
-                        postionCursor = formulatext.length() + newtext.length() - 1;
+                        if(!mStatusM) {
+                            formulatext = mTruncatedWholeNumber;
+                            postionCursor = formulatext.length() + newtext.length() - 1;
+                        }else {
+                            formulatext="";
+                            postionCursor=0;
+                        }
                     }
-
                     int lengthold = formulatext.length();// do dai cua chuoi
                     if (lengthold >= postionCursor || mCurrentState == CalculatorState.RESULT) {
                         mPostionCursorToRight = lengthold - postionCursor;// Bkav TienNVh : Vi tri con tro tinh tu ben phai sang
@@ -2482,4 +2489,7 @@ public class Calculator extends Activity
         if (mFormulaText != null) mFormulaText.touchOutSide((int) ev.getX(), (int) ev.getY());
         return super.dispatchTouchEvent(ev);
     }
+    //==========================Bkav==============================
+    // Bkav TienNVh : Biến dùng để phân biệt Click "="  và "M"
+    private boolean mStatusM=false;
 }

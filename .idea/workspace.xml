@@ -6,7 +6,7 @@
     </shared>
   </component>
   <component name="AndroidLogFilters">
-    <option name="TOOL_WINDOW_CUSTOM_FILTER" value="onCreate" />
+    <option name="TOOL_WINDOW_CUSTOM_FILTER" value="onButtonClick" />
     <option name="TOOL_WINDOW_LOG_LEVEL" value="verbose" />
     <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="Show only selected application" />
     <option name="TOOL_WINDOW_REGEXP_FILTER" value="false" />
@@ -58,74 +58,34 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/android/calculator2/Calculator.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="276">
-              <caret line="505" column="79" selection-start-line="505" selection-start-column="79" selection-end-line="505" selection-end-column="79" />
+            <state relative-caret-position="446">
+              <caret line="2493" column="35" lean-forward="true" selection-start-line="2493" selection-start-column="35" selection-end-line="2493" selection-end-column="35" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#9075#9290#0" expanded="true" />
-                <element signature="e#9289#9290#0" expanded="true" />
-                <element signature="e#21557#21787#0" expanded="true" />
-                <element signature="e#21786#21787#0" expanded="true" />
-                <element signature="e#21628#25353#0" expanded="true" />
-                <element signature="e#25352#25353#0" expanded="true" />
-                <element signature="e#103580#103581#0" expanded="true" />
-                <element signature="e#103619#103620#0" expanded="true" />
-                <element signature="e#104249#104250#0" expanded="true" />
-                <element signature="e#104304#104305#0" expanded="true" />
-                <element signature="e#112804#112805#0" expanded="true" />
-                <element signature="e#112849#112850#0" expanded="true" />
-                <element signature="e#112882#112883#0" expanded="true" />
-                <element signature="e#112930#112931#0" expanded="true" />
+                <element signature="e#6971#6972#0" expanded="true" />
+                <element signature="e#7048#7049#0" expanded="true" />
+                <element signature="e#8573#8574#0" expanded="true" />
+                <element signature="e#8632#8633#0" expanded="true" />
+                <element signature="e#55031#55032#0" expanded="true" />
+                <element signature="e#55064#55065#0" expanded="true" />
+                <element signature="e#55697#55698#0" expanded="true" />
+                <element signature="e#55742#55743#0" expanded="true" />
+                <element signature="e#103798#103799#0" expanded="true" />
+                <element signature="e#103837#103838#0" expanded="true" />
+                <element signature="e#104467#104468#0" expanded="true" />
+                <element signature="e#104522#104523#0" expanded="true" />
+                <element signature="e#113022#113023#0" expanded="true" />
+                <element signature="e#113067#113068#0" expanded="true" />
+                <element signature="e#113238#113239#0" expanded="true" />
+                <element signature="e#113286#113287#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/android/calculator2/CalculatorPadViewPager.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="161">
-              <caret line="32" column="24" lean-forward="true" selection-start-line="32" selection-start-column="24" selection-end-line="32" selection-end-column="24" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/android/calculator2/BkavHistoryLayout.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-235">
-              <caret line="10" column="21" selection-start-line="10" selection-start-column="21" selection-end-line="10" selection-end-column="21" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/android/calculator2/HistoryFragment.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1219">
-              <caret line="37" column="78" lean-forward="true" selection-start-line="37" selection-start-column="78" selection-end-line="37" selection-end-column="78" />
-              <folding>
-                <element signature="e#3511#3513#0" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/captures/com.android.calculator2_2020.01.10_13.33.li">
+        <entry file="file://$PROJECT_DIR$/captures/com.android.calculator2_2020.01.10_14.38.li">
           <provider selected="true" editor-type-id="capture-editor" />
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/android/calculator2/CalculatorScrollView.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-9">
-              <caret line="65" column="69" selection-start-line="65" selection-start-column="69" selection-end-line="65" selection-end-column="69" />
-              <folding>
-                <element signature="e#0#3544#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
         </entry>
       </file>
     </leaf>
@@ -639,13 +599,6 @@
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/values/dimens.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="713">
-          <caret line="31" column="17" selection-start-line="31" selection-start-column="17" selection-end-line="31" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/values-sw360dp-port/styles.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1725">
@@ -965,26 +918,31 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/captures/com.android.calculator2_2020.01.10_14.38.li">
+      <provider selected="true" editor-type-id="capture-editor" />
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/android/calculator2/Calculator.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="276">
-          <caret line="505" column="79" selection-start-line="505" selection-start-column="79" selection-end-line="505" selection-end-column="79" />
+        <state relative-caret-position="446">
+          <caret line="2493" column="35" lean-forward="true" selection-start-line="2493" selection-start-column="35" selection-end-line="2493" selection-end-column="35" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#9075#9290#0" expanded="true" />
-            <element signature="e#9289#9290#0" expanded="true" />
-            <element signature="e#21557#21787#0" expanded="true" />
-            <element signature="e#21786#21787#0" expanded="true" />
-            <element signature="e#21628#25353#0" expanded="true" />
-            <element signature="e#25352#25353#0" expanded="true" />
-            <element signature="e#103580#103581#0" expanded="true" />
-            <element signature="e#103619#103620#0" expanded="true" />
-            <element signature="e#104249#104250#0" expanded="true" />
-            <element signature="e#104304#104305#0" expanded="true" />
-            <element signature="e#112804#112805#0" expanded="true" />
-            <element signature="e#112849#112850#0" expanded="true" />
-            <element signature="e#112882#112883#0" expanded="true" />
-            <element signature="e#112930#112931#0" expanded="true" />
+            <element signature="e#6971#6972#0" expanded="true" />
+            <element signature="e#7048#7049#0" expanded="true" />
+            <element signature="e#8573#8574#0" expanded="true" />
+            <element signature="e#8632#8633#0" expanded="true" />
+            <element signature="e#55031#55032#0" expanded="true" />
+            <element signature="e#55064#55065#0" expanded="true" />
+            <element signature="e#55697#55698#0" expanded="true" />
+            <element signature="e#55742#55743#0" expanded="true" />
+            <element signature="e#103798#103799#0" expanded="true" />
+            <element signature="e#103837#103838#0" expanded="true" />
+            <element signature="e#104467#104468#0" expanded="true" />
+            <element signature="e#104522#104523#0" expanded="true" />
+            <element signature="e#113022#113023#0" expanded="true" />
+            <element signature="e#113067#113068#0" expanded="true" />
+            <element signature="e#113238#113239#0" expanded="true" />
+            <element signature="e#113286#113287#0" expanded="true" />
           </folding>
         </state>
       </provider>
