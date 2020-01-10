@@ -1115,7 +1115,9 @@ public class CalculatorResult extends AlignedTextView implements MenuItem.OnMenu
     }
 
     public boolean stopActionModeOrContextMenu() {
+
         if (mActionMode != null) {
+
             mActionMode.finish();
             return true;
         }

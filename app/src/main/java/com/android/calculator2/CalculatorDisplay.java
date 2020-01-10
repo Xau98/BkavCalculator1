@@ -21,12 +21,15 @@ import android.transition.Fade;
 import android.transition.Transition;
 import android.transition.TransitionManager;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.accessibility.AccessibilityManager;
 import android.widget.LinearLayout;
 import android.widget.Toolbar;
+
+import androidx.annotation.Nullable;
 
 public class CalculatorDisplay extends LinearLayout
         implements AccessibilityManager.AccessibilityStateChangeListener {
@@ -101,6 +104,7 @@ public class CalculatorDisplay extends LinearLayout
         // Draw the children in reverse order so that the toolbar is on top.
         setChildrenDrawingOrderEnabled(true);
     }
+
 
     @Override
     protected void onFinishInflate() {

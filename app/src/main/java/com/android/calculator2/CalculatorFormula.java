@@ -20,6 +20,7 @@ import android.annotation.TargetApi;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
+import android.content.res.Configuration;
 import android.content.res.TypedArray;
 import android.graphics.Rect;
 import android.os.Build;
@@ -410,5 +411,20 @@ public class CalculatorFormula extends AlignedTextView implements MenuItem.OnMen
         boolean onPaste(ClipData clip);
 
         void onMemoryRecall();
+    }
+
+    //===========================BKAV==========================
+    private Rect mContainer = new Rect();
+
+    //Bkav AnhNDd: kiểm tra xem toạ độ x,y có nàm ngoài view hay không
+    public void touchOutSide(int x, int y) {
+        if (mContainer.isEmpty()) {
+            getGlobalVisibleRect(mContainer);
+        }
+        boolean isTouchOutSide = !mContainer.contains(x, y);
+        if (isTouchOutSide && mActionMode != null) {
+            mActionMode.finish();
+            mActionMode = null;
+        }
     }
 }

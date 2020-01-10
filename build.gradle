@@ -15,3 +15,7 @@ allprojects {
         google()
     }
 }
+
+//version 1.0.4
+//-Bỏ actionmode của edittext, dùng actionmode mặc định
+//-Khi bấm ra ngoài ô phép tính nếu có actionmode thì ẩn đi
