@@ -233,16 +233,16 @@ public class Calculator extends Activity
                     } else {
                         // Bkav TienNVh : lay du lieu copy
                         String textNew = item.coerceToText(Calculator.this).toString() + "";
-                        String formula =mFormulaText.getText().toString();
-                        String formula1= formula.substring(0, mFormulaText.getSelectionEnd());
-                        String formula2= formula.substring(mFormulaText.getSelectionEnd());
-                        String result = formula1 + textNew+ formula2;
+                        String formula = mFormulaText.getText().toString();
+                        String formula1 = formula.substring(0, mFormulaText.getSelectionEnd());
+                        String formula2 = formula.substring(mFormulaText.getSelectionEnd());
+                        String result = formula1 + textNew + formula2;
                         mPostionCursorToRight = result.length() - textNew.length() - formula1.length();
                         // Bkav TienNVh : Xoa cac phep tinh hiện tại
                         mEvaluator.clearMain();
                         // Bkav TienNVh : add cac phep tính mới
-                       addExplicitStringToExpr(result);
-                       redisplayAfterFormulaChange();
+                        addExplicitStringToExpr(result);
+                        redisplayAfterFormulaChange();
                         // Bkav TienNVh : thay doi vi tri con tro
                         changePostionCursor();
                     }
@@ -418,6 +418,7 @@ public class Calculator extends Activity
             }
         });
         mRelativeLayoutHistory = (BkavHistoryLayout) findViewById(R.id.relativeLayout_history);
+
         mMainCalculator = findViewById(R.id.main_calculator);
         mDisplayView = (CalculatorDisplay) findViewById(R.id.display);
         mModeView = (TextView) findViewById(R.id.mode);
@@ -493,6 +494,14 @@ public class Calculator extends Activity
         setBlurBackground();
         //Bkav TienNVh :Load tab history
         onRefeshSaveHistory();
+        // Bkav TienNVh : setbackground history sau khi xoay màn hình
+        mRelativeLayoutHistory.post(new Runnable() {
+            @Override
+            public void run() {
+                if (bitmapBlurHis != null)
+                    mRelativeLayoutHistory.setBackground(new BitmapDrawable(bitmapBlurHis));
+            }
+        });
 
         final int orientation = getResources().getConfiguration().orientation;
         mDragLayout.post(new Runnable() {
@@ -524,6 +533,7 @@ public class Calculator extends Activity
                         public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
                             if (position == 0) {
                                 // Bkav TienNVh :  position =0 là tab history
+
                                 mRelativeLayoutHistory.setInforScrollViewpager(bitmapBlurHis,
                                         position, positionOffset, positionOffsetPixels);
                             } else {
@@ -575,7 +585,7 @@ public class Calculator extends Activity
 
         // Bkav TienNVh : Lam trong suot status bar
         overlapStatusbar();
-     
+
         // Bkav TienNVh : Nhận sự kiện chạm vào
         mFormulaText.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -608,7 +618,7 @@ public class Calculator extends Activity
 
                     }
                 }
-             
+
                 return true;
             }
         });
@@ -1686,7 +1696,7 @@ public class Calculator extends Activity
         // Bkav TienNVh : Xét trường hợp
         if (lengthold >= mPostionCursorToRight && mPostionCursorToRight != 0) {
             // Bkav TienNVh :  Set lại vị trí cảu con trỏ
-            Log.d("TienNVh", lengthold+"changePostionCursor: "+mPostionCursorToRight);
+            Log.d("TienNVh", lengthold + "changePostionCursor: " + mPostionCursorToRight);
             mFormulaText.setSelection(lengthold - mPostionCursorToRight);
         } else {
             // Bkav TienNVh :  Set vi trí con tro ở cuối cùng
