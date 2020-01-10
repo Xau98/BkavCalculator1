@@ -493,27 +493,7 @@ public class Calculator extends Activity
         setBlurBackground();
         //Bkav TienNVh :Load tab history
         onRefeshSaveHistory();
-mFormulaText.setCustomSelectionActionModeCallback(new ActionMode.Callback() {
-    @Override
-    public boolean onCreateActionMode(ActionMode mode, Menu menu) {
-        return false;
-    }
 
-    @Override
-    public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
-        return false;
-    }
-
-    @Override
-    public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
-        return false;
-    }
-
-    @Override
-    public void onDestroyActionMode(ActionMode mode) {
-
-    }
-});
         final int orientation = getResources().getConfiguration().orientation;
         mDragLayout.post(new Runnable() {
             @Override
