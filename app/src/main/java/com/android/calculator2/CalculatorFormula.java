@@ -95,8 +95,61 @@ public class CalculatorFormula extends AlignedTextView implements MenuItem.OnMen
         } else {
             setupContextMenu();
         }
+
         //Bkav tiennvh khong cho show ban phim
         setShowSoftInputOnFocus(false);
+   // Bkav TienNVh : ẩn hiện paste , select all ... khi click vào dưới cursor
+        setCustomInsertionActionModeCallback(new ActionMode.Callback() {
+            @Override
+            public boolean onCreateActionMode(ActionMode mode, Menu menu) {
+                return false;
+            }
+
+            @Override
+            public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
+                return false;
+            }
+
+            @Override
+            public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
+                return false;
+            }
+
+            @Override
+            public void onDestroyActionMode(ActionMode mode) {
+
+            }
+        });
+
+// Bkav TienNVh : Custom Action mode để chỉ cho  hiện mỗi past
+        setCustomSelectionActionModeCallback(new ActionMode.Callback() {
+            @Override
+            public boolean onCreateActionMode(ActionMode mode, Menu menu) {
+                mCheckActionMode= true;
+                return true;
+            }
+
+            @Override
+            public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
+                // Bkav TienNVh :  Lọc cho hiện thị mỗi paste
+                for (int i = 0; i < menu.size();) {
+                    MenuItem item = menu.getItem(i);
+                    if (item.getItemId() != android.R.id.paste) menu.removeItem(item.getItemId());
+                    else i++;
+                }
+                return false;
+            }
+
+            @Override
+            public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
+                return false;
+            }
+
+            @Override
+            public void onDestroyActionMode(ActionMode mode) {
+                mCheckActionMode= false;
+            }
+        });
     }
 
     @Override
@@ -308,6 +361,7 @@ public class CalculatorFormula extends AlignedTextView implements MenuItem.OnMen
                 return true;
             }
         });
+
     }
 
     /**
@@ -415,16 +469,30 @@ public class CalculatorFormula extends AlignedTextView implements MenuItem.OnMen
 
     //===========================BKAV==========================
     private Rect mContainer = new Rect();
+    // Bkav TienNVh : Biến để check Action mode của hệ thống  có đã tồn tại chưa
+    private boolean mCheckActionMode = false;
 
     //Bkav AnhNDd: kiểm tra xem toạ độ x,y có nàm ngoài view hay không
     public void touchOutSide(int x, int y) {
+        // Bkav TienNVh : Trường hợp toạ độ (0,0,0,0) thì lấy lại vị trí
         if (mContainer.isEmpty()) {
+            // Bkav TienNVh : set lại toạ độ
             getGlobalVisibleRect(mContainer);
         }
+        // Bkav TienNVh : Biến Check Click  ngoài toạ độ edittext
         boolean isTouchOutSide = !mContainer.contains(x, y);
+        // Bkav TienNVh : Check Click ngoài toạ độ edittext và Action mode đã hiện thi chưa
         if (isTouchOutSide && mActionMode != null) {
+            // Bkav TienNVh : Tiến hành đóng Actionmode
             mActionMode.finish();
             mActionMode = null;
         }
+        // Bkav TienNVh : Check Action mode hệ thống hiện thị hay không ?
+        if (isTouchOutSide && mCheckActionMode) {
+            // Bkav TienNVh : dịch chuyển con trỏ về sau đoạn text để đóng action  mode hệ thống
+            setSelection(getSelectionEnd());
+        }
     }
-}
+    }
+
+
