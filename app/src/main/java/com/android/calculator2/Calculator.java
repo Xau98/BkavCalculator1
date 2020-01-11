@@ -948,43 +948,14 @@ public class Calculator extends Activity
         }
     }
 
-    // Bkav TienNVh : truong hop co ky tu chen o giua cum
+    // Bkav TienNVh : phép tính không hợp lệ
     public void insertCharacters(String formulatext) {
-        // Bkav TienNVh : Biến để lưu trữ độ dài của ký tự mới nhập vào
-        int lengthTextNew = 1;
-        // Bkav TienNVh : Vi tri con tro truoc khi chen
-        int postion = mFormulaText.getSelectionStart();
-        // Bkav TienNVh :  Lay do dai cua kys tu
-        switch (formulatext.charAt(postion)) {
-            case 'c':
-            case 't':
-            case 's':
-            case 'e':
-                if ((byte) formulatext.charAt(postion + 3) == 123) {
-                    lengthTextNew = 6;
-                } else
-                    lengthTextNew = 4;
-                break;
-            case 'l':
-                if ((byte) formulatext.charAt(postion + 1) == 110) {
-                    lengthTextNew = 3;
-                } else
-                    lengthTextNew = 4;
-                break;
-            default:
-                lengthTextNew = 1;
-                break;
-        }
-        // Bkav TienNVh : Vi tri con tro sau khi chen ky tu , tinh tu ben phai sang
-        mPostionCursorToRight = formulatext.length() - postion - lengthTextNew;
-        // Bkav TienNVh : Hien thong bao loi
         mEvaluator.clearMain();
         mUnprocessedChars = formulatext;
         if (haveUnprocessed()) {
             mFormulaText.setText(mUnprocessedChars);
         } else {
             mFormulaText.setText(formulatext);
-
         }
     }
 
