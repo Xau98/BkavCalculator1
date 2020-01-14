@@ -781,7 +781,6 @@ public class Calculator extends Activity
     // Bkav TienNVh : Chuyen ky tu sang ID
     public void addExplicitStringToExpr(String formulatext) {
         mEvaluator.clearMain();
-        Log.d("TienNVh", "addExplicitStringToExpr 78: " + formulatext);
         if (!formulatext.equals("")) {
             for (int i = 0; i < formulatext.length(); ) {
                 // Bkav TienNVh : Lay tung ky tu trong chuoi
@@ -810,7 +809,7 @@ public class Calculator extends Activity
                     // Bkav TienNVh : Kiểm tra ký tự có phải phép tính không?
                     if (KeyMaps.keyForChar(splitFormulatext) != View.NO_ID) {
                         // Bkav TienNVh :  trường hợp trùng  e với exp() , để phân biệt thì phải dựa vào ký tự p
-                        if (i < formulatext.length() - 2 && (byte) formulatext.charAt(i + 2) == 112) {// Bkav TienNVh : 'p'=112
+                        if (i < formulatext.length() - 2 && (byte) formulatext.charAt(i + 2) == 112&& splitFormulatext == 'e' && (byte) formulatext.charAt(i + 1) == 120) {// Bkav TienNVh : 'p'=112
                             // Bkav TienNVh : Trường hợp ký tự là exp(
                             addExplicitKeyToExpr(R.id.fun_exp);
                             mUnprocessedChars = null;
@@ -818,22 +817,11 @@ public class Calculator extends Activity
                             i = i + 4;
                             continue;
                         } else {
-                            // Bkav TienNVh :
-                            if (i < formulatext.length() - 2 && splitFormulatext == 'e' && (byte) formulatext.charAt(i + 2) != 112) {// Bkav TienNVh : 'p'=112
-                                // Bkav TienNVh : truong hop co ky tu chen o giua cum
-                                int postion = mFormulaText.getSelectionStart();
-                                mPostionCursorToRight = formulatext.length() - postion - 1;
-                                // Bkav TienNVh : Neu mUnprocessedChars!=null va !empty => Phep tinh ay loi
-                                mUnprocessedChars = formulatext;
-                                mEvaluator.clearMain();
-                                mFormulaText.setText(mUnprocessedChars);
-                                return;
-                            } else {
+                            // Bkav TienNVh :  Trường hợp ký tự là e
                                 addExplicitKeyToExpr(KeyMaps.keyForChar(splitFormulatext));
                                 mUnprocessedChars = null;
                                 i++;
                                 continue;
-                            }
                         }
                     } else {
                         if ((byte) splitFormulatext == 26) {
@@ -1602,7 +1590,7 @@ public class Calculator extends Activity
                 }
             default:
                 cancelIfEvaluating(false);
-                if (haveUnprocessed()) {
+                if (haveUnprocessed()) { 
                     // Bkav TienNVh : Truong hop Phep tinh khong hop le
                     // For consistency, append as uninterpreted characters.
                     // This may actually be useful for a left parenthesis.
@@ -1636,8 +1624,7 @@ public class Calculator extends Activity
                     }
 
                 } else {
-                    //addExplicitKeyToExpr(id);
-
+                    //addExplicitKeyToExpr(id); 
                     String formulatext = mFormulaText.getText().toString();
 
                     String newtext = KeyMaps.toString(this, id);

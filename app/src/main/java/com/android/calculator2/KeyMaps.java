@@ -555,9 +555,10 @@ public class KeyMaps {
 
             case 'e':
                 return R.id.const_e;
-            case 'p':
-            case 'P':
-                return R.id.const_pi;
+                // Bkav TienNVh : Bỏ vì không có trường hợp nhập vào 'p' tránh trường hợp người dùng dán ký tự 'p' vào chuyển sang sang số hằng số pi
+//            case 'p':
+//            case 'P':
+//                return R.id.const_pi;
             case '^':
                 return R.id.op_pow;
             case '!':
