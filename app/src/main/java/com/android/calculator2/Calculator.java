@@ -284,7 +284,7 @@ public class Calculator extends Activity
     private Evaluator mEvaluator;
 
     private CalculatorDisplay mDisplayView;
-    private TextView mModeView;
+    private TextView mModeView, mModeViewM;
     private Toolbar mToolbar;
     private CalculatorFormula mFormulaText;
     private CalculatorResult mResultText;
@@ -422,6 +422,7 @@ public class Calculator extends Activity
         mMainCalculator = findViewById(R.id.main_calculator);
         mDisplayView = (CalculatorDisplay) findViewById(R.id.display);
         mModeView = (TextView) findViewById(R.id.mode);
+        mModeViewM = (TextView) findViewById(R.id.mode2);
         mFormulaText = (CalculatorFormula) findViewById(R.id.formula);
         mResultText = (CalculatorResult) findViewById(R.id.result);
         mFormulaContainer = (HorizontalScrollView) findViewById(R.id.formula_container);
@@ -583,7 +584,7 @@ public class Calculator extends Activity
         // Bkav TienNVh : Set font number
         setFontNumber();
 
-        // Bkav TienNVh : Lam trong suot status bar
+        // Bkav TienNVh : Lam trong suot arstatus bar
         overlapStatusbar();
 
         // Bkav TienNVh : Nhận sự kiện chạm vào
@@ -788,7 +789,7 @@ public class Calculator extends Activity
                 // Bkav TienNVh : xử lý dấu ngăn cách và dấu phẩy
                 if (splitFormulatext == ',' || splitFormulatext == '.') {
                     // Bkav TienNVh : Trường hợp Ngôn ngữ tiếng việt dấu ',' tương ứng với dấu phẩy và dấu ngăn cách là '.'
-                    // Bkav TienNVh : Trường hợp ngôn ngữ khác tiếng viết '.' tương ứng với dấu phẩy và dấu ngăn cách là dấu ','
+                    // Bkav TienNVh : Trường  hợp ngôn ngữ khác tiếng viết '.' tương ứng với dấu phẩy và dấu ngăn cách là dấu ','
                     if ((splitFormulatext == ',' && Locale.getDefault().toString().equals("vi_VN")) ||
                             (splitFormulatext == '.' && !Locale.getDefault().toString().equals("vi_VN"))) {
                         // Bkav TienNVh : Trường hợp dấu phẩy
@@ -948,7 +949,7 @@ public class Calculator extends Activity
         }
     }
 
-    // Bkav TienNVh : phép tính không hợp lệ
+    // Bkav TienNVh : truong hop co ky tu chen  o giua cum
     public void insertCharacters(String formulatext) {
         mEvaluator.clearMain();
         mUnprocessedChars = formulatext;
@@ -1011,6 +1012,7 @@ public class Calculator extends Activity
                         | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         window.setStatusBarColor(Color.TRANSPARENT);
+
     }
 
     // Bkav TienNVh : Xu ly dau phay theo ngon ngu
@@ -1330,6 +1332,7 @@ public class Calculator extends Activity
             mModeToggle.setText(R.string.mode_deg);
             mModeToggle.setContentDescription(getString(R.string.desc_switch_deg));
         }
+
     }
 
     private void removeHistoryFragment() {
@@ -1460,7 +1463,7 @@ public class Calculator extends Activity
                 }
                 break;
             case R.id.eq:
-                mStatusM =false;
+                mStatusM = false;
                 onEquals();
                 break;
             case R.id.del:
@@ -1500,6 +1503,7 @@ public class Calculator extends Activity
             //Bkav  TienNVh: Click cac nut mc , mr, m+, m-
             case R.id.op_m_c:
                 mINPUT = "";
+                mModeViewM.setText("");
                 return;
             case R.id.op_m_r:
                 mEvaluator.clearMain();
@@ -1515,46 +1519,48 @@ public class Calculator extends Activity
                         }
                     }
                 }
-                onEquals();
                 redisplayAfterFormulaChange();
+                onEquals();
                 // Bkav TienNVh : Dịch chuyển con trỏ cuối cùng
                 mFormulaText.setSelection(mFormulaText.getText().length());
+                mModeViewM.setText("M");
                 return;
 
             // Bkav TienNVh : Tính năng m+
             case R.id.op_m_plus:
-                mStatusM =true;
                 // Bkav TienNVh : Thuc hien phep tinh
                 onEquals();
 
                 // Bkav TienNVh : mINPUT là biến lưu tạm thời
                 // Bkav TienNVh : Kiem tra truong hop biến mINPUT đã có nội dung chưa
                 if (mINPUT.equals("")) {
-                    if (mCurrentState == CalculatorState.ANIMATE || mCurrentState == CalculatorState.RESULT) {
+
+                    if (mCurrentState == CalculatorState.EVALUATE || mCurrentState == CalculatorState.RESULT) {
                         // Bkav TienNVh : Trường hợp các ký tự nhập vào là phép tính thì lấy kết quả để lưu
-                        mINPUT = mTruncatedWholeNumber + "";
+                        mINPUT = mResultText.getText() + "";
                     } else {
                         // Bkav TienNVh : Trường họp cào là 1 số thì lấy các ký tự nhập vào để lưu
                         mINPUT = mFormulaText.getText() + "";
                     }
                 } else {
                     // Bkav TienNVh : Trường hơp : biến mINPUT đã có nội dung thì lấy nội dung của mINPUT cũ nối với nội dung mới
-                    if (mCurrentState == CalculatorState.ANIMATE || mCurrentState == CalculatorState.RESULT) {
-                        mINPUT = mINPUT + "+" + mTruncatedWholeNumber;
+                    if (mCurrentState == CalculatorState.EVALUATE || mCurrentState == CalculatorState.RESULT) {
+                        mINPUT = mINPUT + "+" + mResultText.getText();
                     } else {
                         mINPUT = mINPUT + "+" + mFormulaText.getText();
                     }
                 }
+                mModeViewM.setText("M");
+                mStatusM = true;
                 return;
             // Bkav TienNVh :  m- tương tự như m+
             case R.id.op_m_sub:
-                mStatusM =true;
                 onEquals();
                 // Bkav TienNVh : Tạo biến cục bộ để luu noi dung mới
                 String input = "";
                 // Bkav TienNVh : Truong hop cac ky tu nhap vao khong phai la phep tinh
-                if (mCurrentState == CalculatorState.ANIMATE || mCurrentState == CalculatorState.RESULT) {
-                    input = "" + mTruncatedWholeNumber;
+                if (mCurrentState == CalculatorState.EVALUATE || mCurrentState == CalculatorState.RESULT) {
+                    input = "" + mResultText.getText();
                 } else {
                     input = "" + mFormulaText.getText();
                 }
@@ -1581,6 +1587,9 @@ public class Calculator extends Activity
                         mINPUT = mINPUT + Character.toString(KeyMaps.MINUS_SIGN) + input;
                     }
                 }
+                onModeChanged(mEvaluator.getDegreeMode(Evaluator.MAIN_INDEX));
+                mModeViewM.setText("M");
+                mStatusM = true;
                 return;
             //Bkav  TienNVh: Click cac nut % , ! , pi dong item mo rong
             case R.id.const_pi:
@@ -1634,12 +1643,12 @@ public class Calculator extends Activity
                     String newtext = KeyMaps.toString(this, id);
                     // Bkav TienNVh : Truowng hop lay ket qua de tiep tuc tinh tiep
                     if (mCurrentState == CalculatorState.RESULT) {
-                        if(!mStatusM) {
+                        if (!mStatusM) {
                             formulatext = mTruncatedWholeNumber;
                             postionCursor = formulatext.length() + newtext.length() - 1;
-                        }else {
-                            formulatext="";
-                            postionCursor=0;
+                        } else {
+                            formulatext = "";
+                            postionCursor = 0;
                         }
                     }
                     int lengthold = formulatext.length();// do dai cua chuoi
@@ -1674,7 +1683,6 @@ public class Calculator extends Activity
         // Bkav TienNVh : Xét trường hợp
         if (lengthold >= mPostionCursorToRight && mPostionCursorToRight != 0) {
             // Bkav TienNVh :  Set lại vị trí cảu con trỏ
-            Log.d("TienNVh", lengthold + "changePostionCursor: " + mPostionCursorToRight);
             mFormulaText.setSelection(lengthold - mPostionCursorToRight);
         } else {
             // Bkav TienNVh :  Set vi trí con tro ở cuối cùng
@@ -1852,16 +1860,10 @@ public class Calculator extends Activity
         setState(CalculatorState.INPUT);
         if (haveUnprocessed()) {
             mUnprocessedChars = mFormulaText.getText() + "";
-            Log.d("TienNVh", "onDelete: " + mFormulaText.getSelectionEnd());
-            int position = mUnprocessedChars.length() - mFormulaText.getSelectionEnd();
-            Log.d("TienNVh", "onDelete 895: " + position);
             mPostionCursorToRight = mUnprocessedChars.length() - mFormulaText.getSelectionEnd();
             if (mFormulaText.getSelectionEnd() >= 1 && mUnprocessedChars.length() > 0)
                 mUnprocessedChars = mUnprocessedChars.substring(0, mFormulaText.getSelectionEnd() - 1) + mUnprocessedChars.substring(mFormulaText.getSelectionEnd());
-
             addExplicitStringToExpr(mUnprocessedChars);
-
-            Log.d("TienNVh", "onDelete 8989: " + mUnprocessedChars);
             changePostionCursor();
         } else {
             final Editable formulaText = mFormulaText.getEditableText();
@@ -1961,7 +1963,7 @@ public class Calculator extends Activity
         final Rect displayRect = new Rect();
         mDisplayView.getGlobalVisibleRect(displayRect);
 
-        // Make reveal cover the display and status bar.
+        // Make reveal cover the display and status bar.ake
         final View revealView = new View(this);
         revealView.setBottom(displayRect.bottom);
         revealView.setLeft(displayRect.left);
@@ -2460,7 +2462,8 @@ public class Calculator extends Activity
         if (mFormulaText != null) mFormulaText.touchOutSide((int) ev.getX(), (int) ev.getY());
         return super.dispatchTouchEvent(ev);
     }
+
     //==========================Bkav==============================
     // Bkav TienNVh : Biến dùng để phân biệt Click "="  và "M"
-    private boolean mStatusM=false;
+    private boolean mStatusM = false;
 }

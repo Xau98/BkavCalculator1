@@ -19,7 +19,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/toolbar"
     android:layout_width="match_parent"
-    android:layout_height="0dp"
+    android:layout_height="10dp"
     android:layout_gravity="top">
 
     <TextView
@@ -30,5 +30,15 @@
         android:textAllCaps="true"
         android:textColor="@color/display_formula_text_color"
         android:textSize="8sp" />
+    <TextView
+        android:id="@+id/mode2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif-medium"
+        android:textAllCaps="true"
+        android:layout_gravity="center"
+        android:textColor="@color/display_formula_text_color"
+        android:textSize="8sp"
+        />
 
 </Toolbar>
