@@ -222,7 +222,6 @@ public class KeyMaps {
      * key id.
      */
     public static int fromByte(byte b) {
-        Log.d("tien", "fromByte: " + b);
         switch ((char) b) {
             case 'p':
                 return R.id.const_pi;
@@ -270,8 +269,6 @@ public class KeyMaps {
                 return R.id.op_sqr;
             case '4':
                 return R.id.op_sqrt;
-
-
             default:
                 return View.NO_ID;
 
@@ -708,5 +705,4 @@ public class KeyMaps {
         }
         return result.toString();
     }
-
 }

@@ -809,7 +809,7 @@ public class Calculator extends Activity
                     // Bkav TienNVh : Kiểm tra ký tự có phải phép tính không?
                     if (KeyMaps.keyForChar(splitFormulatext) != View.NO_ID) {
                         // Bkav TienNVh :  trường hợp trùng  e với exp() , để phân biệt thì phải dựa vào ký tự p
-                        if (i < formulatext.length() - 2 && (byte) formulatext.charAt(i + 2) == 112&& splitFormulatext == 'e' && (byte) formulatext.charAt(i + 1) == 120) {// Bkav TienNVh : 'p'=112
+                        if (i < formulatext.length() - 2 && (byte) formulatext.charAt(i + 2) == 112 && splitFormulatext == 'e' && (byte) formulatext.charAt(i + 1) == 120) {// Bkav TienNVh : 'p'=112
                             // Bkav TienNVh : Trường hợp ký tự là exp(
                             addExplicitKeyToExpr(R.id.fun_exp);
                             mUnprocessedChars = null;
@@ -818,10 +818,10 @@ public class Calculator extends Activity
                             continue;
                         } else {
                             // Bkav TienNVh :  Trường hợp ký tự là e
-                                addExplicitKeyToExpr(KeyMaps.keyForChar(splitFormulatext));
-                                mUnprocessedChars = null;
-                                i++;
-                                continue;
+                            addExplicitKeyToExpr(KeyMaps.keyForChar(splitFormulatext));
+                            mUnprocessedChars = null;
+                            i++;
+                            continue;
                         }
                     } else {
                         if ((byte) splitFormulatext == 26) {
@@ -934,6 +934,7 @@ public class Calculator extends Activity
                     mUnprocessedChars = null;
                 }
             }
+
         }
     }
 
@@ -1580,9 +1581,9 @@ public class Calculator extends Activity
                 mStatusM = true;
                 return;
             //Bkav  TienNVh: Click cac nut % , ! , pi dong item mo rong
-            case R.id.const_pi:
             case R.id.op_fact:
             case R.id.op_pct:
+            case R.id.const_pi:
                 if (orientation == Configuration.ORIENTATION_PORTRAIT) {
                     if (mPadViewPager != null) {
                         mPadViewPager.setCurrentItem(mPadViewPager.getCurrentItem() - 1);
@@ -1590,7 +1591,7 @@ public class Calculator extends Activity
                 }
             default:
                 cancelIfEvaluating(false);
-                if (haveUnprocessed()) { 
+                if (haveUnprocessed()) {
                     // Bkav TienNVh : Truong hop Phep tinh khong hop le
                     // For consistency, append as uninterpreted characters.
                     // This may actually be useful for a left parenthesis.
@@ -1649,10 +1650,15 @@ public class Calculator extends Activity
                         mEvaluator.clearMain();
                         // Bkav TienNVh : Them Cac phep tinh sau khi sua
                         addExplicitStringToExpr(formulaText);
+                        if(KeyMaps.isFunc(id)){
+                            addExplicitKeyToExpr(R.id.rparen);
+                            mPostionCursorToRight++;
+                        }
                         // Bkav TienNVh : Show ket qua neu chuoi ky tu nhap vao la phep tinh
                         redisplayAfterFormulaChange();
                         // Bkav TienNVh : Thay doi vi tri con tro sau
                         changePostionCursor();
+
                     }
 
                 }
@@ -1676,6 +1682,7 @@ public class Calculator extends Activity
             if (mPostionCursorToRight == 0)
                 mFormulaText.setSelection(lengthold);
         }
+
     }
 
     void redisplayFormula() {
