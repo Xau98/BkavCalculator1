@@ -829,7 +829,7 @@ public class Calculator extends Activity
                             mUnprocessedChars = null;
                             i++;
                             continue;
-                        } else {
+                        } else { 
                             switch (splitFormulatext) {
                                 case 's':
                                     if (formulatext.length() > i + 3 && (byte) formulatext.charAt(i + 3) != 40) { // Bkav TienNVh :  '('= 40
@@ -1339,6 +1339,8 @@ public class Calculator extends Activity
      * View.NO_ID is treated as an incomplete function id.
      */
     private void switchToInput(int button_id) {
+        // Bkav TienNVh : Kiem tra id nay co phai id cua phep tinh khong?
+        // Bkav TienNVh : Kiem tra id nay co phai id cua cac hau to (!,%..) khong?
         if (KeyMaps.isBinary(button_id) || KeyMaps.isSuffix(button_id)) {
             mEvaluator.collapse(mEvaluator.getMaxIndex() /* Most recent history entry */);
         } else {
@@ -1354,18 +1356,22 @@ public class Calculator extends Activity
      * We perform slightly more aggressive correction than in pasted expressions.
      */
     private void addExplicitKeyToExpr(int id) {
-        if (mCurrentState == CalculatorState.INPUT && id == R.id.op_sub) {
-            mEvaluator.getExpr(Evaluator.MAIN_INDEX).removeTrailingAdditiveOperators();
-        }
-        addKeyToExpr(id);
+    if (mCurrentState == CalculatorState.INPUT && id == R.id.op_sub) {
+        // Bkav TienNVh : Trường hợp nhập số âm, format lai phep tinh
+        mEvaluator.getExpr(Evaluator.MAIN_INDEX).removeTrailingAdditiveOperators();
+    }
+    // Bkav TienNVh : add id vao Mang Expr
+    addKeyToExpr(id);
     }
 
     // Add the given button id to input expression.
     // If appropriate, clear the expression before doing so.
     private void addKeyToExpr(int id) {
+        // Bkav TienNVh : Khi nhap phep tinh chuyen sang trang thai INPUT
         if (mCurrentState == CalculatorState.ERROR) {
             setState(CalculatorState.INPUT);
         } else if (mCurrentState == CalculatorState.RESULT) {
+            // Bkav TienNVh : Check trong trang thai lay ket qua de tiep tuc tinh
             switchToInput(id);
         }
         if (!mEvaluator.append(id)) {
@@ -1591,48 +1597,15 @@ public class Calculator extends Activity
                 }
             default:
                 cancelIfEvaluating(false);
-                if (haveUnprocessed()) {
-                    // Bkav TienNVh : Truong hop Phep tinh khong hop le
-                    // For consistency, append as uninterpreted characters.
-                    // This may actually be useful for a left parenthesis.
-                    // addChars(KeyMaps.toString(this, id), true);
-                    String formulatext = mFormulaText.getText().toString();
-                    String newtext = KeyMaps.toString(this, id);
-
-                    // Bkav TienNVh : Truowng hop lay ket qua de tiep tuc tinh tiep
-                    if (mCurrentState == CalculatorState.RESULT) {
-                        // Bkav TienNVh :
-                        formulatext = mTruncatedWholeNumber;
-                        postionCursor = formulatext.length() + newtext.length() - 1;
-                    }
-
-                    int lengthold = formulatext.length();// do dai cua chuoi
-                    if (lengthold >= postionCursor || mCurrentState == CalculatorState.RESULT) {
-                        mPostionCursorToRight = lengthold - postionCursor;// Bkav TienNVh : Vi tri con tro tinh tu ben phai sang
-                        // Bkav TienNVh : Chen chuoi moi nhap vao vi tri con tro
-                        String slipt1 = formulatext.substring(0, postionCursor);
-                        String slipt2 = formulatext.substring(postionCursor, lengthold);
-                        String formulaText = slipt1 + newtext + slipt2;
-                        // Bkav TienNVh : Xoa tat ca cac phep tinh cu
-                        mEvaluator.clearMain();
-                        // Bkav TienNVh : Them Cac phep tinh sau khi sua
-                        addExplicitStringToExpr(formulaText);
-                        // Bkav TienNVh : Show ket qua neu chuoi ky tu nhap vao la phep tinh
-                        redisplayAfterFormulaChange();
-                        // Bkav TienNVh : Thay doi vi tri con tro sau
-                        changePostionCursor();
-
-                    }
-
-                } else {
+                // addChars(KeyMaps.toString(this, id), true);
                     //addExplicitKeyToExpr(id); 
                     String formulatext = mFormulaText.getText().toString();
-
                     String newtext = KeyMaps.toString(this, id);
                     // Bkav TienNVh : Truowng hop lay ket qua de tiep tuc tinh tiep
                     if (mCurrentState == CalculatorState.RESULT) {
                         if (!mStatusM) {
-                            formulatext = mTruncatedWholeNumber;
+                            // Bkav TienNVh : Trong trường lấy kết quả để tính tiếp thì chèn ký tự vừa nhập vào sau kết quả
+                            formulatext = mTruncatedWholeNumber + newtext;
                             postionCursor = formulatext.length() + newtext.length() - 1;
                         } else {
                             formulatext = "";
@@ -1641,11 +1614,15 @@ public class Calculator extends Activity
                     }
                     int lengthold = formulatext.length();// do dai cua chuoi
                     if (lengthold >= postionCursor || mCurrentState == CalculatorState.RESULT) {
-                        mPostionCursorToRight = lengthold - postionCursor;// Bkav TienNVh : Vi tri con tro tinh tu ben phai sang
                         // Bkav TienNVh : Chen chuoi moi nhap vao vi tri con tro
-                        String slipt1 = formulatext.substring(0, postionCursor);
-                        String slipt2 = formulatext.substring(postionCursor, lengthold);
-                        String formulaText = slipt1 + newtext + slipt2;
+                        String formulaText = formulatext;
+                        // Bkav TienNVh : Trong trường hợp lấy kết quả để tính tiếp thì mặc đinh chèn ký tự vào phía sau kết quả => bỏ qua đoạn chèn
+                        if( mCurrentState != CalculatorState.RESULT) {
+                            mPostionCursorToRight = lengthold - postionCursor;// Bkav TienNVh : Vi tri con tro tinh tu ben phai sang
+                            String slipt1 = formulatext.substring(0, postionCursor);
+                            String slipt2 = formulatext.substring(postionCursor, lengthold);
+                            formulaText  = slipt1 + newtext + slipt2;
+                        }
                         // Bkav TienNVh : Xoa tat ca cac phep tinh cu
                         mEvaluator.clearMain();
                         // Bkav TienNVh : Them Cac phep tinh sau khi sua
@@ -1658,10 +1635,7 @@ public class Calculator extends Activity
                         redisplayAfterFormulaChange();
                         // Bkav TienNVh : Thay doi vi tri con tro sau
                         changePostionCursor();
-
                     }
-
-                }
                 break;
         }
         showOrHideToolbar();
@@ -1725,8 +1699,14 @@ public class Calculator extends Activity
 
         if (mCurrentState != CalculatorState.INPUT) {
             // In EVALUATE, INIT, RESULT, or INIT_FOR_RESULT state.
-            // Bkav TienNVh : Trường hợp click "=" cho ra kết quả
-            mTruncatedWholeNumber = truncatedWholeNumber;
+            // Bkav TienNVh : check muc dich la lay ket qua de tiep tuc tinh phep tinh tiep theo
+            if(mResultText.getText().toString().contains("E")){
+                // Bkav TienNVh : Check ket qua cho ra so lon thi lay phan nguyen cua ket qua
+                mTruncatedWholeNumber = truncatedWholeNumber;
+            }else {
+                // Bkav TienNVh :  Nguoc lai thi lay ket qua
+                mTruncatedWholeNumber=mResultText.getText().toString();
+            }
             onResult(mCurrentState == CalculatorState.EVALUATE /* animate */,
                     mCurrentState == CalculatorState.INIT_FOR_RESULT
                             || mCurrentState == CalculatorState.RESULT /* previously preserved */);
@@ -1927,7 +1907,8 @@ public class Calculator extends Activity
                     }
 
                 }
-
+                if(formulaText.length()==1&& formulaText.charAt(0)==')')
+                    formulaText.clear();
                 mEvaluator.clearMain();
                 addExplicitStringToExpr(formulaText.toString());
             }
@@ -2335,7 +2316,6 @@ public class Calculator extends Activity
      * @param explicit  these characters were explicitly typed by the user, not pasted
      */
     private void addChars(String moreChars, boolean explicit) {
-        Log.d("TienNVh", "addChars: " + moreChars);
         if (mUnprocessedChars != null) {
             moreChars = mUnprocessedChars + moreChars;
         }

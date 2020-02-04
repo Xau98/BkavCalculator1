@@ -111,7 +111,6 @@ class CalculatorExpr {
         // TODO: rename id.
         public final int id; // We use the button resource id
         Operator(int resId) {
-            Log.d(TAG, "Operator: "+resId);
             id = resId;
         }
         Operator(byte op) throws IOException {
@@ -132,7 +131,6 @@ class CalculatorExpr {
 
                 return result;
             } else {
-                Log.d(TAG, "toCharSequence: "+KeyMaps.toString(context, id));
                 return KeyMaps.toString(context, id);
             }
         }
@@ -529,20 +527,26 @@ class CalculatorExpr {
     /**
      * Remove trailing op_add and op_sub operators.
      */
+    // Bkav TienNVh : Xu ly mot so phep tinh
     void removeTrailingAdditiveOperators() {
         while (true) {
             int s = mExpr.size();
+            // Bkav TienNVh : Check size phep tinh , neu =0 thi bo qua , ket thuc vong lap
             if (s == 0) {
                 break;
             }
             Token lastTok = mExpr.get(s-1);
+            // Bkav TienNVh : Check nhap co phai phep tinh khong ? neu khong phai phep tinh, ket thuc vong lap (VD: -3222)
             if (!(lastTok instanceof Operator)) {
                 break;
             }
             int lastOp = ((Operator) lastTok).id;
-            if (lastOp != R.id.op_add && lastOp != R.id.op_sub) {
+            // Bkav TienNVh : neu co phep chia , nhan so am (VD: 3*-)
+            if (lastOp != R.id.op_add && lastOp != R.id.op_sub) { 
                 break;
             }
+            // Bkav TienNVh :  truong hop con lai thi xoa
+            // Bkav TienNVh :  vi du nhap : 3-+ thi chuyen thanh 3+ (Nghia la lay phep tinh sau cung)
             delete();
         }
     }
@@ -588,7 +592,6 @@ class CalculatorExpr {
                 return;
             }
         }
-
         mExpr.remove(s-1);
     }
 
@@ -728,17 +731,17 @@ class CalculatorExpr {
     // This is essentially a simple recursive descent parser combined with expression evaluation.
 
     private EvalRet evalUnary(int i, EvalContext ec) throws SyntaxException {
-
+// Bkav TienNVh : Token la bieu thuc toan hoc
         final Token t = mExpr.get(i);
+        // Bkav TienNVh : Check t thuoc number
         if (t instanceof Constant) {
             Constant c = (Constant)t;
-            Log.d("evalUnary", c.toString());
             return new EvalRet(i+1,new UnifiedReal(c.toRational()));
         }
+        // Bkav TienNVh : Check t thuoc cac hau to (!,%...)
         if (t instanceof PreEval) {
             final long index = ((PreEval)t).mIndex;
             UnifiedReal res = ec.mExprResolver.getResult(index);
-
             if (res == null) {
                 // We try to minimize this recursive evaluation case, but currently don't
                 // completely avoid it.
@@ -750,6 +753,7 @@ class CalculatorExpr {
         switch(((Operator)(t)).id) {
         case R.id.const_pi:
             return new EvalRet(i+1, UnifiedReal.PI);
+
         case R.id.const_e:
             return new EvalRet(i+1, UnifiedReal.E);
         case R.id.op_sqrt:
@@ -971,7 +975,6 @@ class CalculatorExpr {
                     val = val.add(tmp.val);
                 } else {
                     val = val.subtract(tmp.val);
-
                 }
             }
             cpos = tmp.pos;
@@ -1038,6 +1041,7 @@ class CalculatorExpr {
      */
     private void addReferencedExprs(ArrayList<Long> list, ExprResolver er) {
         for (Token t : mExpr) {
+            Log.d("TienNVh", "addReferencedExprs: "+mExpr.size());
             if (t instanceof PreEval) {
                 Long index = ((PreEval) t).mIndex;
                 if (er.getResult(index) == null && !list.contains(index)) {

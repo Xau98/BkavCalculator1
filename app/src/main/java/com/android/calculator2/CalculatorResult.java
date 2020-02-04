@@ -433,7 +433,6 @@ public class CalculatorResult extends AlignedTextView implements MenuItem.OnMenu
     public void onEvaluate(long index, int initPrec, int msd, int leastDigPos,
             String truncatedWholePart) {
         initPositions(initPrec, msd, leastDigPos, truncatedWholePart);
-
         if (mStoreToMemoryRequested) {
             mEvaluator.copyToMemory(index);
             mStoreToMemoryRequested = false;
@@ -808,7 +807,6 @@ public class CalculatorResult extends AlignedTextView implements MenuItem.OnMenu
                 result = KeyMaps.ELLIPSIS + result;
             }
         }
-
         return result;
     }
 
@@ -955,6 +953,7 @@ public class CalculatorResult extends AlignedTextView implements MenuItem.OnMenu
             formattedResult.setSpan(mExponentColorSpan, expIndex, result.length(),
                                     Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
             setText(formattedResult);
+
         } else {
             setText(result);
         }

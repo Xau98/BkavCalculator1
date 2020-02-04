@@ -580,6 +580,7 @@ public class Evaluator implements CalculatorExpr.ExprResolver {
                             throw new CR.AbortedException();
                         }
                         res = putResultIfAbsent(mIndex, res);
+                        Log.d("TienNVh", "doInBackground: "+res);
                     } catch (StackOverflowError e) {
                         // Absurdly large integer exponents can cause this. There might be other
                         // examples as well. Treat it as a timeout.
@@ -757,7 +758,6 @@ public class Evaluator implements CalculatorExpr.ExprResolver {
         protected ReevalResult doInBackground(Integer... prec) {
             try {
                 final int precOffset = prec[0].intValue();
-                Log.d("TienNVh 1:", "doInBackground: "+mExprInfo.mVal.get());
                 return new ReevalResult(mExprInfo.mVal.get().toStringTruncated(precOffset),
                         precOffset);
             } catch(ArithmeticException e) {
@@ -1068,7 +1068,6 @@ public class Evaluator implements CalculatorExpr.ExprResolver {
             boolean[] truncated, boolean[] negative, EvaluationListener listener) {
 
         ExprInfo ei = mExprs.get(index);
-         Log.d("TienNVh", index+"getFullCopyText:index::"+mExprs.size());
         int currentPrecOffset = precOffset[0];
         // Make sure we eventually get a complete answer
         if (ei.mResultString == null) {
@@ -1107,11 +1106,9 @@ public class Evaluator implements CalculatorExpr.ExprResolver {
         }
         int startIndex = Math.max(endIndex + deficit - maxDigs, 0);
         truncated[0] = (startIndex > getMsdIndex(index));
-        Log.d( "TienNVh" ,  ei.mResultString+"getFullCopyText: startIndex"+startIndex+"//endIndex"+endIndex);
         String result = ei.mResultString.substring(startIndex, endIndex);
         if (deficit > 0) {
             result += StringUtils.repeat(' ', deficit);
-            Log.d("TienNVh", "getFullCopyText:--- result"+result);
             // Blank character is replaced during translation.
             // Since we always compute past the decimal point, this never fills in the spot
             // where the decimal point should go, and we can otherwise treat placeholders
@@ -1158,7 +1155,7 @@ public class Evaluator implements CalculatorExpr.ExprResolver {
      */
     private void evaluateResult(long index, EvaluationListener listener, CharMetricsInfo cmi,
             boolean required) {
-//        Log.d("evaluateResult", Log.getStackTraceString(new Exception()));
+//        Log.d("TienNVh", Log.getStackTraceString(new Exception()));
         ExprInfo ei = mExprs.get(index);
         if (index == MAIN_INDEX) {
             clearMainCache();
@@ -1843,7 +1840,6 @@ public class Evaluator implements CalculatorExpr.ExprResolver {
     public UnifiedReal putResultIfAbsent(long index, UnifiedReal result) {
         ExprInfo ei = mExprs.get(index);
         if (ei.mVal.compareAndSet(null, result)) {
-            Log.d("TienNVh 4", "putResultIfAbsent: "+result);
             return result;
         } else {
             // Cannot change once non-null.
