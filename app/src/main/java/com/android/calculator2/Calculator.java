@@ -778,10 +778,19 @@ public class Calculator extends Activity
         return cutBitmap;
     }
 
-    // Bkav TienNVh : Chuyen ky tu sang ID
+    // Bkav TienNVh :  Hàm này dùng đề cắt chuỗi thành ký tự. sau đó chuyển sang id. sau đó add vào mảng Expr
+    // Bkav TienNVh :  Các ký tự đặc biệt như sin( , cos( .... xét từng trường hợp để lấy lại id
+    // và dịch chuyển con trỏ theo sau các ký tự đặc biệt
+    // VD : chuổi truyền vào là 123sin( thì hàm tiến hành cắt từ trái sang ta được các ký tự là 1, 2,3, sin(
+    // cắt 1,2,3 thì đơn giản còn cắt sin( cắt đến 4 ký tự
+
+    // Bkav TienNVh :  Check ngôn ngữ để thay đổi dấu phẩy cho phù hợp với ngôn ngữ
+
     public void addExplicitStringToExpr(String formulatext) {
         mEvaluator.clearMain();
+        // Bkav TienNVh : Check chuỗi khác rỗng
         if (!formulatext.equals("")) {
+            // Bkav TienNVh :  Cắt các ký tự trong chuỗi
             for (int i = 0; i < formulatext.length(); ) {
                 // Bkav TienNVh : Lay tung ky tu trong chuoi
                 char splitFormulatext = formulatext.charAt(i);
@@ -802,48 +811,57 @@ public class Calculator extends Activity
                         mUnprocessedChars = null;
                         continue;
                     }
-
                 }
                 // Bkav TienNVh :  Kiểm tra ký tự có phải số không ?
                 if (KeyMaps.keyForDigVal((int) splitFormulatext) == View.NO_ID) {
                     // Bkav TienNVh : Kiểm tra ký tự có phải phép tính không?
                     if (KeyMaps.keyForChar(splitFormulatext) != View.NO_ID) {
-                        // Bkav TienNVh :  trường hợp trùng  e với exp() , để phân biệt thì phải dựa vào ký tự p
+                        // Bkav TienNVh : check i < formulatext.length() - 2  để tránh trường hợp lỗi do ko có vị trí i+2
+                        // trường hợp trùng  e với exp() , để phân biệt thì phải dựa vào ký tự p . 'e'chuyển sang byte được 112 tượng tư 'p'=112
                         if (i < formulatext.length() - 2 && (byte) formulatext.charAt(i + 2) == 112 && splitFormulatext == 'e' && (byte) formulatext.charAt(i + 1) == 120) {// Bkav TienNVh : 'p'=112
-                            // Bkav TienNVh : Trường hợp ký tự là exp(
+                            // Bkav TienNVh :sau khi lọc ký tự là exp( thì add vào mảng Expr
                             addExplicitKeyToExpr(R.id.fun_exp);
+                            // Bkav TienNVh : Nếu đang trong trạng thái lỗi thì chuyển sang hết lỗi
+                            // Bkav TienNVh :  TH lỗi khi mUnprocessedChars != null
                             mUnprocessedChars = null;
                             // Bkav TienNVh : tăng lên 4 vì độ dài chuỗi exp( là 4
                             i = i + 4;
+                            // Bkav TienNVh : Tiếp tục vòng lặp với i tăng lên 4
                             continue;
                         } else {
-                            // Bkav TienNVh :  Trường hợp ký tự là e
+                            // Bkav TienNVh :  Trường hợp ký tự là hằng số 'e ' chuyển sang id sau đó add vào mảng Expr
                             addExplicitKeyToExpr(KeyMaps.keyForChar(splitFormulatext));
                             mUnprocessedChars = null;
                             i++;
                             continue;
                         }
                     } else {
+                        // Bkav TienNVh :  dấu căn chuyển sang byte là 26
                         if ((byte) splitFormulatext == 26) {
                             addExplicitKeyToExpr(R.id.op_sqrt);
                             mUnprocessedChars = null;
                             i++;
                             continue;
-                        } else { 
+                        } else {
+                            // Bkav TienNVh :  Các ký tự : sin, cos , tag , ln ,.. do cắt từng ký tự 1 => cắt đưược là 's', 'c',  't' ,'l'
+                            // Bkav TienNVh : Xét từng trường hợp : ký tự 's' thì có cả trường hợp acrsin . tương tự  cos , tan , ln
                             switch (splitFormulatext) {
                                 case 's':
+                                    // Bkav TienNVh : Check trường hợp cắt được ký tự 's'
                                     if (formulatext.length() > i + 3 && (byte) formulatext.charAt(i + 3) != 40) { // Bkav TienNVh :  '('= 40
+                                        // Bkav TienNVh : Check  TH: sin-1(
                                         if ((byte) formulatext.charAt(i + 3) == 123) {// Bkav TienNVh :  '-'=123
                                             addExplicitKeyToExpr(R.id.fun_arcsin);
                                             mUnprocessedChars = null;
+                                            // Bkav TienNVh :  độ dài của sin-1( =6
                                             i = i + 6;
                                         } else {
-                                            // Bkav TienNVh :  Trường hợp chèn ký tự vào giữa cụm
+                                            // Bkav TienNVh :  Trường hợp chèn ký tự vào giữa cụm => sai cú pháp  (VD : si5555n => Báo lỗi cú pháp )
                                             insertCharacters(formulatext);
                                             return;
                                         }
                                     } else {
-                                        // Bkav TienNVh : sln(in(
+                                        // Bkav TienNVh : Trường hợp sin(
                                         if ((byte) formulatext.charAt(i + 1) == 105) { // Bkav TienNVh : 'i'=105
                                             addExplicitKeyToExpr(R.id.fun_sin);
                                             i = i + 4;
@@ -915,6 +933,7 @@ public class Calculator extends Activity
                                     continue;
 
                                 default:
+                                    // Bkav TienNVh :  Trường hợp : x^2
                                     if ((byte) formulatext.charAt(i) == -78) {
                                         addExplicitKeyToExpr(R.id.op_sqr);
                                         i++;
@@ -934,7 +953,6 @@ public class Calculator extends Activity
                     mUnprocessedChars = null;
                 }
             }
-
         }
     }
 
@@ -1421,7 +1439,7 @@ public class Calculator extends Activity
             mDisplayView.hideToolbar();
         }
     }
-
+// Bkav TienNVh :  Hàm chứa tất cả sự kiện click của app
     public void onButtonClick(View view) {
         // Any animation is ended before we get here.
         mCurrentButton = view;
@@ -1595,16 +1613,23 @@ public class Calculator extends Activity
                         mPadViewPager.setCurrentItem(mPadViewPager.getCurrentItem() - 1);
                     }
                 }
+                // Bkav TienNVh : Các trường hợp còn lại là các ký tự
+                // Để Mục đích là thêm vào id vao Mang Expr  đúng trình tự  thì phải
+                // chuyển id sang string sau đó chèn vào vị trí mình mong muốn
+                // sau đó cắt String thành các ký tự ,sau đó chuyển ký tự đó sang id ròi add vào Mảng Expr
+                // mỗi khi click ký tự thì được xoá sạch rồi sau đó thưc hiện tính lại
             default:
                 cancelIfEvaluating(false);
                 // addChars(KeyMaps.toString(this, id), true);
-                    //addExplicitKeyToExpr(id); 
+                    //addExplicitKeyToExpr(id);
+                // Bkav TienNVh : Lấy nội dung đang hiện thị
                     String formulatext = mFormulaText.getText().toString();
+                    // Bkav TienNVh :  Chuyển từ id sang giá trị
                     String newtext = KeyMaps.toString(this, id);
                     // Bkav TienNVh : Truowng hop lay ket qua de tiep tuc tinh tiep
                     if (mCurrentState == CalculatorState.RESULT) {
                         if (!mStatusM) {
-                            // Bkav TienNVh : Trong trường lấy kết quả để tính tiếp thì chèn ký tự vừa nhập vào sau kết quả
+                            // Bkav TienNVh : Trong trường hợp lấy kết quả để tính tiếp thì chèn ký tự vừa nhập vào sau kết quả
                             formulatext = mTruncatedWholeNumber + newtext;
                             postionCursor = formulatext.length() + newtext.length() - 1;
                         } else {
@@ -1627,6 +1652,7 @@ public class Calculator extends Activity
                         mEvaluator.clearMain();
                         // Bkav TienNVh : Them Cac phep tinh sau khi sua
                         addExplicitStringToExpr(formulaText);
+                        // Bkav TienNVh : tính năng mở rộng thêm dấu ( sau các sin( , cos(...
                         if(KeyMaps.isFunc(id)){
                             addExplicitKeyToExpr(R.id.rparen);
                             mPostionCursorToRight++;

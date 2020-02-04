@@ -1041,7 +1041,6 @@ class CalculatorExpr {
      */
     private void addReferencedExprs(ArrayList<Long> list, ExprResolver er) {
         for (Token t : mExpr) {
-            Log.d("TienNVh", "addReferencedExprs: "+mExpr.size());
             if (t instanceof PreEval) {
                 Long index = ((PreEval) t).mIndex;
                 if (er.getResult(index) == null && !list.contains(index)) {
