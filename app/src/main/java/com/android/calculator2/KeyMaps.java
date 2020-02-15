@@ -549,7 +549,6 @@ public class KeyMaps {
             case '\u00F7': // DIVISION SIGN
                 return R.id.op_div;
             // We no longer localize function names, so they can't start with an 'e' or 'p'.
-
             case 'e':
                 return R.id.const_e;
                 // Bkav TienNVh : Bỏ vì không có trường hợp nhập vào 'p' tránh trường hợp người dùng dán ký tự 'p' vào chuyển sang sang số hằng số pi
@@ -566,6 +565,13 @@ public class KeyMaps {
                 return R.id.lparen;
             case ')':
                 return R.id.rparen;
+
+            // Bkav TienNVh : mũ 2
+            case '²':
+                return R.id.op_sqr;
+             // Bkav TienNVh : căn 2
+            case '√':
+                    return R.id.op_sqrt;
             default:
                 if (c == mDecimalPt) return R.id.dec_point;
                 if (c == mPiChar) return R.id.const_pi;
@@ -613,6 +619,8 @@ public class KeyMaps {
             sKeyValForFun.put("atan", R.id.fun_arctan);
             sKeyValForFun.put("ln", R.id.fun_ln);
             sKeyValForFun.put("log", R.id.fun_log);
+            // Bkav TienNVh :
+            sKeyValForFun.put("exp", R.id.fun_exp);
             sKeyValForFun.put("sqrt", R.id.op_sqrt); // special treatment
             addButtonToFunMap(R.id.fun_sin);
             addButtonToFunMap(R.id.fun_cos);

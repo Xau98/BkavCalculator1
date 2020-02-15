@@ -68,7 +68,6 @@ private ArrayList<String> mListHistory=new ArrayList<>();
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
-        Log.d(TAG, "onCreate: ");
         final View view = inflater.inflate(
                 R.layout.fragment_history, container, false /* attachToRoot */);
 

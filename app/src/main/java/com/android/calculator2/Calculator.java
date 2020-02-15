@@ -239,12 +239,15 @@ public class Calculator extends Activity
                         String result = formula1 + textNew + formula2;
                         mPostionCursorToRight = result.length() - textNew.length() - formula1.length();
                         // Bkav TienNVh : Xoa cac phep tinh hiện tại
+                        //long start = System.currentTimeMillis();
                         mEvaluator.clearMain();
                         // Bkav TienNVh : add cac phep tính mới
-                        addExplicitStringToExpr(result);
+//                        addExplicitStringToExpr(result);
+                        addChars(result, false);
                         redisplayAfterFormulaChange();
                         // Bkav TienNVh : thay doi vi tri con tro
                         changePostionCursor();
+                        //Log.d("TienNVh", "onPaste: "+(System.currentTimeMillis() - start));
                     }
                     return true;
                 }
@@ -282,7 +285,7 @@ public class Calculator extends Activity
 
     private CalculatorState mCurrentState;
     private Evaluator mEvaluator;
-
+    private BkavMemoryFunction mBkavMemoryFunction;
     private CalculatorDisplay mDisplayView;
     private TextView mModeView, mModeViewM;
     private Toolbar mToolbar;
@@ -310,8 +313,7 @@ public class Calculator extends Activity
     // Bkav TienNVh :
     private SharedPreferences mSharedPreferences;
     private String mSharePreFile = "SaveCalCulator";
-    // Bkav TienNVh : Bien luu tam thoi khi dung m+ , m-
-    private String mINPUT = "";
+
 
     // Characters that were recently entered at the end of the display that have not yet
     // been added to the underlying expression.
@@ -418,7 +420,7 @@ public class Calculator extends Activity
             }
         });
         mRelativeLayoutHistory = (BkavHistoryLayout) findViewById(R.id.relativeLayout_history);
-
+        mBkavMemoryFunction = new BkavMemoryFunction();
         mMainCalculator = findViewById(R.id.main_calculator);
         mDisplayView = (CalculatorDisplay) findViewById(R.id.display);
         mModeView = (TextView) findViewById(R.id.mode);
@@ -785,176 +787,177 @@ public class Calculator extends Activity
     // cắt 1,2,3 thì đơn giản còn cắt sin( cắt đến 4 ký tự
 
     // Bkav TienNVh :  Check ngôn ngữ để thay đổi dấu phẩy cho phù hợp với ngôn ngữ
-
-    public void addExplicitStringToExpr(String formulatext) {
-        mEvaluator.clearMain();
-        // Bkav TienNVh : Check chuỗi khác rỗng
-        if (!formulatext.equals("")) {
-            // Bkav TienNVh :  Cắt các ký tự trong chuỗi
-            for (int i = 0; i < formulatext.length(); ) {
-                // Bkav TienNVh : Lay tung ky tu trong chuoi
-                char splitFormulatext = formulatext.charAt(i);
-                // Bkav TienNVh : xử lý dấu ngăn cách và dấu phẩy
-                if (splitFormulatext == ',' || splitFormulatext == '.') {
-                    // Bkav TienNVh : Trường hợp Ngôn ngữ tiếng việt dấu ',' tương ứng với dấu phẩy và dấu ngăn cách là '.'
-                    // Bkav TienNVh : Trường  hợp ngôn ngữ khác tiếng viết '.' tương ứng với dấu phẩy và dấu ngăn cách là dấu ','
-                    if ((splitFormulatext == ',' && Locale.getDefault().toString().equals("vi_VN")) ||
-                            (splitFormulatext == '.' && !Locale.getDefault().toString().equals("vi_VN"))) {
-                        // Bkav TienNVh : Trường hợp dấu phẩy
-                        addExplicitKeyToExpr(R.id.dec_point);
-                        i++;
-                        mUnprocessedChars = null;
-                        continue;
-                    } else {
-                        // Bkav TienNVh : Trường hợp dấu ngăn cách
-                        i++;
-                        mUnprocessedChars = null;
-                        continue;
-                    }
-                }
-                // Bkav TienNVh :  Kiểm tra ký tự có phải số không ?
-                if (KeyMaps.keyForDigVal((int) splitFormulatext) == View.NO_ID) {
-                    // Bkav TienNVh : Kiểm tra ký tự có phải phép tính không?
-                    if (KeyMaps.keyForChar(splitFormulatext) != View.NO_ID) {
-                        // Bkav TienNVh : check i < formulatext.length() - 2  để tránh trường hợp lỗi do ko có vị trí i+2
-                        // trường hợp trùng  e với exp() , để phân biệt thì phải dựa vào ký tự p . 'e'chuyển sang byte được 112 tượng tư 'p'=112
-                        if (i < formulatext.length() - 2 && (byte) formulatext.charAt(i + 2) == 112 && splitFormulatext == 'e' && (byte) formulatext.charAt(i + 1) == 120) {// Bkav TienNVh : 'p'=112
-                            // Bkav TienNVh :sau khi lọc ký tự là exp( thì add vào mảng Expr
-                            addExplicitKeyToExpr(R.id.fun_exp);
-                            // Bkav TienNVh : Nếu đang trong trạng thái lỗi thì chuyển sang hết lỗi
-                            // Bkav TienNVh :  TH lỗi khi mUnprocessedChars != null
-                            mUnprocessedChars = null;
-                            // Bkav TienNVh : tăng lên 4 vì độ dài chuỗi exp( là 4
-                            i = i + 4;
-                            // Bkav TienNVh : Tiếp tục vòng lặp với i tăng lên 4
-                            continue;
-                        } else {
-                            // Bkav TienNVh :  Trường hợp ký tự là hằng số 'e ' chuyển sang id sau đó add vào mảng Expr
-                            addExplicitKeyToExpr(KeyMaps.keyForChar(splitFormulatext));
-                            mUnprocessedChars = null;
-                            i++;
-                            continue;
-                        }
-                    } else {
-                        // Bkav TienNVh :  dấu căn chuyển sang byte là 26
-                        if ((byte) splitFormulatext == 26) {
-                            addExplicitKeyToExpr(R.id.op_sqrt);
-                            mUnprocessedChars = null;
-                            i++;
-                            continue;
-                        } else {
-                            // Bkav TienNVh :  Các ký tự : sin, cos , tag , ln ,.. do cắt từng ký tự 1 => cắt đưược là 's', 'c',  't' ,'l'
-                            // Bkav TienNVh : Xét từng trường hợp : ký tự 's' thì có cả trường hợp acrsin . tương tự  cos , tan , ln
-                            switch (splitFormulatext) {
-                                case 's':
-                                    // Bkav TienNVh : Check trường hợp cắt được ký tự 's'
-                                    if (formulatext.length() > i + 3 && (byte) formulatext.charAt(i + 3) != 40) { // Bkav TienNVh :  '('= 40
-                                        // Bkav TienNVh : Check  TH: sin-1(
-                                        if ((byte) formulatext.charAt(i + 3) == 123) {// Bkav TienNVh :  '-'=123
-                                            addExplicitKeyToExpr(R.id.fun_arcsin);
-                                            mUnprocessedChars = null;
-                                            // Bkav TienNVh :  độ dài của sin-1( =6
-                                            i = i + 6;
-                                        } else {
-                                            // Bkav TienNVh :  Trường hợp chèn ký tự vào giữa cụm => sai cú pháp  (VD : si5555n => Báo lỗi cú pháp )
-                                            insertCharacters(formulatext);
-                                            return;
-                                        }
-                                    } else {
-                                        // Bkav TienNVh : Trường hợp sin(
-                                        if ((byte) formulatext.charAt(i + 1) == 105) { // Bkav TienNVh : 'i'=105
-                                            addExplicitKeyToExpr(R.id.fun_sin);
-                                            i = i + 4;
-                                            // Bkav TienNVh : set lai trường hợp hết lỗi cú pháp
-                                            mUnprocessedChars = null;
-                                        } else {
-                                            // Bkav TienNVh :  Trường hợp chèn ký tự vào giữa cụm
-                                            insertCharacters(formulatext);
-                                            return;
-                                        }
-                                    }
-                                    continue;
-                                case 'c':
-                                    if (formulatext.length() > i + 3 && (byte) formulatext.charAt(i + 3) != 40) {
-                                        if ((byte) formulatext.charAt(i + 3) == 94) {// Bkav TienNVh :  '-'=94
-                                            addExplicitKeyToExpr(R.id.fun_arccos);
-                                            i = i + 6;
-                                            // Bkav TienNVh : set lai trường hợp hết lỗi cú pháp
-                                            mUnprocessedChars = null;
-                                        } else {
-                                            // Bkav TienNVh :  Trường hợp chèn ký tự vào giữa cụm
-                                            insertCharacters(formulatext);
-                                            return;
-                                        }
-                                    } else {
-                                        addExplicitKeyToExpr(R.id.fun_cos);
-                                        i = i + 4;
-                                        // Bkav TienNVh : set lai trường hợp hết lỗi cú pháp
-                                        mUnprocessedChars = null;
-                                    }
-                                    continue;
-                                case 't':
-                                    if (formulatext.length() > i + 3 && (byte) formulatext.charAt(i + 3) != 40) {
-                                        if ((byte) formulatext.charAt(i + 3) == 94) {// Bkav TienNVh :  '-'=94
-                                            addExplicitKeyToExpr(R.id.fun_arctan);
-                                            i = i + 6;
-                                            // Bkav TienNVh : set lai trường hợp hết lỗi cú pháp
-                                            mUnprocessedChars = null;
-                                        } else {
-                                            // Bkav TienNVh :  Trường hợp chèn ký tự vào giữa cụm
-                                            insertCharacters(formulatext);
-                                            return;
-                                        }
-                                    } else {
-                                        addExplicitKeyToExpr(R.id.fun_tan);
-                                        i = i + 4;
-                                        // Bkav TienNVh : set lai trường hợp hết lỗi cú pháp
-                                        mUnprocessedChars = null;
-                                    }
-                                    continue;
-                                case 'l':
-                                    if ((byte) formulatext.charAt(i + 2) == 103) { // Bkav TienNVh : 'g'=103
-                                        addExplicitKeyToExpr(R.id.fun_log);
-                                        i = i + 4;
-                                        // Bkav TienNVh : set lai trường hợp hết lỗi cú pháp
-                                        mUnprocessedChars = null;
-                                    } else {
-                                        if ((byte) formulatext.charAt(i + 2) == 40) {// Bkav TienNVh : '('=40
-                                            addExplicitKeyToExpr(R.id.fun_ln);
-                                            i = i + 3;
-                                            // Bkav TienNVh : set lai trường hợp hết lỗi cú pháp
-                                            mUnprocessedChars = null;
-                                        } else {
-                                            // Bkav TienNVh :  Trường hợp chèn ký tự vào giữa cụm
-                                            insertCharacters(formulatext);
-                                            return;
-                                        }
-                                    }
-                                    continue;
-
-                                default:
-                                    // Bkav TienNVh :  Trường hợp : x^2
-                                    if ((byte) formulatext.charAt(i) == -78) {
-                                        addExplicitKeyToExpr(R.id.op_sqr);
-                                        i++;
-                                        mUnprocessedChars = null;
-                                        continue;
-                                    } else {
-                                        mEvaluator.clearMain();
-                                        mUnprocessedChars = formulatext;
-                                        return;
-                                    }
-                            }
-                        }
-                    }
-                } else {
-                    addExplicitKeyToExpr(KeyMaps.keyForDigVal((int) splitFormulatext));
-                    i++;
-                    mUnprocessedChars = null;
-                }
-            }
-        }
-    }
+    // Bkav TienNVh : Có thể thay hàm addChar
+//
+//    public void addExplicitStringToExpr(String formulatext) {
+//        mEvaluator.clearMain();
+//        // Bkav TienNVh : Check chuỗi khác rỗng
+//        if (!formulatext.equals("")) {
+//            // Bkav TienNVh :  Cắt các ký tự trong chuỗi
+//            for (int i = 0; i < formulatext.length(); ) {
+//                // Bkav TienNVh : Lay tung ky tu trong chuoi
+//                char splitFormulatext = formulatext.charAt(i);
+//                // Bkav TienNVh : xử lý dấu ngăn cách và dấu phẩy
+//                if (splitFormulatext == ',' || splitFormulatext == '.') {
+//                    // Bkav TienNVh : Trường hợp Ngôn ngữ tiếng việt dấu ',' tương ứng với dấu phẩy và dấu ngăn cách là '.'
+//                    // Bkav TienNVh : Trường  hợp ngôn ngữ khác tiếng viết '.' tương ứng với dấu phẩy và dấu ngăn cách là dấu ','
+//                    if ((splitFormulatext == ',' && Locale.getDefault().toString().equals("vi_VN")) ||
+//                            (splitFormulatext == '.' && !Locale.getDefault().toString().equals("vi_VN"))) {
+//                        // Bkav TienNVh : Trường hợp dấu phẩy
+//                        addExplicitKeyToExpr(R.id.dec_point);
+//                        i++;
+//                        mUnprocessedChars = null;
+//                        continue;
+//                    } else {
+//                        // Bkav TienNVh : Trường hợp dấu ngăn cách
+//                        i++;
+//                        mUnprocessedChars = null;
+//                        continue;
+//                    }
+//                }
+//                // Bkav TienNVh :  Kiểm tra ký tự có phải số không ?
+//                if (KeyMaps.keyForDigVal((int) splitFormulatext) == View.NO_ID) {
+//                    // Bkav TienNVh : Kiểm tra ký tự có phải phép tính không?
+//                    if (KeyMaps.keyForChar(splitFormulatext) != View.NO_ID) {
+//                        // Bkav TienNVh : check i < formulatext.length() - 2  để tránh trường hợp lỗi do ko có vị trí i+2
+//                        // trường hợp trùng  e với exp() , để phân biệt thì phải dựa vào ký tự p . 'e'chuyển sang byte được 112 tượng tư 'p'=112
+//                        if (i < formulatext.length() - 2 && (byte) formulatext.charAt(i + 2) == 112 && splitFormulatext == 'e' && (byte) formulatext.charAt(i + 1) == 120) {// Bkav TienNVh : 'p'=112
+//                            // Bkav TienNVh :sau khi lọc ký tự là exp( thì add vào mảng Expr
+//                            addExplicitKeyToExpr(R.id.fun_exp);
+//                            // Bkav TienNVh : Nếu đang trong trạng thái lỗi thì chuyển sang hết lỗi
+//                            // Bkav TienNVh :  TH lỗi khi mUnprocessedChars != null
+//                            mUnprocessedChars = null;
+//                            // Bkav TienNVh : tăng lên 4 vì độ dài chuỗi exp( là 4
+//                            i = i + 4;
+//                            // Bkav TienNVh : Tiếp tục vòng lặp với i tăng lên 4
+//                            continue;
+//                        } else {
+//                            // Bkav TienNVh :  Trường hợp ký tự là hằng số 'e ' chuyển sang id sau đó add vào mảng Expr
+//                            addExplicitKeyToExpr(KeyMaps.keyForChar(splitFormulatext));
+//                            mUnprocessedChars = null;
+//                            i++;
+//                            continue;
+//                        }
+//                    } else {
+//                        // Bkav TienNVh :  dấu căn chuyển sang byte là 26
+//                        if ((byte) splitFormulatext == 26) {
+//                            addExplicitKeyToExpr(R.id.op_sqrt);
+//                            mUnprocessedChars = null;
+//                            i++;
+//                            continue;
+//                        } else {
+//                            // Bkav TienNVh :  Các ký tự : sin, cos , tag , ln ,.. do cắt từng ký tự 1 => cắt đưược là 's', 'c',  't' ,'l'
+//                            // Bkav TienNVh : Xét từng trường hợp : ký tự 's' thì có cả trường hợp acrsin . tương tự  cos , tan , ln
+//                            switch (splitFormulatext) {
+//                                case 's':
+//                                    // Bkav TienNVh : Check trường hợp cắt được ký tự 's'
+//                                    if (formulatext.length() > i + 3 && (byte) formulatext.charAt(i + 3) != 40) { // Bkav TienNVh :  '('= 40
+//                                        // Bkav TienNVh : Check  TH: sin-1(
+//                                        if ((byte) formulatext.charAt(i + 3) == 123) {// Bkav TienNVh :  '-'=123
+//                                            addExplicitKeyToExpr(R.id.fun_arcsin);
+//                                            mUnprocessedChars = null;
+//                                            // Bkav TienNVh :  độ dài của sin-1( =6
+//                                            i = i + 6;
+//                                        } else {
+//                                            // Bkav TienNVh :  Trường hợp chèn ký tự vào giữa cụm => sai cú pháp  (VD : si5555n => Báo lỗi cú pháp )
+//                                            insertCharacters(formulatext);
+//                                            return;
+//                                        }
+//                                    } else {
+//                                        // Bkav TienNVh : Trường hợp sin(
+//                                        if ((byte) formulatext.charAt(i + 1) == 105) { // Bkav TienNVh : 'i'=105
+//                                            addExplicitKeyToExpr(R.id.fun_sin);
+//                                            i = i + 4;
+//                                            // Bkav TienNVh : set lai trường hợp hết lỗi cú pháp
+//                                            mUnprocessedChars = null;
+//                                        } else {
+//                                            // Bkav TienNVh :  Trường hợp chèn ký tự vào giữa cụm
+//                                            insertCharacters(formulatext);
+//                                            return;
+//                                        }
+//                                    }
+//                                    continue;
+//                                case 'c':
+//                                    if (formulatext.length() > i + 3 && (byte) formulatext.charAt(i + 3) != 40) {
+//                                        if ((byte) formulatext.charAt(i + 3) == 94) {// Bkav TienNVh :  '-'=94
+//                                            addExplicitKeyToExpr(R.id.fun_arccos);
+//                                            i = i + 6;
+//                                            // Bkav TienNVh : set lai trường hợp hết lỗi cú pháp
+//                                            mUnprocessedChars = null;
+//                                        } else {
+//                                            // Bkav TienNVh :  Trường hợp chèn ký tự vào giữa cụm
+//                                            insertCharacters(formulatext);
+//                                            return;
+//                                        }
+//                                    } else {
+//                                        addExplicitKeyToExpr(R.id.fun_cos);
+//                                        i = i + 4;
+//                                        // Bkav TienNVh : set lai trường hợp hết lỗi cú pháp
+//                                        mUnprocessedChars = null;
+//                                    }
+//                                    continue;
+//                                case 't':
+//                                    if (formulatext.length() > i + 3 && (byte) formulatext.charAt(i + 3) != 40) {
+//                                        if ((byte) formulatext.charAt(i + 3) == 94) {// Bkav TienNVh :  '-'=94
+//                                            addExplicitKeyToExpr(R.id.fun_arctan);
+//                                            i = i + 6;
+//                                            // Bkav TienNVh : set lai trường hợp hết lỗi cú pháp
+//                                            mUnprocessedChars = null;
+//                                        } else {
+//                                            // Bkav TienNVh :  Trường hợp chèn ký tự vào giữa cụm
+//                                            insertCharacters(formulatext);
+//                                            return;
+//                                        }
+//                                    } else {
+//                                        addExplicitKeyToExpr(R.id.fun_tan);
+//                                        i = i + 4;
+//                                        // Bkav TienNVh : set lai trường hợp hết lỗi cú pháp
+//                                        mUnprocessedChars = null;
+//                                    }
+//                                    continue;
+//                                case 'l':
+//                                    if ((byte) formulatext.charAt(i + 2) == 103) { // Bkav TienNVh : 'g'=103
+//                                        addExplicitKeyToExpr(R.id.fun_log);
+//                                        i = i + 4;
+//                                        // Bkav TienNVh : set lai trường hợp hết lỗi cú pháp
+//                                        mUnprocessedChars = null;
+//                                    } else {
+//                                        if ((byte) formulatext.charAt(i + 2) == 40) {// Bkav TienNVh : '('=40
+//                                            addExplicitKeyToExpr(R.id.fun_ln);
+//                                            i = i + 3;
+//                                            // Bkav TienNVh : set lai trường hợp hết lỗi cú pháp
+//                                            mUnprocessedChars = null;
+//                                        } else {
+//                                            // Bkav TienNVh :  Trường hợp chèn ký tự vào giữa cụm
+//                                            insertCharacters(formulatext);
+//                                            return;
+//                                        }
+//                                    }
+//                                    continue;
+//
+//                                default:
+//                                    // Bkav TienNVh :  Trường hợp : x^2
+//                                    if ((byte) formulatext.charAt(i) == -78) {
+//                                        addExplicitKeyToExpr(R.id.op_sqr);
+//                                        i++;
+//                                        mUnprocessedChars = null;
+//                                        continue;
+//                                    } else {
+//                                        mEvaluator.clearMain();
+//                                        mUnprocessedChars = formulatext;
+//                                        return;
+//                                    }
+//                            }
+//                        }
+//                    }
+//                } else {
+//                    addExplicitKeyToExpr(KeyMaps.keyForDigVal((int) splitFormulatext));
+//                    i++;
+//                    mUnprocessedChars = null;
+//                }
+//            }
+//        }
+//    }
 
     // Bkav TienNVh : truong hop co ky tu chen  o giua cum
     public void insertCharacters(String formulatext) {
@@ -1042,7 +1045,8 @@ public class Calculator extends Activity
                 }
             }
         }
-        addExplicitStringToExpr(formulaText);
+//        addExplicitStringToExpr(formulaText);
+        addChars(formulaText, false);
         restoreDisplay();
         if (mFormulaText.length() > 0)
             mFormulaText.setSelection(mFormulaText.length());
@@ -1374,12 +1378,12 @@ public class Calculator extends Activity
      * We perform slightly more aggressive correction than in pasted expressions.
      */
     private void addExplicitKeyToExpr(int id) {
-    if (mCurrentState == CalculatorState.INPUT && id == R.id.op_sub) {
-        // Bkav TienNVh : Trường hợp nhập số âm, format lai phep tinh
-        mEvaluator.getExpr(Evaluator.MAIN_INDEX).removeTrailingAdditiveOperators();
-    }
-    // Bkav TienNVh : add id vao Mang Expr
-    addKeyToExpr(id);
+        if (mCurrentState == CalculatorState.INPUT && id == R.id.op_sub) {
+            // Bkav TienNVh : Trường hợp nhập số âm, format lai phep tinh
+            mEvaluator.getExpr(Evaluator.MAIN_INDEX).removeTrailingAdditiveOperators();
+        }
+        // Bkav TienNVh : add id vao Mang Expr
+        addKeyToExpr(id);
     }
 
     // Add the given button id to input expression.
@@ -1439,7 +1443,8 @@ public class Calculator extends Activity
             mDisplayView.hideToolbar();
         }
     }
-// Bkav TienNVh :  Hàm chứa tất cả sự kiện click của app
+
+    // Bkav TienNVh :  Hàm chứa tất cả sự kiện click của app
     public void onButtonClick(View view) {
         // Any animation is ended before we get here.
         mCurrentButton = view;
@@ -1514,96 +1519,63 @@ public class Calculator extends Activity
                 }
                 return;
             //Bkav  TienNVh: Click cac nut mc , mr, m+, m-
+
             case R.id.op_m_c:
-                mINPUT = "";
+                mBkavMemoryFunction.onClearMemory();
                 mModeViewM.setText("");
                 return;
+
+            // Bkav TienNVh : Tính năng Mr : Lấy dữ liệu trong bộ nhớ tạm
             case R.id.op_m_r:
                 mEvaluator.clearMain();
-                if (!mINPUT.equals("")) {
-                    for (int i = 0; i < mINPUT.length(); i++) {
-                        char splitFormulatext = mINPUT.charAt(i);
-                        if (KeyMaps.keyForDigVal((int) splitFormulatext) == View.NO_ID) {
-                            if (KeyMaps.keyForChar(splitFormulatext) != View.NO_ID) {
-                                addExplicitKeyToExpr(KeyMaps.keyForChar(splitFormulatext));
-                            }
-                        } else {
-                            addExplicitKeyToExpr(KeyMaps.keyForDigVal((int) splitFormulatext));
-                        }
-                    }
-                }
+                addChars(mBkavMemoryFunction.onRecallMemory(), false);
                 redisplayAfterFormulaChange();
                 onEquals();
                 // Bkav TienNVh : Dịch chuyển con trỏ cuối cùng
                 mFormulaText.setSelection(mFormulaText.getText().length());
-                mModeViewM.setText("M");
+                if (mBkavMemoryFunction.isExitMemory())
+                    mModeViewM.setText("M");
                 return;
 
-            // Bkav TienNVh : Tính năng m+
+            // Bkav TienNVh : Tính năng m+ : thêm  vào bộ nhớ tam
+            // Bkav TienNVh : Trang thai
+            //CalculatorState.EVALUATE : Phep tinh khong hop le
+            // CalculatorState.ANIMATE  : Pheps tinh hop le
+            // CalculatorState.INPUT : trang thai nguoi nhap vao
+            //CalculatorState.RESULT : co ket qua
             case R.id.op_m_plus:
                 // Bkav TienNVh : Thuc hien phep tinh
                 onEquals();
-
-                // Bkav TienNVh : mINPUT là biến lưu tạm thời
-                // Bkav TienNVh : Kiem tra truong hop biến mINPUT đã có nội dung chưa
-                if (mINPUT.equals("")) {
-
-                    if (mCurrentState == CalculatorState.EVALUATE || mCurrentState == CalculatorState.RESULT) {
-                        // Bkav TienNVh : Trường hợp các ký tự nhập vào là phép tính thì lấy kết quả để lưu
-                        mINPUT = mResultText.getText() + "";
-                    } else {
-                        // Bkav TienNVh : Trường họp cào là 1 số thì lấy các ký tự nhập vào để lưu
-                        mINPUT = mFormulaText.getText() + "";
-                    }
+                // Bkav TienNVh : Trường hợp phép tính hợp lệ
+                if (mCurrentState == CalculatorState.ANIMATE) {
+                    mBkavMemoryFunction.onMPlusAddMemory(mResultText.getText().toString());
                 } else {
-                    // Bkav TienNVh : Trường hơp : biến mINPUT đã có nội dung thì lấy nội dung của mINPUT cũ nối với nội dung mới
-                    if (mCurrentState == CalculatorState.EVALUATE || mCurrentState == CalculatorState.RESULT) {
-                        mINPUT = mINPUT + "+" + mResultText.getText();
-                    } else {
-                        mINPUT = mINPUT + "+" + mFormulaText.getText();
-                    }
+                    // Bkav TienNVh : TH: ko phải phép tính
+                    if (mCurrentState == CalculatorState.INPUT)
+                        mBkavMemoryFunction.onMPlusAddMemory(mFormulaText.getText().toString());
                 }
-                mModeViewM.setText("M");
+                // Bkav TienNVh : kiểm tra bộ nhớ đã tồn tại , mục đích hiện thị 'M' trên màn hình
+                if (mBkavMemoryFunction.isExitMemory())
+                    mModeViewM.setText("M");
+                // Bkav TienNVh : bật trạng thái M , mục đích
                 mStatusM = true;
                 return;
+
             // Bkav TienNVh :  m- tương tự như m+
             case R.id.op_m_sub:
                 onEquals();
-                // Bkav TienNVh : Tạo biến cục bộ để luu noi dung mới
-                String input = "";
-                // Bkav TienNVh : Truong hop cac ky tu nhap vao khong phai la phep tinh
-                if (mCurrentState == CalculatorState.EVALUATE || mCurrentState == CalculatorState.RESULT) {
-                    input = "" + mResultText.getText();
+                if (mCurrentState == CalculatorState.ANIMATE) {
+                    mBkavMemoryFunction.onMSubAddMemory(mResultText.getText().toString());
                 } else {
-                    input = "" + mFormulaText.getText();
+                    if (mCurrentState == CalculatorState.INPUT)
+                        mBkavMemoryFunction.onMSubAddMemory(mFormulaText.getText().toString());
                 }
 
-                // Bkav TienNVh : Xet truong hop bien mINPUT da co noi dung chua
-                if (mINPUT.equals("")) {
-
-                    if (input.length() > 0) {
-                        // Bkav TienNVh : kiem tra input >0 de co the lay duoc input.charAt(0)
-                        if (input.charAt(0) == KeyMaps.MINUS_SIGN) {
-                            // Bkav TienNVh : Neu nhap vao la -a thi luu vao a (vi --a = a)
-                            mINPUT = input.substring(1);
-                        } else {
-                            // Bkav TienNVh : Nguoc lai neu nhap vao la a thi luu vao la -a
-                            mINPUT = Character.toString(KeyMaps.MINUS_SIGN) + input;
-                        }
-                    }
-                } else {
-                    // Bkav TienNVh : Xet truong hop : --a= a
-                    if (input.charAt(0) == KeyMaps.MINUS_SIGN) {
-                        // Bkav TienNVh : Chuyen dau - thanh dau + . Bang cach cắt bỏ dấu trừ thêm vào đó là dáu cộng  (--a = +a)
-                        mINPUT = mINPUT + "+" + input.substring(1);
-                    } else {
-                        mINPUT = mINPUT + Character.toString(KeyMaps.MINUS_SIGN) + input;
-                    }
-                }
-                onModeChanged(mEvaluator.getDegreeMode(Evaluator.MAIN_INDEX));
-                mModeViewM.setText("M");
+                if (mBkavMemoryFunction.isExitMemory())
+                    mModeViewM.setText("M");
                 mStatusM = true;
                 return;
+
             //Bkav  TienNVh: Click cac nut % , ! , pi dong item mo rong
             case R.id.op_fact:
             case R.id.op_pct:
@@ -1621,47 +1593,48 @@ public class Calculator extends Activity
             default:
                 cancelIfEvaluating(false);
                 // addChars(KeyMaps.toString(this, id), true);
-                    //addExplicitKeyToExpr(id);
+                //addExplicitKeyToExpr(id);
                 // Bkav TienNVh : Lấy nội dung đang hiện thị
-                    String formulatext = mFormulaText.getText().toString();
-                    // Bkav TienNVh :  Chuyển từ id sang giá trị
-                    String newtext = KeyMaps.toString(this, id);
-                    // Bkav TienNVh : Truowng hop lay ket qua de tiep tuc tinh tiep
-                    if (mCurrentState == CalculatorState.RESULT) {
-                        if (!mStatusM) {
-                            // Bkav TienNVh : Trong trường hợp lấy kết quả để tính tiếp thì chèn ký tự vừa nhập vào sau kết quả
-                            formulatext = mTruncatedWholeNumber + newtext;
-                            postionCursor = formulatext.length() + newtext.length() - 1;
-                        } else {
-                            formulatext = "";
-                            postionCursor = 0;
-                        }
+                String formulatext = mFormulaText.getText().toString();
+                // Bkav TienNVh :  Chuyển từ id sang giá trị
+                String newtext = KeyMaps.toString(this, id);
+                // Bkav TienNVh : Truowng hop lay ket qua de tiep tuc tinh tiep
+                if (mCurrentState == CalculatorState.RESULT) {
+                    if (!mStatusM) {
+                        // Bkav TienNVh : Trong trường hợp lấy kết quả để tính tiếp thì chèn ký tự vừa nhập vào sau kết quả
+                        formulatext = mTruncatedWholeNumber + newtext;
+                        postionCursor = formulatext.length() + newtext.length() - 1;
+                    } else {
+                        formulatext = "";
+                        postionCursor = 0;
                     }
-                    int lengthold = formulatext.length();// do dai cua chuoi
-                    if (lengthold >= postionCursor || mCurrentState == CalculatorState.RESULT) {
-                        // Bkav TienNVh : Chen chuoi moi nhap vao vi tri con tro
-                        String formulaText = formulatext;
-                        // Bkav TienNVh : Trong trường hợp lấy kết quả để tính tiếp thì mặc đinh chèn ký tự vào phía sau kết quả => bỏ qua đoạn chèn
-                        if( mCurrentState != CalculatorState.RESULT) {
-                            mPostionCursorToRight = lengthold - postionCursor;// Bkav TienNVh : Vi tri con tro tinh tu ben phai sang
-                            String slipt1 = formulatext.substring(0, postionCursor);
-                            String slipt2 = formulatext.substring(postionCursor, lengthold);
-                            formulaText  = slipt1 + newtext + slipt2;
-                        }
-                        // Bkav TienNVh : Xoa tat ca cac phep tinh cu
-                        mEvaluator.clearMain();
-                        // Bkav TienNVh : Them Cac phep tinh sau khi sua
-                        addExplicitStringToExpr(formulaText);
-                        // Bkav TienNVh : tính năng mở rộng thêm dấu ( sau các sin( , cos(...
-                        if(KeyMaps.isFunc(id)){
-                            addExplicitKeyToExpr(R.id.rparen);
-                            mPostionCursorToRight++;
-                        }
-                        // Bkav TienNVh : Show ket qua neu chuoi ky tu nhap vao la phep tinh
-                        redisplayAfterFormulaChange();
-                        // Bkav TienNVh : Thay doi vi tri con tro sau
-                        changePostionCursor();
+                }
+                int lengthold = formulatext.length();// do dai cua chuoi
+                if (lengthold >= postionCursor || mCurrentState == CalculatorState.RESULT) {
+                    // Bkav TienNVh : Chen chuoi moi nhap vao vi tri con tro
+                    String formulaText = formulatext;
+                    // Bkav TienNVh : Trong trường hợp lấy kết quả để tính tiếp thì mặc đinh chèn ký tự vào phía sau kết quả => bỏ qua đoạn chèn
+                    if (mCurrentState != CalculatorState.RESULT) {
+                        mPostionCursorToRight = lengthold - postionCursor;// Bkav TienNVh : Vi tri con tro tinh tu ben phai sang
+                        String slipt1 = formulatext.substring(0, postionCursor);
+                        String slipt2 = formulatext.substring(postionCursor, lengthold);
+                        formulaText = slipt1 + newtext + slipt2;
                     }
+                    // Bkav TienNVh : Xoa tat ca cac phep tinh cu
+                    mEvaluator.clearMain();
+                    // Bkav TienNVh : Them Cac phep tinh sau khi sua
+                    //            addExplicitStringToExpr(formulaText);
+                    addChars(formulaText, false);
+                    // Bkav TienNVh : tính năng mở rộng thêm dấu ( sau các sin( , cos(...
+                    if (KeyMaps.isFunc(id)) {
+                        addExplicitKeyToExpr(R.id.rparen);
+                        mPostionCursorToRight++;
+                    }
+                    // Bkav TienNVh : Show ket qua neu chuoi ky tu nhap vao la phep tinh
+                    redisplayAfterFormulaChange();
+                    // Bkav TienNVh : Thay doi vi tri con tro sau
+                    changePostionCursor();
+                }
                 break;
         }
         showOrHideToolbar();
@@ -1726,12 +1699,12 @@ public class Calculator extends Activity
         if (mCurrentState != CalculatorState.INPUT) {
             // In EVALUATE, INIT, RESULT, or INIT_FOR_RESULT state.
             // Bkav TienNVh : check muc dich la lay ket qua de tiep tuc tinh phep tinh tiep theo
-            if(mResultText.getText().toString().contains("E")){
+            if (mResultText.getText().toString().contains("E")) {
                 // Bkav TienNVh : Check ket qua cho ra so lon thi lay phan nguyen cua ket qua
                 mTruncatedWholeNumber = truncatedWholeNumber;
-            }else {
+            } else {
                 // Bkav TienNVh :  Nguoc lai thi lay ket qua
-                mTruncatedWholeNumber=mResultText.getText().toString();
+                mTruncatedWholeNumber = mResultText.getText().toString();
             }
             onResult(mCurrentState == CalculatorState.EVALUATE /* animate */,
                     mCurrentState == CalculatorState.INIT_FOR_RESULT
@@ -1807,7 +1780,8 @@ public class Calculator extends Activity
     }
 
     private void onEquals() {
-        addExplicitStringToExpr(mFormulaText.getText() + "");
+        // addChars(mFormulaText.getText() + "", false);
+        //  addExplicitStringToExpr(mFormulaText.getText() + "");
         // Ignore if in non-INPUT state, or if there are no operators.
         if (mCurrentState == CalculatorState.INPUT) {
             if (haveUnprocessed()) {
@@ -1863,7 +1837,8 @@ public class Calculator extends Activity
             mPostionCursorToRight = mUnprocessedChars.length() - mFormulaText.getSelectionEnd();
             if (mFormulaText.getSelectionEnd() >= 1 && mUnprocessedChars.length() > 0)
                 mUnprocessedChars = mUnprocessedChars.substring(0, mFormulaText.getSelectionEnd() - 1) + mUnprocessedChars.substring(mFormulaText.getSelectionEnd());
-            addExplicitStringToExpr(mUnprocessedChars);
+            addChars(mUnprocessedChars, false);
+            // addExplicitStringToExpr(mUnprocessedChars);
             changePostionCursor();
         } else {
             final Editable formulaText = mFormulaText.getEditableText();
@@ -1933,18 +1908,22 @@ public class Calculator extends Activity
                     }
 
                 }
-                if(formulaText.length()==1&& formulaText.charAt(0)==')')
+                if (formulaText.length() == 1 && formulaText.charAt(0) == ')')
                     formulaText.clear();
                 mEvaluator.clearMain();
-                addExplicitStringToExpr(formulaText.toString());
+                // Bkav TienNVh : Vị trí con trỏ sau khi xoá
+                int postionCursor2 = mFormulaText.getSelectionStart();
+                addChars(formulaText.toString(), true);
+
+                // Bkav TienNVh : Hiện thị kết quả phép tính sau khi thay đổi (Xoá )
+                redisplayAfterFormulaChange();
+                // addExplicitStringToExpr(formulaText.toString());
+                mPostionCursorToRight = formulaText.toString().length() - postionCursor2;
+                // Bkav TienNVh : Cập nhật vị trí con trỏ sau khi xoá
+                changePostionCursor();
             }
-            // Bkav TienNVh : Vị trí con trỏ sau khi xoá
-            int postionCursor2 = mFormulaText.getSelectionStart();
-            mPostionCursorToRight = mFormulaText.length() - postionCursor2;
-            // Bkav TienNVh : Hiện thị kết quả phép tính sau khi thay đổi (Xoá )
-            redisplayAfterFormulaChange();
-            // Bkav TienNVh : Cập nhật vị trí con trỏ sau khi xoá
-            changePostionCursor();
+
+
         }
         if (mEvaluator.getExpr(Evaluator.MAIN_INDEX).isEmpty() && !haveUnprocessed()) {
             // Resulting formula won't be announced, since it's empty.
@@ -2342,6 +2321,8 @@ public class Calculator extends Activity
      * @param explicit  these characters were explicitly typed by the user, not pasted
      */
     private void addChars(String moreChars, boolean explicit) {
+        mEvaluator.clearMain();
+// Bkav TienNVh : Bỏ vì moreChars đã  cộng mUnprocessedChars
         if (mUnprocessedChars != null) {
             moreChars = mUnprocessedChars + moreChars;
         }
@@ -2350,7 +2331,10 @@ public class Calculator extends Activity
         boolean lastWasDigit = false;
         if (mCurrentState == CalculatorState.RESULT && len != 0) {
             // Clear display immediately for incomplete function name.
-            switchToInput(KeyMaps.keyForChar(moreChars.charAt(current)));
+//            switchToInput(KeyMaps.keyForChar(moreChars.charAt(current)));
+            announceClearedForAccessibility();
+            mEvaluator.clearMain();
+            setState(CalculatorState.INPUT);
         }
         char groupingSeparator = KeyMaps.translateResult(",").charAt(0);
         while (current < len) {
@@ -2359,7 +2343,13 @@ public class Calculator extends Activity
                 ++current;
                 continue;
             }
-            int k = KeyMaps.keyForChar(c);
+            int f = KeyMaps.funForString(moreChars, current);
+            int k = -1;
+            // Bkav TienNVh :  Check phép tính chức năng . Nếu ko phải thì mới xét đến ký tự  .
+            // Nhằm tránh trùng trường hợp hằng sô e và chức năng exp(
+            if (f == -1)
+                k = KeyMaps.keyForChar(c);
+
             if (!explicit) {
                 int expEnd;
                 if (lastWasDigit && current !=
@@ -2373,6 +2363,7 @@ public class Calculator extends Activity
                     continue;
                 } else {
                     boolean isDigit = KeyMaps.digVal(k) != KeyMaps.NOT_DIGIT;
+                    // Bkav TienNVh :
                     if (current == 0 && (isDigit || k == R.id.dec_point)
                             && mEvaluator.getExpr(Evaluator.MAIN_INDEX).hasTrailingConstant()) {
                         // Refuse to concatenate pasted content to trailing constant.
@@ -2397,7 +2388,7 @@ public class Calculator extends Activity
                 }
                 continue;
             }
-            int f = KeyMaps.funForString(moreChars, current);
+
             if (f != View.NO_ID) {
                 mCurrentButton = findViewById(f);
                 if (explicit) {
@@ -2465,5 +2456,6 @@ public class Calculator extends Activity
 
     //==========================Bkav==============================
     // Bkav TienNVh : Biến dùng để phân biệt Click "="  và "M"
+    // Bkav TienNVh : Đầu việc #12217
     private boolean mStatusM = false;
 }

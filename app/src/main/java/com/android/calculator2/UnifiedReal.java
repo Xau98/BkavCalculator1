@@ -611,7 +611,6 @@ public class UnifiedReal {
         if (mCrFactor == u.mCrFactor) {
             BoundedRational nRatFactor = BoundedRational.add(mRatFactor, u.mRatFactor);// tinh
             if (nRatFactor != null) {
-                Log.d("TienNVh 5", "add : "+nRatFactor);
                 return new UnifiedReal(nRatFactor, mCrFactor);
             }
         }
@@ -632,7 +631,6 @@ public class UnifiedReal {
     }
 
     public UnifiedReal subtract(UnifiedReal u) {
-        Log.d("TienNVh 4: u.negate()"+u.negate(), u.mCrFactor+"evalExpr: "+u.mRatFactor);
         return add(u.negate());
     }
 

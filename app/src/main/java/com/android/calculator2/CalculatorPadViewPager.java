@@ -45,7 +45,6 @@ public class CalculatorPadViewPager extends ViewPager {
 
         @Override
         public void destroyItem(ViewGroup container, int position, Object object) {
-            Log.d("TienNVh", "destroyItem: " + position);
 //             removeViewAt(position);
         }
 
@@ -66,6 +65,10 @@ public class CalculatorPadViewPager extends ViewPager {
                     return 0.717f / 0.9f;
                 }
             }
+            // Bkav TienNVh :
+            if (position == 2) {
+                return 0.9999f;
+            }
             return 1.0f;
         }
 
@@ -76,6 +79,8 @@ public class CalculatorPadViewPager extends ViewPager {
             return pageDescriptions[position];
         }
     };
+
+
 
     // Bkav TienNVh : hàm này mục đích là Lấy hết tất cả các view con trong ViewGroup để setEnable  (cho phép click vào view con)
     public void recursivelySetEnabled(View view, boolean enabled) {
@@ -92,6 +97,8 @@ public class CalculatorPadViewPager extends ViewPager {
             view.setEnabled(enabled);
         }
     }
+
+
 
     //Bkav ThanhNgD: Them method nay`
     public OnPageChangeListener getmOnPageChangeListener() {
@@ -114,6 +121,7 @@ public class CalculatorPadViewPager extends ViewPager {
         @Override
         public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
             super.onPageScrolled(position, positionOffset, positionOffsetPixels);
+
         }
 
         @Override

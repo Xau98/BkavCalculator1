@@ -222,6 +222,7 @@ class CalculatorExpr {
         public void addExponent(int exp) {
             // Note that adding a 0 exponent is a no-op.  That's OK.
             mExponent = exp;
+
         }
 
         /**
@@ -450,6 +451,7 @@ class CalculatorExpr {
             return false;
         }
         Token t = mExpr.get(s-1);
+
         return t instanceof Constant;
     }
 

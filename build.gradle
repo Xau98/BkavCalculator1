@@ -16,6 +16,8 @@ allprojects {
     }
 }
 
-//version 1.0.4
-//-Bỏ actionmode của edittext, dùng actionmode mặc định
-//-Khi bấm ra ngoài ô phép tính nếu có actionmode thì ẩn đi
+//version 2.0.1
+// Chỉnh sửa tính năng M
+// Chuyển hàm addStringToExp sang AddChar
+// fix tạm thời lỗi vuốt nhanh tab mở rông
+

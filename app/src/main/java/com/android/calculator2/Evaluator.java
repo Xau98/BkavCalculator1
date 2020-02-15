@@ -580,7 +580,6 @@ public class Evaluator implements CalculatorExpr.ExprResolver {
                             throw new CR.AbortedException();
                         }
                         res = putResultIfAbsent(mIndex, res);
-                        Log.d("TienNVh", "doInBackground: "+res);
                     } catch (StackOverflowError e) {
                         // Absurdly large integer exponents can cause this. There might be other
                         // examples as well. Treat it as a timeout.
@@ -1906,8 +1905,10 @@ public class Evaluator implements CalculatorExpr.ExprResolver {
             ++i;
         }
         for (; i < end; ++i) {
+
             exp = 10 * exp + Character.digit(s.charAt(i), 10);
         }
+        Log.d("TienNVh", "addExponent: "+exp);
         mMainExpr.mExpr.addExponent(sign * exp);
         mChangedValue = true;
     }
