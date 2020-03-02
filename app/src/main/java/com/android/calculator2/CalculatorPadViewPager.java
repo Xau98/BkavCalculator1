@@ -100,7 +100,6 @@ public class CalculatorPadViewPager extends ViewPager {
 
 
 
-    //Bkav ThanhNgD: Them method nay`
     public OnPageChangeListener getmOnPageChangeListener() {
         return mOnPageChangeListener;
     }

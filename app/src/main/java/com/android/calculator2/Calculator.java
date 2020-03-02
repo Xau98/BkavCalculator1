@@ -475,7 +475,7 @@ public class Calculator extends Activity
         mDragLayout.removeDragCallback(this);
         mDragLayout.addDragCallback(this);
         mDragLayout.setCloseCallback(this);
-
+         
         mFormulaText.setOnContextMenuClickListener(mOnFormulaContextMenuClickListener);
         mFormulaText.setOnDisplayMemoryOperationsListener(mOnDisplayMemoryOperationsListener);
         mFormulaText.setEnabled(true);
@@ -514,37 +514,44 @@ public class Calculator extends Activity
                 // Bkav TienNVh :  set background cho tab History
                 BlurManager blur = new BlurManager();
                 Bitmap cutBitmapHistory = cutImageToBackgroundHistory(bitmap);
-                Bitmap mContainerFilter = Bitmap.createBitmap(cutBitmapHistory.getWidth(), cutBitmapHistory.getHeight(),
-                        Bitmap.Config.ARGB_8888);
-                mContainerFilter.eraseColor(getResources().getColor(R.color.colorHistory));
-                Bitmap bmHistory = overlayBitmap(mContainerFilter, cutBitmapHistory, 255);
-                blur.bitmapScale(0.05f).build(getApplicationContext(), bmHistory);
-                bitmapBlurHis = blur.blur(20f);
+                // Bkav TienNVh : Tránh một số trường hợp khi chưa kịp lấy kích thước thì đã load giao diện
+                if(cutBitmapHistory !=null) {
+                    Bitmap mContainerFilter = Bitmap.createBitmap(cutBitmapHistory.getWidth(), cutBitmapHistory.getHeight(),
+                            Bitmap.Config.ARGB_8888);
+                    mContainerFilter.eraseColor(getResources().getColor(R.color.colorHistory));
+                    Bitmap bmHistory = overlayBitmap(mContainerFilter, cutBitmapHistory, 255);
+                    blur.bitmapScale(0.05f).build(getApplicationContext(), bmHistory);
+                    bitmapBlurHis = blur.blur(20f);
+                }
                 // Bkav TienNVh :  Set background cho tab Advanced
                 BlurManager blurAd = new BlurManager();
                 final Bitmap cutBitmapAd = cutImageToBackgroundAdvence(bitmap);
-                Bitmap mContainerFilter1 = Bitmap.createBitmap(cutBitmapHistory.getWidth(), cutBitmapHistory.getHeight(),
-                        Bitmap.Config.ARGB_8888);
-                mContainerFilter1.eraseColor(getResources().getColor(R.color.colorHistory));
-                Bitmap bmAd = overlayBitmap(mContainerFilter1, cutBitmapAd, 255);
-                blurAd.bitmapScale(0.05f).build(getApplicationContext(), bmAd);
-                final Bitmap bitmapBlurAd = blurAd.blur(20f);
+                Bitmap bitmapBlurAd = null;
+                // Bkav TienNVh : Tránh một số trường hợp khi chưa kịp lấy kích thước thì đã load giao diện
+                if(cutBitmapAd!=null) {
+                    Bitmap mContainerFilter1 = Bitmap.createBitmap(cutBitmapHistory.getWidth(), cutBitmapHistory.getHeight(),
+                            Bitmap.Config.ARGB_8888);
+                    mContainerFilter1.eraseColor(getResources().getColor(R.color.colorHistory));
+                    Bitmap bmAd = overlayBitmap(mContainerFilter1, cutBitmapAd, 255);
+                    blurAd.bitmapScale(0.05f).build(getApplicationContext(), bmAd);
+                    bitmapBlurAd = blurAd.blur(20f);
+                }
                 // Bkav TienNVh : sự kiện sang trang
                 if (mPadViewPager != null) {
+                    final Bitmap finalBitmapBlurAd = bitmapBlurAd;
                     mPadViewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
                         @Override
                         public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
                             if (position == 0) {
                                 // Bkav TienNVh :  position =0 là tab history
-
                                 mRelativeLayoutHistory.setInforScrollViewpager(bitmapBlurHis,
                                         position, positionOffset, positionOffsetPixels);
                             } else {
                                 if (position == 1) {
                                     if (orientation == Configuration.ORIENTATION_PORTRAIT) {
-                                        if (bitmapBlurAd != null) {
+                                        if (finalBitmapBlurAd != null) {
                                             mCalculatorPadLayout = (BkavAdvancedLayout) findViewById(R.id.pad_advanced);
-                                            mCalculatorPadLayout.setInforScrollViewpager(bitmapBlurAd, positionOffset, positionOffsetPixels);
+                                            mCalculatorPadLayout.setInforScrollViewpager(finalBitmapBlurAd, positionOffset, positionOffsetPixels);
                                         }
                                     }
                                 }
@@ -579,7 +586,6 @@ public class Calculator extends Activity
 
         // Bkav TienNVh : Khi xoay hide button more , set height cho button Xoa
         if (orientation != Configuration.ORIENTATION_PORTRAIT) {
-            findViewById(R.id.bt_more).setVisibility(View.GONE);
             findViewById(R.id.delHistory).getLayoutParams().height = 150;
         }
 
@@ -625,7 +631,13 @@ public class Calculator extends Activity
                 return true;
             }
         });
+        
+    }
 
+    @Override
+    public void onConfigurationChanged(@NonNull Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        Log.d("TienNVh", "onConfigurationChanged: ");
     }
 
     // Bkav TienNVh :them font chu cho number
@@ -711,8 +723,6 @@ public class Calculator extends Activity
             public void onClick(View v) {
             }
         });
-
-
     }
 
     //    Bkav Phongngb tao ra 1 bitmap b1 tuong tu nhu mot bitmap thu 2
@@ -754,12 +764,14 @@ public class Calculator extends Activity
         int orientation = getResources().getConfiguration().orientation;
         if (bitmap != null && orientation == Configuration.ORIENTATION_PORTRAIT) {
             int y = mScreenHeight - heightChild;
+            // Bkav TienNVh :  khi y<0 thì khi chưa có kích thước => ko thể lấy được bitmap
+           if(y > 0)
             cutBitmap = Bitmap.createBitmap(bitmap, 0, y + heightChild > bitmap.getHeight() ? bitmap.getHeight() - heightChild : y,
                     (int) (mScreenWidth * 0.8), heightChild);
 
         } else {
-            // Bkav TienNVh :
-            if ((heightChild - 100) > 0)
+            // Bkav TienNVh : để tránh một số trường hợp chưa load kịp giao giện
+            if ((heightChild - 100) > 0 && ( mScreenHeight - heightChild)>0)
                 cutBitmap = Bitmap.createBitmap(bitmap, 0, mScreenHeight - heightChild,
                         (int) (mScreenWidth * 0.4), heightChild - 100);
         }
@@ -773,7 +785,8 @@ public class Calculator extends Activity
         int mScreenHeight = displayMetrics.heightPixels;
         int heightChild = findViewById(R.id.pad_advanced).getHeight();
         Bitmap cutBitmap = null;
-        if (bitmap != null) {
+        // Bkav TienNVh :
+        if (bitmap != null && (mScreenHeight - heightChild)>0 && heightChild>100 ) {
             cutBitmap = Bitmap.createBitmap(bitmap, (int) (bitmap.getWidth() * 0.2),
                     mScreenHeight - heightChild, (int) (bitmap.getWidth() * 0.8), heightChild - 100);
         }
@@ -1028,7 +1041,7 @@ public class Calculator extends Activity
     // Bkav TienNVh : Xu ly dau phay theo ngon ngu
     @Override
     protected void onResume() {
-        super.onResume();
+        super.onResume(); 
         mEvaluator.clearMain();
         String language = mSharedPreferences.getString("Language", "vi_VN");
         String formulaText = mSharedPreferences.getString("FormulaText", "");
@@ -1837,6 +1850,7 @@ public class Calculator extends Activity
             mPostionCursorToRight = mUnprocessedChars.length() - mFormulaText.getSelectionEnd();
             if (mFormulaText.getSelectionEnd() >= 1 && mUnprocessedChars.length() > 0)
                 mUnprocessedChars = mUnprocessedChars.substring(0, mFormulaText.getSelectionEnd() - 1) + mUnprocessedChars.substring(mFormulaText.getSelectionEnd());
+
             addChars(mUnprocessedChars, false);
             // addExplicitStringToExpr(mUnprocessedChars);
             changePostionCursor();
@@ -2323,9 +2337,9 @@ public class Calculator extends Activity
     private void addChars(String moreChars, boolean explicit) {
         mEvaluator.clearMain();
 // Bkav TienNVh : Bỏ vì moreChars đã  cộng mUnprocessedChars
-        if (mUnprocessedChars != null) {
-            moreChars = mUnprocessedChars + moreChars;
-        }
+//        if (mUnprocessedChars != null) {
+//            moreChars = mUnprocessedChars + moreChars;
+//        }
         int current = 0;
         int len = moreChars.length();
         boolean lastWasDigit = false;

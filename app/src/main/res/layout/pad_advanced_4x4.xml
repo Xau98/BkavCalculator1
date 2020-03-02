@@ -20,7 +20,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/pad_advanced"
     style="@style/PadLayoutStyle.Advanced"
-    android:background="#A6464646"
    android:paddingTop="5dp"
     app:rowCount="4"
     app:columnCount="4">

@@ -84,11 +84,11 @@
             android:textStyle="normal"
             android:textAllCaps="false"
             android:textColor="#66FFFFFF" />
-
+<!--TienNVh : màn hinh xoay thì cho ẩn chế độ more -->
         <ImageView
             android:id="@+id/bt_more"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
             android:layout_alignParentRight="true"
             android:contentDescription="more"
             android:onClick="onButtonClick"
