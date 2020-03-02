@@ -423,6 +423,21 @@ public class Calculator extends Activity
         mBkavMemoryFunction = new BkavMemoryFunction();
         mMainCalculator = findViewById(R.id.main_calculator);
         mDisplayView = (CalculatorDisplay) findViewById(R.id.display);
+        mToolbar = findViewById(R.id.toolbar);
+//        mDisplayView.setOnTouchListener(new View.OnTouchListener() {
+//            @Override
+//            public boolean onTouch(View v, MotionEvent event) {
+//                Log.d("TienNVh", View.VISIBLE+"onTouch: "+mToolbar.getVisibility() );
+//                if (mToolbar.getVisibility() != View.VISIBLE) {
+//                    mDisplayView.showToolbar(true);
+//                } else {
+//                    mDisplayView.hideToolbar();
+//                }
+//                return true;
+//            }
+//        });
+
+
         mModeView = (TextView) findViewById(R.id.mode);
         mModeViewM = (TextView) findViewById(R.id.mode2);
         mFormulaText = (CalculatorFormula) findViewById(R.id.formula);
@@ -1459,6 +1474,7 @@ public class Calculator extends Activity
 
     // Bkav TienNVh :  Hàm chứa tất cả sự kiện click của app
     public void onButtonClick(View view) {
+        Log.d("TienNVh", "onButtonClick: ");
         // Any animation is ended before we get here.
         mCurrentButton = view;
         int postionCursor = mFormulaText.getSelectionStart(); // vi tri con tro
@@ -1487,12 +1503,15 @@ public class Calculator extends Activity
                 break;
             // Bkav TienNVh : Tab History
             case R.id.bt_history:
+                // Bkav TienNVh :
+                mDisplayView.setClickButtonHistory(true);
                 if (mPadViewPager == null || mPadViewPager.getCurrentItem() == 1) {
                     mPadViewPager.setCurrentItem(mPadViewPager.getCurrentItem() - 1);
                 } else if (mPadViewPager == null || mPadViewPager.getCurrentItem() == 0) {
                     mPadViewPager.setCurrentItem(mPadViewPager.getCurrentItem() + 1);
                 }
                 break;
+
             case R.id.eq:
                 mStatusM = false;
                 onEquals();
@@ -1650,7 +1669,7 @@ public class Calculator extends Activity
                 }
                 break;
         }
-        showOrHideToolbar();
+
     }
 
     // Bkav TienNVh : Biến chỉ vị trí con tro đếm từ bên phải sang

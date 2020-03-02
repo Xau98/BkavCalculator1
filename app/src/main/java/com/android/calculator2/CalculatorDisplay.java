@@ -60,11 +60,16 @@ public class CalculatorDisplay extends LinearLayout
 
     private final AccessibilityManager mAccessibilityManager;
     private final GestureDetector mTapDetector;
-
+    // Bkav TienNVh : Biến này lưu trang thái click button history
+    private  boolean clickButtonHistory=false;
     private Toolbar mToolbar;
     private Transition mTransition;
 
     private boolean mForceToolbarVisible;
+
+ void  setClickButtonHistory(boolean b){
+     clickButtonHistory=b;
+ }
 
     public CalculatorDisplay(Context context) {
         this(context, null /* attrs */);
@@ -91,16 +96,19 @@ public class CalculatorDisplay extends LinearLayout
 
             @Override
             public boolean onSingleTapConfirmed(MotionEvent e) {
-                if (mToolbar.getVisibility() != View.VISIBLE) {
-                    showToolbar(true);
-                } else {
-                    hideToolbar();
+                // Bkav TienNVh :  Bỏ qua trường hợp khi click button History
+                if (!clickButtonHistory) {
+                    if (mToolbar.getVisibility() != View.VISIBLE) {
+                        showToolbar(true);
+                    } else {
+                        hideToolbar();
+                    }
+                }
+                clickButtonHistory=false;
+                    return true;
                 }
 
-                return true;
-            }
         });
-
         // Draw the children in reverse order so that the toolbar is on top.
         setChildrenDrawingOrderEnabled(true);
     }
