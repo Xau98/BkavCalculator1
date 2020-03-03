@@ -38,7 +38,7 @@
         android:textAllCaps="true"
         android:layout_gravity="center"
         android:textColor="@color/display_formula_text_color"
-        android:textSize="8sp"
+        android:textSize="3dp"
         />
 
 </Toolbar>

@@ -424,20 +424,6 @@ public class Calculator extends Activity
         mMainCalculator = findViewById(R.id.main_calculator);
         mDisplayView = (CalculatorDisplay) findViewById(R.id.display);
         mToolbar = findViewById(R.id.toolbar);
-//        mDisplayView.setOnTouchListener(new View.OnTouchListener() {
-//            @Override
-//            public boolean onTouch(View v, MotionEvent event) {
-//                Log.d("TienNVh", View.VISIBLE+"onTouch: "+mToolbar.getVisibility() );
-//                if (mToolbar.getVisibility() != View.VISIBLE) {
-//                    mDisplayView.showToolbar(true);
-//                } else {
-//                    mDisplayView.hideToolbar();
-//                }
-//                return true;
-//            }
-//        });
-
-
         mModeView = (TextView) findViewById(R.id.mode);
         mModeViewM = (TextView) findViewById(R.id.mode2);
         mFormulaText = (CalculatorFormula) findViewById(R.id.formula);
@@ -530,29 +516,29 @@ public class Calculator extends Activity
                 BlurManager blur = new BlurManager();
                 Bitmap cutBitmapHistory = cutImageToBackgroundHistory(bitmap);
                 // Bkav TienNVh : Tránh một số trường hợp khi chưa kịp lấy kích thước thì đã load giao diện
-                if(cutBitmapHistory !=null) {
+          //      if(cutBitmapHistory !=null) {
                     Bitmap mContainerFilter = Bitmap.createBitmap(cutBitmapHistory.getWidth(), cutBitmapHistory.getHeight(),
                             Bitmap.Config.ARGB_8888);
                     mContainerFilter.eraseColor(getResources().getColor(R.color.colorHistory));
                     Bitmap bmHistory = overlayBitmap(mContainerFilter, cutBitmapHistory, 255);
                     blur.bitmapScale(0.05f).build(getApplicationContext(), bmHistory);
                     bitmapBlurHis = blur.blur(20f);
-                }
+          //      }
                 // Bkav TienNVh :  Set background cho tab Advanced
                 BlurManager blurAd = new BlurManager();
                 final Bitmap cutBitmapAd = cutImageToBackgroundAdvence(bitmap);
                 Bitmap bitmapBlurAd = null;
                 // Bkav TienNVh : Tránh một số trường hợp khi chưa kịp lấy kích thước thì đã load giao diện
-                if(cutBitmapAd!=null) {
+     //           if(cutBitmapAd!=null) {
                     Bitmap mContainerFilter1 = Bitmap.createBitmap(cutBitmapHistory.getWidth(), cutBitmapHistory.getHeight(),
                             Bitmap.Config.ARGB_8888);
                     mContainerFilter1.eraseColor(getResources().getColor(R.color.colorHistory));
                     Bitmap bmAd = overlayBitmap(mContainerFilter1, cutBitmapAd, 255);
                     blurAd.bitmapScale(0.05f).build(getApplicationContext(), bmAd);
                     bitmapBlurAd = blurAd.blur(20f);
-                }
+     //           }
                 // Bkav TienNVh : sự kiện sang trang
-                if (mPadViewPager != null) {
+      //          if (mPadViewPager != null) {
                     final Bitmap finalBitmapBlurAd = bitmapBlurAd;
                     mPadViewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
                         @Override
@@ -585,7 +571,7 @@ public class Calculator extends Activity
 
                         }
                     });
-                }
+            //    }
             }
         });
 
@@ -780,7 +766,7 @@ public class Calculator extends Activity
         if (bitmap != null && orientation == Configuration.ORIENTATION_PORTRAIT) {
             int y = mScreenHeight - heightChild;
             // Bkav TienNVh :  khi y<0 thì khi chưa có kích thước => ko thể lấy được bitmap
-           if(y > 0)
+           if(y > 0 && heightChild>0)
             cutBitmap = Bitmap.createBitmap(bitmap, 0, y + heightChild > bitmap.getHeight() ? bitmap.getHeight() - heightChild : y,
                     (int) (mScreenWidth * 0.8), heightChild);
 
@@ -1474,7 +1460,6 @@ public class Calculator extends Activity
 
     // Bkav TienNVh :  Hàm chứa tất cả sự kiện click của app
     public void onButtonClick(View view) {
-        Log.d("TienNVh", "onButtonClick: ");
         // Any animation is ended before we get here.
         mCurrentButton = view;
         int postionCursor = mFormulaText.getSelectionStart(); // vi tri con tro

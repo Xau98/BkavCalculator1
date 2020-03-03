@@ -51,6 +51,7 @@
         <item name="android:paddingBottom">8dip</item>
         <item name="android:paddingStart">18dip</item>
         <item name="android:paddingEnd">18dip</item>
+        <item name="android:background">#464646</item>
     </style>
 
     <style name="PadLayoutStyle.Numeric">
