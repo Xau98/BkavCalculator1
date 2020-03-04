@@ -16,8 +16,12 @@ allprojects {
     }
 }
 
-//version 2.0.1
+//version 1.0.9
 // Chỉnh sửa tính năng M
 // Chuyển hàm addStringToExp sang AddChar
 // fix tạm thời lỗi vuốt nhanh tab mở rông
+//Version 1.1.0
+// khi click button history thì ấn 'Rad/Deg '
+// fix lỗi xoá đoạn text được dán vào
+// Sửa giao diện chia đôi màn hình
 

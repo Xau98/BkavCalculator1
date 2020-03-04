@@ -25,7 +25,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-    <com.android.calculator2.CalculatorPadViewPager
+    <com.bkav.calculator2.CalculatorPadViewPager
         android:id="@+id/pad_pager"
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -51,5 +51,5 @@
             <include layout="@layout/pad_advanced" />
 
         </LinearLayout>
-    </com.android.calculator2.CalculatorPadViewPager>
+    </com.bkav.calculator2.CalculatorPadViewPager>
 </LinearLayout>

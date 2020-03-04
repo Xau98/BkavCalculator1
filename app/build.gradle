@@ -5,11 +5,11 @@ android {
     buildToolsVersion '28.0.3'
 
     defaultConfig {
-        applicationId "com.android.calculator2"
+        applicationId "com.bkav.calculator2"
         minSdkVersion 21
         targetSdkVersion 29
         versionCode 2
-        versionName "2.0.1"
+        versionName "1.1.0"
     }
 
     buildTypes {
