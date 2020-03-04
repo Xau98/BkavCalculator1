@@ -20,6 +20,7 @@
     android:id="@+id/toolbar"
     android:layout_width="match_parent"
     android:layout_height="10dp"
+    android:layout_marginTop="20dp"
     android:layout_gravity="top">
 
     <TextView
@@ -29,7 +30,7 @@
         android:fontFamily="sans-serif-medium"
         android:textAllCaps="true"
         android:textColor="@color/display_formula_text_color"
-        android:textSize="8sp" />
+        android:textSize="8dp" />
     <TextView
         android:id="@+id/mode2"
         android:layout_width="wrap_content"
@@ -38,7 +39,7 @@
         android:textAllCaps="true"
         android:layout_gravity="center"
         android:textColor="@color/display_formula_text_color"
-        android:textSize="3dp"
+        android:textSize="8dp"
         />
 
 </Toolbar>

@@ -20,13 +20,7 @@
     android:layout_height="wrap_content"
     android:elevation="10dip"
     android:orientation="vertical">
-<!-- Bkav TienNVH : Hien tại để layout_height =0dp để ẩn đi trạng thái DEG / RAD -->
-    <Toolbar
-        android:id="@+id/toolbarapp"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginBottom="20dp"/>
-
+<!-- Bkav TienNVH : thanh trạng thái DEG / RAD -->
     <include layout="@layout/toolbar" />
 
     <com.android.calculator2.CalculatorScrollView

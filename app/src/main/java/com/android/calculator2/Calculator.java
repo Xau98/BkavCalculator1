@@ -1489,7 +1489,7 @@ public class Calculator extends Activity
             // Bkav TienNVh : Tab History
             case R.id.bt_history:
                 // Bkav TienNVh :
-                mDisplayView.setClickButtonHistory(true);
+                mDisplayView.setEnableToolbar(true);
                 if (mPadViewPager == null || mPadViewPager.getCurrentItem() == 1) {
                     mPadViewPager.setCurrentItem(mPadViewPager.getCurrentItem() - 1);
                 } else if (mPadViewPager == null || mPadViewPager.getCurrentItem() == 0) {
@@ -1572,10 +1572,11 @@ public class Calculator extends Activity
                         mBkavMemoryFunction.onMPlusAddMemory(mFormulaText.getText().toString());
                 }
                 // Bkav TienNVh : kiểm tra bộ nhớ đã tồn tại , mục đích hiện thị 'M' trên màn hình
-                if (mBkavMemoryFunction.isExitMemory())
+                if (mBkavMemoryFunction.isExitMemory()) {
                     mModeViewM.setText("M");
-                // Bkav TienNVh : bật trạng thái M , mục đích
-                mStatusM = true;
+                    // Bkav TienNVh : bật trạng thái M , mục đích
+                    mStatusM = true;
+                }
                 return;
 
             // Bkav TienNVh :  m- tương tự như m+
@@ -1588,9 +1589,10 @@ public class Calculator extends Activity
                         mBkavMemoryFunction.onMSubAddMemory(mFormulaText.getText().toString());
                 }
 
-                if (mBkavMemoryFunction.isExitMemory())
+                if (mBkavMemoryFunction.isExitMemory()) {
                     mModeViewM.setText("M");
-                mStatusM = true;
+                    mStatusM = true;
+                }
                 return;
 
             //Bkav  TienNVh: Click cac nut % , ! , pi dong item mo rong
@@ -1622,7 +1624,7 @@ public class Calculator extends Activity
                         formulatext = mTruncatedWholeNumber + newtext;
                         postionCursor = formulatext.length() + newtext.length() - 1;
                     } else {
-                        formulatext = "";
+                        formulatext =newtext;
                         postionCursor = 0;
                     }
                 }

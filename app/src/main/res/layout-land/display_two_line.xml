@@ -21,12 +21,6 @@
     android:elevation="10dip"
     android:orientation="vertical">
 
-    <Toolbar
-        android:id="@+id/toolbarapp"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginBottom="20dp"/>
-
     <include layout="@layout/toolbar" />
 
     <com.android.calculator2.CalculatorScrollView
