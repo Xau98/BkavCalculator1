@@ -471,7 +471,7 @@ public class Calculator extends Activity
         mDragLayout.removeDragCallback(this);
         mDragLayout.addDragCallback(this);
         mDragLayout.setCloseCallback(this);
-         
+
         mFormulaText.setOnContextMenuClickListener(mOnFormulaContextMenuClickListener);
         mFormulaText.setOnDisplayMemoryOperationsListener(mOnDisplayMemoryOperationsListener);
         mFormulaText.setEnabled(true);
@@ -628,12 +628,6 @@ public class Calculator extends Activity
             }
         });
         
-    }
-
-    @Override
-    public void onConfigurationChanged(@NonNull Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-        Log.d("TienNVh", "onConfigurationChanged: ");
     }
 
     // Bkav TienNVh :them font chu cho number
@@ -1457,7 +1451,7 @@ public class Calculator extends Activity
     public void onButtonClick(View view) {
         // Any animation is ended before we get here.
         mCurrentButton = view;
-        int postionCursor = mFormulaText.getSelectionStart(); // vi tri con tro
+        int postionCursor = mFormulaText.getSelectionEnd(); // vi tri con tro
         stopActionModeOrContextMenu();
         // See onKey above for the rationale behind some of the behavior below:
         cancelUnrequested();
@@ -1628,8 +1622,8 @@ public class Calculator extends Activity
                     // Bkav TienNVh : Trong trường hợp lấy kết quả để tính tiếp thì mặc đinh chèn ký tự vào phía sau kết quả => bỏ qua đoạn chèn
                     if (mCurrentState != CalculatorState.RESULT) {
                         mPostionCursorToRight = lengthold - postionCursor;// Bkav TienNVh : Vi tri con tro tinh tu ben phai sang
-                        String slipt1 = formulatext.substring(0, postionCursor);
-                        String slipt2 = formulatext.substring(postionCursor, lengthold);
+                        String slipt1 = formulatext.substring(0, mFormulaText.getSelectionStart());
+                        String slipt2 = formulatext.substring(mFormulaText.getSelectionEnd(), lengthold);
                         formulaText = slipt1 + newtext + slipt2;
                     }
                     // Bkav TienNVh : Xoa tat ca cac phep tinh cu
@@ -1780,7 +1774,6 @@ public class Calculator extends Activity
         }
     }
 
-
     private void cancelUnrequested() {
         if (mCurrentState == CalculatorState.INPUT) {
             mEvaluator.cancel(Evaluator.MAIN_INDEX, true);
@@ -1857,6 +1850,7 @@ public class Calculator extends Activity
             final Editable formulaText = mFormulaText.getEditableText();
             // Bkav TienNVh : lấy vị trí con trỏ tính từ bên trái
             int postionCursor = mFormulaText.getSelectionEnd();
+            if(postionCursor == mFormulaText.getSelectionStart()){
             // Bkav TienNVh : tính vị trí con trỏ tính từ bên phải sang
             // Bkav TienNVh : Mục đích chỉ thay đổi các ký tự trước con trỏ , còn sau con trỏ thì dự nguyên
             mPostionCursorToRight = formulaText.length() - postionCursor;
@@ -1921,22 +1915,24 @@ public class Calculator extends Activity
                     }
 
                 }
+            }
                 if (formulaText.length() == 1 && formulaText.charAt(0) == ')')
                     formulaText.clear();
-                mEvaluator.clearMain();
-                // Bkav TienNVh : Vị trí con trỏ sau khi xoá
-                int postionCursor2 = mFormulaText.getSelectionStart();
-                addChars(formulaText.toString(), true);
-
-                // Bkav TienNVh : Hiện thị kết quả phép tính sau khi thay đổi (Xoá )
-                redisplayAfterFormulaChange();
-                // addExplicitStringToExpr(formulaText.toString());
-                mPostionCursorToRight = formulaText.toString().length() - postionCursor2;
-                // Bkav TienNVh : Cập nhật vị trí con trỏ sau khi xoá
-                changePostionCursor();
             }
+            else {
+                formulaText.delete( mFormulaText.getSelectionStart(),mFormulaText.getSelectionEnd());
+            }
+            mEvaluator.clearMain();
+            // Bkav TienNVh : Vị trí con trỏ sau khi xoá
+            int postionCursor2 = mFormulaText.getSelectionStart();
+            addChars(formulaText.toString(), true);
 
-
+            // Bkav TienNVh : Hiện thị kết quả phép tính sau khi thay đổi (Xoá )
+            redisplayAfterFormulaChange();
+            // addExplicitStringToExpr(formulaText.toString());
+            mPostionCursorToRight = formulaText.toString().length() - postionCursor2;
+            // Bkav TienNVh : Cập nhật vị trí con trỏ sau khi xoá
+            changePostionCursor();
         }
         if (mEvaluator.getExpr(Evaluator.MAIN_INDEX).isEmpty() && !haveUnprocessed()) {
             // Resulting formula won't be announced, since it's empty.
@@ -2463,9 +2459,10 @@ public class Calculator extends Activity
 
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
+        // Bkav TienNVh :  Check vị trí click có nằm trong vùng hiện thị không
+        //nếu nămf trong thì cho ẩn mode (paste)
+       if(ev.getY()<mDisplayView.getHeight())
         if (mFormulaText != null) mFormulaText.touchOutSide((int) ev.getX(), (int) ev.getY());
         return super.dispatchTouchEvent(ev);
     }
-
-
 }
