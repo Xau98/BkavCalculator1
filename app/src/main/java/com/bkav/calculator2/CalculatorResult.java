@@ -1062,17 +1062,18 @@ public class CalculatorResult extends AlignedTextView implements MenuItem.OnMenu
                 }
             }
         };
-        setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                if (mValid) {
-                    mActionMode = startActionMode(mCopyActionModeCallback,
-                            ActionMode.TYPE_FLOATING);
-                    return true;
-                }
-                return false;
-            }
-        });
+        // Bkav TienNVh : Bỏ vì theo kịch bản kết quả ko cho xử lý ActionMode  
+//        setOnLongClickListener(new View.OnLongClickListener() {
+//            @Override
+//            public boolean onLongClick(View v) {
+//                if (mValid) {
+//                    mActionMode = startActionMode(mCopyActionModeCallback,
+//                            ActionMode.TYPE_FLOATING);
+//                    return true;
+//                }
+//                return false;
+//            }
+//        });
     }
 
     /**

@@ -62,7 +62,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
+import android.os.Handler;
+import android.os.HandlerThread;
 import android.os.PersistableBundle;
+import android.os.SystemClock;
 import android.text.Editable;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
@@ -229,7 +232,7 @@ public class Calculator extends Activity
                         // Bkav TienNVh : lay du lieu copy
                         String textNew = item.coerceToText(Calculator.this).toString() + "";
                         String formula = mFormulaText.getText().toString();
-                        String formula1 = formula.substring(0, mFormulaText.getSelectionEnd());
+                        String formula1 = formula.substring(0, mFormulaText.getSelectionStart());
                         String formula2 = formula.substring(mFormulaText.getSelectionEnd());
                         String result = formula1 + textNew + formula2;
                         mPostionCursorToRight = result.length() - textNew.length() - formula1.length();
@@ -448,7 +451,6 @@ public class Calculator extends Activity
         mModeToggle = (TextView) findViewById(R.id.toggle_mode);
 
         mIsOneLine = mResultText.getVisibility() == View.INVISIBLE;
-
         mInvertibleButtons = new View[]{
                 findViewById(R.id.fun_sin),
                 findViewById(R.id.fun_cos),
@@ -1165,15 +1167,20 @@ public class Calculator extends Activity
         editor.putString("FormulaText", mFormulaText.getText() + "");
         editor.putString("Language", Locale.getDefault().toString() + "");
         editor.apply();
-
     }
 
     @Override
     protected void onDestroy() {
         mEvaluator.delete();
         mDragLayout.removeDragCallback(this);
-
         super.onDestroy();
+    }
+
+    @Override
+    public void onMultiWindowModeChanged(boolean isInMultiWindowMode, Configuration newConfig) {
+       // Bkav TienNVh : Khi chuyển giữa chia đôi gai diện về 1 giao diện thì đóng các tab trở về tab chính
+        mPadViewPager.setCurrentItem(1);
+        super.onMultiWindowModeChanged(isInMultiWindowMode, newConfig);
     }
 
     /**
@@ -1552,13 +1559,16 @@ public class Calculator extends Activity
             case R.id.op_m_plus:
                 // Bkav TienNVh : Thuc hien phep tinh
                 onEquals();
-                // Bkav TienNVh : Trường hợp phép tính hợp lệ
-                if (mCurrentState == CalculatorState.ANIMATE) {
-                    mBkavMemoryFunction.onMPlusAddMemory(mResultText.getText().toString());
-                } else {
-                    // Bkav TienNVh : TH: ko phải phép tính
-                    if (mCurrentState == CalculatorState.INPUT)
-                        mBkavMemoryFunction.onMPlusAddMemory(mFormulaText.getText().toString());
+                // Bkav TienNVh :  Tránh trường hợp ko có dữ liệu
+                if(mResultText.getText().length()>0) {
+                    // Bkav TienNVh : Trường hợp phép tính hợp lệ
+                    if (mCurrentState == CalculatorState.ANIMATE) {
+                        mBkavMemoryFunction.onMPlusAddMemory(mResultText.getText().toString());
+                    } else {
+                        // Bkav TienNVh : TH: ko phải phép tính
+                        if (mCurrentState == CalculatorState.INPUT)
+                            mBkavMemoryFunction.onMPlusAddMemory(mFormulaText.getText().toString());
+                    }
                 }
                 // Bkav TienNVh : kiểm tra bộ nhớ đã tồn tại , mục đích hiện thị 'M' trên màn hình
                 if (mBkavMemoryFunction.isExitMemory())
@@ -1570,13 +1580,14 @@ public class Calculator extends Activity
             // Bkav TienNVh :  m- tương tự như m+
             case R.id.op_m_sub:
                 onEquals();
-                if (mCurrentState == CalculatorState.ANIMATE) {
-                    mBkavMemoryFunction.onMSubAddMemory(mResultText.getText().toString());
-                } else {
-                    if (mCurrentState == CalculatorState.INPUT)
-                        mBkavMemoryFunction.onMSubAddMemory(mFormulaText.getText().toString());
+                if(mResultText.getText().length()>0) {
+                    if (mCurrentState == CalculatorState.ANIMATE) {
+                        mBkavMemoryFunction.onMSubAddMemory(mResultText.getText().toString());
+                    } else {
+                        if (mCurrentState == CalculatorState.INPUT)
+                            mBkavMemoryFunction.onMSubAddMemory(mFormulaText.getText().toString());
+                    }
                 }
-
                 if (mBkavMemoryFunction.isExitMemory())
                     mModeViewM.setText("M");
                     mBkavMemoryFunction.setmStatusM(true);
@@ -1643,7 +1654,6 @@ public class Calculator extends Activity
                 }
                 break;
         }
-
     }
 
 
