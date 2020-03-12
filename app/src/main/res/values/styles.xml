@@ -155,4 +155,8 @@
         <item name="android:paddingEnd">12dip</item>
     </style>
 
+    <style name="ButtonMore">
+        <item name="android:layout_width">50dip</item>
+        <item name="android:layout_height">25dip</item>
+    </style>
 </resources>

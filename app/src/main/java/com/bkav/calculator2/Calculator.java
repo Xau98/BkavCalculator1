@@ -1460,13 +1460,13 @@ public class Calculator extends Activity
         switch (id) {
             // Bkav TienNVh : Tab tinh nang mo rong
             case R.id.bt_more:
-                if (orientation == Configuration.ORIENTATION_PORTRAIT) {
+
                     if (mPadViewPager == null || mPadViewPager.getCurrentItem() == 1) {
                         mPadViewPager.setCurrentItem(mPadViewPager.getCurrentItem() + 1);
                     } else if (mPadViewPager == null || mPadViewPager.getCurrentItem() == 2) {
                         mPadViewPager.setCurrentItem(mPadViewPager.getCurrentItem() - 1);
                     }
-                }
+
                 break;
             // Bkav TienNVh : Delete History
             case R.id.delHistory:
@@ -1645,6 +1645,8 @@ public class Calculator extends Activity
         }
 
     }
+
+
 
     // Bkav TienNVh : Biến chỉ vị trí con tro đếm từ bên phải sang
     private int mPostionCursorToRight = 0;
