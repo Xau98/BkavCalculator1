@@ -412,15 +412,18 @@ public class CalculatorFormula extends AlignedTextView implements MenuItem.OnMen
     private void paste() {
         final ClipData primaryClip = mClipboardManager.getPrimaryClip();
         if (primaryClip != null && mOnContextMenuClickListener != null) {
-            mOnContextMenuClickListener.onPaste(primaryClip);
 
+            mOnContextMenuClickListener.onPaste(primaryClip);
         }
     }
 
     @Override
     public boolean onMenuItemClick(MenuItem item) {
         switch (item.getItemId()) {
-
+            // Bkav TienNVh :  thay longclick hiện ra tính năng M bằng Các button
+//            case R.id.memory_recall:
+//                mOnContextMenuClickListener.onMemoryRecall();
+//                return true;
             case R.id.menu_paste:
 
                 paste();

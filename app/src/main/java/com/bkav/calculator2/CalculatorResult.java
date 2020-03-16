@@ -35,6 +35,7 @@ import android.text.style.BackgroundColorSpan;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.RelativeSizeSpan;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.ActionMode;
 import android.view.ContextMenu;
 import android.view.GestureDetector;
@@ -52,7 +53,7 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
 // A text widget that is "infinitely" scrollable to the right,
-// and obtains the text to display via a callback to Logic.
+// and obtains the text to display via a callback to Logic.og
 public class CalculatorResult extends AlignedTextView implements MenuItem.OnMenuItemClickListener,
         Evaluator.EvaluationListener, Evaluator.CharMetricsInfo {
     static final int MAX_RIGHT_SCROLL = 10000000;
@@ -452,6 +453,10 @@ public class CalculatorResult extends AlignedTextView implements MenuItem.OnMenu
             mStoreToMemoryRequested = true;
             mEvaluator.requireResult(mIndex, this /* listener */, this /* CharMetricsInfo */);
         }
+    }
+
+    public long getmIndex() {
+        return mIndex;
     }
 
     /**
@@ -1063,17 +1068,17 @@ public class CalculatorResult extends AlignedTextView implements MenuItem.OnMenu
             }
         };
         // Bkav TienNVh : Bỏ vì theo kịch bản kết quả ko cho xử lý ActionMode  
-//        setOnLongClickListener(new View.OnLongClickListener() {
-//            @Override
-//            public boolean onLongClick(View v) {
-//                if (mValid) {
-//                    mActionMode = startActionMode(mCopyActionModeCallback,
-//                            ActionMode.TYPE_FLOATING);
-//                    return true;
-//                }
-//                return false;
-//            }
-//        });
+        setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                if (mValid) {
+                    mActionMode = startActionMode(mCopyActionModeCallback,
+                            ActionMode.TYPE_FLOATING);
+                    return true;
+                }
+                return false;
+            }
+        });
     }
 
     /**
@@ -1106,10 +1111,10 @@ public class CalculatorResult extends AlignedTextView implements MenuItem.OnMenu
     private boolean createContextMenu(MenuInflater inflater, Menu menu) {
         inflater.inflate(R.menu.menu_result, menu);
         final boolean displayMemory = mEvaluator.getMemoryIndex() != 0;
-        final MenuItem memoryAddItem = menu.findItem(R.id.memory_add);
-        final MenuItem memorySubtractItem = menu.findItem(R.id.memory_subtract);
-        memoryAddItem.setEnabled(displayMemory);
-        memorySubtractItem.setEnabled(displayMemory);
+//        final MenuItem memoryAddItem = menu.findItem(R.id.memory_add);
+//        final MenuItem memorySubtractItem = menu.findItem(R.id.memory_subtract);
+//        memoryAddItem.setEnabled(displayMemory);
+//        memorySubtractItem.setEnabled(displayMemory);
         highlightResult();
         return true;
     }
@@ -1161,15 +1166,16 @@ public class CalculatorResult extends AlignedTextView implements MenuItem.OnMenu
     @Override
     public boolean onMenuItemClick(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.memory_add:
-                onMemoryAdd();
-                return true;
-            case R.id.memory_subtract:
-                onMemorySubtract();
-                return true;
-            case R.id.memory_store:
-                onMemoryStore();
-                return true;
+            // Bkav TienNVh :  thay longclick hiện ra tính năng M bằng Các button
+//            case R.id.memory_add:
+//                onMemoryAdd();
+//                return true;
+//            case R.id.memory_subtract:
+//                onMemorySubtract();
+//                return true;
+//            case R.id.memory_store:
+//                onMemoryStore();
+//                return true;
             case R.id.menu_copy:
                 if (mEvaluator.evaluationInProgress(mIndex)) {
                     // Refuse to copy placeholder characters.

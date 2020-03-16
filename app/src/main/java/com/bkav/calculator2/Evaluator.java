@@ -1146,6 +1146,11 @@ public class Evaluator implements CalculatorExpr.ExprResolver {
         setMainExpr(new ExprInfo(new CalculatorExpr(), dm));
     }
 
+     public  boolean exitExprs(){
+        if(mExprs.size()>1)
+        return true;
+        return false;
+     }
     /**
      * Start asynchronous evaluation.
      * Invoke listener on successful completion. If the result is required, invoke
@@ -1219,6 +1224,7 @@ public class Evaluator implements CalculatorExpr.ExprResolver {
             throw new AssertionError("requireResult called too early");
         }
         ExprInfo ei = ensureExprIsCached(index);
+        Log.d("TienNVh", "requireResult: "+ei.mResultString);
         if (ei.mResultString == null || (index == MAIN_INDEX && mChangedValue)) {
             if (index == HISTORY_MAIN_INDEX) {
                 // We don't want to compute a result for HISTORY_MAIN_INDEX that was
@@ -1474,6 +1480,7 @@ public class Evaluator implements CalculatorExpr.ExprResolver {
      */
     private long addToDB(boolean in_history, ExprInfo ei) {
         byte[] serializedExpr = ei.mExpr.toBytes();
+
         ExpressionDB.RowData rd = new ExpressionDB.RowData(serializedExpr, ei.mDegreeMode,
                 ei.mLongTimeout, 0);
         long resultIndex = mExprDB.addRow(!in_history, rd);
@@ -1694,7 +1701,16 @@ public class Evaluator implements CalculatorExpr.ExprResolver {
      * given index. Make mMemoryIndex point to it when we complete evaluating.
      */
     public void addToMemory(long index) {
-        ExprInfo newEi = sum(mMemoryIndex, index);
+        ExprInfo   newEi;
+        if(mMemoryIndex!=0)
+        newEi = sum(mMemoryIndex, index);
+      else {
+          // Bkav TienNVh : Trường hợp trong bộ nhớ rỗng thì bỏ qua sum()
+            CalculatorExpr result = new CalculatorExpr();
+            CalculatorExpr collapsed1 = getCollapsedExpr(index);
+            result.append(collapsed1);
+           newEi = new ExprInfo(result, false  );
+        }
         if (newEi != null) {
             long newIndex = addToDB(false, newEi);
             mMemoryIndex = 0;  // Invalidate while we're evaluating.
@@ -1909,7 +1925,6 @@ public class Evaluator implements CalculatorExpr.ExprResolver {
 
             exp = 10 * exp + Character.digit(s.charAt(i), 10);
         }
-        Log.d("TienNVh", "addExponent: "+exp);
         mMainExpr.mExpr.addExponent(sign * exp);
         mChangedValue = true;
     }
