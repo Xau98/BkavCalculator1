@@ -12,6 +12,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ac9bea0b-70d1-44fa-9642-a5f1677d6e9c" name="Default Changelist" comment="">
+<<<<<<< HEAD
       <change beforePath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
@@ -60,6 +61,10 @@
       <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/history_item.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/history_item.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/pad_advanced_3x5.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/pad_advanced_3x5.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/local.properties" beforeDir="false" afterPath="$PROJECT_DIR$/local.properties" afterDir="false" />
+=======
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/bkav/calculator2/Calculator.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/bkav/calculator2/Calculator.java" afterDir="false" />
+>>>>>>> 1cd012fe31ad09f1484c817a0c50535754b56212
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -112,10 +117,10 @@
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="PropertiesComponent">
     <property name="DEBUGGABLE_DEVICE" value="bkav-bphone_b1114-1234567" />
-    <property name="DEBUGGABLE_PROCESS" value="com.android.calculator2" />
+    <property name="DEBUGGABLE_PROCESS" value="com.bkav.calculator2" />
     <property name="DEBUGGER_ID" value="Auto" />
     <property name="DeviceAndSnapshotComboBoxAction.selectedDevice" value="1234567" />
-    <property name="DeviceAndSnapshotComboBoxAction.selectionTime" value="2020-03-02T09:25:22.597Z" />
+    <property name="DeviceAndSnapshotComboBoxAction.selectionTime" value="2020-03-11T04:17:01.634Z" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="SHOW_ALL_PROCESSES" value="true" />
     <property name="android.project.structure.last.selected" value="SDK Location" />
@@ -123,7 +128,7 @@
     <property name="android.sdk.path" value="$PROJECT_DIR$/../../../../../../quangndb/SubSystem/sdk" />
     <property name="external.system.task.project.file.to.start" value="$PROJECT_DIR$/app" />
     <property name="last_directory_selection" value="$PROJECT_DIR$/app/src/main/res/mipmap-xxhdpi" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../appBkav/GTV" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.17" />
     <property name="project.structure.side.proportion" value="0.2" />
@@ -336,15 +341,6 @@
     <MESSAGE value="C7/11" />
     <MESSAGE value="C8/11" />
     <option name="LAST_COMMIT_MESSAGE" value="C8/11" />
-  </component>
-  <component name="debuggerHistoryManager">
-    <expressions id="watch">
-      <expression>
-        <expression-string>52</expression-string>
-        <language-id>JAVA</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-    </expressions>
   </component>
   <component name="masterDetails">
     <states>

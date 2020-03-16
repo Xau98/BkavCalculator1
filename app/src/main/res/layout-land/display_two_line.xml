@@ -60,14 +60,13 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="17dp"
+        android:layout_marginBottom="10dp"
         android:layout_below="@+id/result">
 
         <Button
             android:id="@+id/bt_history"
             android:layout_width="wrap_content"
             android:layout_height="25dp"
-
             android:layout_marginBottom="0dp"
             android:background="@null"
             android:onClick="onButtonClick"
@@ -81,14 +80,12 @@
 <!--TienNVh : màn hinh xoay thì cho ẩn chế độ more -->
         <ImageView
             android:id="@+id/bt_more"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
+            style="@style/ButtonMore"
             android:layout_alignParentRight="true"
             android:contentDescription="more"
             android:onClick="onButtonClick"
-            android:paddingLeft="20dp"
-            android:paddingTop="23dp"
-            android:paddingRight="19dp"
+            android:paddingRight="10dp"
+            android:layout_marginTop="7dp"
             android:src="@drawable/ic_more_vert_black_24dp" />
     </RelativeLayout>
 </com.android.calculator2.bkav.CalculatorDisplay>

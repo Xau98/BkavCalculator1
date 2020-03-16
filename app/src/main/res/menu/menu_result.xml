@@ -18,18 +18,18 @@
 -->
 
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
+<!--Bkav TienNvh : Thay đổi sang Button trong tab Advance -->
+<!--    <item-->
+<!--        android:id="@+id/memory_store"-->
+<!--        android:title="@string/memory_store" />-->
 
-    <item
-        android:id="@+id/memory_store"
-        android:title="@string/memory_store" />
+<!--    <item-->
+<!--        android:id="@+id/memory_add"-->
+<!--        android:title="@string/memory_add" />-->
 
-    <item
-        android:id="@+id/memory_add"
-        android:title="@string/memory_add" />
-
-    <item
-        android:id="@+id/memory_subtract"
-        android:title="@string/memory_subtract" />
+<!--    <item-->
+<!--        android:id="@+id/memory_subtract"-->
+<!--        android:title="@string/memory_subtract" />-->
 
     <item
         android:id="@+id/menu_copy"

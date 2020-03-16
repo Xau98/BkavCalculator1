@@ -81,7 +81,6 @@ public class CalculatorDisplay extends LinearLayout
 
     public CalculatorDisplay(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-
         mAccessibilityManager =
                 (AccessibilityManager) context.getSystemService(Context.ACCESSIBILITY_SERVICE);
 

@@ -87,9 +87,9 @@
         android:contentDescription="@string/desc_eq"
         android:src="@drawable/equals_btn"
         android:layout_height="12dp"
-        android:paddingLeft="25dp"
+        android:paddingLeft="20dp"
         android:paddingTop="0dp"
-        android:paddingRight="25dp"
+        android:paddingRight="20dp"
         app:layout_row="2"
         app:layout_column="1" />
 

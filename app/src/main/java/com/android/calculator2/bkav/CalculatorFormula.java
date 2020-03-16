@@ -38,6 +38,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.bkav.calculator2.R;
+import androidx.annotation.RequiresApi;
 
 
 /**
@@ -73,6 +74,7 @@ public class CalculatorFormula extends AlignedTextView implements MenuItem.OnMen
         this(context, attrs, 0 /* defStyleAttr */);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
     public CalculatorFormula(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
 
@@ -120,6 +122,7 @@ public class CalculatorFormula extends AlignedTextView implements MenuItem.OnMen
             }
         });
 
+
 // Bkav TienNVh : Custom Action mode để chỉ cho  hiện mỗi past
         setCustomSelectionActionModeCallback(new ActionMode.Callback() {
             @Override
@@ -154,12 +157,16 @@ public class CalculatorFormula extends AlignedTextView implements MenuItem.OnMen
     @Override
     protected void onSelectionChanged(int selStart, int selEnd) {
         super.onSelectionChanged(selStart, selEnd);
+
         // Bkav TienNVh : set vi tri cuoi cung ko hien thi con tro
         if (getSelectionEnd() == length()) {
             setCursorVisible(false);
         } else
             setCursorVisible(true);
+      //  Log.d("TienNVh", "onSelectionChanged: "+ getSelectionEnd()+"//"+ getSelectionStart());
     }
+
+
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
@@ -281,7 +288,9 @@ public class CalculatorFormula extends AlignedTextView implements MenuItem.OnMen
             announceForAccessibility(newText);
         }
         setText(newText, BufferType.NORMAL);
+
     }
+
 
 
     public boolean stopActionModeOrContextMenu() {
@@ -397,28 +406,25 @@ public class CalculatorFormula extends AlignedTextView implements MenuItem.OnMen
         bringPointIntoView(length());
         inflater.inflate(R.menu.menu_formula, menu);
         final MenuItem pasteItem = menu.findItem(R.id.menu_paste);
-        final MenuItem memoryRecallItem = menu.findItem(R.id.memory_recall);
         pasteItem.setEnabled(isPasteEnabled);
-        memoryRecallItem.setEnabled(isMemoryEnabled);
         return true;
     }
 
     private void paste() {
-
-
         final ClipData primaryClip = mClipboardManager.getPrimaryClip();
         if (primaryClip != null && mOnContextMenuClickListener != null) {
-            mOnContextMenuClickListener.onPaste(primaryClip);
 
+            mOnContextMenuClickListener.onPaste(primaryClip);
         }
     }
 
     @Override
     public boolean onMenuItemClick(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.memory_recall:
-                mOnContextMenuClickListener.onMemoryRecall();
-                return true;
+            // Bkav TienNVh :  thay longclick hiện ra tính năng M bằng Các button
+//            case R.id.memory_recall:
+//                mOnContextMenuClickListener.onMemoryRecall();
+//                return true;
             case R.id.menu_paste:
 
                 paste();
@@ -480,6 +486,7 @@ public class CalculatorFormula extends AlignedTextView implements MenuItem.OnMen
         }
         // Bkav TienNVh : Biến Check Click  ngoài toạ độ edittext
         boolean isTouchOutSide = !mContainer.contains(x, y);
+
         // Bkav TienNVh : Check Click ngoài toạ độ edittext và Action mode đã hiện thi chưa
         if (isTouchOutSide && mActionMode != null) {
             // Bkav TienNVh : Tiến hành đóng Actionmode
@@ -489,7 +496,7 @@ public class CalculatorFormula extends AlignedTextView implements MenuItem.OnMen
         // Bkav TienNVh : Check Action mode hệ thống hiện thị hay không ?
         if (isTouchOutSide && mCheckActionMode) {
             // Bkav TienNVh : dịch chuyển con trỏ về sau đoạn text để đóng action  mode hệ thống
-            setSelection(getSelectionEnd());
+          setSelection(getSelectionEnd());
         }
     }
     }
