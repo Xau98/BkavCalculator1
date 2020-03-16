@@ -15,7 +15,7 @@
   limitations under the License.
   -->
 
-<com.bkav.calculator2.CalculatorDisplay
+<com.android.calculator2.bkav.CalculatorDisplay
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/display"
     android:layout_width="match_parent"
@@ -31,7 +31,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <com.bkav.calculator2.CalculatorScrollView
+        <com.android.calculator2.bkav.CalculatorScrollView
             android:id="@+id/formula_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -39,7 +39,7 @@
             android:overScrollMode="never"
             android:scrollbars="none">
 
-            <com.bkav.calculator2.CalculatorFormula
+            <com.android.calculator2.bkav.CalculatorFormula
                 android:id="@+id/formula"
                 style="@style/DisplayTextStyle.Formula"
                 android:layout_width="wrap_content"
@@ -52,9 +52,9 @@
                 android:textColor="@color/display_formula_text_color"
                 android:textIsSelectable="false" />
 
-        </com.bkav.calculator2.CalculatorScrollView>
+        </com.android.calculator2.bkav.CalculatorScrollView>
 
-        <com.bkav.calculator2.CalculatorResult
+        <com.android.calculator2.bkav.CalculatorResult
             android:id="@+id/result"
             style="@style/DisplayTextStyle.Result"
             android:layout_width="match_parent"
@@ -67,4 +67,4 @@
 
     </FrameLayout>
 
-</com.bkav.calculator2.CalculatorDisplay>
+</com.android.calculator2.bkav.CalculatorDisplay>

@@ -27,7 +27,7 @@
         android:supportsRtl="true">
 
         <activity
-            android:name="com.bkav.calculator2.Calculator"
+            android:name="com.android.calculator2.bkav.BkavCalculator"
             android:label="@string/app_name"
             android:windowSoftInputMode="stateAlwaysHidden|adjustNothing"
             android:launchMode="singleTask"
@@ -47,9 +47,9 @@
         </activity>
 
         <activity
-            android:name="com.bkav.calculator2.Licenses"
+            android:name="com.android.calculator2.bkav.Licenses"
             android:launchMode="singleTop"
-            android:parentActivityName="com.bkav.calculator2.Calculator"
+            android:parentActivityName="com.android.calculator2.bkav.BkavCalculator"
             android:theme="@style/Theme.Licenses" />
 
     </application>

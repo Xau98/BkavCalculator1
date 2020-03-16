@@ -13,43 +13,43 @@
   <component name="ChangeListManager">
     <list default="true" id="ac9bea0b-70d1-44fa-9642-a5f1677d6e9c" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/app.iml" beforeDir="false" afterPath="$PROJECT_DIR$/app/app.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/app/build.gradle" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/android/calculator2/AlertDialogFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/bkav/calculator2/AlertDialogFragment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/android/calculator2/AlignedTextView.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/bkav/calculator2/AlignedTextView.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/android/calculator2/BkavAdvancedLayout.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/bkav/calculator2/BkavAdvancedLayout.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/android/calculator2/BkavHistoryAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/bkav/calculator2/BkavHistoryAdapter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/android/calculator2/BkavHistoryLayout.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/bkav/calculator2/BkavHistoryLayout.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/android/calculator2/BkavMemoryFunction.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/bkav/calculator2/BkavMemoryFunction.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/android/calculator2/BlurManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/bkav/calculator2/BlurManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/android/calculator2/BoundedRational.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/bkav/calculator2/BoundedRational.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/android/calculator2/CR.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/bkav/calculator2/CR.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/android/calculator2/Calculator.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/bkav/calculator2/Calculator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/android/calculator2/CalculatorDisplay.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/bkav/calculator2/CalculatorDisplay.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/android/calculator2/CalculatorExpr.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/bkav/calculator2/CalculatorExpr.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/android/calculator2/CalculatorFormula.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/bkav/calculator2/CalculatorFormula.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/android/calculator2/CalculatorPadViewPager.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/bkav/calculator2/CalculatorPadViewPager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/android/calculator2/CalculatorResult.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/bkav/calculator2/CalculatorResult.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/android/calculator2/CalculatorScrollView.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/bkav/calculator2/CalculatorScrollView.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/android/calculator2/CheckPermission.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/bkav/calculator2/CheckPermission.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/android/calculator2/DragController.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/bkav/calculator2/DragController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/android/calculator2/DragLayout.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/bkav/calculator2/DragLayout.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/android/calculator2/EqualsImageButton.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/bkav/calculator2/EqualsImageButton.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/android/calculator2/Evaluator.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/bkav/calculator2/Evaluator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/android/calculator2/ExpressionDB.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/bkav/calculator2/ExpressionDB.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/android/calculator2/HistoryAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/bkav/calculator2/HistoryAdapter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/android/calculator2/HistoryFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/bkav/calculator2/HistoryFragment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/android/calculator2/HistoryItem.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/bkav/calculator2/HistoryItem.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/android/calculator2/KeyMaps.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/bkav/calculator2/KeyMaps.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/android/calculator2/Licenses.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/bkav/calculator2/Licenses.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/android/calculator2/PermissionUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/bkav/calculator2/PermissionUtil.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/android/calculator2/StringFloatRep.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/bkav/calculator2/StringFloatRep.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/android/calculator2/StringUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/bkav/calculator2/StringUtils.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/android/calculator2/UnaryCRFunction.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/bkav/calculator2/UnaryCRFunction.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/android/calculator2/UnifiedReal.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/bkav/calculator2/UnifiedReal.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/android/calculator2/WallpaperBlurCompat.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/bkav/calculator2/WallpaperBlurCompat.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/bkav/calculator2/AlertDialogFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/android/calculator2/bkav/AlertDialogFragment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/bkav/calculator2/AlignedTextView.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/android/calculator2/bkav/AlignedTextView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/bkav/calculator2/BkavAdvancedLayout.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/android/calculator2/bkav/BkavAdvancedLayout.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/bkav/calculator2/BkavHistoryAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/android/calculator2/bkav/BkavHistoryAdapter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/bkav/calculator2/BkavHistoryLayout.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/android/calculator2/bkav/BkavHistoryLayout.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/bkav/calculator2/BkavMemoryFunction.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/android/calculator2/bkav/BkavMemoryFunction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/bkav/calculator2/BlurManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/android/calculator2/bkav/BlurManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/bkav/calculator2/BoundedRational.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/android/calculator2/bkav/BoundedRational.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/bkav/calculator2/CR.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/android/calculator2/bkav/CR.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/bkav/calculator2/Calculator.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/android/calculator2/bkav/BkavCalculator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/bkav/calculator2/CalculatorDisplay.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/android/calculator2/bkav/CalculatorDisplay.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/bkav/calculator2/CalculatorExpr.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/android/calculator2/bkav/CalculatorExpr.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/bkav/calculator2/CalculatorFormula.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/android/calculator2/bkav/CalculatorFormula.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/bkav/calculator2/CalculatorPadViewPager.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/android/calculator2/bkav/CalculatorPadViewPager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/bkav/calculator2/CalculatorResult.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/android/calculator2/bkav/CalculatorResult.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/bkav/calculator2/CalculatorScrollView.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/android/calculator2/bkav/CalculatorScrollView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/bkav/calculator2/CheckPermission.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/android/calculator2/bkav/CheckPermission.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/bkav/calculator2/DragController.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/android/calculator2/bkav/DragController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/bkav/calculator2/DragLayout.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/android/calculator2/bkav/DragLayout.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/bkav/calculator2/EqualsImageButton.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/android/calculator2/bkav/EqualsImageButton.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/bkav/calculator2/Evaluator.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/android/calculator2/bkav/Evaluator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/bkav/calculator2/ExpressionDB.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/android/calculator2/bkav/ExpressionDB.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/bkav/calculator2/HistoryAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/android/calculator2/bkav/HistoryAdapter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/bkav/calculator2/HistoryFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/android/calculator2/bkav/HistoryFragment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/bkav/calculator2/HistoryItem.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/android/calculator2/bkav/HistoryItem.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/bkav/calculator2/KeyMaps.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/android/calculator2/bkav/KeyMaps.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/bkav/calculator2/Licenses.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/android/calculator2/bkav/Licenses.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/bkav/calculator2/PermissionUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/android/calculator2/bkav/PermissionUtil.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/bkav/calculator2/StringFloatRep.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/android/calculator2/bkav/StringFloatRep.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/bkav/calculator2/StringUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/android/calculator2/bkav/StringUtils.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/bkav/calculator2/UnaryCRFunction.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/android/calculator2/bkav/UnaryCRFunction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/bkav/calculator2/UnifiedReal.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/android/calculator2/bkav/UnifiedReal.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/bkav/calculator2/WallpaperBlurCompat.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/android/calculator2/bkav/WallpaperBlurCompat.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/res/layout-land/display_two_line.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout-land/display_two_line.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_calculator_land.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_calculator_land.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_calculator_main.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_calculator_main.xml" afterDir="false" />
@@ -59,7 +59,7 @@
       <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_history.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_history.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/history_item.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/history_item.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/pad_advanced_3x5.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/pad_advanced_3x5.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/local.properties" beforeDir="false" afterPath="$PROJECT_DIR$/local.properties" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -120,7 +120,7 @@
     <property name="SHOW_ALL_PROCESSES" value="true" />
     <property name="android.project.structure.last.selected" value="SDK Location" />
     <property name="android.project.structure.proportion" value="0.15" />
-    <property name="android.sdk.path" value="/media/quangndb/SubSystem/sdk" />
+    <property name="android.sdk.path" value="$PROJECT_DIR$/../../../../../../quangndb/SubSystem/sdk" />
     <property name="external.system.task.project.file.to.start" value="$PROJECT_DIR$/app" />
     <property name="last_directory_selection" value="$PROJECT_DIR$/app/src/main/res/mipmap-xxhdpi" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
@@ -160,7 +160,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Android App.app">
+  <component name="RunManager" selected="Gradle.unsigned">
     <configuration default="true" type="JUnit" factoryName="JUnit">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
       <module name="" />

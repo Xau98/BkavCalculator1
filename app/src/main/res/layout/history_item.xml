@@ -45,14 +45,14 @@
         android:textColor="?android:attr/colorAccent"
         android:textSize="14dp" />
 
-    <com.bkav.calculator2.CalculatorScrollView
+    <com.android.calculator2.bkav.CalculatorScrollView
         android:id="@+id/history_formula_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:overScrollMode="never"
         android:scrollbars="none">
 
-        <com.bkav.calculator2.AlignedTextView
+        <com.android.calculator2.bkav.AlignedTextView
             android:id="@+id/history_formula"
             style="@style/HistoryItemTextStyle"
             android:layout_width="wrap_content"
@@ -60,9 +60,9 @@
             android:ellipsize="none"
             android:textColor="@color/display_formula_text_color" />
 
-    </com.bkav.calculator2.CalculatorScrollView>
+    </com.android.calculator2.bkav.CalculatorScrollView>
 
-    <com.bkav.calculator2.CalculatorResult
+    <com.android.calculator2.bkav.CalculatorResult
         android:id="@+id/history_result"
         style="@style/HistoryItemTextStyle"
         android:layout_width="match_parent"

@@ -14,7 +14,7 @@
   limitations under the License.
   -->
 <!--Bkav TienNVh : Giao dien doc cua hien thi -->
-<com.bkav.calculator2.CalculatorDisplay xmlns:android="http://schemas.android.com/apk/res/android"
+<com.android.calculator2.bkav.CalculatorDisplay xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/display"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -23,7 +23,7 @@
 <!-- Bkav TienNVH : thanh trạng thái DEG / RAD -->
     <include layout="@layout/toolbar" />
 
-    <com.bkav.calculator2.CalculatorScrollView
+    <com.android.calculator2.bkav.CalculatorScrollView
         android:id="@+id/formula_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -31,7 +31,7 @@
         android:scrollbars="none">
 <!--Bkav TienNVh: Chặn giật lên khi nhập ký tự -->
 <!--        android:gravity="center"-->
-        <com.bkav.calculator2.CalculatorFormula
+        <com.android.calculator2.bkav.CalculatorFormula
             android:id="@+id/formula"
             style="@style/DisplayTextStyle.Formula"
             android:layout_width="wrap_content"
@@ -45,9 +45,9 @@
             android:textColor="@color/display_formula_text_color" />
 <!--        Bkav TienNVh : Cho phep nhap phep tinh -->
 <!--        android:focusableInTouchMode="true"        -->
-    </com.bkav.calculator2.CalculatorScrollView>
+    </com.android.calculator2.bkav.CalculatorScrollView>
     <!-- Bkav TienNVh : Sửa layout_height = match_parent thành wrap_content  -->
-    <com.bkav.calculator2.CalculatorResult
+    <com.android.calculator2.bkav.CalculatorResult
         android:id="@+id/result"
         style="@style/DisplayTextStyle.Result"
         android:layout_width="match_parent"
@@ -95,4 +95,4 @@
             android:paddingRight="28dp"
             android:src="@drawable/icon_more" />
     </RelativeLayout>
-</com.bkav.calculator2.CalculatorDisplay>
+</com.android.calculator2.bkav.CalculatorDisplay>
