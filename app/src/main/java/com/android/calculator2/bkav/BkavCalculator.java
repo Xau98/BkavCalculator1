@@ -592,9 +592,6 @@ public class BkavCalculator extends Activity
         // Bkav TienNVh : Set font number
         setFontNumber();
 
-        // Bkav TienNVh : Lam trong suot arstatus bar
-        overlapStatusbar();
-
         // Bkav TienNVh : Nhận sự kiện chạm vào
         mFormulaText.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -602,13 +599,23 @@ public class BkavCalculator extends Activity
                 v.onTouchEvent(event);
                 String text = mFormulaText.getText().toString();
                 int handle = mFormulaText.getSelectionStart();
-                if (text.length() >= handle + 1) {
-                    // Bkav TienNVh :  Truong hop con tro dung truoc cac ky tu :'o, i ,n, g,x,p,s,a' thi no dich chuyen con tro ve sau dau (.
-                    // Bkav TienNVh : Trong truong hop
-                    if (text.charAt(handle) == 'i' || text.charAt(handle) == 'n' || text.charAt(handle) == 'o' || text.charAt(handle) == 's'
-                            || text.charAt(handle) == 'a' || text.charAt(handle) == 'g' || text.charAt(handle) == 'x' || text.charAt(handle) == 'p' || text.charAt(handle) == '(') {
-                        if (text.charAt(handle) == 's') {
-                            if (handle > 0 && text.charAt(handle - 1) == 'o') {
+                // Bkav TienNVh : Check trong trường hợp phép tính không bị lỗi thì cho phép chuyển con trỏ về cuối '('
+                if((mUnprocessedChars!=null &&mUnprocessedChars.equals(""))||mUnprocessedChars==null) {
+                    if (text.length() >= handle + 1) {
+                        // Bkav TienNVh :  Truong hop con tro dung truoc cac ky tu :'o, i ,n, g,x,p,s,a' thi no dich chuyen con tro ve sau dau (.
+                        // Bkav TienNVh : Trong truong hop
+                        if (text.charAt(handle) == 'i' || text.charAt(handle) == 'n' || text.charAt(handle) == 'o' || text.charAt(handle) == 's'
+                                || text.charAt(handle) == 'a' || text.charAt(handle) == 'g' || text.charAt(handle) == 'x' || text.charAt(handle) == 'p' || text.charAt(handle) == '(') {
+                            if (text.charAt(handle) == 's') {
+                                if (handle > 0 && text.charAt(handle - 1) == 'o') {
+                                    for (int i = handle; i < text.length(); i++) {
+                                        if (text.charAt(i) == '(') {
+                                            mFormulaText.setSelection(i + 1);
+                                            break;
+                                        }
+                                    }
+                                }
+                            } else {
                                 for (int i = handle; i < text.length(); i++) {
                                     if (text.charAt(i) == '(') {
                                         mFormulaText.setSelection(i + 1);
@@ -616,22 +623,15 @@ public class BkavCalculator extends Activity
                                     }
                                 }
                             }
-                        } else {
-                            for (int i = handle; i < text.length(); i++) {
-                                if (text.charAt(i) == '(') {
-                                    mFormulaText.setSelection(i + 1);
-                                    break;
-                                }
-                            }
-                        }
 
+                        }
                     }
                 }
-
                 return true;
             }
         });
-
+        // Bkav TienNVh : Lam trong suot arstatus bar
+        overlapStatusbar();
     }
 
     // Bkav TienNVh :them font chu cho number
@@ -1136,17 +1136,18 @@ public class BkavCalculator extends Activity
                         ContextCompat.getColor(this, R.color.calculator_error_color);
                 mFormulaText.setTextColor(errorColor);
                 mResultText.setTextColor(errorColor);
-                getWindow().setStatusBarColor(errorColor);
+                // Bkav TienNVh : Không cho setStatusBar vì theo kịch bản để StatusBar trong suốt
+                //getWindow().setStatusBarColor(errorColor);
             } else if (mCurrentState != CalculatorState.RESULT) {
                 mFormulaText.setTextColor(
                         ContextCompat.getColor(this, R.color.display_formula_text_color));
                 mResultText.setTextColor(
                         ContextCompat.getColor(this, R.color.display_result_text_color));
-                getWindow().setStatusBarColor(
-                        ContextCompat.getColor(this, R.color.calculator_statusbar_color));
+                // Bkav TienNVh : Không cho setStatusBar vì theo kịch bản để StatusBar trong suốt
+                //getWindow().setStatusBarColor(
+                //        ContextCompat.getColor(this, R.color.calculator_statusbar_color));
             }
             // Bkav TienNVh : Set thanh status bar trong suot
-            overlapStatusbar();
             invalidateOptionsMenu();
         }
     }

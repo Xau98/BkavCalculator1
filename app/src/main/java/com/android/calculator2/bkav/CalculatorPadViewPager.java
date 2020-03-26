@@ -59,6 +59,9 @@ public class CalculatorPadViewPager extends ViewPager {
             int orientation = getResources().getConfiguration().orientation;
             if (position == 0) {
                 if (orientation == Configuration.ORIENTATION_LANDSCAPE){
+                    // Bkav TienNVh : set width cho tab history khi o man hinh chia doi
+                    if(getChildCount()==3)
+                        return 0.65f;
                     return 0.385f;
                 }
                 else {

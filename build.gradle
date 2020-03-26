@@ -5,7 +5,7 @@ buildscript {
         google()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.5.1'
+        classpath 'com.android.tools.build:gradle:3.6.0'
     }
 }
 
@@ -24,4 +24,5 @@ allprojects {
 // khi click button history thì ấn 'Rad/Deg '
 // fix lỗi xoá đoạn text được dán vào
 // Sửa giao diện chia đôi màn hình
-
+//Version 1.1.1
+// Fix giao diện bàn phím ko hiển thị các nút
