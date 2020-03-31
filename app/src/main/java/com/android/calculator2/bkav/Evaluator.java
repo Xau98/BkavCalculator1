@@ -948,6 +948,7 @@ public class Evaluator implements CalculatorExpr.ExprResolver {
             // CalculatorResult would not use scientific notation either.
             lsdOffset = -1;
         }
+
         if (msdIndex > dotIndex) {
             if (msdIndex <= dotIndex + EXP_COST + 1) {
                 // Preferred display format in this case is with leading zeroes, even if
@@ -1225,7 +1226,6 @@ public class Evaluator implements CalculatorExpr.ExprResolver {
             throw new AssertionError("requireResult called too early");
         }
         ExprInfo ei = ensureExprIsCached(index);
-        Log.d("TienNVh", "requireResult: "+ei.mResultString);
         if (ei.mResultString == null || (index == MAIN_INDEX && mChangedValue)) {
             if (index == HISTORY_MAIN_INDEX) {
                 // We don't want to compute a result for HISTORY_MAIN_INDEX that was
@@ -1724,14 +1724,36 @@ public class Evaluator implements CalculatorExpr.ExprResolver {
      * from "memory." Make mMemoryIndex point to it when we complete evaluating.
      */
     public void subtractFromMemory(long index) {
-        ExprInfo newEi = difference(mMemoryIndex, index);
+        ExprInfo newEi;
+        if(mMemoryIndex!=0)
+            newEi= difference(mMemoryIndex, index);
+        else {
+            // Bkav TienNVh : Trường hợp trong bộ nhớ rỗng thì bỏ qua difference().
+            CalculatorExpr result = new CalculatorExpr();
+            CalculatorExpr collapsed1 = getCollapsedExpr(index);
+            // Bkav TienNVh : Thêm dấu '-' trong trường hợp bộ nhớ rỗng
+            result.add(R.id.op_sub);
+            result.append(collapsed1);
+            newEi = new ExprInfo(result, false  );
+        }
         if (newEi != null) {
             long newIndex = addToDB(false, newEi);
             mMemoryIndex = 0;  // Invalidate while we're evaluating.
             setMemoryIndexWhenEvaluated(newIndex, true /* persist */);
         }
     }
+    // Bkav TienNVh : Biến dùng để phân biệt Click "="  và "M"
+    // Bkav TienNVh : mStatus =true nếu phép tính trước đó là phép tính M
+    // ngược lại là phép tính '='
+    private boolean mStatusM = false;
 
+    public boolean ismStatusM() {
+        return mStatusM;
+    }
+
+    public void setmStatusM(boolean mStatusM) {
+        this.mStatusM = mStatusM;
+    }
     /**
      * Return index of "saved" expression, or 0.
      */

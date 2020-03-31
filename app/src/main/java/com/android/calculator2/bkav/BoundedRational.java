@@ -331,8 +331,6 @@ public class BoundedRational {
             return null;
         }
         final BigInteger den = r1.mDen.multiply(r2.mDen);
-//        Log.d("TienNVh 7", r1.mNum+"//"+r2.mDen+"add: "+r2.mNum+"//"+r1.mDen);
-        Log.d("TienNVh 6", r1.mNum.multiply(r2.mDen)+"add: "+r2.mNum.multiply(r1.mDen));
         final BigInteger num = r1.mNum.multiply(r2.mDen).add(r2.mNum.multiply(r1.mDen));
 
         return maybeReduce(new BoundedRational(num,den));

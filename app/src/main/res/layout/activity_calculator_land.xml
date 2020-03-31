@@ -38,6 +38,7 @@
         <include layout="@layout/fragment_history" />
 
         <LinearLayout
+            android:id="@+id/numeric_operator"
             android:layout_width="match_parent"
             android:layout_height="0dip"
             android:background="#16ffffff"

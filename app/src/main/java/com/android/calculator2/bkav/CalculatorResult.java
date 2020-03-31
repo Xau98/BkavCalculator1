@@ -132,10 +132,11 @@ public class CalculatorResult extends AlignedTextView implements MenuItem.OnMenu
                             // Should we evaluate when layout completes, and how?
     private Evaluator.EvaluationListener mEvaluationListener = this;
                             // Listener to use if/when evaluation is requested.
-    public static final int MAX_LEADING_ZEROES = 6;
+    public static final int MAX_LEADING_ZEROES =6;
                             // Maximum number of leading zeroes after decimal point before we
                             // switch to scientific notation with negative exponent.
-    public static final int MAX_TRAILING_ZEROES = 6;
+    // Bkav TienNVh :  Hiện thị kết quả phụ thuộc vào kích thước màn hình
+    public static final  int MAX_TRAILING_ZEROES = 9999;
                             // Maximum number of trailing zeroes before the decimal point before
                             // we switch to scientific notation with positive exponent.
     private static final int SCI_NOTATION_EXTRA = 1;
@@ -486,7 +487,9 @@ public class CalculatorResult extends AlignedTextView implements MenuItem.OnMenu
      */
     private void initPositions(int initPrecOffset, int msdIndex, int lsdOffset,
             String truncatedWholePart) {
+        // Bkav TienNVh :  getMaxChar : là số ký tự tối đa hiện thị
         int maxChars = getMaxChars();
+        // Bkav TienNVh :  độ dài của kết quả
         mWholeLen = truncatedWholePart.length();
         // Allow a tiny amount of slop for associativity/rounding differences in length
         // calculation.  If getPreferredPrec() decided it should fit, we want to make it fit, too.
@@ -522,13 +525,14 @@ public class CalculatorResult extends AlignedTextView implements MenuItem.OnMenu
         }
         // Set to position of leftmost significant digit relative to dec. point. Usually negative.
         int minCharOffset = msdIndex - mWholeLen;
-        if (minCharOffset > -1 && minCharOffset < MAX_LEADING_ZEROES + 2) {
+        if (minCharOffset > -1 && minCharOffset <  getMaxChars()) {
             // Small number of leading zeroes, avoid scientific notation.
             minCharOffset = -1;
         }
+
         if (lsdOffset < MAX_RIGHT_SCROLL) {
             mMaxCharOffset = lsdOffset;
-            if (mMaxCharOffset < -1 && mMaxCharOffset > -(MAX_TRAILING_ZEROES + 2)) {
+            if (mMaxCharOffset < -1 && mMaxCharOffset > -(MAX_TRAILING_ZEROES)) {
                 mMaxCharOffset = -1;
             }
             // lsdOffset is positive or negative, never 0.
@@ -766,6 +770,17 @@ public class CalculatorResult extends AlignedTextView implements MenuItem.OnMenu
                     lastDisplayedOffset[0] -= dropDigits;
                 }
             }
+//            // Bkav TienNVh : Muc dich bỏ dấu ',' trong chuỗi .vd: 2,E11 => 2E11
+//            char c = result.charAt(result.length() - 1);
+//            if(c=='.'||c==',')
+//                result = result.substring( 0 , result.length()-1);
+//            // Bkav TienNVh : mục đich fomat lại kq 1 lần nữa
+//            // Bkav TienNVh : VD: 1.0425000E13 => 1.0425E13
+//            if(result.contains(",") || result.contains("."))
+//                 result= Double.parseDouble(result)+"";
+//             else
+//                result = Long.parseLong(result)+"";
+
             result = result + "E" + Integer.toString(exponent);
         } else if (insertCommas) {
            //khi xoay

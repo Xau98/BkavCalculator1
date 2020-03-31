@@ -18,11 +18,9 @@ public class BkavHistoryLayout extends RelativeLayout {
     private float mOffset;
     private int mOffsetPixel;
 
-    public void setInforScrollViewpager(Bitmap bitmap, int i, float v, int i1) {
+    public void setInforScrollViewpager(Bitmap bitmap, float v ) {
         this.mBitmap = bitmap;
-        this.mPostion = i;
         this.mOffset = v;
-        this.mOffsetPixel = i1;
 
         invalidate();
         requestLayout();

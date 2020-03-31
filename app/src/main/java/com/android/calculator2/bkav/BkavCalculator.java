@@ -90,8 +90,10 @@ import android.view.WindowManager;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.Button;
 import android.widget.HorizontalScrollView;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.Toolbar;
 
 import com.bkav.calculator2.R;
@@ -112,6 +114,7 @@ public class BkavCalculator extends Activity
         implements CalculatorFormula.OnTextSizeChangeListener, OnLongClickListener,
         AlertDialogFragment.OnClickListener, Evaluator.EvaluationListener /* for main result */,
         DragLayout.CloseCallback, DragLayout.DragCallback, PermissionUtil.CallbackCheckPermission {
+
 
     private static final String TAG = "Calculator";
     /**
@@ -151,6 +154,7 @@ public class BkavCalculator extends Activity
     // it has not.
     // TODO: Possibly save a bit more information, e.g. its initial display string
     // or most significant digit position, to speed up restart.
+
 
     private final Property<TextView, Integer> TEXT_COLOR =
             new Property<TextView, Integer>(Integer.class, "textColor") {
@@ -313,7 +317,7 @@ public class BkavCalculator extends Activity
     // Bkav TienNVh :
     private SharedPreferences mSharedPreferences;
     private String mSharePreFile = "SaveCalCulator";
-
+    private ImageView mImgMore ;
 
     // Characters that were recently entered at the end of the display that have not yet
     // been added to the underlying expression.
@@ -538,19 +542,30 @@ public class BkavCalculator extends Activity
                 //           }
                 // Bkav TienNVh : sự kiện sang trang
                 //          if (mPadViewPager != null) {
+                //    Bkav TienNVh : set background cho History
+                mRelativeLayoutHistory.setInforScrollViewpager(bitmapBlurHis, (float) 0.0);
+                mCalculatorPadLayout = (BkavAdvancedLayout) findViewById(R.id.pad_advanced);
+                mImgMore = findViewById(R.id.bt_more);
+                //    Bkav TienNVh : set background cho Advance
                 final Bitmap finalBitmapBlurAd = bitmapBlurAd;
+                // Bkav TienNVh : Nếu ViewPager có 3 tab thì set background và hiện bt More
+                if (mPadViewPager.getChildCount() == 3){
+                    mImgMore.setVisibility(View.VISIBLE);
+                    mCalculatorPadLayout.setInforScrollViewpager(finalBitmapBlurAd, (float) 0.9999, findViewById(R.id.numeric_operator).getWidth());
+                }
+                else
+                    mImgMore.setVisibility(View.GONE);
+
                 mPadViewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
                     @Override
                     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
                         if (position == 0) {
                             // Bkav TienNVh :  position =0 là tab history
-                            mRelativeLayoutHistory.setInforScrollViewpager(bitmapBlurHis,
-                                    position, positionOffset, positionOffsetPixels);
+                            mRelativeLayoutHistory.setInforScrollViewpager(bitmapBlurHis, positionOffset);
                         } else {
                             if (position == 1) {
                                 if (orientation == Configuration.ORIENTATION_PORTRAIT) {
                                     if (finalBitmapBlurAd != null) {
-                                        mCalculatorPadLayout = (BkavAdvancedLayout) findViewById(R.id.pad_advanced);
                                         mCalculatorPadLayout.setInforScrollViewpager(finalBitmapBlurAd, positionOffset, positionOffsetPixels);
                                     }
                                 }
@@ -600,7 +615,7 @@ public class BkavCalculator extends Activity
                 String text = mFormulaText.getText().toString();
                 int handle = mFormulaText.getSelectionStart();
                 // Bkav TienNVh : Check trong trường hợp phép tính không bị lỗi thì cho phép chuyển con trỏ về cuối '('
-                if((mUnprocessedChars!=null &&mUnprocessedChars.equals(""))||mUnprocessedChars==null) {
+                if ((mUnprocessedChars != null && mUnprocessedChars.equals("")) || mUnprocessedChars == null) {
                     if (text.length() >= handle + 1) {
                         // Bkav TienNVh :  Truong hop con tro dung truoc cac ky tu :'o, i ,n, g,x,p,s,a' thi no dich chuyen con tro ve sau dau (.
                         // Bkav TienNVh : Trong truong hop
@@ -1495,7 +1510,7 @@ public class BkavCalculator extends Activity
                 }
                 break;
             case R.id.eq:
-                mBkavMemoryFunction.setmStatusM(false);
+                mEvaluator.setmStatusM(false);
                 onEquals();
                 break;
             case R.id.del:
@@ -1538,6 +1553,7 @@ public class BkavCalculator extends Activity
 //                mBkavMemoryFunction.onClearMemory();
                 mEvaluator.clearEverything();
                 mModeViewM.setText("");
+                Toast.makeText(getApplication(),"Đã xoá bộ nhớ tạm",Toast.LENGTH_LONG).show();
                 return;
 
             // Bkav TienNVh : Tính năng Mr : Lấy dữ liệu trong bộ nhớ tạm
@@ -1558,7 +1574,6 @@ public class BkavCalculator extends Activity
                 if (mEvaluator.exitExprs())
                     mModeViewM.setText("M");
                 return;
-
             // Bkav TienNVh : Tính năng m+ : thêm  vào bộ nhớ tam
             // Bkav TienNVh : Trang thai
             //CalculatorState.EVALUATE : Phep tinh khong hop le
@@ -1566,15 +1581,16 @@ public class BkavCalculator extends Activity
             // CalculatorState.INPUT : trang thai nguoi nhap vao
             //CalculatorState.RESULT : co ket qua
             case R.id.op_m_plus:
-              // Bkav TienNVh : Thuc hien phep tinh
+                // Bkav TienNVh : Thuc hien phep tinh
                 onEquals();
                 // Bkav TienNVh :  Khi nào có phép tinh đó hợp lệ thì mới dùng được tính năng M
-                if(mCurrentState== CalculatorState.RESULT) {
+                if (mCurrentState == CalculatorState.RESULT|| mCurrentState== CalculatorState.ANIMATE) {
                     mEvaluator.addToMemory(mResultText.getmIndex());
                     mFormulaText.setSelection(mFormulaText.getText().length());
                 }
                 if (mEvaluator.exitExprs())
                     mModeViewM.setText("M");
+                mEvaluator.setmStatusM(true);
 //                // Bkav TienNVh :  Tránh trường hợp ko có dữ liệu
 //                if(mResultText.getText().length()>0) {
 //                    // Bkav TienNVh : Trường hợp phép tính hợp lệ
@@ -1595,7 +1611,7 @@ public class BkavCalculator extends Activity
             // Bkav TienNVh :  m- tương tự như m+
             case R.id.op_m_sub:
                 onEquals();
-                if(mCurrentState== CalculatorState.RESULT) {
+                if (mCurrentState == CalculatorState.RESULT|| mCurrentState== CalculatorState.ANIMATE) {
                     mEvaluator.subtractFromMemory(mResultText.getmIndex());
                     mFormulaText.setSelection(mFormulaText.getText().length());
                 }
@@ -1609,6 +1625,7 @@ public class BkavCalculator extends Activity
 //                }
                 if (mEvaluator.exitExprs())
                     mModeViewM.setText("M");
+                mEvaluator.setmStatusM(true);
                 return;
 
             //Bkav  TienNVh: Click cac nut % , ! , pi dong item mo rong
@@ -1635,12 +1652,12 @@ public class BkavCalculator extends Activity
                 String newtext = KeyMaps.toString(this, id);
                 // Bkav TienNVh : Truowng hop lay ket qua de tiep tuc tinh tiep
                 if (mCurrentState == CalculatorState.RESULT) {
-                    if (!mBkavMemoryFunction.ismStatusM()) {
+                    if (!mEvaluator.ismStatusM()) {
                         // Bkav TienNVh : Trong trường hợp lấy kết quả để tính tiếp thì chèn ký tự vừa nhập vào sau kết quả
                         formulatext = mTruncatedWholeNumber + newtext;
                         postionCursor = formulatext.length() + newtext.length() - 1;
                     } else {
-                        formulatext =newtext;
+                        formulatext = newtext;
                         postionCursor = 0;
                     }
                 }
