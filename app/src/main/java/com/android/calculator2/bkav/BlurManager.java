@@ -12,6 +12,7 @@ import android.renderscript.Allocation;
 import android.renderscript.Element;
 import android.renderscript.RenderScript;
 import android.renderscript.ScriptIntrinsicBlur;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.ImageView;
@@ -68,7 +69,6 @@ public class BlurManager {
         } else {
             int width = Math.round(imageBitmap.getWidth() * mBitmapScale);
             int height = Math.round(imageBitmap.getHeight() * mBitmapScale);
-
             mInputBitmap = Bitmap.createScaledBitmap(imageBitmap, width, height, false);
         }
 

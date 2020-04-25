@@ -227,14 +227,15 @@ public class BkavCalculator extends Activity
                         // nothing to paste, bail early...
                         return false;
                     }
-
+                    // Bkav TienNVh : đoạn này có nghĩa là
+                    // Bkav TienNVh : Trong TH :Khi mình copy kết quả và dán để tính tiếp thì ko phải lưu đoạn text mà chỉ cần lấy Index kết quả
                     // Check if the item is a previously copied result, otherwise paste as raw text.
-                    final Uri uri = item.getUri();
-                    if (uri != null && mEvaluator.isLastSaved(uri)) {
-                        clearIfNotInputState();
-                        mEvaluator.appendExpr(mEvaluator.getSavedIndex());
-                        redisplayAfterFormulaChange();
-                    } else {
+ //                   final Uri uri = item.getUri();
+//                    if (uri != null && mEvaluator.isLastSaved(uri)) {
+//                        clearIfNotInputState();
+//                        mEvaluator.appendExpr(mEvaluator.getSavedIndex());
+//                        redisplayAfterFormulaChange();
+//                    } else {
                         // Bkav TienNVh : lay du lieu copy
                         String textNew = item.coerceToText(BkavCalculator.this).toString() + "";
                         String formula = mFormulaText.getText().toString();
@@ -252,7 +253,7 @@ public class BkavCalculator extends Activity
                         // Bkav TienNVh : thay doi vi tri con tro
                         changePostionCursor();
                         //Log.d("TienNVh", "onPaste: "+(System.currentTimeMillis() - start));
-                    }
+                    //    }
                     return true;
                 }
 
@@ -424,6 +425,7 @@ public class BkavCalculator extends Activity
             }
         });
         mRelativeLayoutHistory = (BkavHistoryLayout) findViewById(R.id.relativeLayout_history);
+        mCalculatorPadLayout = (BkavAdvancedLayout) findViewById(R.id.pad_advanced);
         mBkavMemoryFunction = new BkavMemoryFunction();
         mMainCalculator = findViewById(R.id.main_calculator);
         mDisplayView = (CalculatorDisplay) findViewById(R.id.display);
@@ -511,6 +513,7 @@ public class BkavCalculator extends Activity
         });
 
         final int orientation = getResources().getConfiguration().orientation;
+        long a = System.currentTimeMillis();
         mDragLayout.post(new Runnable() {
             @Override
             public void run() {
@@ -544,13 +547,11 @@ public class BkavCalculator extends Activity
                 //          if (mPadViewPager != null) {
                 //    Bkav TienNVh : set background cho History
                 mRelativeLayoutHistory.setInforScrollViewpager(bitmapBlurHis, (float) 0.0);
-                mCalculatorPadLayout = (BkavAdvancedLayout) findViewById(R.id.pad_advanced);
                 mImgMore = findViewById(R.id.bt_more);
                 //    Bkav TienNVh : set background cho Advance
                 final Bitmap finalBitmapBlurAd = bitmapBlurAd;
                 // Bkav TienNVh : Nếu ViewPager có 3 tab thì set background và hiện bt More
                 if (mPadViewPager.getChildCount() == 3){
-                    mImgMore.setVisibility(View.VISIBLE);
                     mCalculatorPadLayout.setInforScrollViewpager(finalBitmapBlurAd, (float) 0.9999, findViewById(R.id.numeric_operator).getWidth());
                 }
                 else
@@ -588,11 +589,9 @@ public class BkavCalculator extends Activity
                 //    }
             }
         });
-
+        Log.d("TienNVh", "onCreate: "+ (System.currentTimeMillis()-a));
         //Bkav TienNVh : Ko cho click xuyen len lich su
-        findViewById(R.id.relativeLayout_history).
-
-                setOnClickListener(new View.OnClickListener() {
+        mRelativeLayoutHistory.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
 
@@ -765,25 +764,12 @@ public class BkavCalculator extends Activity
     private Bitmap cutImageToBackgroundHistory(Bitmap bitmap) {
         DisplayMetrics displayMetrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-        int mScreenHeight = displayMetrics.heightPixels;
-        int mScreenWidth = displayMetrics.widthPixels;
-
-        int heightChild = findViewById(R.id.relativeLayout_history).getHeight();
+        int mScreenHeight =mDragLayout.getHeight();
+        int heightChild = mRelativeLayoutHistory.getHeight();
+        int widthChild =  mRelativeLayoutHistory.getWidth();
         Bitmap cutBitmap = null;
-        int orientation = getResources().getConfiguration().orientation;
-        if (bitmap != null && orientation == Configuration.ORIENTATION_PORTRAIT) {
             int y = mScreenHeight - heightChild;
-            // Bkav TienNVh :  khi y<0 thì khi chưa có kích thước => ko thể lấy được bitmap
-            if (y > 0 && heightChild > 0)
-                cutBitmap = Bitmap.createBitmap(bitmap, 0, y + heightChild > bitmap.getHeight() ? bitmap.getHeight() - heightChild : y,
-                        (int) (mScreenWidth * 0.8), heightChild);
-
-        } else {
-            // Bkav TienNVh : để tránh một số trường hợp chưa load kịp giao giện
-            if ((heightChild - 100) > 0 && (mScreenHeight - heightChild) > 0)
-                cutBitmap = Bitmap.createBitmap(bitmap, 0, mScreenHeight - heightChild,
-                        (int) (mScreenWidth * 0.4), heightChild - 100);
-        }
+                cutBitmap = Bitmap.createBitmap(bitmap, 0,   y, widthChild, heightChild);
         return cutBitmap;
     }
 
@@ -791,14 +777,10 @@ public class BkavCalculator extends Activity
     private Bitmap cutImageToBackgroundAdvence(Bitmap bitmap) {
         DisplayMetrics displayMetrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-        int mScreenHeight = displayMetrics.heightPixels;
-        int heightChild = findViewById(R.id.pad_advanced).getHeight();
+        int mScreenHeight =mDragLayout.getHeight();
+        int heightChild = mRelativeLayoutHistory.getHeight();
         Bitmap cutBitmap = null;
-        // Bkav TienNVh :
-        if (bitmap != null && (mScreenHeight - heightChild) > 0 && heightChild > 100) {
-            cutBitmap = Bitmap.createBitmap(bitmap, (int) (bitmap.getWidth() * 0.2),
-                    mScreenHeight - heightChild, (int) (bitmap.getWidth() * 0.8), heightChild - 100);
-        }
+        cutBitmap = Bitmap.createBitmap(bitmap, (int) (bitmap.getWidth() * 0.2), mScreenHeight - heightChild, (int) (bitmap.getWidth() * 0.8), heightChild );
         return cutBitmap;
     }
 
@@ -1490,7 +1472,6 @@ public class BkavCalculator extends Activity
                 } else if (mPadViewPager == null || mPadViewPager.getCurrentItem() == 2) {
                     mPadViewPager.setCurrentItem(mPadViewPager.getCurrentItem() - 1);
                 }
-
                 break;
             // Bkav TienNVh : Delete History
             case R.id.delHistory:
@@ -2505,9 +2486,11 @@ public class BkavCalculator extends Activity
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
         // Bkav TienNVh :  Check vị trí click có nằm trong vùng hiện thị không
-        //nếu nămf trong thì cho ẩn mode (paste)
-        if (ev.getY() < mDisplayView.getHeight())
+        //nếu nămf trong thì cho ẩn mode (paste/ copy)
+        if (ev.getY() < mDisplayView.getHeight()) {
             if (mFormulaText != null) mFormulaText.touchOutSide((int) ev.getX(), (int) ev.getY());
+            if(mResultText != null) mResultText.touchOutSide((int) ev.getX(), (int) ev.getY());
+        }
         return super.dispatchTouchEvent(ev);
     }
 }

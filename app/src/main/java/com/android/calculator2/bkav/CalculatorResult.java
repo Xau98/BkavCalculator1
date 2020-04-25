@@ -1213,4 +1213,9 @@ public class CalculatorResult extends AlignedTextView implements MenuItem.OnMenu
         super.onDetachedFromWindow();
 
     }
+
+    //===========================BKAV==========================
+    public void touchOutSide(int x, int y) {
+        touchOutSide(mActionMode, x,y, false);
+    }
 }
