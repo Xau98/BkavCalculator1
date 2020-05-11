@@ -353,7 +353,6 @@ public class CalculatorResult extends AlignedTextView implements MenuItem.OnMenu
     @Override
     protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
         super.onLayout(changed, left, top, right, bottom);
-
         if (mEvaluator != null && mEvaluationRequest != SHOULD_NOT_EVALUATE) {
             final CalculatorExpr expr = mEvaluator.getExpr(mIndex);
             if (expr != null && expr.hasInterestingOps()) {

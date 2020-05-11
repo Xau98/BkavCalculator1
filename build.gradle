@@ -36,4 +36,7 @@ allprojects {
 //Version 1.1.3
 // sửa gradle:3.5.1
 // Huỷ lệnh sao chép
-// sửa button '='
+// sửa button '=' 
+// Sửa hàm post để sửa lỗi crash do hàm post ko đảm bảo view đã được draw xong 
+// Sửa lỗi App Máy tính Sau khi hoàn thành phép tính không tự chuyển sang phép tính mới là chuyển thành số nối tiếp của phép tính trước
+// Fomat lại các biến (Chuyển các thông số thành các biến static)
