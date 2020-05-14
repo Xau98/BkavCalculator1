@@ -242,15 +242,14 @@ public class BkavCalculator extends Activity
                         // nothing to paste, bail early...
                         return false;
                     }
-                    // Bkav TienNVh : đoạn này có nghĩa là
-                    // Bkav TienNVh : Trong TH :Khi mình copy kết quả và dán để tính tiếp thì ko phải lưu đoạn text mà chỉ cần lấy Index kết quả
+
                     // Check if the item is a previously copied result, otherwise paste as raw text.
- //                   final Uri uri = item.getUri();
-//                    if (uri != null && mEvaluator.isLastSaved(uri)) {
-//                        clearIfNotInputState();
-//                        mEvaluator.appendExpr(mEvaluator.getSavedIndex());
-//                        redisplayAfterFormulaChange();
-//                    } else {
+                    final Uri uri = item.getUri();
+                    if (uri != null && mEvaluator.isLastSaved(uri)) {
+                        clearIfNotInputState();
+                        mEvaluator.appendExpr(mEvaluator.getSavedIndex());
+                        redisplayAfterFormulaChange();
+                    } else {
                         // Bkav TienNVh : lay du lieu copy
                         String textNew = item.coerceToText(BkavCalculator.this).toString() + "";
                         String formula = mFormulaText.getText().toString();
@@ -268,7 +267,7 @@ public class BkavCalculator extends Activity
                         // Bkav TienNVh : thay doi vi tri con tro
                         changePostionCursor();
                         //Log.d("TienNVh", "onPaste: "+(System.currentTimeMillis() - start));
-                    //    }
+                    }
                     return true;
                 }
 

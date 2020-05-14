@@ -335,8 +335,7 @@ public class KeyMaps {
      */
     public static boolean isBinary(int id) {
         switch (id) {
-            // Bkav TienNVh : loại bỏ "^" ra khỏi nhóm phép tính .
-         //   case R.id.op_pow:
+            case R.id.op_pow:
             case R.id.op_mul:
             case R.id.op_div:
             case R.id.op_add:

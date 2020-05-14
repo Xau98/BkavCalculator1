@@ -89,8 +89,7 @@ public class CalculatorDisplay extends LinearLayout
             @Override
             public boolean onDown(MotionEvent e) {
                 // Remove callbacks to hide the toolbar.
-           // Bkav TienNVh :
-                //removeCallbacks(mHideToolbarRunnable);
+                removeCallbacks(mHideToolbarRunnable);
 
                 return true;
             }
@@ -106,12 +105,6 @@ public class CalculatorDisplay extends LinearLayout
                         hideToolbar();
                     }
                 }
-
-//                if (mToolbar.getVisibility() == View.VISIBLE) {
-//                    showToolbar(true);
-//                } else {
-//                    hideToolbar();
-//                }
                 mEnableToolbar = false;
                 return true;
             }
