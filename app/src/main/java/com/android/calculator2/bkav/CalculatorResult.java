@@ -525,14 +525,14 @@ public class CalculatorResult extends AlignedTextView implements MenuItem.OnMenu
         }
         // Set to position of leftmost significant digit relative to dec. point. Usually negative.
         int minCharOffset = msdIndex - mWholeLen;
-        if (minCharOffset > -1 && minCharOffset <  getMaxChars()) {
+        if (minCharOffset > -1 && minCharOffset <  MAX_LEADING_ZEROES + 2) {
             // Small number of leading zeroes, avoid scientific notation.
             minCharOffset = -1;
         }
 
         if (lsdOffset < MAX_RIGHT_SCROLL) {
             mMaxCharOffset = lsdOffset;
-            if (mMaxCharOffset < -1 && mMaxCharOffset > -(MAX_TRAILING_ZEROES)) {
+            if (mMaxCharOffset < -1 && mMaxCharOffset > -(MAX_TRAILING_ZEROES + 2)) {
                 mMaxCharOffset = -1;
             }
             // lsdOffset is positive or negative, never 0.
