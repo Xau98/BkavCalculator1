@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "99252337405",
+    "firebase_url": "https://bkavcalculator.firebaseio.com",
+    "project_id": "bkavcalculator",
+    "storage_bucket": "bkavcalculator.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:99252337405:android:2e41d01354413467995c94",
+        "android_client_info": {
+          "package_name": "com.bkav.calculator2"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "99252337405-8tmpv4t02og7i5athpfpb8bqgvdep38p.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.bkav.calculator2",
+            "certificate_hash": "734bd65ea3dc8e50ad174b609a5e30ed9f578bf0"
+          }
+        },
+        {
+          "client_id": "99252337405-oqckrh8qp389lfro193sfol9i9buln0v.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCOo0kqSBqNdd3j01Rpv_NVi_6L1BARt0E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "99252337405-oqckrh8qp389lfro193sfol9i9buln0v.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

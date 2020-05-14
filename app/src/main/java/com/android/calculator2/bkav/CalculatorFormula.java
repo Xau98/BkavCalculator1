@@ -473,31 +473,12 @@ public class CalculatorFormula extends AlignedTextView implements MenuItem.OnMen
     }
 
     //===========================BKAV==========================
-    private Rect mContainer = new Rect();
     // Bkav TienNVh : Biến để check Action mode của hệ thống  có đã tồn tại chưa
     private boolean mCheckActionMode = false;
 
     //Bkav AnhNDd: kiểm tra xem toạ độ x,y có nàm ngoài view hay không
     public void touchOutSide(int x, int y) {
-        // Bkav TienNVh : Trường hợp toạ độ (0,0,0,0) thì lấy lại vị trí
-        if (mContainer.isEmpty()) {
-            // Bkav TienNVh : set lại toạ độ
-            getGlobalVisibleRect(mContainer);
-        }
-        // Bkav TienNVh : Biến Check Click  ngoài toạ độ edittext
-        boolean isTouchOutSide = !mContainer.contains(x, y);
-
-        // Bkav TienNVh : Check Click ngoài toạ độ edittext và Action mode đã hiện thi chưa
-        if (isTouchOutSide && mActionMode != null) {
-            // Bkav TienNVh : Tiến hành đóng Actionmode
-            mActionMode.finish();
-            mActionMode = null;
-        }
-        // Bkav TienNVh : Check Action mode hệ thống hiện thị hay không ?
-        if (isTouchOutSide && mCheckActionMode) {
-            // Bkav TienNVh : dịch chuyển con trỏ về sau đoạn text để đóng action  mode hệ thống
-          setSelection(getSelectionEnd());
-        }
+        touchOutSide(mActionMode, x, y, mCheckActionMode);
     }
     }
 

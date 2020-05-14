@@ -21,6 +21,7 @@ import android.transition.Fade;
 import android.transition.Transition;
 import android.transition.TransitionManager;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
@@ -95,6 +96,7 @@ public class CalculatorDisplay extends LinearLayout
 
             @Override
             public boolean onSingleTapConfirmed(MotionEvent e) {
+                // Bkav TienNVh : Sự kiện chạm 1 lần lên màn hình
                 // Bkav TienNVh :  Bỏ qua trường hợp khi click button History
                 if (!mEnableToolbar) {
                     if (mToolbar.getVisibility() != View.VISIBLE) {
@@ -106,7 +108,6 @@ public class CalculatorDisplay extends LinearLayout
                 mEnableToolbar = false;
                 return true;
             }
-
         });
         // Draw the children in reverse order so that the toolbar is on top.
         setChildrenDrawingOrderEnabled(true);

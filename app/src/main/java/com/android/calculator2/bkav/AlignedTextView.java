@@ -20,6 +20,7 @@ import android.content.Context;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.util.AttributeSet;
+import android.view.ActionMode;
 import android.widget.EditText;
 
 /**
@@ -72,5 +73,29 @@ public class AlignedTextView extends EditText {
     @Override
     public int getCompoundPaddingBottom() {
         return super.getCompoundPaddingBottom() - mBottomPaddingOffset;
+    }
+    //===========================BKAV==========================
+    private Rect mContainer = new Rect();
+    //Bkav AnhNDd: kiểm tra xem toạ độ x,y có nàm ngoài view hay không
+    public void touchOutSide(ActionMode actionMode, int x, int y,boolean mCheckActionMode ) {
+        // Bkav TienNVh : Trường hợp toạ độ (0,0,0,0) thì lấy lại vị trí
+        if (mContainer.isEmpty()) {
+            // Bkav TienNVh : set lại toạ độ
+            getGlobalVisibleRect(mContainer);
+        }
+        // Bkav TienNVh : Biến Check Click  ngoài toạ độ edittext
+        boolean isTouchOutSide = !mContainer.contains(x, y);
+
+        // Bkav TienNVh : Check Click ngoài toạ độ edittext và Action mode đã hiện thi chưa
+        if (isTouchOutSide && actionMode != null) {
+            // Bkav TienNVh : Tiến hành đóng Actionmode
+            actionMode.finish();
+            actionMode = null;
+        }
+        // Bkav TienNVh : Check Action mode hệ thống hiện thị hay không ?
+        if (isTouchOutSide && mCheckActionMode) {
+            // Bkav TienNVh : dịch chuyển con trỏ về sau đoạn text để đóng action  mode hệ thống
+            setSelection(getSelectionEnd());
+        }
     }
 }
