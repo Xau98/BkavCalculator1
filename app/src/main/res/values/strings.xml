@@ -117,13 +117,13 @@
     <!-- Equals button (e.g. "1 + 2 = ?"). [CHAR_LIMIT=1] -->
     <string name="eq" translatable="false">=</string>
     <!-- Clear button to clear the currently entered expression. [CHAR_LIMIT=4] -->
-    <string name="clr">Clr</string>
+    <string name="clr">clr</string>
     <!--
       Announced when all characters are removed from Formula, e.g. after clear. [CHAR_LIMIT=NONE]
       -->
-    <string name="cleared">Cleared</string>
+    <string name="cleared">cleared</string>
     <!-- Delete button to remove last entered token. [CHAR_LIMIT=4] -->
-    <string name="del">Del</string>
+    <string name="del">del</string>
     <!-- Toggle button to show/hide inverse functions. [CHAR_LIMIT=4] -->
     <string name="inv" translatable="false">inv</string>
 
@@ -240,7 +240,6 @@
     <string name="desc_adv_pad">Advanced operations</string>
     <!-- Content description for the pad pages when slide-able. -->
     <string-array name="desc_pad_pages" translatable="false">
-        <item>history</item>
         <item>@string/desc_num_pad</item>
         <item>@string/desc_adv_pad</item>
     </string-array>
@@ -315,14 +314,5 @@
     <string name="title_current_expression">Current Expression</string>
     <!-- Placeholder string when there is no history to be shown. [CHAR_LIMIT=40] -->
     <string name="no_history">No History</string>
-    <string name="mr">mr</string>
-    <string name="button_mr">mr</string>
-    <string name="m_plus">m+</string>
-    <string name="button_m_plus">button m+</string>
-    <string name="mc">mc</string>
-    <string name="button_mc">Button mc</string>
-    <string name="m_sub">m-</string>
-    <string name="button_m_sub">Button m-</string>
-    <string name="op_10pow">10^</string>
 
 </resources>

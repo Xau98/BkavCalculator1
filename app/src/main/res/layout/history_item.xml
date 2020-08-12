@@ -14,7 +14,7 @@
   See the License for the specific language governing permissions and
   limitations under the License.
   -->
-<!--Bkav TienNVh : Bỏ Chuyển sang line_history -->
+
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
@@ -45,14 +45,14 @@
         android:textColor="?android:attr/colorAccent"
         android:textSize="14dp" />
 
-    <com.android.calculator2.bkav.CalculatorScrollView
+    <com.android.calculator2.CalculatorScrollView
         android:id="@+id/history_formula_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:overScrollMode="never"
         android:scrollbars="none">
 
-        <com.android.calculator2.bkav.AlignedTextView
+        <com.android.calculator2.AlignedTextView
             android:id="@+id/history_formula"
             style="@style/HistoryItemTextStyle"
             android:layout_width="wrap_content"
@@ -60,9 +60,9 @@
             android:ellipsize="none"
             android:textColor="@color/display_formula_text_color" />
 
-    </com.android.calculator2.bkav.CalculatorScrollView>
+    </com.android.calculator2.CalculatorScrollView>
 
-    <com.android.calculator2.bkav.CalculatorResult
+    <com.android.calculator2.CalculatorResult
         android:id="@+id/history_result"
         style="@style/HistoryItemTextStyle"
         android:layout_width="match_parent"

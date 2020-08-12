@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?><!--
+<?xml version="1.0" encoding="utf-8"?>
+<!--
   Copyright (C) 2014 The Android Open Source Project
 
   Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,86 +14,43 @@
   See the License for the specific language governing permissions and
   limitations under the License.
   -->
-<!--Bkav TienNVh : Giao dien doc cua hien thi -->
-<com.android.calculator2.bkav.CalculatorDisplay xmlns:android="http://schemas.android.com/apk/res/android"
+
+<com.android.calculator2.CalculatorDisplay
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/display"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:elevation="10dip"
+    android:background="@color/display_background_color"
+    android:elevation="4dip"
     android:orientation="vertical">
-<!-- Bkav TienNVH : thanh trạng thái DEG / RAD -->
+
     <include layout="@layout/toolbar" />
 
-    <com.android.calculator2.bkav.CalculatorScrollView
+    <com.android.calculator2.CalculatorScrollView
         android:id="@+id/formula_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:overScrollMode="never"
         android:scrollbars="none">
-<!--Bkav TienNVh: Chặn giật lên khi nhập ký tự -->
-<!--        android:gravity="center"-->
-        <com.android.calculator2.bkav.CalculatorFormula
+
+       <com.android.calculator2.CalculatorFormula
             android:id="@+id/formula"
             style="@style/DisplayTextStyle.Formula"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:gravity="center"
-            android:singleLine="true"
-            android:cursorVisible="true"
-            android:focusable="true"
-            android:focusableInTouchMode="true"
-            android:paddingTop="0dp"
+            android:ellipsize="none"
+            android:maxLines="1"
             android:textColor="@color/display_formula_text_color" />
-<!--        Bkav TienNVh : Cho phep nhap phep tinh -->
-<!--        android:focusableInTouchMode="true"        -->
-    </com.android.calculator2.bkav.CalculatorScrollView>
-    <!-- Bkav TienNVh : Sửa layout_height = match_parent thành wrap_content  -->
-    <com.android.calculator2.bkav.CalculatorResult
+
+    </com.android.calculator2.CalculatorScrollView>
+
+    <com.android.calculator2.CalculatorResult
         android:id="@+id/result"
         style="@style/DisplayTextStyle.Result"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:bufferType="spannable"
-        android:paddingTop="0dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="20dp"
         android:singleLine="true"
         android:textColor="@color/display_result_text_color" />
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
-        android:layout_below="@+id/result">
-
-        <Button
-            android:id="@+id/bt_history"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="0dp"
-            android:background="@null"
-            android:onClick="onButtonClick"
-           android:paddingLeft="22dp"
-            android:paddingTop="12dp"
-            android:paddingBottom="0dp"
-            android:text="@string/title_history"
-            android:textSize="17dp"
-            android:textStyle="normal"
-            android:textAllCaps="false"
-            android:textColor="#66FFFFFF" />
-
-        <ImageView
-            android:id="@+id/bt_more"
-            android:layout_width="wrap_content"
-            android:layout_height="50dp"
-            android:layout_alignParentRight="true"
-            android:contentDescription="more"
-            android:onClick="onButtonClick"
-            android:paddingLeft="12dp"
-            android:paddingTop="26dp"
-            android:paddingBottom="10dp"
-            android:layout_marginBottom="0dp"
-            android:paddingRight="28dp"
-            android:src="@drawable/icon_more" />
-    </RelativeLayout>
-</com.android.calculator2.bkav.CalculatorDisplay>
+</com.android.calculator2.CalculatorDisplay>

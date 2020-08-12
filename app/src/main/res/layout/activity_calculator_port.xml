@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?><!--
+<?xml version="1.0" encoding="utf-8"?>
+<!--
   Copyright (C) 2014 The Android Open Source Project
 
   Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,52 +15,32 @@
   limitations under the License.
   -->
 
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/relativeLayout"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_weight="5">
+    android:orientation="vertical">
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/display_background_color" />
+    <include layout="@layout/display" />
 
-    <include
-        android:id="@+id/display"
-        layout="@layout/display"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
-
-    <com.android.calculator2.bkav.CalculatorPadViewPager
+    <com.android.calculator2.CalculatorPadViewPager
         android:id="@+id/pad_pager"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/display"
-        android:layout_marginTop="0dp"
-        android:paddingEnd="0dp"
-        android:paddingStart="0dp"
-        android:background="#fff"
+        android:layout_height="0dip"
+        android:layout_weight="1"
         android:overScrollMode="never">
 
-        <include layout="@layout/fragment_history" />
-
         <LinearLayout
-            android:id="@+id/numeric_operator"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="#16cccfff"
-            android:layout_weight="1">
+            android:layout_height="match_parent">
 
             <include layout="@layout/pad_numeric" />
-
             <include layout="@layout/pad_operator" />
+
         </LinearLayout>
 
         <include layout="@layout/pad_advanced" />
 
+    </com.android.calculator2.CalculatorPadViewPager>
 
-    </com.android.calculator2.bkav.CalculatorPadViewPager>
-
-</RelativeLayout>
+</LinearLayout>

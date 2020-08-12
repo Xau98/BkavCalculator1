@@ -21,17 +21,15 @@
         <item name="android:background">@drawable/pad_button_advanced_background</item>
         <item name="android:textColor">@color/pad_button_advanced_text_color</item>
         <item name="android:textSize">17dip</item>
-        <item name="android:textStyle">bold</item>
-
     </style>
 
     <style name="PadButtonStyle.Advanced.Text">
         <item name="android:textAllCaps">true</item>
-        <item name="android:textSize">16dip</item>
+        <item name="android:textSize">14dip</item>
     </style>
 
     <style name="PadButtonStyle.Numeric">
-        <item name="android:textSize">25dip</item>
+        <item name="android:textSize">20dip</item>
     </style>
 
     <style name="PadButtonStyle.Numeric.Equals">
@@ -40,13 +38,11 @@
 
     <style name="PadButtonStyle.Operator">
         <item name="android:textSize">17dip</item>
-        <item name="android:fontFamily">sans-serif-light</item>
-        <item name="android:textStyle">normal</item>
     </style>
 
     <style name="PadButtonStyle.Operator.Text">
         <item name="android:textAllCaps">true</item>
-        <item name="android:textSize">16dip</item>
+        <item name="android:textSize">14dip</item>
     </style>
 
     <style name="PadLayoutStyle.Advanced">
@@ -56,7 +52,6 @@
         <item name="android:paddingBottom">8dip</item>
         <item name="android:paddingStart">12dip</item>
         <item name="android:paddingEnd">12dip</item>
-        <item name="android:background">@color/colorAdvanced</item>
     </style>
 
     <style name="PadLayoutStyle.Numeric">
@@ -64,18 +59,17 @@
         <item name="android:layout_weight">5</item>
         <item name="android:paddingTop">2dip</item>
         <item name="android:paddingBottom">8dip</item>
+        <item name="android:paddingStart">12dip</item>
+        <item name="android:paddingEnd">12dip</item>
     </style>
 
     <style name="PadLayoutStyle.Operator">
         <item name="android:layout_width">0dip</item>
         <item name="android:layout_weight">3</item>
         <item name="android:paddingTop">2dip</item>
-        <item name="android:paddingBottom">2dip</item>
+        <item name="android:paddingBottom">8dip</item>
         <item name="android:paddingStart">12dip</item>
         <item name="android:paddingEnd">12dip</item>
     </style>
-    <style name="ButtonMore">
-        <item name="android:layout_width">0dip</item>
-        <item name="android:layout_height">0dip</item>
-    </style>
+
 </resources>

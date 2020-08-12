@@ -20,9 +20,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/pad_numeric"
     style="@style/PadLayoutStyle.Numeric"
+    android:background="@color/pad_numeric_background_color"
     app:rowCount="4"
-    android:paddingBottom="0dp"
-    android:paddingRight="0dp"
     app:columnCount="3">
 
     <Button
@@ -103,26 +102,10 @@
         app:layout_column="1" />
 
     <Button
-        android:id="@+id/del"
-        style="@style/PadButtonStyle.Operator.Text"
-        android:contentDescription="@string/desc_del"
-        android:text="@string/del"
-        android:layout_marginLeft="0dp"
-        android:layout_marginTop="0dp"
-        android:fontFamily="sans-serif-thin"
-        app:layout_row="3"
-        app:layout_column="2" />
-
-    <Button
-        android:id="@+id/clr"
-        style="@style/PadButtonStyle.Operator.Text"
-        android:contentDescription="@string/desc_clr"
-        android:textAllCaps="true"
-        android:text="@string/clr"
-        android:layout_marginLeft="0dp"
-        android:layout_marginTop="0dp"
-        android:fontFamily="sans-serif-thin"
-        android:visibility="gone"
+        android:id="@+id/eq"
+        style="@style/PadButtonStyle.Numeric.Equals"
+        android:contentDescription="@string/desc_eq"
+        android:text="@string/eq"
         app:layout_row="3"
         app:layout_column="2" />
 

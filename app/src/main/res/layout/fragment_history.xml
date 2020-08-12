@@ -14,73 +14,37 @@
   See the License for the specific language governing permissions and
   limitations under the License.
   -->
-<com.android.calculator2.bkav.BkavHistoryLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:clipChildren="false"
-    android:elevation="7dp"
-    android:clickable="false"
-    android:focusable="false"
-    android:id="@+id/relativeLayout_history"
-    android:background="@color/colorHistory"
-  android:orientation="vertical">
+    android:orientation="vertical">
 
-<!--    <Toolbar-->
-<!--        android:id="@+id/history_toolbar"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:background="?android:attr/colorPrimary"-->
-<!--        android:elevation="4dip"-->
-<!--        android:minHeight="?android:attr/actionBarSize"-->
-<!--        android:navigationContentDescription="@string/desc_navigate_up"-->
-<!--        android:navigationIcon="?android:attr/homeAsUpIndicator"-->
-<!--        android:popupTheme="@android:style/ThemeOverlay.Material.Light"-->
-<!--        android:theme="@android:style/ThemeOverlay.Material.Dark.ActionBar"-->
-<!--        android:title="@string/title_history" />-->
-
-    <!--        android:background="@color/display_background_color"-->
+    <Toolbar
+        android:id="@+id/history_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?android:attr/colorPrimary"
+        android:elevation="4dip"
+        android:minHeight="?android:attr/actionBarSize"
+        android:navigationContentDescription="@string/desc_navigate_up"
+        android:navigationIcon="?android:attr/homeAsUpIndicator"
+        android:popupTheme="@android:style/ThemeOverlay.Material.Light"
+        android:theme="@android:style/ThemeOverlay.Material.Dark.ActionBar"
+        android:title="@string/title_history" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/history_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fontFamily="sans-serif-thin"
-        android:layout_above="@+id/delHistory"
-        android:elevation="13dp"
-        android:paddingBottom="23dp"
+        android:background="@color/display_background_color"
+        android:clipChildren="false"
+        android:clipToPadding="false"
+        android:paddingBottom="@dimen/history_divider_padding"
+        android:visibility="invisible"
         app:layoutManager="LinearLayoutManager"
-        app:reverseLayout="true"
-        />
-<!--    Bkav TienNVh : Khi không có lịch sử thì hiện textview này-->
-    <TextView
-        android:id="@+id/emptyElement"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:text="@string/no_history"
-        android:maxLines="1"
-        android:elevation="14dp"
-        android:textColor="#ffffff"
-        android:gravity="center"
-        android:textSize="19.0sp"
-        android:visibility="gone" />
+        app:reverseLayout="true" />
 
-    <Button
-        android:id="@+id/delHistory"
-        android:layout_width="match_parent"
-        android:layout_height="86dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="0dp"
-        android:layout_marginBottom="1dp"
-        android:background="@null"
-        android:fontFamily="sans-serif-thin"
-        android:gravity="center"
-        android:onClick="onButtonClick"
-        android:text="@string/menu_clear_history"
-        android:textAllCaps="false"
-        android:textColor="#fff"
-        android:textSize="25sp" />
-</com.android.calculator2.bkav.BkavHistoryLayout>
+</LinearLayout>

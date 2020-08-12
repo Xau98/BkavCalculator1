@@ -6,7 +6,7 @@ buildscript {
     }
     dependencies {
         //Bkav TienNVH : 3.6.0 => 3.5.1
-        classpath 'com.android.tools.build:gradle:3.5.1'
+        classpath 'com.android.tools.build:gradle:4.0.0'
     }
 }
 
@@ -42,3 +42,6 @@ allprojects {
 // Sửa hàm post để sửa lỗi crash do hàm post ko đảm bảo view đã được draw xong 
 // Sửa lỗi App Máy tính Sau khi hoàn thành phép tính không tự chuyển sang phép tính mới là chuyển thành số nối tiếp của phép tính trước
 // Fomat lại các biến (Chuyển các thông số thành các biến static)
+//
+//Bkav AnhNDd: update base 9.0.0_r59 (https://android.googlesource.com/platform/packages/apps/ExactCalculator/+/refs/tags/android-9.0.0_r59)
+//version 2.0.0

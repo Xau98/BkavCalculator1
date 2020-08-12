@@ -18,38 +18,33 @@
 <manifest
     xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.bkav.calculator2">
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+
     <application
         android:allowBackup="false"
-        android:icon="@mipmap/ic_calculator_nopadding"
+        android:icon="@mipmap/ic_launcher_calculator"
         android:label="@string/app_name"
-        android:theme="@style/CalculatorTheme"
         android:supportsRtl="true">
 
         <activity
             android:name="com.android.calculator2.bkav.BkavCalculator"
             android:label="@string/app_name"
-            android:windowSoftInputMode="stateAlwaysHidden|adjustNothing"
             android:launchMode="singleTask"
-             >
+            android:theme="@style/Theme.Calculator">
             <layout
                 android:minHeight="220dp"
                 android:minWidth="230dp" />
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
                 <category android:name="android.intent.category.APP_CALCULATOR" />
-            </intent-filter>
-            <intent-filter android:priority="1">
-                <action android:name="bkav.intent.action.APP_CALCULATOR" />
-                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
 
         <activity
-            android:name="com.android.calculator2.bkav.Licenses"
+            android:name="com.android.calculator2.Licenses"
             android:launchMode="singleTop"
-            android:parentActivityName="com.android.calculator2.bkav.BkavCalculator"
+            android:parentActivityName="com.android.calculator2.Calculator"
             android:theme="@style/Theme.Licenses" />
 
     </application>
