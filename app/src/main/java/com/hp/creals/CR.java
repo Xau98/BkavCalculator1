@@ -111,7 +111,9 @@
 // hboehm@google.com 8/21/2017
 // Have comparison check for interruption. hboehm@google.com 10/31/2017
 
-package com.android.calculator2;
+package com.hp.creals;
+
+import android.util.Log;
 
 import java.math.BigInteger;
 import java.util.ArrayList;

@@ -60,7 +60,7 @@ public class CalculatorDisplay extends LinearLayout
     private final AccessibilityManager mAccessibilityManager;
     private final GestureDetector mTapDetector;
 
-    private Toolbar mToolbar;
+    /*private*/protected Toolbar mToolbar;
     private Transition mTransition;
 
     private boolean mForceToolbarVisible;
@@ -200,5 +200,15 @@ public class CalculatorDisplay extends LinearLayout
 
     public boolean isToolbarVisible() {
         return mToolbar.getVisibility() == View.VISIBLE;
+    }
+
+    //================================bkav==================================
+    // Bkav TienNVh :
+    public void setSwitchToolbar(){
+        if (mToolbar.getVisibility() != View.VISIBLE) {
+            showToolbar(true);
+        } else {
+            hideToolbar();
+        }
     }
 }

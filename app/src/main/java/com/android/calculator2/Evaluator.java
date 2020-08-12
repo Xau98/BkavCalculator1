@@ -29,6 +29,7 @@ import android.text.Spannable;
 import android.util.Log;
 
 import com.bkav.calculator2.R;
+import com.hp.creals.CR;
 
 import java.io.ByteArrayInputStream;
 import java.io.DataInput;

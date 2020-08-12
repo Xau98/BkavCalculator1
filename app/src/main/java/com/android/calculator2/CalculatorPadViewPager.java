@@ -251,4 +251,9 @@ public class CalculatorPadViewPager extends ViewPager {
             return false;
         }
     }
+
+    //=======================Bkav=================
+    protected void getBkavCurrentItem(){
+        // no something
+    }
 }

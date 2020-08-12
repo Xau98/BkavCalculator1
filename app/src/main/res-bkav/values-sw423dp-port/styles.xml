@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Bkav TienNVh :   -->
+
+
+    <style name="BkavDisplayTextStyle.Formula">
+        <item name="android:paddingTop">@dimen/formula_padding_top</item>
+        <item name="android:paddingBottom">@dimen/formula_padding_bottom</item>
+        <item name="android:paddingStart">@dimen/formula_padding_start</item>
+        <item name="android:paddingEnd">16dp</item>
+        <item name="android:gravity">bottom</item>
+        <item name="minTextSize">@dimen/formula_min_textsize</item>
+        <item name="maxTextSize">@dimen/formula_max_textsize</item>
+        <item name="stepTextSize">1dp</item>
+    </style>
+
+    <style name="BkavDisplayTextStyle.Result">
+        <item name="android:layout_marginTop">20dp</item>
+        <item name="android:layout_marginBottom">20dp</item>
+        <item name="android:paddingTop">10dp</item>
+        <item name="android:paddingBottom">@dimen/result_padding_bottom</item>
+        <item name="android:paddingStart">@dimen/result_padding_start</item>
+        <item name="android:paddingEnd">@dimen/result_padding_end</item>
+        <item name="android:gravity">bottom</item>
+        <item name="android:textSize">@dimen/result_textsize</item>
+    </style>
+
+    <style name="BkavButtonHistoryStyle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:paddingTop">12dp</item>
+        <item name="android:paddingBottom">0dp</item>
+        <item name="android:paddingLeft">22dp</item>
+        <item name="android:layout_marginBottom">0dp</item>
+    </style>
+
+    <style name="BkavButtonMoreAdvanceStyle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">50dip</item>
+        <item name="android:paddingTop">26dp</item>
+        <item name="android:paddingBottom">10dp</item>
+        <item name="android:paddingLeft">12dp</item>
+        <item name="android:paddingRight">28dp</item>
+        <item name="android:layout_marginBottom">0dp</item>
+    </style>
+
+    <style name="BkavPadLayoutStyle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+    </style>
+
+    <style name="BkavPadLayoutStyle.Numeric">
+        <item name="android:layout_width">0dip</item>
+        <item name="android:layout_weight">11.7</item>
+        <item name="android:paddingTop">0dip</item>
+        <item name="android:gravity">center</item>
+        <item name="android:paddingBottom">20dip</item>
+    </style>
+
+    <style name="BkavPadButtonStyle.Numeric">
+        <item name="android:fontFamily">sans-serif-thin</item>
+        <item name="android:includeFontPadding">false</item>
+        <item name="android:background">@drawable/pad_button_advanced_background</item>
+        <item name="android:textSize">66.67dip</item>
+    </style>
+
+    <style name="BkavPadButtonStyle.Operator">
+        <item name="android:textSize">27dip</item>
+        <item name="android:fontFamily">sans-serif-light</item>
+        <item name="android:textStyle">normal</item>
+    </style>
+
+    <style name="BkavPadButtonStyle.Operator.Equal">
+        <item name="android:padding">20.5dp</item>
+    </style>
+
+    <style name="BkavPadButtonStyle.Operator.Text">
+        <item name="android:layout_marginLeft">3dp</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textSize">21dip</item>
+    </style>
+
+    <style name="BkavPadLayoutStyle.Operator">
+        <item name="android:layout_width">0dip</item>
+        <item name="android:layout_weight">3</item>
+        <item name="android:paddingTop">8dip</item>
+        <item name="android:paddingBottom">24dip</item>
+        <item name="android:paddingStart">0dip</item>
+        <item name="android:paddingEnd">28dip</item>
+    </style>
+
+    <style name="BkavPadLayoutStyle.Advanced">
+            <item name="android:elevation">4dip</item>
+            <item name="android:paddingTop">0dip</item>
+            <item name="android:paddingBottom">0dip</item>
+            <item name="android:paddingStart">0dip</item>
+            <item name="android:paddingEnd">0dip</item>
+    </style>
+
+    <style name="BkavPadButtonStyle.Advanced">
+        <item name="android:textSize">18dp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/bkav_color_text_advance</item>
+    </style>
+
+    <style name="BkavPadButtonStyle.Advanced.Text">
+        <item name="android:textAllCaps">true</item>
+    </style>
+</resources>

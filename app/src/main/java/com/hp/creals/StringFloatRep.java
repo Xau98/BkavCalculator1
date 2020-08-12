@@ -30,7 +30,7 @@
 // EXCLUSION AND LIMITATION MAY NOT APPLY TO YOU.
 //
 
-package com.android.calculator2;
+package com.hp.creals;
 
 /**
 * A scientific notation representation of an approximation to a constructive

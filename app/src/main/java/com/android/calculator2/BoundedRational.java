@@ -16,6 +16,8 @@
 
 package com.android.calculator2;
 
+import com.hp.creals.CR;
+
 import java.math.BigInteger;
 import java.util.Objects;
 import java.util.Random;

@@ -148,7 +148,7 @@ public class CalculatorResult extends AlignedTextView implements MenuItem.OnMenu
                             // The maximum number of digits we're willing to recompute in the UI
                             // thread.  We only do this for known rational results, where we
                             // can bound the computation cost.
-    private final ForegroundColorSpan mExponentColorSpan;
+    /*private*/protected /*final*/ ForegroundColorSpan mExponentColorSpan;
     private final BackgroundColorSpan mHighlightSpan;
 
     private ActionMode mActionMode;
@@ -257,7 +257,7 @@ public class CalculatorResult extends AlignedTextView implements MenuItem.OnMenu
         setContentDescription(context.getString(R.string.desc_result));
     }
 
-    void setEvaluator(Evaluator evaluator, long index) {
+    public void setEvaluator(Evaluator evaluator, long index) {
         mEvaluator = evaluator;
         mIndex = index;
         requestLayout();
@@ -1178,5 +1178,19 @@ public class CalculatorResult extends AlignedTextView implements MenuItem.OnMenu
     protected void onDetachedFromWindow() {
         stopActionModeOrContextMenu();
         super.onDetachedFromWindow();
+    }
+
+    //==================Bkav============
+    // Bkav TienNVh :
+    String mTruncatedWholePart;
+    // Bkav TienNVh
+    protected  void setColorE(Context context){
+        mExponentColorSpan = new ForegroundColorSpan(
+                ContextCompat.getColor(context, R.color.display_result_exponent_text_color));
+    }
+
+    // Bkav TienNVh :
+    public  String getTruncatedWholePart(){
+        return mTruncatedWholePart;
     }
 }

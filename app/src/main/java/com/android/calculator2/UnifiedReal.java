@@ -16,6 +16,9 @@
 
 package com.android.calculator2;
 
+import com.hp.creals.CR;
+import com.hp.creals.UnaryCRFunction;
+
 import java.math.BigInteger;
 
 /**

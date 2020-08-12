@@ -39,7 +39,7 @@
 // 5/2014 Added Strings to ArithmeticExceptions.
 // 5/2015 Added support for direct asin() implementation in CR.
 
-package com.android.calculator2;
+package com.hp.creals;
 // import android.util.Log;
 
 import java.math.BigInteger;

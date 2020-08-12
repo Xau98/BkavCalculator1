@@ -35,6 +35,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.bkav.calculator2.R;
@@ -42,7 +43,7 @@ import com.bkav.calculator2.R;
 /**
  * TextView adapted for displaying the formula and allowing pasting.
  */
-public class CalculatorFormula extends AlignedTextView implements MenuItem.OnMenuItemClickListener,
+public class CalculatorFormula extends /*AlignedTextView*/EditText implements MenuItem.OnMenuItemClickListener, //Bkav TienNVh thay
         ClipboardManager.OnPrimaryClipChangedListener {
 
     public static final String TAG_ACTION_MODE = "ACTION_MODE";
@@ -57,7 +58,7 @@ public class CalculatorFormula extends AlignedTextView implements MenuItem.OnMen
     private final ClipboardManager mClipboardManager;
 
     private int mWidthConstraint = -1;
-    private ActionMode mActionMode;
+    /*private*/protected ActionMode mActionMode;
     private ActionMode.Callback mPasteActionModeCallback;
     private ContextMenu mContextMenu;
     private OnTextSizeChangeListener mOnTextSizeChangeListener;
@@ -391,4 +392,17 @@ public class CalculatorFormula extends AlignedTextView implements MenuItem.OnMen
         boolean onPaste(ClipData clip);
         void onMemoryRecall();
     }
+
+    //=====================Bkav================
+    //Bkav tiennvh khong cho show ban phim
+    protected void hideSoftInputOnFocus(){
+        //no something
+    }
+    // Bkav TienNVh :
+    protected void setPositionCursorEnd(){
+        //no something
+    }
+    // Bkav TienNVh :
+    protected void hideActionModeOrigin(){}
+    // Bkav TienNVh :
 }

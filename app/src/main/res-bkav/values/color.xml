@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Bkav TienNVh :  background của Status bar khi open  app  -->
+    <color name="bkav_status_bar_color">#FFFF</color>
+
+    <!-- Bkav TienNVh : màu background của phần màn hình hiện thị phép tính và kết quả   -->
+    <color name="bkav_display_background_color">#76000000</color>
+
+    <!-- Bkav TienNVh :   -->
+    <color name="bkav_calculator_primary_color">#161b22</color>
+
+    <!-- Bkav TienNVh : Background Viewpage  -->
+    <color name="bkav_background_viewpage">#FFF</color>
+
+    <!-- Bkav TienNVh : Bkackground number and opera  mode screen port-->
+    <color name="bkav_background_number_land">#16ffffff</color>
+    <!-- Bkav TienNVh : Bkackground number and opera  mode screen port-->
+    <color name="bkav_background_number_port">#16cccfff</color>
+    <!-- Bkav TienNVh :  Màu của phép tính -->
+    <color name="bkav_display_formula_text_color">#FFF</color>
+
+    <!-- Bkav TienNVh :  màu chữ của kết qảu phép tính  -->
+    <color name="bkav_display_result_text_color">#FFF</color>
+
+    <!-- Bkav TienNVh : mau chu cua tab advance  -->
+    <color name="bkav_color_text_advance">#FFF</color>
+
+    <!-- Bkav TienNVh : Màu của background của phép tính-->
+    <color name="bkav_pad_operator_background_color">#663a4852</color>
+
+    <!--    Bkav TienNVh : Màu background của tab Lịch sử và Advance -->
+    <color name="bkav_backdround_tab_history">#A6464646</color>
+
+    <!-- Bkav TienNVh :   -->
+    <color name="bkav_background_tab_advance">#A6464646</color>
+
+    <!-- Status bar color. -->
+    <color name="bkav_calculator_statusbar_color">#00FFFFFF</color>
+
+    <!-- Bkav TienNVh -->
+    <color name="bkav_display_result_exponent_text_color">#FFF</color>
+
+    <!--    Bkav TienNVh : -->
+    <color name="colorHistory">#A6464646</color>
+
+    <!-- Bkav TienNVh :   -->
+    <color name="colorAdvanced">#A6464646</color>
+
+</resources>

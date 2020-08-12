@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Copyright (C) 2014 The Android Open Source Project
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+  -->
+
+<com.android.calculator2.bkav.BkavCalculatorDisplay
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/display"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:elevation="4dip"
+    android:orientation="vertical">
+
+    <include layout="@layout/bkav_toolbar" />
+
+    <com.android.calculator2.bkav.BkavCalculatorScrollView
+        android:id="@+id/formula_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:overScrollMode="never"
+        android:scrollbars="none">
+
+       <com.android.calculator2.bkav.BkavCalculatorFormula
+            android:id="@+id/formula"
+            style="@style/BkavDisplayTextStyle.Formula"
+           android:layout_width="wrap_content"
+           android:layout_height="match_parent"
+           android:gravity="center"
+           android:singleLine="true"
+           android:cursorVisible="true"
+           android:focusable="true"
+           android:focusableInTouchMode="true"
+           android:paddingTop="0dp"
+           android:textColor="@color/bkav_display_formula_text_color" />
+
+    </com.android.calculator2.bkav.BkavCalculatorScrollView>
+
+    <com.android.calculator2.bkav.BkavCalculatorResult
+        android:id="@+id/result"
+        style="@style/BkavDisplayTextStyle.Result"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:bufferType="spannable"
+        android:singleLine="true"
+        android:textColor="@color/bkav_display_result_text_color" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:layout_below="@+id/result">
+
+        <Button
+            android:id="@+id/bt_history"
+            style="@style/BkavButtonHistoryStyle"
+            android:background="@null"
+            android:text="@string/title_history"
+            android:textSize="17dp"
+            android:onClick="onButtonClick"
+            android:textStyle="normal"
+            android:textAllCaps="false"
+            android:textColor="#66FFFFFF" />
+
+        <ImageView
+            android:id="@+id/bt_more"
+            style="@style/BkavButtonMoreAdvanceStyle"
+            android:layout_alignParentRight="true"
+            android:contentDescription="more"
+            android:onClick="onButtonClick"
+            android:src="@drawable/bkav_icon_more" />
+    </RelativeLayout>
+</com.android.calculator2.bkav.BkavCalculatorDisplay>
