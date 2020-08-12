@@ -13,6 +13,7 @@ import androidx.viewpager.widget.PagerAdapter;
 import com.android.calculator2.CalculatorPadViewPager;
 import com.bkav.calculator2.R;
 
+//Bkav AnhNDd TODO Các hằng số 1,2,3 trong này đặt trong biến để biết ý nghĩa
 public class BkavCalculatorPadViewPager extends CalculatorPadViewPager {
 
     public BkavCalculatorPadViewPager(Context context) {
@@ -94,6 +95,7 @@ public class BkavCalculatorPadViewPager extends CalculatorPadViewPager {
             return pageDescriptions[position];
         }
     };
+    //Bkav AnhNDd TODO Biến để sai???? Giải thích lại ý nghĩa, không code thế này
     boolean check =true;
     // Bkav TienNVh : Custom lại để cho tab lịch sử về phía trái và tab Advnace về phía phải của màn hình
     // Bkav TienNVh : Mục đích biến nay là giữ tab bàn phím số và phép tính ở nguyên vị trí chính
@@ -104,7 +106,7 @@ public class BkavCalculatorPadViewPager extends CalculatorPadViewPager {
             if (getChildCount() >= 2) {
                 if (view.equals(getChildAt(1))) {
                     float sizeTrans = getWidth() * -position;
-                    if(sizeTrans<0&&check) {
+                    if(sizeTrans<0&&check && mCallInvisibleTabHistory != null) {
                         mCallInvisibleTabHistory.onCallVisiblleHistory();
                         check = false;
                     }
@@ -125,6 +127,7 @@ public class BkavCalculatorPadViewPager extends CalculatorPadViewPager {
         // Bkav TienNVh : giữa nguyên tab number làm tab main
         // nghĩa là tab này ở nguyên 1 vị trí dù có đóng mở tab khác
         setPageTransformer(false, mPageTransformer);
+        //Bkav AnhNDd TODO code gốc margin ở đâu mà set ở đây????
         // Bkav TienNVh : Set Margin về 0 để làm mất đi viền xanh cạnh trái
         setPageMargin(0);
     }
@@ -137,6 +140,7 @@ public class BkavCalculatorPadViewPager extends CalculatorPadViewPager {
     }
 
     // Bkav TienNVh: Call back listener close /open tab history
+    //Bkav AnhNDd TODO nếu interface dùng để callback thì luôn phải check ở class khởi tạo có khác null hay không
     public interface CallInvisibleTabHistory {
         void onCallVisiblleHistory();
 

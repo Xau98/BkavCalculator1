@@ -90,11 +90,13 @@ public class CalculatorDisplay extends LinearLayout
 
             @Override
             public boolean onSingleTapConfirmed(MotionEvent e) {
-                if (mToolbar.getVisibility() != View.VISIBLE) {
+                //Bkav AnhNDd TODO Không được xóa code gốc, tên hàm không đúng ý nghĩa, mục đích ở đây là ẩn hiện toolbar
+                setSwitchToolbar();
+                /*if (mToolbar.getVisibility() != View.VISIBLE) {
                     showToolbar(true);
                 } else {
                     hideToolbar();
-                }
+                }*/
 
                 return true;
             }

@@ -73,6 +73,10 @@ import android.widget.TextView;
 import android.widget.Toolbar;
 
 import com.android.calculator2.CalculatorFormula.OnTextSizeChangeListener;
+import com.android.calculator2.bkav.BkavCalculatorDisplay;
+import com.android.calculator2.bkav.BkavCalculatorFormula;
+import com.android.calculator2.bkav.BkavCalculatorPadViewPager;
+import com.android.calculator2.bkav.BkavHistoryFragment;
 import com.bkav.calculator2.R;
 
 import java.io.ByteArrayInputStream;
@@ -91,13 +95,13 @@ public class Calculator extends Activity
         AlertDialogFragment.OnClickListener, Evaluator.EvaluationListener /* for main result */,
         DragLayout.CloseCallback, DragLayout.DragCallback {
 
-    private static final String TAG = "Calculator";
+    protected String TAG = "Calculator";
     /**
      * Constant for an invalid resource id.
      */
     public static final int INVALID_RES_ID = -1;
 
-    private enum CalculatorState {
+    /*private*/protected enum CalculatorState {
         INPUT,          // Result and formula both visible, no evaluation requested,
                         // Though result may be visible on bottom line.
         EVALUATE,       // Both visible, evaluation requested, evaluation/animation incomplete.
@@ -245,34 +249,38 @@ public class Calculator extends Activity
         }
     };
 
-    private CalculatorState mCurrentState;
-    private Evaluator mEvaluator;
+    //Bkav AnhNDd TODO Nên viết thế này, xem tất cả những cái tương tự
+    /*private*/protected CalculatorState mCurrentState;
+    /*private*/protected Evaluator mEvaluator;
 
-    private CalculatorDisplay mDisplayView;
+    //Bkav AnhNDd TODO Không viết kiểu này để nguyên là CalculatorDisplay, sửa lại
+    /*private*/protected /*CalculatorDisplay*/ BkavCalculatorDisplay mDisplayView;
     private TextView mModeView;
-    private CalculatorFormula mFormulaText;
-    private CalculatorResult mResultText;
+    //Bkav AnhNDd TODO Không viết kiểu này để nguyên là CalculatorFormula, sửa lại
+    /*private*/ protected /*CalculatorFormula*/ BkavCalculatorFormula mFormulaText;
+    /*private*/protected CalculatorResult mResultText;
     private HorizontalScrollView mFormulaContainer;
-    private DragLayout mDragLayout;
+    /*private*/protected DragLayout mDragLayout;
 
-    private ViewPager mPadViewPager;
+    //Bkav AnhNDd TODO Không viết kiểu này để nguyên là ViewPager, sửa lại
+    /*private*/protected /*ViewPager*/ BkavCalculatorPadViewPager mPadViewPager;
     private View mDeleteButton;
     private View mClearButton;
     private View mEqualButton;
-    private View mMainCalculator;
+    /*private*/protected View mMainCalculator;
 
     private TextView mInverseToggle;
     private TextView mModeToggle;
 
-    private View[] mInvertibleButtons;
-    private View[] mInverseButtons;
+    /*private*/protected View[] mInvertibleButtons;
+    /*private*/protected View[] mInverseButtons;
 
-    private View mCurrentButton;
+    /*private*/protected View mCurrentButton;
     private Animator mCurrentAnimator;
 
     // Characters that were recently entered at the end of the display that have not yet
     // been added to the underlying expression.
-    private String mUnprocessedChars = null;
+    /*private*/protected String mUnprocessedChars = null;
 
     // Color to highlight unprocessed characters from physical keyboard.
     // TODO: should probably match this to the error color?
@@ -336,7 +344,7 @@ public class Calculator extends Activity
         //         - slow recomputation if we've scrolled far.
     }
 
-    private void restoreDisplay() {
+    /*private*/protected void restoreDisplay() {
         onModeChanged(mEvaluator.getDegreeMode(Evaluator.MAIN_INDEX));
         if (mCurrentState != CalculatorState.RESULT
             && mCurrentState != CalculatorState.INIT_FOR_RESULT) {
@@ -357,7 +365,10 @@ public class Calculator extends Activity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_calculator_main);
+        // Bkav TienNVh :
+        setContentView(getMainResId());
+        //setContentView(R.layout.activity_calculator_main);
+
         setActionBar((Toolbar) findViewById(R.id.toolbar));
 
         // Hide all default options in the ActionBar.
@@ -372,9 +383,9 @@ public class Calculator extends Activity
         });
 
         mMainCalculator = findViewById(R.id.main_calculator);
-        mDisplayView = (CalculatorDisplay) findViewById(R.id.display);
+        mDisplayView = (BkavCalculatorDisplay) findViewById(R.id.display);
         mModeView = (TextView) findViewById(R.id.mode);
-        mFormulaText = (CalculatorFormula) findViewById(R.id.formula);
+        mFormulaText = (BkavCalculatorFormula) findViewById(R.id.formula);
         mResultText = (CalculatorResult) findViewById(R.id.result);
         mFormulaContainer = (HorizontalScrollView) findViewById(R.id.formula_container);
         mEvaluator = Evaluator.getInstance(this);
@@ -382,7 +393,7 @@ public class Calculator extends Activity
         mResultText.setEvaluator(mEvaluator, Evaluator.MAIN_INDEX);
         KeyMaps.setActivity(this);
 
-        mPadViewPager = (ViewPager) findViewById(R.id.pad_pager);
+        mPadViewPager = (BkavCalculatorPadViewPager) findViewById(R.id.pad_pager);
         mDeleteButton = findViewById(R.id.del);
         mClearButton = findViewById(R.id.clr);
         final View numberPad = findViewById(R.id.pad_numeric);
@@ -444,6 +455,8 @@ public class Calculator extends Activity
         if (mDisplayView.isToolbarVisible()) {
             showAndMaybeHideToolbar();
         }
+        // Bkav TienNVh :
+        onResumeBkavCalculator();
         // If HistoryFragment is showing, hide the main Calculator elements from accessibility.
         // This is because Talkback does not use visibility as a cue for RelativeLayout elements,
         // and RelativeLayout is the base class of DragLayout.
@@ -483,7 +496,7 @@ public class Calculator extends Activity
     // Set the state, updating delete label and display colors.
     // This restores display positions on moving to INPUT.
     // But movement/animation for moving to RESULT has already been done.
-    private void setState(CalculatorState state) {
+    /*private*/protected void setState(CalculatorState state) {
         if (mCurrentState != state) {
             if (state == CalculatorState.INPUT) {
                 // We'll explicitly request evaluation from now on.
@@ -548,6 +561,8 @@ public class Calculator extends Activity
     @Override
     protected void onDestroy() {
         mDragLayout.removeDragCallback(this);
+        //Bkav AnhNDd TODO không comment ????
+        removeHistoryFragment();
         super.onDestroy();
     }
 
@@ -570,7 +585,7 @@ public class Calculator extends Activity
      * Stop any active ActionMode or ContextMenu for copy/paste actions.
      * Return true if there was one.
      */
-    private boolean stopActionModeOrContextMenu() {
+    /*private*/protected boolean stopActionModeOrContextMenu() {
         return mResultText.stopActionModeOrContextMenu()
                 || mFormulaText.stopActionModeOrContextMenu();
     }
@@ -591,32 +606,43 @@ public class Calculator extends Activity
         if (e.getActionMasked() == MotionEvent.ACTION_DOWN) {
             stopActionModeOrContextMenu();
 
-            final HistoryFragment historyFragment = getHistoryFragment();
+            //Bkav AnhNDd TODO ko bỏ code gốc,
+            // Bkav TienNVh :
+            final BkavHistoryFragment historyFragment = getBkavHistoryFragment();
+            //final HistoryFragment historyFragment = getHistoryFragment();
             if (mDragLayout.isOpen() && historyFragment != null) {
                 historyFragment.stopActionModeOrContextMenu();
             }
         }
+        // Bkav TienNVh :
+        dispatchTouchEventOutsideDisPlay(e);
         return super.dispatchTouchEvent(e);
     }
 
     @Override
     public void onBackPressed() {
         if (!stopActionModeOrContextMenu()) {
-            final HistoryFragment historyFragment = getHistoryFragment();
+            //Bkav TienNVh
+            final BkavHistoryFragment historyFragment = getBkavHistoryFragment();
+            //final HistoryFragment historyFragment = getHistoryFragment();
             if (mDragLayout.isOpen() && historyFragment != null) {
                 if (!historyFragment.stopActionModeOrContextMenu()) {
                     removeHistoryFragment();
                 }
                 return;
             }
-            if (mPadViewPager != null && mPadViewPager.getCurrentItem() != 0) {
+            // Bkav TienNVh :
+            if(!onSetPositonViewPagerWhenBackPressed()){
+                super.onBackPressed();
+            }
+            /*if (mPadViewPager != null && mPadViewPager.getCurrentItem() != 0) {
                 // Select the previous pad.
                 mPadViewPager.setCurrentItem(mPadViewPager.getCurrentItem() - 1);
             } else {
                 // If the user is currently looking at the first pad (or the pad is not paged),
                 // allow the system to handle the Back button.
                 super.onBackPressed();
-            }
+            }*/
         }
     }
 
@@ -684,7 +710,7 @@ public class Calculator extends Activity
      *
      * @param showInverse {@code true} if inverse functions should be shown
      */
-    private void onInverseToggled(boolean showInverse) {
+    /*private*/protected void onInverseToggled(boolean showInverse) {
         mInverseToggle.setSelected(showInverse);
         if (showInverse) {
             mInverseToggle.setContentDescription(getString(R.string.desc_inv_on));
@@ -727,7 +753,7 @@ public class Calculator extends Activity
         }
     }
 
-    private void removeHistoryFragment() {
+    /*private*/protected void removeHistoryFragment() {
         final FragmentManager manager = getFragmentManager();
         if (manager != null && !manager.isDestroyed()) {
             manager.popBackStack(HistoryFragment.TAG, FragmentManager.POP_BACK_STACK_INCLUSIVE);
@@ -753,7 +779,7 @@ public class Calculator extends Activity
 
     // Add the given button id to input expression.
     // If appropriate, clear the expression before doing so.
-    private void addKeyToExpr(int id) {
+    /*private*/protected void addKeyToExpr(int id) {
         if (mCurrentState == CalculatorState.ERROR) {
             setState(CalculatorState.INPUT);
         } else if (mCurrentState == CalculatorState.RESULT) {
@@ -769,7 +795,7 @@ public class Calculator extends Activity
      * typed/touched.
      * We perform slightly more aggressive correction than in pasted expressions.
      */
-    private void addExplicitKeyToExpr(int id) {
+    /*private*/protected void addExplicitKeyToExpr(int id) {
         if (mCurrentState == CalculatorState.INPUT && id == R.id.op_sub) {
             mEvaluator.getExpr(Evaluator.MAIN_INDEX).removeTrailingAdditiveOperators();
         }
@@ -783,7 +809,7 @@ public class Calculator extends Activity
         }
     }
 
-    private void redisplayAfterFormulaChange() {
+    /*private*/protected void redisplayAfterFormulaChange() {
         // TODO: Could do this more incrementally.
         redisplayFormula();
         setState(CalculatorState.INPUT);
@@ -809,7 +835,7 @@ public class Calculator extends Activity
     /**
      * Display or hide the toolbar depending on calculator state.
      */
-    private void showOrHideToolbar() {
+    /*private*/protected void showOrHideToolbar() {
         final boolean shouldBeVisible =
                 mCurrentState == CalculatorState.INPUT && mEvaluator.hasTrigFuncs();
         if (shouldBeVisible) {
@@ -822,6 +848,10 @@ public class Calculator extends Activity
     public void onButtonClick(View view) {
         // Any animation is ended before we get here.
         mCurrentButton = view;
+
+        //Bkav AnhNDd TODO Tại sao thêm cái này????
+        mFormulaText.setFocusable(true);
+
         stopActionModeOrContextMenu();
 
         // See onKey above for the rationale behind some of the behavior below:
@@ -866,8 +896,22 @@ public class Calculator extends Activity
                     evaluateInstantIfNecessary();
                 }
                 return;
+                //Bkav AnhNDd TODO Đoạn này không có ý nghĩa, xóa đi
+            // Bkav TienNVh
+            /*case R.id.bt_history:
+            case R.id.delHistory:
+            case R.id.bt_more:
+            case R.id.op_m_plus:
+            case R.id.op_m_sub:
+            case R.id.op_m_c:
+            case R.id.op_m_r:
+                eventOnClick(id);
+                break;*/
             default:
-                cancelIfEvaluating(false);
+                //Bkav AnhNDd TODO Tên hàm khó hiểu, có thể là handleDefaultEvent
+                // Bkav TienNVh :
+                eventOnClick(id);
+                /*cancelIfEvaluating(false);
                 if (haveUnprocessed()) {
                     // For consistency, append as uninterpreted characters.
                     // This may actually be useful for a left parenthesis.
@@ -875,13 +919,13 @@ public class Calculator extends Activity
                 } else {
                     addExplicitKeyToExpr(id);
                     redisplayAfterFormulaChange();
-                }
+                }*/
                 break;
         }
         showOrHideToolbar();
     }
 
-    void redisplayFormula() {
+    protected void redisplayFormula() {
         SpannableStringBuilder formula
                 = mEvaluator.getExpr(Evaluator.MAIN_INDEX).toSpannableStringBuilder(this);
         if (mUnprocessedChars != null) {
@@ -917,6 +961,9 @@ public class Calculator extends Activity
 
         mResultText.onEvaluate(index, initDisplayPrec, msd, leastDigPos, truncatedWholeNumber);
         if (mCurrentState != CalculatorState.INPUT) {
+            // Bkav TienNVh :
+            getTruncatedWholeNumber(truncatedWholeNumber);
+
             // In EVALUATE, INIT, RESULT, or INIT_FOR_RESULT state.
             onResult(mCurrentState == CalculatorState.EVALUATE /* animate */,
                      mCurrentState == CalculatorState.INIT_FOR_RESULT
@@ -969,7 +1016,7 @@ public class Calculator extends Activity
                     value, and certainly changes the display, so it seems reasonable to warn.
      * @return      true if there was such an evaluation
      */
-    private boolean cancelIfEvaluating(boolean quiet) {
+    /*private*/protected boolean cancelIfEvaluating(boolean quiet) {
         if (mCurrentState == CalculatorState.EVALUATE) {
             mEvaluator.cancel(Evaluator.MAIN_INDEX, quiet);
             return true;
@@ -985,11 +1032,11 @@ public class Calculator extends Activity
         }
     }
 
-    private boolean haveUnprocessed() {
+    /*private*/protected boolean haveUnprocessed() {
         return mUnprocessedChars != null && !mUnprocessedChars.isEmpty();
     }
 
-    private void onEquals() {
+    /*private*/protected void onEquals() {
         // Ignore if in non-INPUT state, or if there are no operators.
         if (mCurrentState == CalculatorState.INPUT) {
             if (haveUnprocessed()) {
@@ -1011,7 +1058,9 @@ public class Calculator extends Activity
         // If there is an in-progress explicit evaluation, just cancel it and return.
         if (cancelIfEvaluating(false)) return;
         setState(CalculatorState.INPUT);
-        if (haveUnprocessed()) {
+        //Bkav AnhNDd TODO Đoạn này vừa xóa code , vừa không comment. Đã làm thì phải nghiêm túc kể cả vấn đề nhỏ này !!!!!!!!!!!
+        onDeleteBkavCalculator();
+        /*if (haveUnprocessed()) {
             mUnprocessedChars = mUnprocessedChars.substring(0, mUnprocessedChars.length() - 1);
         } else {
             mEvaluator.delete();
@@ -1020,7 +1069,7 @@ public class Calculator extends Activity
             // Resulting formula won't be announced, since it's empty.
             announceClearedForAccessibility();
         }
-        redisplayAfterFormulaChange();
+        redisplayAfterFormulaChange();*/
     }
 
     private void reveal(View sourceView, int colorRes, AnimatorListener listener) {
@@ -1077,7 +1126,7 @@ public class Calculator extends Activity
         animatorSet.start();
     }
 
-    private void announceClearedForAccessibility() {
+    /*private*/protected void announceClearedForAccessibility() {
         mResultText.announceForAccessibility(getResources().getString(R.string.cleared));
     }
 
@@ -1089,13 +1138,15 @@ public class Calculator extends Activity
          redisplayFormula();
     }
 
-    private void onClear() {
+    /*private*/protected void onClear() {
         if (mEvaluator.getExpr(Evaluator.MAIN_INDEX).isEmpty() && !haveUnprocessed()) {
             return;
         }
         cancelIfEvaluating(true);
         announceClearedForAccessibility();
-        reveal(mCurrentButton, R.color.calculator_primary_color, new AnimatorListenerAdapter() {
+        // Bkav TienNVh :
+        int color = setBackgroundDisplayWhenClear();
+        reveal(mCurrentButton, /*R.color.calculator_primary_color*/color, new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {
                 onClearAnimationEnd();
@@ -1126,6 +1177,9 @@ public class Calculator extends Activity
             setState(CalculatorState.ERROR);
             mResultText.onError(index, errorResourceId);
         } else {
+            //Bkav AnhNDd TODO tại sao thêm
+            mResultText.onError(index, errorResourceId);
+
             mResultText.clear();
         }
     }
@@ -1335,7 +1389,7 @@ public class Calculator extends Activity
      * Change evaluation state to one that's friendly to the history fragment.
      * Return false if that was not easily possible.
      */
-    private boolean prepareForHistory() {
+    /*private*/protected boolean prepareForHistory() {
         if (mCurrentState == CalculatorState.ANIMATE) {
             // End the current animation and signal that preparation has failed.
             // onUserInteraction is unreliable and onAnimationEnd() is asynchronous, so we
@@ -1361,7 +1415,8 @@ public class Calculator extends Activity
         return true;
     }
 
-    private HistoryFragment getHistoryFragment() {
+    //Bkav AnhNDd TODO Tại sao không override hàm này để lấy ra fragment của mình, mà lại tao một hàm riêng????
+    /*private*/protected HistoryFragment getHistoryFragment() {
         final FragmentManager manager = getFragmentManager();
         if (manager == null || manager.isDestroyed()) {
             return null;
@@ -1370,7 +1425,8 @@ public class Calculator extends Activity
         return fragment == null || fragment.isRemoving() ? null : (HistoryFragment) fragment;
     }
 
-    private void showHistoryFragment() {
+    //Bkav AnhNDd TODO Tại sao không override hàm này để lấy ra fragment của mình, mà lại tao một hàm riêng????
+    /*private*/protected void showHistoryFragment() {
         if (getHistoryFragment() != null) {
             // If the fragment already exists, do nothing.
             return;
@@ -1386,8 +1442,10 @@ public class Calculator extends Activity
         stopActionModeOrContextMenu();
         manager.beginTransaction()
                 .replace(R.id.history_frame, new HistoryFragment(), HistoryFragment.TAG)
-                .setTransition(FragmentTransaction.TRANSIT_NONE)
-                .addToBackStack(HistoryFragment.TAG)
+                //Bkav AnhNDd TODO Tại sao sửa thế này ????
+                .addToBackStack(null)
+                //.setTransition(FragmentTransaction.TRANSIT_NONE)
+                //.addToBackStack(HistoryFragment.TAG)
                 .commit();
 
         // When HistoryFragment is visible, hide all descendants of the main Calculator view.
@@ -1426,7 +1484,7 @@ public class Calculator extends Activity
      * @param moreChars characters to be added
      * @param explicit these characters were explicitly typed by the user, not pasted
      */
-    private void addChars(String moreChars, boolean explicit) {
+    /*private*/protected void addChars(String moreChars, boolean explicit) {
         if (mUnprocessedChars != null) {
             moreChars = mUnprocessedChars + moreChars;
         }
@@ -1508,7 +1566,7 @@ public class Calculator extends Activity
         showOrHideToolbar();
     }
 
-    private void clearIfNotInputState() {
+    /*private*/protected void clearIfNotInputState() {
         if (mCurrentState == CalculatorState.ERROR
                 || mCurrentState == CalculatorState.RESULT) {
             setState(CalculatorState.INPUT);
@@ -1535,5 +1593,60 @@ public class Calculator extends Activity
 
     public interface OnDisplayMemoryOperationsListener {
         boolean shouldDisplayMemory();
+    }
+
+    //============================Bkav===================================
+    // Bkav TienNVh
+    public int getMainResId() {
+        return R.layout.activity_calculator_main;
+    }
+
+    // Bkav TienNVh
+    public  void eventOnClick(int id){ }
+
+    // Bkav TienNVh
+    protected void setBackgroungViewPager(){ }
+
+    // Bkav TienNVh :
+    protected int setBackgroundDisplayWhenClear(){
+        return R.color.calculator_primary_color;
+    }
+
+    // Bkav TienNVh :
+    protected void getTruncatedWholeNumber(String truncatedWholeNumber){}
+
+    // Bkav TienNVh :
+    protected boolean onSetPositonViewPagerWhenBackPressed() {
+        if (mPadViewPager != null && mPadViewPager.getCurrentItem() != 0) {
+            // Select the previous pad.
+            mPadViewPager.setCurrentItem(mPadViewPager.getCurrentItem() - 1);
+            return true;
+        }
+        return false;
+    }
+    // Bkav TienNVh :
+    protected BkavHistoryFragment getBkavHistoryFragment() {
+        return null;
+    }
+
+    // Bkav TienNVh :
+    protected  void onResumeBkavCalculator(){ }
+
+    // Bkav TienNVh :
+    protected  void onDeleteBkavCalculator(){
+        if (haveUnprocessed()) {
+            mUnprocessedChars = mUnprocessedChars.substring(0, mUnprocessedChars.length() - 1);
+        } else {
+            mEvaluator.delete();
+        }
+        if (mEvaluator.getExpr(Evaluator.MAIN_INDEX).isEmpty() && !haveUnprocessed()) {
+            // Resulting formula won't be announced, since it's empty.
+            announceClearedForAccessibility();
+        }
+        redisplayAfterFormulaChange();
+    }
+    // Bkav TienNVh :
+    protected void dispatchTouchEventOutsideDisPlay(MotionEvent ev){
+        // no something
     }
 }

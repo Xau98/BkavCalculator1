@@ -66,6 +66,7 @@ class BkavHistoryAdapter extends RecyclerView.Adapter<BkavHistoryAdapter.ViewHol
             }
         });
         // Bkav TienNVh :Do view Result đã nhận listener=> ko nhận listener khi click cả item
+        //Bkav AnhNDd TODO check lint cái này
         holder.mResult.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -122,6 +123,7 @@ class BkavHistoryAdapter extends RecyclerView.Adapter<BkavHistoryAdapter.ViewHol
         return item;
     }
 
+    //Bkav AnhNDd TODO class inner nên để static, google lý do và giải thích
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         private AlignedTextView mFormula;

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- Bkav TienNVh :  background của Status bar khi open  app  -->
+    <!--Bkav AnhNDd TODO Thường mã màu là hex chỉ có 4 kí tự là vì sao-->
     <color name="bkav_status_bar_color">#FFFF</color>
 
     <!-- Bkav TienNVh : màu background của phần màn hình hiện thị phép tính và kết quả   -->

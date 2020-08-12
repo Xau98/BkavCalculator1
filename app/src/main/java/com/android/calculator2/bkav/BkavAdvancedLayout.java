@@ -36,6 +36,7 @@ public class BkavAdvancedLayout extends GridLayout {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
+        //Bkav AnhNDd TODO Làm sai, hàm draw được gọi liên tục, object Pain chỉ cần tạo 1 lần duy nhất
         Paint mPaint = new Paint();
         if (mBitmap != null) {
             Rect dest = new Rect(0, 0, getWidth(), getHeight());

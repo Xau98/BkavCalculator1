@@ -16,10 +16,9 @@
 
 package com.android.calculator2;
 
+import java.math.BigInteger;
 import com.hp.creals.CR;
 import com.hp.creals.UnaryCRFunction;
-
-import java.math.BigInteger;
 
 /**
  * Computable real numbers, represented so that we can get exact decidable comparisons

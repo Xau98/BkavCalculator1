@@ -26,6 +26,7 @@ public class BkavHistoryLayout extends RelativeLayout {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
+        //Bkav AnhNDd TODO Copy code giống như bên BkavAdvancedLayout, lý do tại sao?
         Paint mPaint = new Paint();
         if (mBitmap != null) {
             Rect dest = new Rect(0, 0, getWidth(), getHeight());

@@ -1,4 +1,5 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
+//Bkav AnhNDd: update base 9.0.0_r59 (https://android.googlesource.com/platform/packages/apps/ExactCalculator/+/refs/tags/android-9.0.0_r59)
 buildscript {
     repositories {
         jcenter()
@@ -6,7 +7,7 @@ buildscript {
     }
     dependencies {
         //Bkav TienNVH : 3.6.0 => 3.5.1
-        classpath 'com.android.tools.build:gradle:4.0.0'
+        classpath 'com.android.tools.build:gradle:4.0.1'
     }
 }
 
@@ -16,6 +17,8 @@ allprojects {
         google()
     }
 }
+//Bkav AnhNDd TODO KHÔNG ĐƯỢC FORMAT CODE CỦA FILE, BỎ THÓI QUEN CTRL+F CẢ FILE, CHỈ ĐOẠN NÀO CẦN FORMAT THÌ MỚI LÀM
+//TODO Chại lại tool lint và fix hết lỗi, project này nhỏ fix nhanh
 
 //version 1.0.9
 // Chỉnh sửa tính năng M
@@ -45,3 +48,5 @@ allprojects {
 //
 //Bkav AnhNDd: update base 9.0.0_r59 (https://android.googlesource.com/platform/packages/apps/ExactCalculator/+/refs/tags/android-9.0.0_r59)
 //version 2.0.0
+//Bkav AnhNDd TODO FOLDER font có đang dùng hay không?
+//Bkav AnhNDd TODO Hàm nào, biến nào không dùng thì xóa đi

@@ -34,10 +34,13 @@
         android:background="?android:attr/listDivider"
         android:importantForAccessibility="no" />
 
+    <!--Bkav AnhNDd TODO
+    android:layout_width="match_parent"
+        android:layout_height="wrap_content"-->
     <TextView
         android:id="@+id/history_date"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="1dp"
+        android:layout_height="1dp"
         android:fontFamily="sans-serif-medium"
         android:paddingStart="@dimen/result_padding_start"
         android:paddingEnd="@dimen/result_padding_end"

@@ -113,7 +113,9 @@ public final class DragController {
                 && vh.getItemViewType() == HistoryAdapter.HISTORY_VIEW_TYPE) {
             final AlignedTextView formula = vh.getFormula();
             final CalculatorResult result = vh.getResult();
-            final TextView date = vh.getDate();
+            //Bkav AnhNDd TODO comment ko có lý do, lệch dòng
+            // Bkav TienNVh :
+           // final TextView date = vh.getDate();
             final View divider = vh.getDivider();
 
             if (!mAnimationInitialized) {
@@ -157,8 +159,9 @@ public final class DragController {
 
             result.setTextColor((int) mColorEvaluator.evaluate(yFraction, mResultStartColor,
                     mResultEndColor));
-
-            date.setTranslationY(mAnimationController.getDateTranslationY(yFraction));
+            //Bkav AnhNDd TODO comment ko có lý do, lệch dòng
+            // Bkav TienNVh :
+           // date.setTranslationY(mAnimationController.getDateTranslationY(yFraction));
             divider.setTranslationY(mAnimationController.getDateTranslationY(yFraction));
         } else if (mIsDisplayEmpty) {
             // There is no current expression but we still need to collect information

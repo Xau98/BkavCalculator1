@@ -20,7 +20,9 @@
     <style name="Theme" parent="@android:style/Theme.Material.Light.DarkActionBar">
         <item name="android:colorPrimary">@color/calculator_primary_color</item>
         <item name="android:colorAccent">@color/calculator_accent_color</item>
-        <item name="android:statusBarColor">@color/calculator_accent_color</item>
+        <!--Bkav AnhNDd TODO khi sửa thì phải comment cái mình sửa vào, trình bày xem vì sao lại sửa-->
+        <item name="android:statusBarColor">@color/bkav_status_bar_color</item>
+        <!--<item name="android:statusBarColor">@color/calculator_accent_color</item>-->
         <item name="android:windowSoftInputMode">stateAlwaysHidden</item>
     </style>
 

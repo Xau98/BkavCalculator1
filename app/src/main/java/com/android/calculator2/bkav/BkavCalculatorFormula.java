@@ -20,6 +20,7 @@ public class BkavCalculatorFormula extends CalculatorFormula {
         super(context, attrs);
     }
 
+    //Bkav AnhNDd TODO Có thuộc tính để Edittext ko hiện bàn phím, xem lại cách làm
     @Override
     protected void hideSoftInputOnFocus() {
         //Bkav tiennvh khong cho show ban phim

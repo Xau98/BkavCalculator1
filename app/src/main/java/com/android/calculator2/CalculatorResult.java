@@ -133,7 +133,9 @@ public class CalculatorResult extends AlignedTextView implements MenuItem.OnMenu
     public static final int MAX_LEADING_ZEROES = 6;
                             // Maximum number of leading zeroes after decimal point before we
                             // switch to scientific notation with negative exponent.
-    public static final int MAX_TRAILING_ZEROES = 6;
+    //Bkav AnhNDd TODO Giải thích Maximum number of leading zeroes là gì???? Sao lại để 9999
+     // Bkav TienNVh :  Hiện thị kết quả phụ thuộc vào kích thước màn hình
+    public static final int MAX_TRAILING_ZEROES = 9999;
                             // Maximum number of trailing zeroes before the decimal point before
                             // we switch to scientific notation with positive exponent.
     private static final int SCI_NOTATION_EXTRA = 1;
@@ -148,7 +150,7 @@ public class CalculatorResult extends AlignedTextView implements MenuItem.OnMenu
                             // The maximum number of digits we're willing to recompute in the UI
                             // thread.  We only do this for known rational results, where we
                             // can bound the computation cost.
-    /*private*/protected /*final*/ ForegroundColorSpan mExponentColorSpan;
+    protected final ForegroundColorSpan mExponentColorSpan;
     private final BackgroundColorSpan mHighlightSpan;
 
     private ActionMode mActionMode;
@@ -162,8 +164,10 @@ public class CalculatorResult extends AlignedTextView implements MenuItem.OnMenu
         super(context, attrs);
         mScroller = new OverScroller(context);
         mHighlightSpan = new BackgroundColorSpan(getHighlightColor());
-        mExponentColorSpan = new ForegroundColorSpan(
-                ContextCompat.getColor(context, R.color.display_result_exponent_text_color));
+        //Bkav AnhNDd TODO không được xóa code gốc, phải comment vào!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!, biến final thì override kiểu này (GHI NHỚ)
+        mExponentColorSpan = setColorE(context);
+        //mExponentColorSpan = new ForegroundColorSpan(
+        //        ContextCompat.getColor(context, R.color.display_result_exponent_text_color));
         mGestureDetector = new GestureDetector(context,
             new GestureDetector.SimpleOnGestureListener() {
                 @Override
@@ -354,6 +358,7 @@ public class CalculatorResult extends AlignedTextView implements MenuItem.OnMenu
         if (mEvaluator != null && mEvaluationRequest != SHOULD_NOT_EVALUATE) {
             final CalculatorExpr expr = mEvaluator.getExpr(mIndex);
             if (expr != null && expr.hasInterestingOps()) {
+                //Bkav AnhNDd TODO tại sao code trước lại xóa
                 if (mEvaluationRequest == SHOULD_REQUIRE) {
                     mEvaluator.requireResult(mIndex, mEvaluationListener, this);
                 } else {
@@ -1184,8 +1189,8 @@ public class CalculatorResult extends AlignedTextView implements MenuItem.OnMenu
     // Bkav TienNVh :
     String mTruncatedWholePart;
     // Bkav TienNVh
-    protected  void setColorE(Context context){
-        mExponentColorSpan = new ForegroundColorSpan(
+    protected ForegroundColorSpan setColorE(Context context){
+        return new ForegroundColorSpan(
                 ContextCompat.getColor(context, R.color.display_result_exponent_text_color));
     }
 

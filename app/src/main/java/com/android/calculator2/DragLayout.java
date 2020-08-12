@@ -113,7 +113,8 @@ public class DragLayout extends ViewGroup {
         if (state instanceof Bundle) {
             final Bundle bundle = (Bundle) state;
             mIsOpen = bundle.getBoolean(KEY_IS_OPEN);
-            mHistoryFrame.setVisibility(mIsOpen ? View.VISIBLE : View.INVISIBLE);
+            //Bkav AnhNDd TODO Tại sao lại xóa đoạn code này đi mà ko comment
+            //mHistoryFrame.setVisibility(mIsOpen ? View.VISIBLE : View.INVISIBLE);
             for (DragCallback c : mDragCallbacks) {
                 c.onInstanceStateRestored(mIsOpen);
             }
@@ -172,6 +173,9 @@ public class DragLayout extends ViewGroup {
                 && mDragHelper.getActivePointerId() != ViewDragHelper.INVALID_POINTER
                 && event.findPointerIndex(mDragHelper.getActivePointerId()) == -1) {
             mDragHelper.cancel();
+            //Bkav AnhNDd TODO Cái này bỏ đi được chưa?
+            // Bkav TienNVh
+            // mDragHelper.smoothSlideViewTo(mHistoryFrame, 0, mIsOpen ? 0 : -mVerticalRange);
             return false;
         }
 

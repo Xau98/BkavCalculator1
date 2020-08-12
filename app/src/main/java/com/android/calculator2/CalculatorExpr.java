@@ -48,7 +48,7 @@ import java.util.HashSet;
  * computed values by writing out the expression that was used to compute them, and reevaluate
  * when reading it back in.
  */
-class CalculatorExpr {
+public class CalculatorExpr {
     /**
      * An interface for resolving expression indices in embedded subexpressions to
      * the associated CalculatorExpr, and associating a UnifiedReal result with it.
@@ -441,7 +441,7 @@ class CalculatorExpr {
      * Does this expression end with a numeric constant?
      * As opposed to an operator or preevaluated expression.
      */
-    boolean hasTrailingConstant() {
+    public boolean hasTrailingConstant() {
         int s = mExpr.size();
         if (s == 0) {
             return false;

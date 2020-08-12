@@ -43,7 +43,7 @@ import com.bkav.calculator2.R;
 /**
  * TextView adapted for displaying the formula and allowing pasting.
  */
-public class CalculatorFormula extends /*AlignedTextView*/EditText implements MenuItem.OnMenuItemClickListener, //Bkav TienNVh thay
+public class CalculatorFormula extends /*AlignedTextView*/EditText implements MenuItem.OnMenuItemClickListener, //Bkav AnhNDd TODO Không đc xóa code, lý do dùng EditText
         ClipboardManager.OnPrimaryClipChangedListener {
 
     public static final String TAG_ACTION_MODE = "ACTION_MODE";
@@ -93,6 +93,11 @@ public class CalculatorFormula extends /*AlignedTextView*/EditText implements Me
         } else {
             setupContextMenu();
         }
+        //Bkav AnhNDd TODO Tại sao hàm khởi tạo lại làm việc như thế này?????
+        // Bkav TienNVh :
+        hideSoftInputOnFocus();
+        // Bkav TienNVh :
+        hideActionModeOrigin();
     }
 
     @Override
@@ -293,6 +298,13 @@ public class CalculatorFormula extends /*AlignedTextView*/EditText implements Me
                 return true;
             }
         });
+    }
+
+    //Bkav AnhNDd TODO CODE mà ko comment?????, Tại sao không gọi bên class cha bkav????
+    @Override
+    protected void onSelectionChanged(int selStart, int selEnd) {
+        super.onSelectionChanged(selStart, selEnd);
+        setPositionCursorEnd();
     }
 
     /**

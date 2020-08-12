@@ -16,8 +16,8 @@ public class BkavCalculatorResult extends CalculatorResult {
 
     // Bkav TienNVh : Set Color của ký tự E trong phần hiện thị kết quả
     @Override
-    protected void setColorE(Context context) {
-        mExponentColorSpan = new ForegroundColorSpan(
+    protected ForegroundColorSpan setColorE(Context context) {
+        return new ForegroundColorSpan(
                 ContextCompat.getColor(context, R.color.bkav_display_result_exponent_text_color));
     }
 }

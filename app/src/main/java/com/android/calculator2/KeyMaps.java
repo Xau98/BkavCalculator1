@@ -72,6 +72,10 @@ public class KeyMaps {
             case R.id.fun_exp:
                 // Button label doesn't work.
                 return context.getString(R.string.exponential) + context.getString(R.string.lparen);
+                //Bkav AnhNDd TODO Lý do vì sao thêm vào đây mà ko phải là cuối? Giải thích cho mọi code trong đây
+            case R.id.fun_10pow:
+                // Bkav TienNVh : 10^
+                return context.getString(R.string.op_10pow);
             case R.id.lparen:
                 return context.getString(R.string.lparen);
             case R.id.rparen:
@@ -89,8 +93,17 @@ public class KeyMaps {
             case R.id.op_sqr:
                 // Button label doesn't work.
                 return context.getString(R.string.squared);
+            // Bkav TienNVh :
+            //  case R.id.dec_point:
+            //  return context.getString(R.string.dec_point);
             case R.id.dec_point:
-                return context.getString(R.string.dec_point);
+                if (Locale.getDefault().toString().equals("vi_VN")) { //Bkav AnhNDd TODO Thấy dùng nhiều, để hằng số
+                    // Bkav TienNVh : Truong hop ngon ngu viet nam thi dau phay la ','
+                    return ",";
+                } else {
+                    // Bkav TienNVh : Nguoc lai  dau phay la '.'
+                    return context.getString(R.string.dec_point);
+                }
             case R.id.digit_0:
                 return context.getString(R.string.digit_0);
             case R.id.digit_1:
@@ -529,9 +542,10 @@ public class KeyMaps {
             case 'e':
             case 'E':
                 return R.id.const_e;
-            case 'p':
-            case 'P':
-                return R.id.const_pi;
+            // Bkav TienNVh : Bỏ vì không có trường hợp nhập vào 'p' tránh trường hợp người dùng dán ký tự 'p' vào chuyển sang sang số hằng số pi
+            //   case 'p':
+            //   case 'P':
+            //  return R.id.const_pi;
             case '^':
                 return R.id.op_pow;
             case '!':
@@ -542,6 +556,12 @@ public class KeyMaps {
                 return R.id.lparen;
             case ')':
                 return R.id.rparen;
+            // Bkav TienNVh : mũ 2
+            case '²':
+                return R.id.op_sqr;
+            // Bkav TienNVh : căn 2
+            case '√':
+                return R.id.op_sqrt;
             default:
                 if (c == mDecimalPt) return R.id.dec_point;
                 if (c == mPiChar) return R.id.const_pi;
@@ -588,6 +608,8 @@ public class KeyMaps {
             sKeyValForFun.put("acos", R.id.fun_arccos);
             sKeyValForFun.put("atan", R.id.fun_arctan);
             sKeyValForFun.put("ln", R.id.fun_ln);
+            // Bkav TienNVh :Thêm vào tính năng exp
+            sKeyValForFun.put("exp", R.id.fun_exp);
             sKeyValForFun.put("log", R.id.fun_log);
             sKeyValForFun.put("sqrt", R.id.op_sqrt); // special treatment
             addButtonToFunMap(R.id.fun_sin);

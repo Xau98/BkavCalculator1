@@ -23,7 +23,8 @@
 
     <include layout="@layout/display" />
 
-    <com.android.calculator2.CalculatorPadViewPager
+    <!--Bkav AnhNDd TODO chưa code đúng quy tắc kế thừa, viết lại-->
+    <com.android.calculator2.bkav.BkavCalculatorPadViewPager
         android:id="@+id/pad_pager"
         android:layout_width="match_parent"
         android:layout_height="0dip"
@@ -41,6 +42,25 @@
 
         <include layout="@layout/pad_advanced" />
 
-    </com.android.calculator2.CalculatorPadViewPager>
+    </com.android.calculator2.bkav.BkavCalculatorPadViewPager>
+    <!--<com.android.calculator2.CalculatorPadViewPager
+        android:id="@+id/pad_pager"
+        android:layout_width="match_parent"
+        android:layout_height="0dip"
+        android:layout_weight="1"
+        android:overScrollMode="never">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <include layout="@layout/pad_numeric" />
+            <include layout="@layout/pad_operator" />
+
+        </LinearLayout>
+
+        <include layout="@layout/pad_advanced" />
+
+    </com.android.calculator2.CalculatorPadViewPager>-->
 
 </LinearLayout>

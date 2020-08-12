@@ -19,7 +19,6 @@ import java.lang.reflect.Method;
 /**
  * Created by duclq on 07/06/2017.
  */
-
 public class WallpaperBlurCompat {
 
     private static final int WIDTH_SCACE_BLUR = 54;
