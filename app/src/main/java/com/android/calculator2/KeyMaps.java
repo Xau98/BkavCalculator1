@@ -23,6 +23,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
+import com.android.calculator2.bkav.BkavCalculator;
 import com.bkav.calculator2.R;
 
 import java.text.DecimalFormatSymbols;
@@ -41,6 +42,7 @@ public class KeyMaps {
      * Map key id to corresponding (internationalized) display string.
      * Pure function.
      */
+    // Bkav TienNVh : Hàm chuyển đổi từ id sang text
     public static String toString(Context context, int id) {
         switch(id) {
             case R.id.const_pi:
@@ -72,9 +74,11 @@ public class KeyMaps {
             case R.id.fun_exp:
                 // Button label doesn't work.
                 return context.getString(R.string.exponential) + context.getString(R.string.lparen);
-                //Bkav AnhNDd TODO Lý do vì sao thêm vào đây mà ko phải là cuối? Giải thích cho mọi code trong đây
+            // Bkav TienNVh : có thể thêm vào vị trí bất ký .
+            // thêm vào đây vì cho sau đọc có logic (vì từ trên xuống đang ở tính năng fun )
+            // Bkav TienNVh : Vì sao phải thêm?
+            // Vì trong Android gốc khi click thì ấn thì add thẳng id vào token không phải chuyển về text
             case R.id.fun_10pow:
-                // Bkav TienNVh : 10^
                 return context.getString(R.string.op_10pow);
             case R.id.lparen:
                 return context.getString(R.string.lparen);
@@ -93,11 +97,12 @@ public class KeyMaps {
             case R.id.op_sqr:
                 // Button label doesn't work.
                 return context.getString(R.string.squared);
-            // Bkav TienNVh :
+            // Bkav TienNVh : Bỏ vì để mục đích xử lý riêng từng ngôn ngữ để format cho đúng định dạng
             //  case R.id.dec_point:
             //  return context.getString(R.string.dec_point);
+            // Bkav TienNVh : Xử lý dấu . cho riêng từng ngôn ngữ để format cho đúng định dạng
             case R.id.dec_point:
-                if (Locale.getDefault().toString().equals("vi_VN")) { //Bkav AnhNDd TODO Thấy dùng nhiều, để hằng số
+                if (Locale.getDefault().toString().equals(BkavCalculator.LANGUAGE_VN)) {
                     // Bkav TienNVh : Truong hop ngon ngu viet nam thi dau phay la ','
                     return ",";
                 } else {

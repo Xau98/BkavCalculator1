@@ -37,7 +37,6 @@ import java.util.Arrays;
 import java.util.Locale;
 
 public class BkavCalculator extends Calculator implements BkavHistoryAdapter.OnClickItemHistory{
-    //Bkav AnhNDd TODO các biến khai báo phải cách nhau 1 khoảng trắng
     // Bkav TienNVh :
     private CheckPermission mCheckPermission;
 
@@ -46,21 +45,34 @@ public class BkavCalculator extends Calculator implements BkavHistoryAdapter.OnC
     Bitmap bitmapBlurHis = null;
 
     private BkavHistoryLayout mRelativeLayoutHistory;
+
     private BkavAdvancedLayout mCalculatorPadLayout;
+
     private Button mBtDelHistory;
+
     // Bkav TienNVh : biến SharedPreferences dùng để lưu phép tính cuối cùng
     //Bkav AnhNDd TODO giải thích lại tại sao những cái liên quan đến sharedPreferences không dùng database, cách làm này cũng ko hiệu quả
     private SharedPreferences mSharedPreferences;
+
     private String mSharePreFile = "SaveCalCulator";
+
     private  static String SHAREDPREFERENCES_FORMULATEXT = "FormulaText";
+
     private static  String SHAREDPREFERENCES_LANGUAGE = "Language";
-    private static String LANGUAGE_VN = "vi_VN";
+
+    public static String LANGUAGE_VN = "vi_VN";
+
     private static int POSITION_HISTORY_VIEWPAGER = 0;
+
     private static int POSITION_NUMBER_VIEWPAGER = 1;
+
     private static int POSITION_ADVENCE_VIEWPAGER = 2;
+
     //Bkav AnhNDd TODO ??? tại sao lại fix cứng
     private static final int WIDTH_SCREEN_LAND = 2160;
+
     private static final int HEIGHT_SCREEN_LAND = 1080;
+
     //Bkav AnhNDd TODO Tại sao làm thế này? chốt lại
     // Bkav TienNVh : 24 là tổng các view con trong tab Advance
     private static final int COUNT_CHILD_ADVANCE = 24;
