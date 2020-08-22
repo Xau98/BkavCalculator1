@@ -1,6 +1,5 @@
 package com.android.calculator2.bkav;
 
-import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.ClipData;
 import android.content.SharedPreferences;
@@ -10,7 +9,6 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
-import android.graphics.Typeface;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Build;
 import android.os.Bundle;
@@ -148,6 +146,17 @@ public class BkavCalculator extends Calculator implements BkavHistoryAdapter.OnC
         mFormulaText.setOnContextMenuClickListener(mOnFormulaContextMenuClickListener);
         // Bkav TienNVh : Update lại các view ẩn khi click INV
         updateInverseButtons();
+        // Bkav TienNVh : thực hiện lấy phép tính cuối cùng để tính khi mở app
+        mEvaluator.clearMain();
+        String formulaText = mSharedPreferences.getString(SHAREDPREFERENCES_FORMULATEXT, "");
+        formulaText = formatStringfllowLanguage(formulaText);
+        addChars(formulaText, false);
+     //   mCurrentState = CalculatorState.ANIMATE;
+        restoreDisplay();
+        // Bkav TienNVh : set vi tri 0 đê đưa con trỏ về cuối phép tính
+        mPostionCursorToRight = 0;
+        // Bkav TienNVh : thay doi vi tri con tro
+        changePostionCursor();
     }
 
     // Bkav TienNVh :
@@ -709,15 +718,6 @@ public class BkavCalculator extends Calculator implements BkavHistoryAdapter.OnC
         } else {
             mBtDelHistory.setVisibility(View.GONE);
         }
-        mEvaluator.clearMain();
-        String formulaText = mSharedPreferences.getString(SHAREDPREFERENCES_FORMULATEXT, "");
-        formulaText = formatStringfllowLanguage(formulaText);
-        addChars(formulaText, false);
-        restoreDisplay();
-        // Bkav TienNVh : set vi tri 0 đê đưa con trỏ về cuối phép tính
-        mPostionCursorToRight = 0;
-        // Bkav TienNVh : thay doi vi tri con tro
-        changePostionCursor();
     }
 
     // Bkav TienNVh : Mục địch format lại phép toán khi thay đổi ngôn ngữ
