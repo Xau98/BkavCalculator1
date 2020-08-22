@@ -14,20 +14,20 @@
   See the License for the specific language governing permissions and
   limitations under the License.
   -->
-<!--Bkav AnhNDd TODO android:textColor="#66FFFFFF"-->
 <FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/empty_history_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-
+    <!-- Bkav TienNVh : sủa cảnh báo dựa trên Lint   -->
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:textColor="#66FFFFFF"
-        android:drawableTop="@drawable/ic_history_grey600_48dp"
+        android:textColor="@color/bkav_text_color_empty_history"
         android:text="@string/no_history"
-        android:textSize="20sp" />
+        android:textSize="20sp"
+        app:drawableTopCompat="@drawable/ic_history_grey600_48dp" />
 
 </FrameLayout>

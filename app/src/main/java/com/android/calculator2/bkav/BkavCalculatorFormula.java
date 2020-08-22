@@ -4,7 +4,6 @@ import android.content.Context;
 import android.graphics.Rect;
 import android.os.Build;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.ActionMode;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -20,7 +19,7 @@ public class BkavCalculatorFormula extends CalculatorFormula {
         super(context, attrs);
     }
 
-    //Bkav AnhNDd TODO Có thuộc tính để Edittext ko hiện bàn phím, xem lại cách làm
+    //Bkav TienNVh: Có thuộc tính ẩn bàn phím nhưng cũng đồng thời ẩn cusor. mục đích của mình là vừa ẩn bàn phím mà vẫn hiện cusor
     @Override
     protected void hideSoftInputOnFocus() {
         //Bkav tiennvh khong cho show ban phim
@@ -35,13 +34,13 @@ public class BkavCalculatorFormula extends CalculatorFormula {
 
     // Bkav TienNVh : Ân con trỏ  ở vị trí cuối
     @Override
-    protected void setPositionCursorEnd() {
+    protected void onSelectionChanged(int selStart, int selEnd) {
+        super.onSelectionChanged(selStart, selEnd);
         if (getSelectionEnd() == length()) {
             setCursorVisible(false);
         } else
             setCursorVisible(true);
     }
-
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override

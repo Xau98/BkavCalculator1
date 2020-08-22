@@ -67,15 +67,15 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:layout_below="@+id/result">
+            android:layout_marginBottom="10sp"
+            >
 
             <Button
                 android:id="@+id/bt_history"
                 style="@style/BkavButtonHistoryStyle"
                 android:background="@null"
                 android:text="@string/title_history"
-                android:textSize="17dp"
+                android:textSize="17sp"
                 android:textStyle="normal"
                 android:textAllCaps="false"
                 android:textColor="#66FFFFFF"
@@ -84,9 +84,9 @@
             <ImageView
                 android:id="@+id/bt_more"
                 style="@style/BkavButtonMoreAdvanceStyle"
-                android:layout_alignParentRight="true"
-                android:contentDescription="more"
-                android:src="@drawable/bkav_icon_more"
+                android:layout_alignParentEnd="true"
+                android:contentDescription="@string/more"
+                android:src="@mipmap/bkav_icon_more"
                 android:onClick="onButtonClick"/>
         </RelativeLayout>
     </FrameLayout>

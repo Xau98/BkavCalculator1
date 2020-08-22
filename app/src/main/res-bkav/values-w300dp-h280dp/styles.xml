@@ -19,7 +19,7 @@
         <item name="android:paddingStart">16dp</item>
         <item name="android:paddingEnd">16dp</item>
         <item name="android:gravity">bottom</item>
-        <item name="android:textSize">32dp</item>
+        <item name="android:textSize">32sp</item>
     </style>
 
     <style name="BkavButtonHistoryStyle">
@@ -55,14 +55,14 @@
     </style>
 
     <style name="BkavPadButtonStyle.Numeric">
-        <item name="android:fontFamily">sans-serif-thin</item>
+        <item name="android:fontFamily">@font/helveticaneuethin</item>
         <item name="android:includeFontPadding">false</item>
         <item name="android:background">@drawable/pad_button_advanced_background</item>
-        <item name="android:textSize">40dip</item>
+        <item name="android:textSize">40sp</item>
     </style>
 
     <style name="BkavPadButtonStyle.Operator">
-        <item name="android:textSize">27dip</item>
+        <item name="android:textSize">27sp</item>
         <item name="android:fontFamily">sans-serif-light</item>
         <item name="android:textStyle">normal</item>
     </style>
@@ -74,7 +74,7 @@
     <style name="BkavPadButtonStyle.Operator.Text">
         <item name="android:layout_marginLeft">3dp</item>
         <item name="android:textAllCaps">true</item>
-        <item name="android:textSize">21dip</item>
+        <item name="android:textSize">21sp</item>
     </style>
 
     <style name="BkavPadLayoutStyle.Operator">
@@ -95,7 +95,7 @@
     </style>
 
     <style name="BkavPadButtonStyle.Advanced">
-        <item name="android:textSize">18dp</item>
+        <item name="android:textSize">18sp</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textColor">@color/bkav_color_text_advance</item>
     </style>

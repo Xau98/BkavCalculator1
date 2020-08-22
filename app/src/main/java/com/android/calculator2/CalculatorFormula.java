@@ -16,6 +16,7 @@
 
 package com.android.calculator2;
 
+import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.content.ClipData;
 import android.content.ClipboardManager;
@@ -43,7 +44,9 @@ import com.bkav.calculator2.R;
 /**
  * TextView adapted for displaying the formula and allowing pasting.
  */
-public class CalculatorFormula extends /*AlignedTextView*/EditText implements MenuItem.OnMenuItemClickListener, //Bkav AnhNDd TODO Không đc xóa code, lý do dùng EditText
+// Bkav TienNVh : Thay AlignedTextView thành Edittext. Mục đích để cho phép sửa phép tính
+@SuppressLint("AppCompatCustomView")
+public class CalculatorFormula extends /*AlignedTextView*/EditText implements MenuItem.OnMenuItemClickListener,
         ClipboardManager.OnPrimaryClipChangedListener {
 
     public static final String TAG_ACTION_MODE = "ACTION_MODE";
@@ -93,15 +96,14 @@ public class CalculatorFormula extends /*AlignedTextView*/EditText implements Me
         } else {
             setupContextMenu();
         }
-        //Bkav AnhNDd TODO Tại sao hàm khởi tạo lại làm việc như thế này?????
-        // Bkav TienNVh :
-        hideSoftInputOnFocus();
+        // Bkav TienNVh : Cho đoạn code ẩn bàn phím khi khởi tạo edittext
+         hideSoftInputOnFocus();
         // Bkav TienNVh :
         hideActionModeOrigin();
     }
 
     @Override
-    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+    /*private*/ protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         if (!isLaidOut()) {
             // Prevent shrinking/resizing with our variable textSize.
             setTextSizeInternal(TypedValue.COMPLEX_UNIT_PX, mMaximumTextSize,
@@ -128,7 +130,7 @@ public class CalculatorFormula extends /*AlignedTextView*/EditText implements Me
     }
 
     @Override
-    protected void onAttachedToWindow() {
+    /*private*/ protected void onAttachedToWindow() {
         super.onAttachedToWindow();
 
         mClipboardManager.addPrimaryClipChangedListener(this);
@@ -136,14 +138,14 @@ public class CalculatorFormula extends /*AlignedTextView*/EditText implements Me
     }
 
     @Override
-    protected void onDetachedFromWindow() {
+    /*private*/ protected void onDetachedFromWindow() {
         super.onDetachedFromWindow();
 
         mClipboardManager.removePrimaryClipChangedListener(this);
     }
 
     @Override
-    protected void onTextChanged(CharSequence text, int start, int lengthBefore, int lengthAfter) {
+    /*private*/ protected void onTextChanged(CharSequence text, int start, int lengthBefore, int lengthAfter) {
         super.onTextChanged(text, start, lengthBefore, lengthAfter);
 
         setTextSize(TypedValue.COMPLEX_UNIT_PX, getVariableTextSize(text.toString()));
@@ -300,13 +302,6 @@ public class CalculatorFormula extends /*AlignedTextView*/EditText implements Me
         });
     }
 
-    //Bkav AnhNDd TODO CODE mà ko comment?????, Tại sao không gọi bên class cha bkav????
-    @Override
-    protected void onSelectionChanged(int selStart, int selEnd) {
-        super.onSelectionChanged(selStart, selEnd);
-        setPositionCursorEnd();
-    }
-
     /**
      * Use ContextMenu for paste support on L and lower.
      */
@@ -407,14 +402,11 @@ public class CalculatorFormula extends /*AlignedTextView*/EditText implements Me
 
     //=====================Bkav================
     //Bkav tiennvh khong cho show ban phim
-    protected void hideSoftInputOnFocus(){
+    /*private*/protected void hideSoftInputOnFocus(){
         //no something
     }
+
     // Bkav TienNVh :
-    protected void setPositionCursorEnd(){
-        //no something
-    }
-    // Bkav TienNVh :
-    protected void hideActionModeOrigin(){}
+    /*private*/protected void hideActionModeOrigin(){}
     // Bkav TienNVh :
 }

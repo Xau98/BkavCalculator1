@@ -12,6 +12,7 @@ import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.graphics.drawable.BitmapDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.util.DisplayMetrics;
@@ -25,6 +26,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.Toast;
 
+import androidx.annotation.RequiresApi;
 import androidx.core.content.ContextCompat;
 import androidx.viewpager.widget.ViewPager;
 
@@ -51,7 +53,7 @@ public class BkavCalculator extends Calculator implements BkavHistoryAdapter.OnC
     private Button mBtDelHistory;
 
     // Bkav TienNVh : biến SharedPreferences dùng để lưu phép tính cuối cùng
-    //Bkav AnhNDd TODO giải thích lại tại sao những cái liên quan đến sharedPreferences không dùng database, cách làm này cũng ko hiệu quả
+    // Bkav TienNVh : SharedPreferences lưu theo cấu trúc, và data ít nên ko cần dùng , cách này lấy data dễ hơn
     private SharedPreferences mSharedPreferences;
 
     private String mSharePreFile = "SaveCalCulator";
@@ -62,20 +64,14 @@ public class BkavCalculator extends Calculator implements BkavHistoryAdapter.OnC
 
     public static String LANGUAGE_VN = "vi_VN";
 
-    private static int POSITION_HISTORY_VIEWPAGER = 0;
+    public static int POSITION_HISTORY_VIEWPAGER = 0;
 
-    private static int POSITION_NUMBER_VIEWPAGER = 1;
+    public static int POSITION_NUMBER_VIEWPAGER = 1;
 
-    private static int POSITION_ADVENCE_VIEWPAGER = 2;
+    public static int POSITION_ADVENCE_VIEWPAGER = 2;
 
-    //Bkav AnhNDd TODO ??? tại sao lại fix cứng
-    private static final int WIDTH_SCREEN_LAND = 2160;
-
-    private static final int HEIGHT_SCREEN_LAND = 1080;
-
-    //Bkav AnhNDd TODO Tại sao làm thế này? chốt lại
-    // Bkav TienNVh : 24 là tổng các view con trong tab Advance
-    private static final int COUNT_CHILD_ADVANCE = 24;
+    // Bkav TienNVh : Trong TH màn hình dọc thì có 3 tab trong viewpager
+    public static int GET_CHILD_VIEWPAGER = 3;
 
     // Bkav TienNVh : Listener khi paste đoạn text
     private final BkavCalculatorFormula.OnFormulaContextMenuClickListener mOnFormulaContextMenuClickListener =
@@ -88,7 +84,10 @@ public class BkavCalculator extends Calculator implements BkavHistoryAdapter.OnC
                         // nothing to paste, bail early...
                         return false;
                     }
-                    //Bkav AnhNDd TODO lên google đọc vê việc lấy con text trong android, có mấy hàm, và chọn cách nào
+                    //Bkav AnhNDd TODO lên google đọc vê việc lấy context trong android, có mấy hàm, và chọn cách nào
+                    // Bkav TienNVh :có các cách getApplicationContext(), getContext(), getBaseContext(),this / getActivity()
+                    // Bkav TienNVh : không nên dùng cách lấy getApplicationContext() này
+                    // vì có thể gây ra ro ri bộ nhớ
                     //Bkav TienNVh: lay du lieu copy
                     String textNew = item.coerceToText(BkavCalculator.this).toString() + "";
                     //Bkav TienNVh: dự liệu phép tính đang tính
@@ -117,8 +116,7 @@ public class BkavCalculator extends Calculator implements BkavHistoryAdapter.OnC
                 }
             };
 
-    //Bkav AnhNDd TODO hàm không chỉ dùng cho việc tính M, comment lại
-    // Bkav TienNVh : Lấy dữ kiệu trong M
+    // Bkav TienNVh : Lấy dữ kiệu trong bộ nhớ. để phục vụ tính năng MR và tính năng past
     private  void onRecallMemory(){
         clearIfNotInputState();
         long memoryIndex = mEvaluator.getMemoryIndex();
@@ -137,48 +135,38 @@ public class BkavCalculator extends Calculator implements BkavHistoryAdapter.OnC
         super.onCreate(savedInstanceState);
         mBtDelHistory =findViewById(R.id.delHistory);
         mCheckPermission = new CheckPermission(this);
-
+        mCalculatorPadLayout = (BkavAdvancedLayout) findViewById(R.id.pad_advanced);
         // Bkav TienNVh : làm trong suốt Statusbar
         overlapStatusbar();
         // Bkav TienNVh : Set tab hien thị đầu tiên
         if(mPadViewPager!=null)
             mPadViewPager.setCurrentItem(POSITION_NUMBER_VIEWPAGER);
-        // Bkav TienNVh : Set Font cho number
-        setFontNumber();
         // Bkav TienNVh :listen  event tab History Open
         mPadViewPager.setCallInvisibleTabHistory(mCallInvisibleTabHistory);
         mSharedPreferences = getSharedPreferences(mSharePreFile, MODE_PRIVATE);
         // Bkav TienNVh : listen Paste memory
         mFormulaText.setOnContextMenuClickListener(mOnFormulaContextMenuClickListener);
+        // Bkav TienNVh : Update lại các view ẩn khi click INV
+        updateInverseButtons();
     }
 
-    //Bkav AnhNDd TODO Tại sao không dùng style trong xml
-    // Bkav TienNVh :them font chu cho number
-    void setFontNumber() {
-        Typeface myTypeface = Typeface.createFromAsset(getAssets(), "fonts/helveticaNeueThin.ttf");
-        Button digit_0, digit_1, digit_2, digit_3, digit_4, digit_5, digit_6, digit_7, digit_8, digit_9, dec_point;
-        digit_0 = findViewById(R.id.digit_0);
-        digit_0.setTypeface(myTypeface);
-        digit_1 = findViewById(R.id.digit_1);
-        digit_1.setTypeface(myTypeface);
-        digit_2 = findViewById(R.id.digit_2);
-        digit_2.setTypeface(myTypeface);
-        digit_3 = findViewById(R.id.digit_3);
-        digit_3.setTypeface(myTypeface);
-        digit_4 = findViewById(R.id.digit_4);
-        digit_4.setTypeface(myTypeface);
-        digit_5 = findViewById(R.id.digit_5);
-        digit_5.setTypeface(myTypeface);
-        digit_6 = findViewById(R.id.digit_6);
-        digit_6.setTypeface(myTypeface);
-        digit_7 = findViewById(R.id.digit_7);
-        digit_7.setTypeface(myTypeface);
-        digit_8 = findViewById(R.id.digit_8);
-        digit_8.setTypeface(myTypeface);
-        digit_9 = findViewById(R.id.digit_9);
-        digit_9.setTypeface(myTypeface);
-        dec_point = findViewById(R.id.dec_point);
-        dec_point.setTypeface(myTypeface);
+    // Bkav TienNVh :
+   void updateInverseButtons(){
+       int orientation = getResources().getConfiguration().orientation;
+       // Bkav TienNVh : Chức năng của button INV là hiện và ẩn các view
+       // Bkav TienNVh : Trường hợp có dưới 3 tab => 2 tab (Xoay ngang màn hình )
+       // Bkav TienNVh : Trường hợp ở chia đôi màn hình
+       if (mPadViewPager.getChildCount() < GET_CHILD_VIEWPAGER ||  orientation== Configuration.ORIENTATION_LANDSCAPE) {
+           //Bkav TienNVh :mInvertibleButtons/mInverseButtons là mảng lưu danh sách các view khi click INV thì hiện/ẩn
+           // Bkav TienNVh :  Mở rộng số phần tử trong mảng mInvertibleButtons/mInverseButtons
+           mInvertibleButtons = Arrays.copyOf(mInvertibleButtons, 8);
+           mInverseButtons = Arrays.copyOf(mInverseButtons, 8);
+           // Bkav TienNVh :  thêm các view tính năng M vào mảng
+           mInvertibleButtons[6] = findViewById(R.id.op_m_sub);
+           mInverseButtons[6] = findViewById(R.id.op_m_c);
+           mInvertibleButtons[7] = findViewById(R.id.op_m_plus);
+           mInverseButtons[7] = findViewById(R.id.op_m_r);
+       }
     }
 
     //Bkav QuangNDb ham de len statusbar
@@ -209,7 +197,7 @@ public class BkavCalculator extends Calculator implements BkavHistoryAdapter.OnC
         return  R.color.bkav_calculator_primary_color;
     }
 
-    //Bkav AnhNDd TODO Các biến color là cố định, sao ko khởi tạo 1 lần duy nhất
+    // Bkav TienNVh : Em viết theo code của android gốc
     // Bkav TienNVh : Cập nhật background cho phần display và Statusbar
     @Override
     protected void setState(Calculator.CalculatorState state) {
@@ -229,9 +217,9 @@ public class BkavCalculator extends Calculator implements BkavHistoryAdapter.OnC
             getWindow().setStatusBarColor(Color.TRANSPARENT);
         } else if (mCurrentState != CalculatorState.RESULT) {
             mFormulaText.setTextColor(
-                    ContextCompat.getColor(this, R.color.display_formula_text_color));
+                    ContextCompat.getColor(this, R.color.bkav_display_formula_text_color));
             mResultText.setTextColor(
-                    ContextCompat.getColor(this, R.color.display_result_text_color));
+                    ContextCompat.getColor(this, R.color.bkav_display_result_text_color));
             // Bkav TienNVh :Làm trong suốt Statusbar. khi trong trạng thái có kết quả
             getWindow().setStatusBarColor(Color.TRANSPARENT);
         }
@@ -256,22 +244,7 @@ public class BkavCalculator extends Calculator implements BkavHistoryAdapter.OnC
     // Bkav TienNVh: Nhận sự kiện click button INV
     @Override
     protected void onInverseToggled(boolean showInverse) {
-        // Bkav TienNVh : Chức năng của hàm này là hiện và ẩn các view khi click INV
-        // Bkav TienNVh : Trường hợp có dưới 3 tab => 2 tab (Xoay ngang màn hình )
-        // Bkav TienNVh : Trường hợp ở chia đôi màn hình
-        mCalculatorPadLayout = (BkavAdvancedLayout) findViewById(R.id.pad_advanced);
-        if (mPadViewPager.getChildCount() < 3||  mCalculatorPadLayout.getChildCount() == COUNT_CHILD_ADVANCE) {  //Bkav AnhNDd TODO điều kiện này ko chuẩn, fix cứng COUNT_CHILD_ADVANCE
-            //Bkav AnhNDd TODO Tại sao mỗi lần bấm lại tạo mới object, tìm lại view ????
-            //Bkav TienNVh :mInvertibleButtons/mInverseButtons là mảng lưu danh sách các view khi click INV thì hiện/ẩn
-            // Bkav TienNVh :  Mở rộng số phần tử trong mảng mInvertibleButtons/mInverseButtons
-            mInvertibleButtons = Arrays.copyOf(mInvertibleButtons, 8);
-            mInverseButtons = Arrays.copyOf(mInverseButtons, 8);
-            // Bkav TienNVh :  thêm các view tính năng M vào mảng
-            mInvertibleButtons[6] = findViewById(R.id.op_m_sub);
-            mInverseButtons[6] = findViewById(R.id.op_m_c);
-            mInvertibleButtons[7] = findViewById(R.id.op_m_plus);
-            mInverseButtons[7] = findViewById(R.id.op_m_r);
-        }
+
         super.onInverseToggled(showInverse);
     }
 
@@ -297,24 +270,14 @@ public class BkavCalculator extends Calculator implements BkavHistoryAdapter.OnC
         return false;
     }
 
-    //Bkav AnhNDd TODO bỏ hàm này, override hàm gốc
-    protected BkavHistoryFragment getBkavHistoryFragment() {
-        final FragmentManager manager = getFragmentManager();
-        if (manager == null || manager.isDestroyed()) {
-            return null;
-        }
-        final Fragment fragment = manager.findFragmentByTag(BkavHistoryFragment.TAG);
-        return fragment == null || fragment.isRemoving() ? null : (BkavHistoryFragment) fragment;
-    }
-
-    //Bkav AnhNDd TODO bỏ hàm này, override hàm gốc
     // Bkav TienNVh : Hiện thị tab history
     @Override
     protected void showHistoryFragment() {
-        if (getBkavHistoryFragment() != null) {
+        if (getHistoryFragment() != null) {
             // If the fragment already exists, do nothing.
             return;
         }
+
         final FragmentManager manager = getFragmentManager();
         if (manager == null || manager.isDestroyed() || !prepareForHistory()) {
             return;
@@ -333,16 +296,6 @@ public class BkavCalculator extends Calculator implements BkavHistoryAdapter.OnC
                 .replace(R.id.bkav_history_frame, bkavHistoryFragment, BkavHistoryFragment.TAG)
                 .addToBackStack(BkavHistoryFragment.TAG)
                 .commit();
-    }
-
-    //Bkav AnhNDd TODO bỏ hàm này, override hàm gốc
-    @Override
-    protected void removeHistoryFragment() {
-        // Bkav TienNVh : Được gọi khi đóng tab history
-        final FragmentManager manager = getFragmentManager();
-        if (manager != null && !manager.isDestroyed()) {
-            manager.popBackStack(BkavHistoryFragment.TAG, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-        }
     }
 
     @Override
@@ -381,9 +334,13 @@ public class BkavCalculator extends Calculator implements BkavHistoryAdapter.OnC
                 // Bkav TienNVh : Set background cho History
                 mRelativeLayoutHistory.setInforScrollViewpager(bitmapBlurHis, (float) 0.0);
                 // Bkav TienNVh : set background cho Advance
-                if (mPadViewPager.getWidth() < WIDTH_SCREEN_LAND)
-                    mCalculatorPadLayout.setInforScrollViewpager(finalBitmapBlurAd, (float) 1, HEIGHT_SCREEN_LAND);
+                final int orientation = getResources().getConfiguration().orientation;
+                //Bkav TienNVh:Khi đang mở tab advance thì thay đổi kích thước màn hình=> load lại background
+                if (mPadViewPager.getCurrentItem() == POSITION_ADVENCE_VIEWPAGER) {
+                    mCalculatorPadLayout.setInforScrollViewpager(finalBitmapBlurAd, (float) 1, mPadViewPager.getWidth());
+                }
                 mPadViewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+                    @RequiresApi(api = Build.VERSION_CODES.N)
                     @Override
                     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
                         if (position == POSITION_HISTORY_VIEWPAGER) {
@@ -392,7 +349,8 @@ public class BkavCalculator extends Calculator implements BkavHistoryAdapter.OnC
                         } else {
                             if (position == POSITION_NUMBER_VIEWPAGER) {
                                 // Bkav TienNVh : Trong truong hop xoay ngang thì sự kiện vuốt sang trái vô hiệu
-                                if (mPadViewPager.getWidth() < WIDTH_SCREEN_LAND)
+                                // Bkav TienNVh : Các TH load tab Advance : dọc , chia đôi màn hình
+                                if (orientation != Configuration.ORIENTATION_LANDSCAPE || isInMultiWindowMode())
                                     mCalculatorPadLayout.setInforScrollViewpager(finalBitmapBlurAd, positionOffset, positionOffsetPixels);
                             }
                         }
@@ -410,7 +368,7 @@ public class BkavCalculator extends Calculator implements BkavHistoryAdapter.OnC
     }
 
     @Override
-    public void eventOnClick(int id) {
+    public void handleDefaultEvent(int id) {
         switch (id) {
             // Bkav TienNVh :  đóng/ mở tab history trên Viewpager
             case R.id.bt_history:
@@ -447,7 +405,7 @@ public class BkavCalculator extends Calculator implements BkavHistoryAdapter.OnC
             case R.id.op_m_c:
                 if(!mResultText.getText().toString().equals("")){
                     mResultText.onMemoryStore();
-                    Toast.makeText(getApplicationContext(),"Replace Memory",Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(),R.string.toast_replace_memory,Toast.LENGTH_LONG).show();
                 }
 
                 return;
@@ -486,7 +444,7 @@ public class BkavCalculator extends Calculator implements BkavHistoryAdapter.OnC
     }
 
     //Bkav AnhNDd TODO Mỗi lần bấm 1 event lại xử lý 1 dống logic, rồi tính toán lại từ đầu ???? Chốt lại cách làm
-    // Bkav TienNVh :
+    // Bkav TienNVh : Hiện tại e chưa nghĩ ra hướng nào hay hơn
     private void addFomulaNew(String formulatext, String newtext, int idFomulaNew) {
         // Bkav TienNVh : postionCursor là biến lưu vị trí con trỏ
         int postionCursor = mFormulaText.getSelectionEnd();
@@ -824,8 +782,7 @@ public class BkavCalculator extends Calculator implements BkavHistoryAdapter.OnC
             cutBitmap = Bitmap.createBitmap(bitmap, 0, y + heightChild > bitmap.getHeight() ? bitmap.getHeight() - heightChild : y,
                     (int) (mScreenWidth * 0.8), heightChild);
         } else {
-            //Bkav AnhNDd TODO là trường hợp nào ??????????
-            // Bkav TienNVh : để tránh một số trường hợp chưa load kịp giao giện
+            // Bkav TienNVh : Trường hợp xoay ngang màn hình
             cutBitmap = Bitmap.createBitmap(bitmap, 0, mScreenHeight - heightChild,
                     (int) (mScreenWidth * 0.4), heightChild - 100);
         }
@@ -869,10 +826,13 @@ public class BkavCalculator extends Calculator implements BkavHistoryAdapter.OnC
         return false;
     }
 
-    //Bkav AnhNDd TODO a chưa hiểu giải thích lại ???
+    // Bkav TienNVh : Hàm này trả về kết quả đầy đủ cho phép tính trước khi format
     @Override
     protected void getTruncatedWholeNumber(String truncatedWholeNumber) {
+        // Bkav TienNVh :  truncatedWholeNumber là kết quả hiện thị đầy đủ ở dạng số nguyên
         // Bkav TienNVh : check muc dich la lay ket qua de tiep tuc tinh phep tinh tiep theo
+        //Bkav TienNVh : khi tính ra có kết quả lớn (khi xuất hiện ký tưự E) thì lấy truncatedWholeNumber để thực hiện phép tính tiếp theo
+        // Nếu không phải phép tính lớn thfi lấy kết quả đang hiện thị trên màn hình để thực hiện phép t
         if (mResultText.getText().toString().contains("E")) {
             // Bkav TienNVh : Check ket qua cho ra so lon thi lay phan nguyen cua ket qua
             mTruncatedWholeNumber = truncatedWholeNumber;
@@ -917,6 +877,7 @@ public class BkavCalculator extends Calculator implements BkavHistoryAdapter.OnC
     };
 
     //Bkav AnhNDd TODO cái này có còn lỗi như trước đã report? Nhảy vị trí linh tinh
+    // Bkav TienNVh :  Cái này e đã fix được cái lỗi đã report
     @Override
     public void onClickItemHistory(String result) {
         // Bkav TienNVh : Xử lý lấy dữ liệu trong tab lịch sử để tính

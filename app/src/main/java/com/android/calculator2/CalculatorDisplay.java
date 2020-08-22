@@ -90,14 +90,8 @@ public class CalculatorDisplay extends LinearLayout
 
             @Override
             public boolean onSingleTapConfirmed(MotionEvent e) {
-                //Bkav AnhNDd TODO Không được xóa code gốc, tên hàm không đúng ý nghĩa, mục đích ở đây là ẩn hiện toolbar
-                setSwitchToolbar();
-                /*if (mToolbar.getVisibility() != View.VISIBLE) {
-                    showToolbar(true);
-                } else {
-                    hideToolbar();
-                }*/
-
+              // Bkav TienNVh : Show/hide Toolbar mode Rad và Deg
+                setHideShowToolbar();
                 return true;
             }
         });
@@ -107,7 +101,7 @@ public class CalculatorDisplay extends LinearLayout
     }
 
     @Override
-    protected void onFinishInflate() {
+    /*private*/ protected void onFinishInflate() {
         super.onFinishInflate();
 
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -117,19 +111,19 @@ public class CalculatorDisplay extends LinearLayout
     }
 
     @Override
-    protected int getChildDrawingOrder(int childCount, int i) {
+    /*private*/ protected int getChildDrawingOrder(int childCount, int i) {
         // Reverse the normal drawing order.
         return (childCount - 1) - i;
     }
 
     @Override
-    protected void onAttachedToWindow() {
+    /*private*/ protected void onAttachedToWindow() {
         super.onAttachedToWindow();
         mAccessibilityManager.addAccessibilityStateChangeListener(this);
     }
 
     @Override
-    protected void onDetachedFromWindow() {
+    /*private*/ protected void onDetachedFromWindow() {
         super.onDetachedFromWindow();
         mAccessibilityManager.removeAccessibilityStateChangeListener(this);
     }
@@ -206,7 +200,8 @@ public class CalculatorDisplay extends LinearLayout
 
     //================================bkav==================================
     // Bkav TienNVh :
-    public void setSwitchToolbar(){
+    public void setHideShowToolbar(){
+        // Bkav TienNVh :  Code gốc
         if (mToolbar.getVisibility() != View.VISIBLE) {
             showToolbar(true);
         } else {

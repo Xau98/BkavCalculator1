@@ -6,6 +6,8 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.util.AttributeSet;
+import android.util.Log;
+
 import androidx.gridlayout.widget.GridLayout;
 
 // Bkav TienNVh : Layout của Tab Advanced
@@ -19,11 +21,15 @@ public class BkavAdvancedLayout extends GridLayout {
     private float mOffset;
     private int mOffsetPixel;
     private int mWidthDistanceRight;
+    private Paint mPaint ;
+    private Rect mDest;
 
     public void setInforScrollViewpager(Bitmap bitmap, float v, int i1) {
         this.mBitmap = bitmap;
         this.mOffset = v;
         this.mOffsetPixel = i1;
+        mPaint = new Paint();
+        mDest = new Rect(0, 0, getWidth(), getHeight());
         invalidate();
         requestLayout();
     }
@@ -36,14 +42,12 @@ public class BkavAdvancedLayout extends GridLayout {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        //Bkav AnhNDd TODO Làm sai, hàm draw được gọi liên tục, object Pain chỉ cần tạo 1 lần duy nhất
-        Paint mPaint = new Paint();
-        if (mBitmap != null) {
-            Rect dest = new Rect(0, 0, getWidth(), getHeight());
+        if (mBitmap != null ) {
+            // Bkav TienNVh :
             mPaint.setFilterBitmap(true);
             int delta = getWidth() - (int) (mOffsetPixel - mWidthDistanceRight);
             canvas.translate(-delta + mOffset * mWidthDistanceRight, 0);
-            canvas.drawBitmap(mBitmap, null, dest, mPaint);
+            canvas.drawBitmap(mBitmap, null, mDest, mPaint);
         }
     }
     }

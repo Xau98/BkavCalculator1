@@ -33,12 +33,10 @@
     <color name="display_background_color">#FFF</color>
 
     <!-- Text color for the formula in the calculator display. -->
-    <!--Bkav AnhNDd TODO #000000-->
-    <color name="display_formula_text_color">#FFF</color>
+    <color name="display_formula_text_color">#000000</color>
 
     <!-- Text color for the result in the calculator display. -->
-    <!--Bkav AnhNDd TODO #6C000000-->
-    <color name="display_result_text_color">#FFF</color>
+    <color name="display_result_text_color">#6c000000</color>
 
     <!-- Lighter color for exponent while scrolling. -->
     <color name="display_result_exponent_text_color">#40000000</color>

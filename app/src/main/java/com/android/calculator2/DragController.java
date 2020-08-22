@@ -113,8 +113,7 @@ public final class DragController {
                 && vh.getItemViewType() == HistoryAdapter.HISTORY_VIEW_TYPE) {
             final AlignedTextView formula = vh.getFormula();
             final CalculatorResult result = vh.getResult();
-            //Bkav AnhNDd TODO comment ko có lý do, lệch dòng
-            // Bkav TienNVh :
+            // Bkav TienNVh :Bỏ hiện thị ngày trong tab lịch sử
            // final TextView date = vh.getDate();
             final View divider = vh.getDivider();
 
@@ -159,8 +158,7 @@ public final class DragController {
 
             result.setTextColor((int) mColorEvaluator.evaluate(yFraction, mResultStartColor,
                     mResultEndColor));
-            //Bkav AnhNDd TODO comment ko có lý do, lệch dòng
-            // Bkav TienNVh :
+            // Bkav TienNVh :Bỏ hiện thị ngày trong tab lịch sử
            // date.setTranslationY(mAnimationController.getDateTranslationY(yFraction));
             divider.setTranslationY(mAnimationController.getDateTranslationY(yFraction));
         } else if (mIsDisplayEmpty) {

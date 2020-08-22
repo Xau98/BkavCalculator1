@@ -30,7 +30,7 @@
         android:fontFamily="sans-serif-medium"
         android:textAllCaps="true"
         android:textColor="@color/bkav_display_formula_text_color"
-        android:textSize="8dp" />
+        android:textSize="8sp" />
     <!-- Bkav TienNVh : Hiiện thị chế độ tính năng M  -->
     <TextView
         android:id="@+id/mode2"
@@ -40,7 +40,7 @@
         android:textAllCaps="true"
         android:layout_gravity="center"
         android:textColor="@color/bkav_display_formula_text_color"
-        android:textSize="8dp"
+        android:textSize="8sp"
         />
 
 </Toolbar>

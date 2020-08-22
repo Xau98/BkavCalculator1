@@ -14,15 +14,15 @@
   See the License for the specific language governing permissions and
   limitations under the License.
   -->
-
-<resources>
-    <string name="mr">mr</string>
-    <string name="button_mr">mr</string>
-    <string name="m_plus">m+</string>
-    <string name="button_m_plus">button m+</string>
-    <string name="mc">mc</string>
-    <string name="button_mc">Button mc</string>
-    <string name="m_sub">m-</string>
-    <string name="button_m_sub">Button m-</string>
-    <string name="op_10pow">10^</string>
+<!-- Bkav TienNVh :   -->
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string name="button_mr" translatable="false">mr</string>
+    <string name="button_m_plus" translatable="false">button m+</string>
+    <string name="mc" translatable="false">mc</string>
+    <string name="button_mc" translatable="false">Button mc</string>
+    <string name="button_m_sub" translatable="false">Button m-</string>
+    <string name="op_10pow" translatable="false">10^</string>
+    <string name="bkav_title_history" translated="en" translatable="true" tools:ignore="MissingTranslation">history</string>
+    <string name="toast_replace_memory" translated="en" translatable="true" tools:ignore="MissingTranslation">Replace Memory</string>
+    <string name="more" translatable="false">more</string>
 </resources>

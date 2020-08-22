@@ -35,6 +35,7 @@ import android.text.style.BackgroundColorSpan;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.RelativeSizeSpan;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.ActionMode;
 import android.view.ContextMenu;
 import android.view.GestureDetector;
@@ -133,9 +134,11 @@ public class CalculatorResult extends AlignedTextView implements MenuItem.OnMenu
     public static final int MAX_LEADING_ZEROES = 6;
                             // Maximum number of leading zeroes after decimal point before we
                             // switch to scientific notation with negative exponent.
-    //Bkav AnhNDd TODO Giải thích Maximum number of leading zeroes là gì???? Sao lại để 9999
      // Bkav TienNVh :  Hiện thị kết quả phụ thuộc vào kích thước màn hình
-    public static final int MAX_TRAILING_ZEROES = 9999;
+    // Bkav TienNVh : MAX_TRAILING_ZEROESlà Số lượng số 0 tối đa đứng đầu sau dầu thập phân
+    //Bkav TienNVh: Set 9999 có nghĩa là set 9999 số 0 sau dấu thập phân.mục địch là set số lớn để tránh trường hợp format số 0
+    // TH đây là ngay sau dấu phẩy mà có nhiều số 0 liên tục thì format sang chữ E trong khi đang thừa không gian hiện thị kết quả
+    public static final int MAX_TRAILING_ZEROES = 9999;// COde gốc set = 6
                             // Maximum number of trailing zeroes before the decimal point before
                             // we switch to scientific notation with positive exponent.
     private static final int SCI_NOTATION_EXTRA = 1;
@@ -150,7 +153,7 @@ public class CalculatorResult extends AlignedTextView implements MenuItem.OnMenu
                             // The maximum number of digits we're willing to recompute in the UI
                             // thread.  We only do this for known rational results, where we
                             // can bound the computation cost.
-    protected final ForegroundColorSpan mExponentColorSpan;
+    /*private*/ protected final ForegroundColorSpan mExponentColorSpan;
     private final BackgroundColorSpan mHighlightSpan;
 
     private ActionMode mActionMode;
@@ -164,9 +167,10 @@ public class CalculatorResult extends AlignedTextView implements MenuItem.OnMenu
         super(context, attrs);
         mScroller = new OverScroller(context);
         mHighlightSpan = new BackgroundColorSpan(getHighlightColor());
-        //Bkav AnhNDd TODO không được xóa code gốc, phải comment vào!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!, biến final thì override kiểu này (GHI NHỚ)
+        // Bkav TienNVh : Set màu chữ cho ký tự E xuất hiện khi thực hiện phép tính lớn
         mExponentColorSpan = setColorE(context);
-        //mExponentColorSpan = new ForegroundColorSpan(
+        // Bkav TienNVh : comment code gốc vì mục địch tách code gốc và code bkav
+        // mExponentColorSpan = new ForegroundColorSpan(
         //        ContextCompat.getColor(context, R.color.display_result_exponent_text_color));
         mGestureDetector = new GestureDetector(context,
             new GestureDetector.SimpleOnGestureListener() {
@@ -283,7 +287,7 @@ public class CalculatorResult extends AlignedTextView implements MenuItem.OnMenu
     }
 
     @Override
-    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+    /*private*/ protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         if (!isLaidOut()) {
             super.onMeasure(widthMeasureSpec, heightMeasureSpec);
             // Set a minimum height so scaled error messages won't affect our layout.
@@ -352,13 +356,13 @@ public class CalculatorResult extends AlignedTextView implements MenuItem.OnMenu
     }
 
     @Override
-    protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
+    /*private*/ protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
         super.onLayout(changed, left, top, right, bottom);
 
         if (mEvaluator != null && mEvaluationRequest != SHOULD_NOT_EVALUATE) {
             final CalculatorExpr expr = mEvaluator.getExpr(mIndex);
             if (expr != null && expr.hasInterestingOps()) {
-                //Bkav AnhNDd TODO tại sao code trước lại xóa
+                // Bkav TienNVh :Có thể do code trước bị sai, do em có code trước e ko rõ nguyên nhân
                 if (mEvaluationRequest == SHOULD_REQUIRE) {
                     mEvaluator.requireResult(mIndex, mEvaluationListener, this);
                 } else {
@@ -675,6 +679,7 @@ public class CalculatorResult extends AlignedTextView implements MenuItem.OnMenu
         final int minusSpace = negative ? 1 : 0;
         final int msdIndex = truncated ? -1 : getNaiveMsdIndexOf(in);  // INVALID_MSD is OK.
         String result = in;
+        Log.d("TienNVh", "formatResult: "+ in );
         boolean needEllipsis = false;
         if (truncated || (negative && result.charAt(0) != '-')) {
             needEllipsis = true;
@@ -961,7 +966,7 @@ public class CalculatorResult extends AlignedTextView implements MenuItem.OnMenu
     }
 
     @Override
-    protected void onTextChanged(java.lang.CharSequence text, int start, int lengthBefore,
+    /*private*/ protected void onTextChanged(java.lang.CharSequence text, int start, int lengthBefore,
             int lengthAfter) {
         super.onTextChanged(text, start, lengthBefore, lengthAfter);
 
@@ -1180,22 +1185,23 @@ public class CalculatorResult extends AlignedTextView implements MenuItem.OnMenu
     }
 
     @Override
-    protected void onDetachedFromWindow() {
+    /*private*/ protected void onDetachedFromWindow() {
         stopActionModeOrContextMenu();
         super.onDetachedFromWindow();
     }
 
     //==================Bkav============
-    // Bkav TienNVh :
-    String mTruncatedWholePart;
-    // Bkav TienNVh
-    protected ForegroundColorSpan setColorE(Context context){
+    // Bkav TienNVh: Set color  cho chữ E xuất hiện khi thực hiện phép tính lớn
+    /*private*/ protected ForegroundColorSpan setColorE(Context context){
         return new ForegroundColorSpan(
                 ContextCompat.getColor(context, R.color.display_result_exponent_text_color));
     }
 
     // Bkav TienNVh :
     public  String getTruncatedWholePart(){
-        return mTruncatedWholePart;
+        // Bkav TienNVh : La
+        int fractionLsdOffset = Math.max(0, mLsdOffset);
+        String rawResult = mEvaluator.getResult(mIndex).toStringTruncated(fractionLsdOffset);
+        return rawResult;
     }
 }

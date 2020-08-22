@@ -7,9 +7,9 @@
         <item name="android:paddingStart">16dp</item>
         <item name="android:paddingEnd">16dp</item>
         <item name="android:gravity">bottom</item>
-        <item name="minTextSize">28dp</item>
-        <item name="maxTextSize">28dp</item>
-        <item name="stepTextSize">1dp</item>
+        <item name="minTextSize">28sp</item>
+        <item name="maxTextSize">28sp</item>
+        <item name="stepTextSize">1sp</item>
     </style>
 
     <style name="BkavDisplayTextStyle.Result">
@@ -20,7 +20,7 @@
         <item name="android:paddingStart">16dp</item>
         <item name="android:paddingEnd">16dp</item>
         <item name="android:gravity">bottom</item>
-        <item name="android:textSize">28dp</item>
+        <item name="android:textSize">28sp</item>
     </style>
 
     <style name="BkavButtonHistoryStyle">
@@ -58,14 +58,14 @@
     </style>
 
     <style name="BkavPadButtonStyle.Numeric">
-        <item name="android:fontFamily">sans-serif-thin</item>
+        <item name="android:fontFamily">@font/helveticaneuethin</item>
         <item name="android:includeFontPadding">false</item>
         <item name="android:background">@drawable/pad_button_advanced_background</item>
-        <item name="android:textSize">17dip</item>
+        <item name="android:textSize">17sp</item>
     </style>
 
     <style name="BkavPadButtonStyle.Operator">
-        <item name="android:textSize">14dip</item>
+        <item name="android:textSize">14sp</item>
         <item name="android:fontFamily">sans-serif-light</item>
         <item name="android:textStyle">normal</item>
     </style>
@@ -77,7 +77,7 @@
     <style name="BkavPadButtonStyle.Operator.Text">
         <item name="android:layout_marginLeft">3dp</item>
         <item name="android:textAllCaps">true</item>
-        <item name="android:textSize">14dip</item>
+        <item name="android:textSize">14sp</item>
     </style>
 
     <style name="BkavPadLayoutStyle.Operator">
@@ -98,7 +98,7 @@
     </style>
 
     <style name="BkavPadButtonStyle.Advanced">
-        <item name="android:textSize">14dp</item>
+        <item name="android:textSize">14sp</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textColor">@color/bkav_color_text_advance</item>
     </style>

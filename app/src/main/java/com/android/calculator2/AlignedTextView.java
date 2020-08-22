@@ -22,10 +22,12 @@ import android.graphics.Rect;
 import android.util.AttributeSet;
 import android.widget.TextView;
 
+import androidx.appcompat.widget.AppCompatTextView;
+
 /**
  * Extended {@link TextView} that supports ascent/baseline alignment.
  */
-public class AlignedTextView extends TextView {
+public class AlignedTextView extends AppCompatTextView {
 
     private static final String LATIN_CAPITAL_LETTER = "H";
 
@@ -51,7 +53,7 @@ public class AlignedTextView extends TextView {
     }
 
     @Override
-    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+    /*private*/protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         final Paint paint = getPaint();
 
         // Always align text to the default capital letter height.

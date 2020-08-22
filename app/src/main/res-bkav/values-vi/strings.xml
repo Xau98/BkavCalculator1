@@ -14,20 +14,8 @@
   See the License for the specific language governing permissions and
   limitations under the License.
   -->
-
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
-
-    <item
-        android:id="@+id/menu_history"
-        android:title="@string/menu_history" />
-
-    <item android:id="@+id/menu_leading"
-        android:title="@string/menu_leading" />
-
-    <item android:id="@+id/menu_fraction"
-        android:title="@string/menu_fraction" />
-
-    <item android:id="@+id/menu_licenses"
-        android:title="@string/menu_licenses" />
-
-</menu>
+<!-- Bkav TienNVh : Ngôn ngữ Tiếng Việt-->
+<resources>
+    <string name="bkav_title_history"  translated="vi" >Lịch sử</string>
+    <string name="toast_replace_memory" translated="vi" >Đã thay thế bộ nhớ</string>
+</resources>

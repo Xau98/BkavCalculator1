@@ -15,10 +15,13 @@ public class BkavHistoryLayout extends RelativeLayout {
 
     private Bitmap mBitmap;
     private float mOffset;
-
+    private  Paint mPaint;
+    private Rect mDest;
     public void setInforScrollViewpager(Bitmap bitmap , float v ) {
         this.mBitmap = bitmap;
         this.mOffset = v;
+        mPaint = new Paint();
+        mDest = new Rect(0, 0, getWidth(), getHeight());
         invalidate();
         requestLayout();
     }
@@ -26,13 +29,11 @@ public class BkavHistoryLayout extends RelativeLayout {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        //Bkav AnhNDd TODO Copy code giống như bên BkavAdvancedLayout, lý do tại sao?
-        Paint mPaint = new Paint();
+        // Bkav TienNVh : Vì Cắt bitmap của 2 tab này giống nhau chỉ khác mỗi vị trí và độ dài
         if (mBitmap != null) {
-            Rect dest = new Rect(0, 0, getWidth(), getHeight());
             mPaint.setFilterBitmap(true);
             canvas.translate((int) (mOffset * getWidth()), 0);
-            canvas.drawBitmap(mBitmap, null, dest, mPaint);
+            canvas.drawBitmap(mBitmap, null, mDest, mPaint);
 
         }
     }

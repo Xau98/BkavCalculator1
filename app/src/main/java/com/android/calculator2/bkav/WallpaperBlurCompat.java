@@ -89,7 +89,7 @@ public class WallpaperBlurCompat {
         Bitmap outputBitmap = Bitmap.createBitmap(inputBitmap);
         Allocation tmpIn = Allocation.createFromBitmap(mRenderScript, inputBitmap);
         Allocation tmpOut = Allocation.createFromBitmap(mRenderScript, outputBitmap);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             mScriptIntrinsicBlur.setRadius(BLUR_RADIUS);
             mScriptIntrinsicBlur.setInput(tmpIn);
             mScriptIntrinsicBlur.forEach(tmpOut);
@@ -102,7 +102,7 @@ public class WallpaperBlurCompat {
 
     private void initBlur(Context context){
         mRenderScript = RenderScript.create(context);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             mScriptIntrinsicBlur = ScriptIntrinsicBlur.create(mRenderScript,
                     Element.U8_4(mRenderScript));
         }

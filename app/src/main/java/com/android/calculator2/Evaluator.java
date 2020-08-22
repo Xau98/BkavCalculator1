@@ -327,10 +327,7 @@ public class Evaluator implements CalculatorExpr.ExprResolver {
     }
 
     private ConcurrentHashMap<Long, ExprInfo> mExprs = new ConcurrentHashMap<Long, ExprInfo>();
-    //Bkav AnhNDd TODO code thêm vào phải để xuống dưới cùng?
-    // Bkav TienNVh : Do Xoá lịch sử là xoá cả table trong DB. Trong DB có cả phép tính hiện tại
-    // Bkav TienNVh : Tạo để lưu phép tinh hiện tại trước khi xoá lịch sụ
-    private ConcurrentHashMap<Long, ExprInfo> mExprsSave = new ConcurrentHashMap<Long, ExprInfo>();
+
     // The database holding persistent expressions.
     private ExpressionDB mExprDB;
 
@@ -1137,20 +1134,21 @@ public class Evaluator implements CalculatorExpr.ExprResolver {
     }
 
     public void clearEverything() {
-        // Bkav TienNVh : Lưu phép tính hiện tại trước khi xoá
+        // Bkav TienNVh : Lưu phép tính đang tính trước khi xoá xoá tát cả
         ExprInfo ei = copy(MAIN_INDEX, true);
         mExprsSave.put(MAIN_INDEX,ei );
-        //Bkav AnhNDd TODO Ở mọi chỗ khi sửa code gốc thì phải comment vào ??????????????????????????.
-        boolean dm = mMainExpr.mDegreeMode;
+        // Bkav TienNVh : Bỏ vì không dùng đến
+        /*boolean dm = mMainExpr.mDegreeMode;*/
         cancelAll(true);
         setSavedIndex(0);
         setMemoryIndex(0);
         mExprDB.eraseAll();
         mExprs.clear();
-        //Bkav AnhNDd TODO Tại sao lại bỏ dm đi?
         // Bkav TienNVh : Set lại phép tính hiện tại
-        setMainExpr(mExprsSave.get(MAIN_INDEX));
-        //setMainExpr(new ExprInfo(new CalculatorExpr(), dm));
+        // Bkav TienNVh : Theo Android gốc Khi clearEveryThing là xoá tất cả lịch sử và phép tính đang tính
+        // Còn kịch bản bkav , khi xoá lịch sử thì sẽ ko ảnh hưởng đến phép tính đang tính
+        // Theo đó, trước khi xoá thì lưu phép tính hiện tại sau đó set lại cái phép tính hiện tại
+        setMainExpr(/*new ExprInfo(new CalculatorExpr(), dm)*/mExprsSave.get(MAIN_INDEX));
     }
 
     /**
@@ -1971,4 +1969,8 @@ public class Evaluator implements CalculatorExpr.ExprResolver {
         void showMessageDialog(@StringRes int title, @StringRes int message,
                 @StringRes int positiveButtonLabel, String tag);
     }
+    //============================bkav============================
+    // Bkav TienNVh : Do Xoá lịch sử là xoá cả table trong DB. Trong DB có cả phép tính hiện tại
+    // Bkav TienNVh : Tạo để lưu phép tinh hiện tại trước khi xoá lịch sụ
+    private ConcurrentHashMap<Long, ExprInfo> mExprsSave = new ConcurrentHashMap<Long, ExprInfo>();
 }

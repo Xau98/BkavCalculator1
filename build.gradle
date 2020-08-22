@@ -17,8 +17,6 @@ allprojects {
         google()
     }
 }
-//Bkav AnhNDd TODO KHÔNG ĐƯỢC FORMAT CODE CỦA FILE, BỎ THÓI QUEN CTRL+F CẢ FILE, CHỈ ĐOẠN NÀO CẦN FORMAT THÌ MỚI LÀM
-//TODO Chại lại tool lint và fix hết lỗi, project này nhỏ fix nhanh
 
 //version 1.0.9
 // Chỉnh sửa tính năng M
@@ -47,6 +45,7 @@ allprojects {
 // Fomat lại các biến (Chuyển các thông số thành các biến static)
 //
 //Bkav AnhNDd: update base 9.0.0_r59 (https://android.googlesource.com/platform/packages/apps/ExactCalculator/+/refs/tags/android-9.0.0_r59)
-//version 2.0.0
-//Bkav AnhNDd TODO FOLDER font có đang dùng hay không?
-//Bkav AnhNDd TODO Hàm nào, biến nào không dùng thì xóa đi
+//version 2.0.1
+//Sưa các chô Todo
+// sửa các cảnh báo theo tool lint
+

@@ -177,7 +177,7 @@ public class CalculatorPadViewPager extends ViewPager {
     }
 
     @Override
-    protected void onFinishInflate() {
+    /*private*/ protected void onFinishInflate() {
         super.onFinishInflate();
 
         // Invalidate the adapter's data set since children may have been added during inflation.
@@ -226,9 +226,8 @@ public class CalculatorPadViewPager extends ViewPager {
                         if (action == MotionEvent.ACTION_DOWN) {
                             mClickedItemIndex = childIndex;
                         }
-                        //Bkav AnhNDd TODO đặt tên hàm không đúng chức năng
                         // Bkav TienNVh : nhận sự kiện vuốt tab history
-                        getBkavCurrentItem();
+                        eventCloseHistory();
                         return childIndex != getCurrentItem();
                     }
                 }
@@ -256,7 +255,7 @@ public class CalculatorPadViewPager extends ViewPager {
     }
 
     //=======================Bkav=================
-    protected void getBkavCurrentItem(){
+    /*private*/ protected void eventCloseHistory(){
         // no something
     }
 }

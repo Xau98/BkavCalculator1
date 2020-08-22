@@ -35,11 +35,10 @@
                 android:minWidth="230dp" />
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
                 <category android:name="android.intent.category.APP_CALCULATOR" />
             </intent-filter>
-            <!--Bkav AnhNDd TODO tại sao thêm cái này?-->
+            <!-- Bkav TienNVh: Thêm vào để ckick biểu tượng máy tính ở dashboard  -->
             <intent-filter android:priority="1">
                 <action android:name="bkav.intent.action.APP_CALCULATOR" />
                 <category android:name="android.intent.category.DEFAULT" />

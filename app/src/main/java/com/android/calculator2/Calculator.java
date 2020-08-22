@@ -47,7 +47,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.StringRes;
 import androidx.core.content.ContextCompat;
-import androidx.viewpager.widget.ViewPager;
+
 import android.text.Editable;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
@@ -95,7 +95,7 @@ public class Calculator extends Activity
         AlertDialogFragment.OnClickListener, Evaluator.EvaluationListener /* for main result */,
         DragLayout.CloseCallback, DragLayout.DragCallback {
 
-    protected String TAG = "Calculator";
+    /*private*/ protected String TAG = "Calculator";
     /**
      * Constant for an invalid resource id.
      */
@@ -249,43 +249,31 @@ public class Calculator extends Activity
         }
     };
 
-    //Bkav AnhNDd TODO Nên viết thế này, xem tất cả những cái tương tự
     /*private*/protected CalculatorState mCurrentState;
     /*private*/protected Evaluator mEvaluator;
-
-    //Bkav AnhNDd TODO Không viết kiểu này để nguyên là CalculatorDisplay, sửa lại
     /*private*/protected /*CalculatorDisplay*/ BkavCalculatorDisplay mDisplayView;
     private TextView mModeView;
-    //Bkav AnhNDd TODO Không viết kiểu này để nguyên là CalculatorFormula, sửa lại
     /*private*/ protected /*CalculatorFormula*/ BkavCalculatorFormula mFormulaText;
     /*private*/protected CalculatorResult mResultText;
     private HorizontalScrollView mFormulaContainer;
     /*private*/protected DragLayout mDragLayout;
-
-    //Bkav AnhNDd TODO Không viết kiểu này để nguyên là ViewPager, sửa lại
     /*private*/protected /*ViewPager*/ BkavCalculatorPadViewPager mPadViewPager;
     private View mDeleteButton;
     private View mClearButton;
     private View mEqualButton;
     /*private*/protected View mMainCalculator;
-
     private TextView mInverseToggle;
     private TextView mModeToggle;
-
     /*private*/protected View[] mInvertibleButtons;
     /*private*/protected View[] mInverseButtons;
-
     /*private*/protected View mCurrentButton;
     private Animator mCurrentAnimator;
-
     // Characters that were recently entered at the end of the display that have not yet
     // been added to the underlying expression.
     /*private*/protected String mUnprocessedChars = null;
-
     // Color to highlight unprocessed characters from physical keyboard.
     // TODO: should probably match this to the error color?
     private ForegroundColorSpan mUnprocessedColorSpan = new ForegroundColorSpan(Color.RED);
-
     // Whether the display is one line.
     private boolean mIsOneLine;
 
@@ -362,7 +350,7 @@ public class Calculator extends Activity
     }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    /*private*/protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         // Bkav TienNVh :
@@ -450,7 +438,7 @@ public class Calculator extends Activity
     }
 
     @Override
-    protected void onResume() {
+    /*private*/protected void onResume() {
         super.onResume();
         if (mDisplayView.isToolbarVisible()) {
             showAndMaybeHideToolbar();
@@ -468,7 +456,7 @@ public class Calculator extends Activity
     }
 
     @Override
-    protected void onSaveInstanceState(@NonNull Bundle outState) {
+    /*private*/protected void onSaveInstanceState(@NonNull Bundle outState) {
         mEvaluator.cancelAll(true);
         // If there's an animation in progress, cancel it first to ensure our state is up-to-date.
         if (mCurrentAnimator != null) {
@@ -559,10 +547,8 @@ public class Calculator extends Activity
     }
 
     @Override
-    protected void onDestroy() {
+    /*private*/protected void onDestroy() {
         mDragLayout.removeDragCallback(this);
-        //Bkav AnhNDd TODO không comment ????
-        removeHistoryFragment();
         super.onDestroy();
     }
 
@@ -605,16 +591,15 @@ public class Calculator extends Activity
     public boolean dispatchTouchEvent(MotionEvent e) {
         if (e.getActionMasked() == MotionEvent.ACTION_DOWN) {
             stopActionModeOrContextMenu();
-
-            //Bkav AnhNDd TODO ko bỏ code gốc,
-            // Bkav TienNVh :
-            final BkavHistoryFragment historyFragment = getBkavHistoryFragment();
+            // Bkav TienNVh : Thay đổi đối tưởng từ HistoryFragment => BkavHistoryFragment
+            final BkavHistoryFragment historyFragment =(BkavHistoryFragment) getBkavHistoryFragment();
+            // Bkav TienNVh :commnet code gốc
             //final HistoryFragment historyFragment = getHistoryFragment();
             if (mDragLayout.isOpen() && historyFragment != null) {
                 historyFragment.stopActionModeOrContextMenu();
             }
         }
-        // Bkav TienNVh :
+        // Bkav TienNVh : Mục đích của hàm để huỷ actionmode
         dispatchTouchEventOutsideDisPlay(e);
         return super.dispatchTouchEvent(e);
     }
@@ -622,8 +607,9 @@ public class Calculator extends Activity
     @Override
     public void onBackPressed() {
         if (!stopActionModeOrContextMenu()) {
-            //Bkav TienNVh
-            final BkavHistoryFragment historyFragment = getBkavHistoryFragment();
+            // Bkav TienNVh : Thay đổi đối tưởng từ HistoryFragment => BkavHistoryFragment
+            final BkavHistoryFragment historyFragment = (BkavHistoryFragment) getBkavHistoryFragment();
+            // Bkav TienNVh :commnet code gốc
             //final HistoryFragment historyFragment = getHistoryFragment();
             if (mDragLayout.isOpen() && historyFragment != null) {
                 if (!historyFragment.stopActionModeOrContextMenu()) {
@@ -848,15 +834,9 @@ public class Calculator extends Activity
     public void onButtonClick(View view) {
         // Any animation is ended before we get here.
         mCurrentButton = view;
-
-        //Bkav AnhNDd TODO Tại sao thêm cái này????
-        mFormulaText.setFocusable(true);
-
         stopActionModeOrContextMenu();
-
         // See onKey above for the rationale behind some of the behavior below:
         cancelUnrequested();
-
         final int id = view.getId();
         switch (id) {
             case R.id.eq:
@@ -896,21 +876,9 @@ public class Calculator extends Activity
                     evaluateInstantIfNecessary();
                 }
                 return;
-                //Bkav AnhNDd TODO Đoạn này không có ý nghĩa, xóa đi
-            // Bkav TienNVh
-            /*case R.id.bt_history:
-            case R.id.delHistory:
-            case R.id.bt_more:
-            case R.id.op_m_plus:
-            case R.id.op_m_sub:
-            case R.id.op_m_c:
-            case R.id.op_m_r:
-                eventOnClick(id);
-                break;*/
             default:
-                //Bkav AnhNDd TODO Tên hàm khó hiểu, có thể là handleDefaultEvent
                 // Bkav TienNVh :
-                eventOnClick(id);
+                handleDefaultEvent(id);
                 /*cancelIfEvaluating(false);
                 if (haveUnprocessed()) {
                     // For consistency, append as uninterpreted characters.
@@ -925,7 +893,7 @@ public class Calculator extends Activity
         showOrHideToolbar();
     }
 
-    protected void redisplayFormula() {
+    /*private*/protected void redisplayFormula() {
         SpannableStringBuilder formula
                 = mEvaluator.getExpr(Evaluator.MAIN_INDEX).toSpannableStringBuilder(this);
         if (mUnprocessedChars != null) {
@@ -1058,8 +1026,10 @@ public class Calculator extends Activity
         // If there is an in-progress explicit evaluation, just cancel it and return.
         if (cancelIfEvaluating(false)) return;
         setState(CalculatorState.INPUT);
-        //Bkav AnhNDd TODO Đoạn này vừa xóa code , vừa không comment. Đã làm thì phải nghiêm túc kể cả vấn đề nhỏ này !!!!!!!!!!!
+        // Bkav TienNVh : xử lý evnent xoá ký tự . Hàm này được tạo ra để lớp BkavCalculator override lên
+        // Bkav TienNVh : Custom lại hàm delete
         onDeleteBkavCalculator();
+        // Bkav TienNVh : comment code gốc
         /*if (haveUnprocessed()) {
             mUnprocessedChars = mUnprocessedChars.substring(0, mUnprocessedChars.length() - 1);
         } else {
@@ -1172,14 +1142,12 @@ public class Calculator extends Activity
                            mResultText.onError(index, errorResourceId);
                         }
                     });
+            // Bkav TienNVh : Thêm mCurrentState == CalculatorState.ERROR để check trạng thái lỗi. Lỗi này khi mở app thực hiện phép tính không hợp lệ rồi bấm =
         } else if (mCurrentState == CalculatorState.INIT
-                || mCurrentState == CalculatorState.INIT_FOR_RESULT /* very unlikely */) {
+                || mCurrentState == CalculatorState.INIT_FOR_RESULT || mCurrentState == CalculatorState.ERROR /* very unlikely */) {
             setState(CalculatorState.ERROR);
             mResultText.onError(index, errorResourceId);
         } else {
-            //Bkav AnhNDd TODO tại sao thêm
-            mResultText.onError(index, errorResourceId);
-
             mResultText.clear();
         }
     }
@@ -1415,8 +1383,8 @@ public class Calculator extends Activity
         return true;
     }
 
-    //Bkav AnhNDd TODO Tại sao không override hàm này để lấy ra fragment của mình, mà lại tao một hàm riêng????
-    /*private*/protected HistoryFragment getHistoryFragment() {
+    // Bkav TienNVh: chuyển HistoryFragment =>Fragment mục địch thay đổi đối tượng HistoryFragment => BkavHistoryFragment
+    /*private*/protected /*HistoryFragment*/ Fragment getHistoryFragment() {
         final FragmentManager manager = getFragmentManager();
         if (manager == null || manager.isDestroyed()) {
             return null;
@@ -1425,7 +1393,6 @@ public class Calculator extends Activity
         return fragment == null || fragment.isRemoving() ? null : (HistoryFragment) fragment;
     }
 
-    //Bkav AnhNDd TODO Tại sao không override hàm này để lấy ra fragment của mình, mà lại tao một hàm riêng????
     /*private*/protected void showHistoryFragment() {
         if (getHistoryFragment() != null) {
             // If the fragment already exists, do nothing.
@@ -1442,10 +1409,8 @@ public class Calculator extends Activity
         stopActionModeOrContextMenu();
         manager.beginTransaction()
                 .replace(R.id.history_frame, new HistoryFragment(), HistoryFragment.TAG)
-                //Bkav AnhNDd TODO Tại sao sửa thế này ????
-                .addToBackStack(null)
-                //.setTransition(FragmentTransaction.TRANSIT_NONE)
-                //.addToBackStack(HistoryFragment.TAG)
+                .setTransition(FragmentTransaction.TRANSIT_NONE)
+                .addToBackStack(HistoryFragment.TAG)
                 .commit();
 
         // When HistoryFragment is visible, hide all descendants of the main Calculator view.
@@ -1602,7 +1567,18 @@ public class Calculator extends Activity
     }
 
     // Bkav TienNVh
-    public  void eventOnClick(int id){ }
+    public  void handleDefaultEvent(int id){
+        // Bkav TienNVh : Code gốc
+         cancelIfEvaluating(false);
+                if (haveUnprocessed()) {
+                    // For consistency, append as uninterpreted characters.
+                    // This may actually be useful for a left parenthesis.
+                    addChars(KeyMaps.toString(this, id), true);
+                } else {
+                    addExplicitKeyToExpr(id);
+                    redisplayAfterFormulaChange();
+                }
+    }
 
     // Bkav TienNVh
     protected void setBackgroungViewPager(){ }
@@ -1625,7 +1601,7 @@ public class Calculator extends Activity
         return false;
     }
     // Bkav TienNVh :
-    protected BkavHistoryFragment getBkavHistoryFragment() {
+    protected Fragment getBkavHistoryFragment() {
         return null;
     }
 
@@ -1634,6 +1610,7 @@ public class Calculator extends Activity
 
     // Bkav TienNVh :
     protected  void onDeleteBkavCalculator(){
+        // Bkav TienNVh :  Code gốc
         if (haveUnprocessed()) {
             mUnprocessedChars = mUnprocessedChars.substring(0, mUnprocessedChars.length() - 1);
         } else {

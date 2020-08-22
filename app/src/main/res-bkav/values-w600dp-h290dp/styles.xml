@@ -8,9 +8,9 @@
         <item name="android:paddingStart">36dp</item>
         <item name="android:paddingEnd">36dp</item>
         <item name="android:gravity">bottom</item>
-        <item name="minTextSize">32dp</item>
-        <item name="maxTextSize">32dp</item>
-        <item name="stepTextSize">1dp</item>
+        <item name="minTextSize">32sp</item>
+        <item name="maxTextSize">32sp</item>
+        <item name="stepTextSize">1sp</item>
     </style>
 
     <style name="BkavDisplayTextStyle.Result">
@@ -19,7 +19,7 @@
         <item name="android:paddingStart">36dp</item>
         <item name="android:paddingEnd">36dp</item>
         <item name="android:gravity">top</item>
-        <item name="android:textSize">32dp</item>
+        <item name="android:textSize">32sp</item>
     </style>
 
     <style name="BkavButtonHistoryStyle">
@@ -51,11 +51,12 @@
     </style>
 
     <style name="BkavPadButtonStyle.Numeric">
-        <item name="android:textSize">23dip</item>
+        <item name="android:fontFamily">@font/helveticaneuethin</item>
+        <item name="android:textSize">23sp</item>
     </style>
 
     <style name="BkavPadButtonStyle.Operator">
-        <item name="android:textSize">20dip</item>
+        <item name="android:textSize">20sp</item>
         <item name="android:fontFamily">sans-serif-light</item>
         <item name="android:textStyle">normal</item>
     </style>
@@ -67,7 +68,7 @@
     <style name="BkavPadButtonStyle.Operator.Text">
         <item name="android:layout_marginLeft">3dp</item>
         <item name="android:textAllCaps">true</item>
-        <item name="android:textSize">17dip</item>
+        <item name="android:textSize">17sp</item>
     </style>
 
     <style name="BkavPadLayoutStyle.Operator">
@@ -89,12 +90,12 @@
     </style>
 
     <style name="BkavPadButtonStyle.Advanced">
-        <item name="android:textSize">20dp</item>
+        <item name="android:textSize">20sp</item>
         <item name="android:textColor">@color/bkav_color_text_advance</item>
     </style>
 
     <style name="BkavPadButtonStyle.Advanced.Text">
         <item name="android:textAllCaps">true</item>
-        <item name="android:textSize">17dp</item>
+        <item name="android:textSize">17sp</item>
     </style>
 </resources>

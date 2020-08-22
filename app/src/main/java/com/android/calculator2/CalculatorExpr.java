@@ -21,6 +21,7 @@ import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.style.TtsSpan;
+import android.util.Log;
 
 import com.bkav.calculator2.R;
 
@@ -137,7 +138,7 @@ public class CalculatorExpr {
     }
 
     /**
-     * Representation of a (possibly incomplete) numerical constant.
+     * Representation of a (possibly iextends Tokenncomplete) numerical constant.
      * Supports addition and removal of trailing characters; hence mutable.
      */
     private static class Constant extends Token implements Cloneable {
@@ -471,6 +472,10 @@ public class CalculatorExpr {
      */
     boolean add(int id) {
         int s = mExpr.size();
+
+        for(int i=0;i< s;i++){
+            Log.d("TienNVh", "write: "+i+"//"+ mExpr.get(i).toString()+"\n");
+        }
         final int d = KeyMaps.digVal(id);
         final boolean binary = KeyMaps.isBinary(id);
         Token lastTok = s == 0 ? null : mExpr.get(s-1);

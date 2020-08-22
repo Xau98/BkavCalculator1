@@ -36,12 +36,15 @@ import static androidx.recyclerview.widget.RecyclerView.SCROLL_STATE_DRAGGING;
 public class HistoryFragment extends Fragment implements DragLayout.DragCallback {
 
     public static final String TAG = "HistoryFragment";
+
     public static final String CLEAR_DIALOG_TAG = "clear";
 
     private final DragController mDragController = new DragController();
 
     private RecyclerView mRecyclerView;
+
     private HistoryAdapter mAdapter;
+
     private DragLayout mDragLayout;
 
     private Evaluator mEvaluator;

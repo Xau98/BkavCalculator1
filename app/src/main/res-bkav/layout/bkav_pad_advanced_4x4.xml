@@ -46,7 +46,7 @@
         android:id="@+id/op_m_sub"
         style="@style/BkavPadButtonStyle.Advanced"
         android:contentDescription="@string/button_m_sub"
-        android:text="@string/m_sub"
+        android:text="@string/memory_subtract"
         app:layout_row="0"
         app:layout_column="2" />
 
@@ -63,7 +63,7 @@
         android:id="@+id/op_m_plus"
         style="@style/BkavPadButtonStyle.Advanced"
         android:contentDescription="@string/button_m_plus"
-        android:text="@string/m_plus"
+        android:text="@string/memory_add"
         app:layout_row="0"
         app:layout_column="3" />
 
@@ -71,7 +71,7 @@
         android:id="@+id/op_m_r"
         style="@style/BkavPadButtonStyle.Advanced"
         android:contentDescription="@string/button_mr"
-        android:text="@string/mr"
+        android:text="@string/memory_recall"
         android:visibility="gone"
         android:fontFamily="sans-serif-medium"
         app:layout_row="0"

@@ -1,10 +1,10 @@
 package com.android.calculator2.bkav;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.os.Build;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +13,6 @@ import androidx.viewpager.widget.PagerAdapter;
 import com.android.calculator2.CalculatorPadViewPager;
 import com.bkav.calculator2.R;
 
-//Bkav AnhNDd TODO Các hằng số 1,2,3 trong này đặt trong biến để biết ý nghĩa
 public class BkavCalculatorPadViewPager extends CalculatorPadViewPager {
 
     public BkavCalculatorPadViewPager(Context context) {
@@ -40,6 +39,7 @@ public class BkavCalculatorPadViewPager extends CalculatorPadViewPager {
             // Set an OnTouchListener to always return true for onTouch events so that a touch
             // sequence cannot pass through the item to the item below.
             child.setOnTouchListener(new OnTouchListener() {
+                @SuppressLint("ClickableViewAccessibility")
                 @Override
                 public boolean onTouch(View v, MotionEvent event) {
                     v.onTouchEvent(event);
@@ -69,20 +69,26 @@ public class BkavCalculatorPadViewPager extends CalculatorPadViewPager {
             return view == object;
         }
 
+        // Bkav TienNVh : Trả về độ rộng của 1 tab
         @Override
         public float getPageWidth(int position) {
             int orientation = getResources().getConfiguration().orientation;
-            if (position == 0) {
+            // Bkav TienNVh : Check
+            if (position == BkavCalculator.POSITION_HISTORY_VIEWPAGER) {
+                // Bkav TienNVh :  Check nếu ở xoay ngang
                 if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
-                    // Bkav TienNVh : set width cho tab history khi o man hinh chia doi
-                    if (getChildCount() == 3)
+                    // Bkav TienNVh : set width cho tab history khi o man hinh chia doi.
+                    if (getChildCount() == BkavCalculator.GET_CHILD_VIEWPAGER)
                         return 0.692f;
+
                     return 0.385f;
                 } else {
+                    // Bkav TienNVh : Ở chế độ dọc màn hình
                     return 0.717f / 0.9f;
                 }
             }
-            if (position == 2) {
+            // Bkav TienNVh :  Set độ rông cho tab Advence
+            if (position == BkavCalculator.POSITION_ADVENCE_VIEWPAGER) {
                 return 0.9999f;
             }
             return 1.0f;
@@ -95,20 +101,26 @@ public class BkavCalculatorPadViewPager extends CalculatorPadViewPager {
             return pageDescriptions[position];
         }
     };
-    //Bkav AnhNDd TODO Biến để sai???? Giải thích lại ý nghĩa, không code thế này
-    boolean check =true;
+
+    // Bkav TienNVh : Biến này để check xem đang ở tab Main không ? (Tab main là tab đầu tiên khi mở app)
+    // Nếu True là đang tab Main và false thì ngược lại
+    boolean isCheckTabMain =true;
     // Bkav TienNVh : Custom lại để cho tab lịch sử về phía trái và tab Advnace về phía phải của màn hình
     // Bkav TienNVh : Mục đích biến nay là giữ tab bàn phím số và phép tính ở nguyên vị trí chính
     // khi vuốt 2 bên để mơ tab lich sự và tab advance
     private final PageTransformer mPageTransformer = new PageTransformer() {
         @Override
         public void transformPage(View view, float position) {
+            // Bkav TienNVh :  Check xem đang ở chế độ nào, chế độ để dọc màn hình thi getChildCount = 3 vì có 3 tab
+            // còn ở chế độ xoay ngang thì chỉ có 2 tab
             if (getChildCount() >= 2) {
                 if (view.equals(getChildAt(1))) {
                     float sizeTrans = getWidth() * -position;
-                    if(sizeTrans<0&&check && mCallInvisibleTabHistory != null) {
+                    // Bkav TienNVh : Check trường hợp đang ở tab main mở tab lịch sử
+                    if(sizeTrans < 0 && isCheckTabMain && mCallInvisibleTabHistory != null) {
+                        // Bkav TienNVh : Call back để hiện thị tab history
                         mCallInvisibleTabHistory.onCallVisiblleHistory();
-                        check = false;
+                        isCheckTabMain = false;
                     }
                     view.setTranslationX(sizeTrans);
                 }
@@ -127,7 +139,7 @@ public class BkavCalculatorPadViewPager extends CalculatorPadViewPager {
         // Bkav TienNVh : giữa nguyên tab number làm tab main
         // nghĩa là tab này ở nguyên 1 vị trí dù có đóng mở tab khác
         setPageTransformer(false, mPageTransformer);
-        //Bkav AnhNDd TODO code gốc margin ở đâu mà set ở đây????
+        // Bkav TienNVh : Mục đích đặt hàm set margin để tách code android và code bkav
         // Bkav TienNVh : Set Margin về 0 để làm mất đi viền xanh cạnh trái
         setPageMargin(0);
     }
@@ -140,7 +152,6 @@ public class BkavCalculatorPadViewPager extends CalculatorPadViewPager {
     }
 
     // Bkav TienNVh: Call back listener close /open tab history
-    //Bkav AnhNDd TODO nếu interface dùng để callback thì luôn phải check ở class khởi tạo có khác null hay không
     public interface CallInvisibleTabHistory {
         void onCallVisiblleHistory();
 
@@ -149,10 +160,13 @@ public class BkavCalculatorPadViewPager extends CalculatorPadViewPager {
 
     // Bkav TienNVh :
     @Override
-    protected void getBkavCurrentItem() {
-        if(getCurrentItem()==1 && !check){
-            mCallInvisibleTabHistory.onCloseHistory();
-            check = true;
+    protected void eventCloseHistory() {
+        if(getCurrentItem() == 1 && !isCheckTabMain){
+            // Bkav TienNVh : Tiến hành đóng tab history
+            if(mCallInvisibleTabHistory != null)
+                 mCallInvisibleTabHistory.onCloseHistory();
+            // Bkav TienNVh : Sau khi đóng tab History thì quay lại tab main
+            isCheckTabMain = true;
         }
     }
 }

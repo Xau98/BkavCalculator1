@@ -22,7 +22,8 @@
     app:rowCount="4"
     app:columnCount="3"
     android:paddingBottom="0dp"
-    android:paddingRight="0dp">
+    android:paddingRight="0dp"
+    android:paddingLeft="0dp">
 
     <Button
         android:id="@+id/digit_7"
@@ -105,7 +106,7 @@
         android:id="@+id/del"
         style="@style/BkavPadButtonStyle.Operator.Text"
         android:contentDescription="@string/del"
-        android:text="DEL"
+        android:text="@string/del"
         app:layout_row="3"
         app:layout_column="2" />
 

@@ -37,7 +37,7 @@
        android:id="@+id/emptyhistory"
        layout="@layout/empty_history_view"
        android:visibility="gone"
-       android:layout_above="@id/delHistory"/>
+       />
 
     <Button
         android:id="@+id/delHistory"

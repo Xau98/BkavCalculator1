@@ -15,5 +15,5 @@
 -->
 
 <selector xmlns:android="http://schemas.android.com/apk/res/android" xmlns:equals="http://schemas.android.com/apk/res-auto">
-    <item android:drawable="@drawable/bkav_btn_equals" />
+    <item android:drawable="@mipmap/bkav_btn_equals" />
 </selector>

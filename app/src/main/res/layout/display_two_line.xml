@@ -38,8 +38,7 @@
             style="@style/DisplayTextStyle.Formula"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:ellipsize="none"
-            android:maxLines="1"
+            singleLine="true"
             android:textColor="@color/display_formula_text_color" />
 
     </com.android.calculator2.CalculatorScrollView>

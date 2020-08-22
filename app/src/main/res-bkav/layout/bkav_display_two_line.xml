@@ -67,7 +67,7 @@
             style="@style/BkavButtonHistoryStyle"
             android:background="@null"
             android:text="@string/title_history"
-            android:textSize="17dp"
+            android:textSize="17sp"
             android:onClick="onButtonClick"
             android:textStyle="normal"
             android:textAllCaps="false"
@@ -76,9 +76,9 @@
         <ImageView
             android:id="@+id/bt_more"
             style="@style/BkavButtonMoreAdvanceStyle"
-            android:layout_alignParentRight="true"
-            android:contentDescription="more"
+            android:layout_alignParentEnd="true"
+            android:contentDescription="@string/more"
             android:onClick="onButtonClick"
-            android:src="@drawable/bkav_icon_more" />
+            android:src="@mipmap/bkav_icon_more" />
     </RelativeLayout>
 </com.android.calculator2.bkav.BkavCalculatorDisplay>

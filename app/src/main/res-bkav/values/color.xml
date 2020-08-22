@@ -38,9 +38,6 @@
     <!-- Bkav TienNVh :   -->
     <color name="bkav_background_tab_advance">#A6464646</color>
 
-    <!-- Status bar color. -->
-    <color name="bkav_calculator_statusbar_color">#00FFFFFF</color>
-
     <!-- Bkav TienNVh -->
     <color name="bkav_display_result_exponent_text_color">#FFFF</color>
 
@@ -48,6 +45,7 @@
     <color name="colorHistory">#A6464646</color>
 
     <!-- Bkav TienNVh :   -->
-    <color name="colorAdvanced">#A6464646</color>
+    <color name="bkav_text_color_empty_history">#66FFFFFF</color>
+
 
 </resources>

@@ -34,19 +34,18 @@
         android:background="?android:attr/listDivider"
         android:importantForAccessibility="no" />
 
-    <!--Bkav AnhNDd TODO
-    android:layout_width="match_parent"
-        android:layout_height="wrap_content"-->
+    <!-- Bkav TienNVh : Mục địch không cho hiện date trong history-->
     <TextView
         android:id="@+id/history_date"
-        android:layout_width="1dp"
-        android:layout_height="1dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:fontFamily="sans-serif-medium"
         android:paddingStart="@dimen/result_padding_start"
         android:paddingEnd="@dimen/result_padding_end"
         android:text="@string/title_current_expression"
         android:textColor="?android:attr/colorAccent"
-        android:textSize="14dp" />
+        android:textSize="14sp"
+        android:visibility="gone"/>
 
     <com.android.calculator2.CalculatorScrollView
         android:id="@+id/history_formula_container"

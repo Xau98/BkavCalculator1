@@ -113,7 +113,9 @@ public class DragLayout extends ViewGroup {
         if (state instanceof Bundle) {
             final Bundle bundle = (Bundle) state;
             mIsOpen = bundle.getBoolean(KEY_IS_OPEN);
-            //Bkav AnhNDd TODO Tại sao lại xóa đoạn code này đi mà ko comment
+            // Bkav TienNVh : Bỏ vì theo gốc là HistoryFrame liên quan đến DragLayout
+            // Còn hiện tại thì HistoryFrame ko liên quan đến DragLayout=> bỏ mối liên quan giữa 2 lớp này
+            //=> khi chạy xảy ra lỗi HistoryFrame bị null vì chưa được khởi tao
             //mHistoryFrame.setVisibility(mIsOpen ? View.VISIBLE : View.INVISIBLE);
             for (DragCallback c : mDragCallbacks) {
                 c.onInstanceStateRestored(mIsOpen);
@@ -173,8 +175,7 @@ public class DragLayout extends ViewGroup {
                 && mDragHelper.getActivePointerId() != ViewDragHelper.INVALID_POINTER
                 && event.findPointerIndex(mDragHelper.getActivePointerId()) == -1) {
             mDragHelper.cancel();
-            //Bkav AnhNDd TODO Cái này bỏ đi được chưa?
-            // Bkav TienNVh
+            //Bkav TienNVh : khi chạy xảy ra lỗi HistoryFrame bị null vì chưa được khởi tao
             // mDragHelper.smoothSlideViewTo(mHistoryFrame, 0, mIsOpen ? 0 : -mVerticalRange);
             return false;
         }

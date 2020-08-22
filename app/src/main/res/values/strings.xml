@@ -117,37 +117,34 @@
     <!-- Equals button (e.g. "1 + 2 = ?"). [CHAR_LIMIT=1] -->
     <string name="eq" translatable="false">=</string>
     <!-- Clear button to clear the currently entered expression. [CHAR_LIMIT=4] -->
-    <!--Bkav AnhNDd TODO clr-->
+    <!-- Bkav TienNVh :sửa clr => Clr cho đúng với kịch bản của BKav   -->
     <string name="clr">Clr</string>
     <!--
       Announced when all characters are removed from Formula, e.g. after clear. [CHAR_LIMIT=NONE]
       -->
-    <!--Bkav AnhNDd TODO cleared-->
+    <!-- Bkav TienNVh : sửa clear => Clear  cho đúng với kịch bản của BKav  -->
     <string name="cleared">Cleared</string>
     <!-- Delete button to remove last entered token. [CHAR_LIMIT=4] -->
-    <!--Bkav AnhNDd TODO del-->
-    <string name="del">Del</string>
+    <!-- Bkav TienNVh : sửa del => DEL cho đúng với kịch bản của BKav  -->
+    <string name="del">DEL</string>
     <!-- Toggle button to show/hide inverse functions. [CHAR_LIMIT=4] -->
     <string name="inv" translatable="false">inv</string>
 
     <!--
       Item on Formula context menu used to paste from the Memory into the edit field. [CHAR_LIMIT=2]
       -->
-    <!--Bkav AnhNDd TODO MR tại sao không dùng những text MR này cho tính năng MR-->
     <string name="memory_recall" translatable="false">mr</string>
     <!-- Item on Result context menu used to store the result in memory. [CHAR_LIMIT=2]
       -->
-    <!--Bkav AnhNDd TODO MR tại sao không dùng những text MR này cho tính năng MR-->
+    <!-- Bkav TienNVh : Vì do theo kịch bản của Bkav là MC chứ ko phải ms  -->
     <string name="memory_store" translatable="false">ms</string>
     <!-- Item on Result context menu, which subtracts the current result from the number in memory.
       [CHAR_LIMIT=2]
       -->
-    <!--Bkav AnhNDd TODO M tại sao không dùng những text MR này cho tính năng MR-->
     <string name="memory_subtract" translatable="false">m\u2212</string>
     <!-- Item on Result context menu, which adds the current result to the number in memory.
       [CHAR_LIMIT=2]
       -->
-    <!--Bkav AnhNDd TODO M+ tại sao không dùng những text MR này cho tính năng MR-->
     <string name="memory_add" translatable="false">m+</string>
 
     <!-- Content description for 'e' button. [CHAR_LIMIT=NONE] -->
@@ -246,9 +243,11 @@
     <!-- Content description for the advanced pad when slide-able. [CHAR_LIMIT=NONE] -->
     <string name="desc_adv_pad">Advanced operations</string>
     <!-- Content description for the pad pages when slide-able. -->
-    <!--Bkav AnhNDd TODO  thêm <item>history</item>-->
+
+    <!--Bkav TienNVh: Theo bản của android gốc thì tab lịch sử không nằm ở trong viewpager nhưng bkav thì lịch sử nằm trong viewpager-->
+    <!-- Bkav TienNVh :  Thêm   <item>history</item> để bổ sung thêm title cho tab -->
     <string-array name="desc_pad_pages" translatable="false">
-        <item>history</item>
+        <item>@string/bkav_title_history</item>
         <item>@string/desc_num_pad</item>
         <item>@string/desc_adv_pad</item>
     </string-array>
