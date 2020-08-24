@@ -287,7 +287,7 @@ public class CalculatorResult extends AlignedTextView implements MenuItem.OnMenu
     }
 
     @Override
-    /*private*/ protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         if (!isLaidOut()) {
             super.onMeasure(widthMeasureSpec, heightMeasureSpec);
             // Set a minimum height so scaled error messages won't affect our layout.
@@ -356,7 +356,7 @@ public class CalculatorResult extends AlignedTextView implements MenuItem.OnMenu
     }
 
     @Override
-    /*private*/ protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
+    protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
         super.onLayout(changed, left, top, right, bottom);
 
         if (mEvaluator != null && mEvaluationRequest != SHOULD_NOT_EVALUATE) {
@@ -679,7 +679,6 @@ public class CalculatorResult extends AlignedTextView implements MenuItem.OnMenu
         final int minusSpace = negative ? 1 : 0;
         final int msdIndex = truncated ? -1 : getNaiveMsdIndexOf(in);  // INVALID_MSD is OK.
         String result = in;
-        Log.d("TienNVh", "formatResult: "+ in );
         boolean needEllipsis = false;
         if (truncated || (negative && result.charAt(0) != '-')) {
             needEllipsis = true;
@@ -966,7 +965,7 @@ public class CalculatorResult extends AlignedTextView implements MenuItem.OnMenu
     }
 
     @Override
-    /*private*/ protected void onTextChanged(java.lang.CharSequence text, int start, int lengthBefore,
+    protected void onTextChanged(java.lang.CharSequence text, int start, int lengthBefore,
             int lengthAfter) {
         super.onTextChanged(text, start, lengthBefore, lengthAfter);
 
@@ -1185,21 +1184,21 @@ public class CalculatorResult extends AlignedTextView implements MenuItem.OnMenu
     }
 
     @Override
-    /*private*/ protected void onDetachedFromWindow() {
+    protected void onDetachedFromWindow() {
         stopActionModeOrContextMenu();
         super.onDetachedFromWindow();
     }
 
     //==================Bkav============
     // Bkav TienNVh: Set color  cho chữ E xuất hiện khi thực hiện phép tính lớn
-    /*private*/ protected ForegroundColorSpan setColorE(Context context){
+    protected ForegroundColorSpan setColorE(Context context){
         return new ForegroundColorSpan(
                 ContextCompat.getColor(context, R.color.display_result_exponent_text_color));
     }
 
     // Bkav TienNVh :
     public  String getTruncatedWholePart(){
-        // Bkav TienNVh : La
+        // Bkav TienNVh : Lấy kết quả ở dạng đầy đủ (chưa format )
         int fractionLsdOffset = Math.max(0, mLsdOffset);
         String rawResult = mEvaluator.getResult(mIndex).toStringTruncated(fractionLsdOffset);
         return rawResult;

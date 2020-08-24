@@ -472,10 +472,6 @@ public class CalculatorExpr {
      */
     boolean add(int id) {
         int s = mExpr.size();
-
-        for(int i=0;i< s;i++){
-            Log.d("TienNVh", "write: "+i+"//"+ mExpr.get(i).toString()+"\n");
-        }
         final int d = KeyMaps.digVal(id);
         final boolean binary = KeyMaps.isBinary(id);
         Token lastTok = s == 0 ? null : mExpr.get(s-1);

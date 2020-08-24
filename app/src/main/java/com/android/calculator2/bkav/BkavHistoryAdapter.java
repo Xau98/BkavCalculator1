@@ -1,6 +1,5 @@
 package com.android.calculator2.bkav;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.graphics.Typeface;
 import android.util.Log;
@@ -48,7 +47,6 @@ class BkavHistoryAdapter extends RecyclerView.Adapter<BkavHistoryAdapter.ViewHol
         return new ViewHolder(view, viewType);
     }
 
-    @SuppressLint("ClickableViewAccessibility")
     @Override
     public void onBindViewHolder(@NonNull final BkavHistoryAdapter.ViewHolder holder, int position) {
         HistoryItem item = getItem(position);
@@ -68,7 +66,6 @@ class BkavHistoryAdapter extends RecyclerView.Adapter<BkavHistoryAdapter.ViewHol
             }
         });
 
-        // Bkav TienNVh :Cái này sinh cảnh báo em đã xử lý nó bằng cách thêm code @SuppressLint("ClickableViewAccessibility") trước hàm
         // Bkav TienNVh :Do view Result đã nhận listener=> ko nhận listener khi click cả item
         holder.mResult.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -126,9 +123,6 @@ class BkavHistoryAdapter extends RecyclerView.Adapter<BkavHistoryAdapter.ViewHol
         return item;
     }
 
-    //Bkav AnhNDd TODO class inner nên để static, google lý do và giải thích
-    // Bkav TienNVh : Nên dùng sattic giúp chương trình sử dụng bộ nhớ hiệu quả (Tiết kiểm bộ nhớ )
-    // Giải thích: Khi truy cập vào lớp ViewHolder không phải tạo đối tưởng của lớp bên ngoài
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
         private AlignedTextView mFormula;

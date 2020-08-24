@@ -1,6 +1,5 @@
 package com.android.calculator2.bkav;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.os.Build;
@@ -39,7 +38,6 @@ public class BkavCalculatorPadViewPager extends CalculatorPadViewPager {
             // Set an OnTouchListener to always return true for onTouch events so that a touch
             // sequence cannot pass through the item to the item below.
             child.setOnTouchListener(new OnTouchListener() {
-                @SuppressLint("ClickableViewAccessibility")
                 @Override
                 public boolean onTouch(View v, MotionEvent event) {
                     v.onTouchEvent(event);
@@ -102,9 +100,9 @@ public class BkavCalculatorPadViewPager extends CalculatorPadViewPager {
         }
     };
 
-    // Bkav TienNVh : Biến này để check xem đang ở tab Main không ? (Tab main là tab đầu tiên khi mở app)
-    // Nếu True là đang tab Main và false thì ngược lại
-    boolean isCheckTabMain =true;
+    // Bkav TienNVh :  Mục đích tạo biến để biết được trạng thái của tab History open/close
+    // open là false , close là true
+    boolean isShowTabHistory =true;
     // Bkav TienNVh : Custom lại để cho tab lịch sử về phía trái và tab Advnace về phía phải của màn hình
     // Bkav TienNVh : Mục đích biến nay là giữ tab bàn phím số và phép tính ở nguyên vị trí chính
     // khi vuốt 2 bên để mơ tab lich sự và tab advance
@@ -117,10 +115,11 @@ public class BkavCalculatorPadViewPager extends CalculatorPadViewPager {
                 if (view.equals(getChildAt(1))) {
                     float sizeTrans = getWidth() * -position;
                     // Bkav TienNVh : Check trường hợp đang ở tab main mở tab lịch sử
-                    if(sizeTrans < 0 && isCheckTabMain && mCallInvisibleTabHistory != null) {
+                    if(sizeTrans < 0 && isShowTabHistory && mCallInvisibleTabHistory != null) {
                         // Bkav TienNVh : Call back để hiện thị tab history
                         mCallInvisibleTabHistory.onCallVisiblleHistory();
-                        isCheckTabMain = false;
+                        // Bkav TienNVh :  Chuyển biến trạng thái
+                        isShowTabHistory = false;
                     }
                     view.setTranslationX(sizeTrans);
                 }
@@ -161,12 +160,13 @@ public class BkavCalculatorPadViewPager extends CalculatorPadViewPager {
     // Bkav TienNVh :
     @Override
     protected void eventCloseHistory() {
-        if(getCurrentItem() == 1 && !isCheckTabMain){
+        // Bkav TienNVh : Check trường hợp đang ở tab history nhưng chỉ nhận khi vuốt sang tab main
+        if(getCurrentItem() == 1 && !isShowTabHistory){
             // Bkav TienNVh : Tiến hành đóng tab history
             if(mCallInvisibleTabHistory != null)
                  mCallInvisibleTabHistory.onCloseHistory();
             // Bkav TienNVh : Sau khi đóng tab History thì quay lại tab main
-            isCheckTabMain = true;
+            isShowTabHistory = true;
         }
     }
 }

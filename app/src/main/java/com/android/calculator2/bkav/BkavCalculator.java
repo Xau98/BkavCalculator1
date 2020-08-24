@@ -1,5 +1,6 @@
 package com.android.calculator2.bkav;
 
+import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.ClipData;
 import android.content.SharedPreferences;
@@ -29,7 +30,10 @@ import androidx.core.content.ContextCompat;
 import androidx.viewpager.widget.ViewPager;
 
 import com.android.calculator2.Calculator;
+import com.android.calculator2.CalculatorFormula;
+import com.android.calculator2.CalculatorPadViewPager;
 import com.android.calculator2.Evaluator;
+import com.android.calculator2.HistoryFragment;
 import com.android.calculator2.KeyMaps;
 import com.bkav.calculator2.R;
 
@@ -82,10 +86,7 @@ public class BkavCalculator extends Calculator implements BkavHistoryAdapter.OnC
                         // nothing to paste, bail early...
                         return false;
                     }
-                    //Bkav AnhNDd TODO lên google đọc vê việc lấy context trong android, có mấy hàm, và chọn cách nào
-                    // Bkav TienNVh :có các cách getApplicationContext(), getContext(), getBaseContext(),this / getActivity()
-                    // Bkav TienNVh : không nên dùng cách lấy getApplicationContext() này
-                    // vì có thể gây ra ro ri bộ nhớ
+
                     //Bkav TienNVh: lay du lieu copy
                     String textNew = item.coerceToText(BkavCalculator.this).toString() + "";
                     //Bkav TienNVh: dự liệu phép tính đang tính
@@ -114,7 +115,7 @@ public class BkavCalculator extends Calculator implements BkavHistoryAdapter.OnC
                 }
             };
 
-    // Bkav TienNVh : Lấy dữ kiệu trong bộ nhớ. để phục vụ tính năng MR và tính năng past
+    // Bkav TienNVh : Lấy dữ kiệu trong bộ nhớ. để phục vụ tính năng MR và tính năng paste
     private  void onRecallMemory(){
         clearIfNotInputState();
         long memoryIndex = mEvaluator.getMemoryIndex();
@@ -140,7 +141,7 @@ public class BkavCalculator extends Calculator implements BkavHistoryAdapter.OnC
         if(mPadViewPager!=null)
             mPadViewPager.setCurrentItem(POSITION_NUMBER_VIEWPAGER);
         // Bkav TienNVh :listen  event tab History Open
-        mPadViewPager.setCallInvisibleTabHistory(mCallInvisibleTabHistory);
+        ((BkavCalculatorPadViewPager)mPadViewPager).setCallInvisibleTabHistory(mCallInvisibleTabHistory);
         mSharedPreferences = getSharedPreferences(mSharePreFile, MODE_PRIVATE);
         // Bkav TienNVh : listen Paste memory
         mFormulaText.setOnContextMenuClickListener(mOnFormulaContextMenuClickListener);
@@ -247,7 +248,7 @@ public class BkavCalculator extends Calculator implements BkavHistoryAdapter.OnC
         // Bkav TienNVh :  Check vị trí click có nằm trong vùng hiện thị không
         //nếu nămf trong thì cho ẩn mode (paste)
         if (ev.getY() < mDisplayView.getHeight())
-            if (mFormulaText != null) mFormulaText.touchOutSide((int) ev.getX(), (int) ev.getY());
+            if (mFormulaText != null) ((BkavCalculatorFormula)mFormulaText).touchOutSide((int) ev.getX(), (int) ev.getY());
     }
 
     // Bkav TienNVh: Nhận sự kiện click button INV
@@ -277,6 +278,17 @@ public class BkavCalculator extends Calculator implements BkavHistoryAdapter.OnC
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         return false;
+    }
+
+    // Bkav TienNVh :
+    @Override
+    protected Fragment getHistoryFragment() {
+        final FragmentManager manager = getFragmentManager();
+        if (manager == null || manager.isDestroyed()) {
+            return null;
+        }
+        final Fragment fragment = manager.findFragmentByTag(BkavHistoryFragment.TAG);
+        return fragment == null || fragment.isRemoving() ? null : (BkavHistoryFragment) fragment;
     }
 
     // Bkav TienNVh : Hiện thị tab history
@@ -381,7 +393,7 @@ public class BkavCalculator extends Calculator implements BkavHistoryAdapter.OnC
         switch (id) {
             // Bkav TienNVh :  đóng/ mở tab history trên Viewpager
             case R.id.bt_history:
-                mDisplayView.setEnableToolbar(true);
+                ((BkavCalculatorDisplay)mDisplayView).setEnableToolbar(true);
                 if (mPadViewPager.getCurrentItem() == POSITION_NUMBER_VIEWPAGER) {
                     mPadViewPager.setCurrentItem(POSITION_HISTORY_VIEWPAGER);
                 } else {
@@ -452,8 +464,6 @@ public class BkavCalculator extends Calculator implements BkavHistoryAdapter.OnC
         }
     }
 
-    //Bkav AnhNDd TODO Mỗi lần bấm 1 event lại xử lý 1 dống logic, rồi tính toán lại từ đầu ???? Chốt lại cách làm
-    // Bkav TienNVh : Hiện tại e chưa nghĩ ra hướng nào hay hơn
     private void addFomulaNew(String formulatext, String newtext, int idFomulaNew) {
         // Bkav TienNVh : postionCursor là biến lưu vị trí con trỏ
         int postionCursor = mFormulaText.getSelectionEnd();
@@ -876,8 +886,6 @@ public class BkavCalculator extends Calculator implements BkavHistoryAdapter.OnC
         }
     };
 
-    //Bkav AnhNDd TODO cái này có còn lỗi như trước đã report? Nhảy vị trí linh tinh
-    // Bkav TienNVh :  Cái này e đã fix được cái lỗi đã report
     @Override
     public void onClickItemHistory(String result) {
         // Bkav TienNVh : Xử lý lấy dữ liệu trong tab lịch sử để tính

@@ -251,13 +251,13 @@ public class Calculator extends Activity
 
     /*private*/protected CalculatorState mCurrentState;
     /*private*/protected Evaluator mEvaluator;
-    /*private*/protected /*CalculatorDisplay*/ BkavCalculatorDisplay mDisplayView;
+    /*private*/protected CalculatorDisplay mDisplayView;
     private TextView mModeView;
-    /*private*/ protected /*CalculatorFormula*/ BkavCalculatorFormula mFormulaText;
+    /*private*/ protected CalculatorFormula mFormulaText;
     /*private*/protected CalculatorResult mResultText;
     private HorizontalScrollView mFormulaContainer;
     /*private*/protected DragLayout mDragLayout;
-    /*private*/protected /*ViewPager*/ BkavCalculatorPadViewPager mPadViewPager;
+    /*private*/protected CalculatorPadViewPager mPadViewPager;
     private View mDeleteButton;
     private View mClearButton;
     private View mEqualButton;
@@ -350,7 +350,7 @@ public class Calculator extends Activity
     }
 
     @Override
-    /*private*/protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         // Bkav TienNVh :
@@ -371,7 +371,7 @@ public class Calculator extends Activity
         });
 
         mMainCalculator = findViewById(R.id.main_calculator);
-        mDisplayView = (BkavCalculatorDisplay) findViewById(R.id.display);
+        mDisplayView = findViewById(R.id.display);
         mModeView = (TextView) findViewById(R.id.mode);
         mFormulaText = (BkavCalculatorFormula) findViewById(R.id.formula);
         mResultText = (CalculatorResult) findViewById(R.id.result);
@@ -438,7 +438,7 @@ public class Calculator extends Activity
     }
 
     @Override
-    /*private*/protected void onResume() {
+     protected void onResume() {
         super.onResume();
         if (mDisplayView.isToolbarVisible()) {
             showAndMaybeHideToolbar();
@@ -456,7 +456,7 @@ public class Calculator extends Activity
     }
 
     @Override
-    /*private*/protected void onSaveInstanceState(@NonNull Bundle outState) {
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
         mEvaluator.cancelAll(true);
         // If there's an animation in progress, cancel it first to ensure our state is up-to-date.
         if (mCurrentAnimator != null) {
@@ -547,7 +547,7 @@ public class Calculator extends Activity
     }
 
     @Override
-    /*private*/protected void onDestroy() {
+    protected void onDestroy() {
         mDragLayout.removeDragCallback(this);
         super.onDestroy();
     }
@@ -592,7 +592,7 @@ public class Calculator extends Activity
         if (e.getActionMasked() == MotionEvent.ACTION_DOWN) {
             stopActionModeOrContextMenu();
             // Bkav TienNVh : Thay đổi đối tưởng từ HistoryFragment => BkavHistoryFragment
-            final BkavHistoryFragment historyFragment =(BkavHistoryFragment) getBkavHistoryFragment();
+            final BkavHistoryFragment historyFragment =(BkavHistoryFragment) getHistoryFragment();
             // Bkav TienNVh :commnet code gốc
             //final HistoryFragment historyFragment = getHistoryFragment();
             if (mDragLayout.isOpen() && historyFragment != null) {
@@ -608,7 +608,7 @@ public class Calculator extends Activity
     public void onBackPressed() {
         if (!stopActionModeOrContextMenu()) {
             // Bkav TienNVh : Thay đổi đối tưởng từ HistoryFragment => BkavHistoryFragment
-            final BkavHistoryFragment historyFragment = (BkavHistoryFragment) getBkavHistoryFragment();
+            final BkavHistoryFragment historyFragment = (BkavHistoryFragment) getHistoryFragment();
             // Bkav TienNVh :commnet code gốc
             //final HistoryFragment historyFragment = getHistoryFragment();
             if (mDragLayout.isOpen() && historyFragment != null) {
@@ -1600,10 +1600,7 @@ public class Calculator extends Activity
         }
         return false;
     }
-    // Bkav TienNVh :
-    protected Fragment getBkavHistoryFragment() {
-        return null;
-    }
+
 
     // Bkav TienNVh :
     protected  void onResumeBkavCalculator(){ }

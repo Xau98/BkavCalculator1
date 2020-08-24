@@ -11,6 +11,7 @@ import android.widget.RelativeLayout;
 public class BkavHistoryLayout extends RelativeLayout {
     public BkavHistoryLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
+        mPaint = new Paint();
     }
 
     private Bitmap mBitmap;
@@ -20,7 +21,6 @@ public class BkavHistoryLayout extends RelativeLayout {
     public void setInforScrollViewpager(Bitmap bitmap , float v ) {
         this.mBitmap = bitmap;
         this.mOffset = v;
-        mPaint = new Paint();
         mDest = new Rect(0, 0, getWidth(), getHeight());
         invalidate();
         requestLayout();

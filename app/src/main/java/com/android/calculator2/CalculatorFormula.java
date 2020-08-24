@@ -16,7 +16,6 @@
 
 package com.android.calculator2;
 
-import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.content.ClipData;
 import android.content.ClipboardManager;
@@ -39,14 +38,15 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import androidx.appcompat.widget.AppCompatEditText;
+
 import com.bkav.calculator2.R;
 
 /**
  * TextView adapted for displaying the formula and allowing pasting.
  */
 // Bkav TienNVh : Thay AlignedTextView thành Edittext. Mục đích để cho phép sửa phép tính
-@SuppressLint("AppCompatCustomView")
-public class CalculatorFormula extends /*AlignedTextView*/EditText implements MenuItem.OnMenuItemClickListener,
+public class CalculatorFormula extends /*AlignedTextView*/AppCompatEditText implements MenuItem.OnMenuItemClickListener,
         ClipboardManager.OnPrimaryClipChangedListener {
 
     public static final String TAG_ACTION_MODE = "ACTION_MODE";
@@ -103,7 +103,7 @@ public class CalculatorFormula extends /*AlignedTextView*/EditText implements Me
     }
 
     @Override
-    /*private*/ protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         if (!isLaidOut()) {
             // Prevent shrinking/resizing with our variable textSize.
             setTextSizeInternal(TypedValue.COMPLEX_UNIT_PX, mMaximumTextSize,
@@ -130,7 +130,7 @@ public class CalculatorFormula extends /*AlignedTextView*/EditText implements Me
     }
 
     @Override
-    /*private*/ protected void onAttachedToWindow() {
+    protected void onAttachedToWindow() {
         super.onAttachedToWindow();
 
         mClipboardManager.addPrimaryClipChangedListener(this);
@@ -138,14 +138,14 @@ public class CalculatorFormula extends /*AlignedTextView*/EditText implements Me
     }
 
     @Override
-    /*private*/ protected void onDetachedFromWindow() {
+    protected void onDetachedFromWindow() {
         super.onDetachedFromWindow();
 
         mClipboardManager.removePrimaryClipChangedListener(this);
     }
 
     @Override
-    /*private*/ protected void onTextChanged(CharSequence text, int start, int lengthBefore, int lengthAfter) {
+    protected void onTextChanged(CharSequence text, int start, int lengthBefore, int lengthAfter) {
         super.onTextChanged(text, start, lengthBefore, lengthAfter);
 
         setTextSize(TypedValue.COMPLEX_UNIT_PX, getVariableTextSize(text.toString()));
@@ -389,6 +389,9 @@ public class CalculatorFormula extends /*AlignedTextView*/EditText implements Me
             Log.i("Calculator", "Error reading clipboard:", e);
         }
         return !TextUtils.isEmpty(clipText);
+    }
+
+    public void touchOutSide(int x, int y) {
     }
 
     public interface OnTextSizeChangeListener {

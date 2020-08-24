@@ -14,6 +14,7 @@ import androidx.gridlayout.widget.GridLayout;
 public class BkavAdvancedLayout extends GridLayout {
     public BkavAdvancedLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
+        mPaint = new Paint();
     }
 
     /****************************** Bkav **************************/
@@ -28,7 +29,6 @@ public class BkavAdvancedLayout extends GridLayout {
         this.mBitmap = bitmap;
         this.mOffset = v;
         this.mOffsetPixel = i1;
-        mPaint = new Paint();
         mDest = new Rect(0, 0, getWidth(), getHeight());
         invalidate();
         requestLayout();

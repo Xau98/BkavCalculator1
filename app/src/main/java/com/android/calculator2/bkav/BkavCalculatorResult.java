@@ -3,9 +3,6 @@ package com.android.calculator2.bkav;
 import android.content.Context;
 import android.text.style.ForegroundColorSpan;
 import android.util.AttributeSet;
-import android.util.Log;
-
-import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 
 import com.android.calculator2.CalculatorResult;

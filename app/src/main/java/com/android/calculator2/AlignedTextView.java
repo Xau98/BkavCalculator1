@@ -53,7 +53,7 @@ public class AlignedTextView extends AppCompatTextView {
     }
 
     @Override
-    /*private*/protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         final Paint paint = getPaint();
 
         // Always align text to the default capital letter height.

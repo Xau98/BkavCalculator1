@@ -177,7 +177,7 @@ public class CalculatorPadViewPager extends ViewPager {
     }
 
     @Override
-    /*private*/ protected void onFinishInflate() {
+    protected void onFinishInflate() {
         super.onFinishInflate();
 
         // Invalidate the adapter's data set since children may have been added during inflation.

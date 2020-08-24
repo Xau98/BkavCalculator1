@@ -101,7 +101,7 @@ public class CalculatorDisplay extends LinearLayout
     }
 
     @Override
-    /*private*/ protected void onFinishInflate() {
+    protected void onFinishInflate() {
         super.onFinishInflate();
 
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -111,19 +111,19 @@ public class CalculatorDisplay extends LinearLayout
     }
 
     @Override
-    /*private*/ protected int getChildDrawingOrder(int childCount, int i) {
+     protected int getChildDrawingOrder(int childCount, int i) {
         // Reverse the normal drawing order.
         return (childCount - 1) - i;
     }
 
     @Override
-    /*private*/ protected void onAttachedToWindow() {
+     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
         mAccessibilityManager.addAccessibilityStateChangeListener(this);
     }
 
     @Override
-    /*private*/ protected void onDetachedFromWindow() {
+    protected void onDetachedFromWindow() {
         super.onDetachedFromWindow();
         mAccessibilityManager.removeAccessibilityStateChangeListener(this);
     }
