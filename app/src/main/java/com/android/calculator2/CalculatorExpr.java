@@ -33,6 +33,7 @@ import java.io.IOException;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.ConcurrentModificationException;
 import java.util.HashSet;
 
 /**
@@ -1089,10 +1090,23 @@ public class CalculatorExpr {
         // expression that has not been previously evaluated.
         // We could do the embedded evaluations recursively, but that risks running out of
         // stack space.
-        ArrayList<Long> referenced = getTransitivelyReferencedExprs(er);
-        for (long index : referenced) {
-            nestedEval(index, er);
+
+        // Bkav TienNVh : đoạn code trong try catch có mục đích lấy kết quả chuyển tiếp thực hiện phép tính khác
+        // Theo kịch bản của gốc: Sau khi copy kết quả thì thực hiện lưu cái index sau khi paste thì chỉ cần add index vào token
+        // Theo Bkav : Sau khi copy  kết quả thì thực hiện copy dữ liệu và paste thì add lại dữ liệu từng ký tự
+        // Vì sao ko theo cái gốc. vì theo Bkav cho chỉnh sửa phép tính trực tiếp rồi thực hiện add lại từng ký tự ko liên quan gì đến index trong token
+        // Đoạn code trong try catch: lọc bỏ các index trùng nhau (2 index trùng nhau khi copy kết quả rồi paste để thực hiện phép tính)
+        //=> Đoạn này có vẻ ko ảnh hưởng đến code của Bkav => để tránh 1 số trường hợp lỗi cùng đồng thời thay đổi trên 1 list
+        //=> thực hiện try catch là cách đơn giản nhất
+        try {
+            ArrayList<Long> referenced = getTransitivelyReferencedExprs(er);
+            for (long index : referenced) {
+                nestedEval(index, er);
+            }
+        }catch (ConcurrentModificationException co){
+            // Lỗi ConcurrentModificationException
         }
+
         try {
             // We currently never include trailing binary operators, but include other trailing
             // operators.  Thus we usually, but not always, display results for prefixes of valid

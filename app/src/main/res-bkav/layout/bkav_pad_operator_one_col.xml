@@ -20,7 +20,7 @@
     style="@style/BkavPadLayoutStyle.Operator"
     android:paddingEnd="0dp"
     android:paddingTop="0dp"
-    android:paddingStart="5dp"
+    android:paddingStart="0dp"
     android:layout_marginStart="0dp"
     android:paddingBottom="0dp"
     android:background="@color/bkav_pad_operator_background_color"
@@ -62,9 +62,10 @@
 
     <ImageView
         android:id="@+id/eq"
-        style="@style/BkavPadButtonStyle.Operator.Equal"
+        style="@style/PadButtonStyle.Operator"
         android:background="#FFd66039"
-        android:layout_height="7dp"
+        android:layout_height="37dp"
+        android:padding="20.5dp"
         android:src="@drawable/bkav_equals_btn"
         android:contentDescription="@string/desc_eq"
         android:textSize="27sp"

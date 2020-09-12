@@ -607,7 +607,7 @@ public class Calculator extends Activity
     @Override
     public void onBackPressed() {
         if (!stopActionModeOrContextMenu()) {
-            // Bkav TienNVh : Thay đổi đối tưởng từ HistoryFragment => BkavHistoryFragment
+            // Bkav TienNVh : BkavHistoryFragment và HistoryFragment cùng dùng fragment
             final BkavHistoryFragment historyFragment = (BkavHistoryFragment) getHistoryFragment();
             // Bkav TienNVh :commnet code gốc
             //final HistoryFragment historyFragment = getHistoryFragment();
